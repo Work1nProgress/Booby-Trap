@@ -16,7 +16,12 @@ public class ControllerGameFlow : GenericSingleton<ControllerGameFlow>
         _currentScene = SceneManager.GetActiveScene().name;
     }
 
-   
+
+    private void Start()
+    {
+        MusicPlayer.Instance.PlayPlaylist("percPlaylist");
+    }
+
     public void LoadNewScene(string sceneName)
     {
         SceneManager.sceneLoaded += OnAfterSceneLoaded;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class MusicTrack
@@ -50,6 +51,47 @@ public class MusicPlaylist
     public float CrossfadeTime;
     public bool Randomize;
     public string[] MusicTracks;
+
+    public (string name, int trackIndex) GetTrack(int currentIndex = -1)
+    {
+
+        if (Randomize)
+        {
+            int remove = 1;
+            if (currentIndex == -1)
+            {
+                remove = 0;
+            }
+            int[] candidates = new int[MusicTracks.Length - remove];
+            for (int i = 0; i < candidates.Length; i++)
+            {
+                if (i < currentIndex)
+                {
+                    candidates[i] = i;
+                }
+                else if (i > currentIndex)
+                {
+                    candidates[i - remove] = i;
+                }
+            }
+
+            var trackIndex = Random.Range(0, candidates.Length);
+            return (MusicTracks[candidates[trackIndex]], trackIndex);
+
+        }
+        else
+        {
+            currentIndex++;
+            if (currentIndex > MusicTracks.Length - 1)
+            {
+                currentIndex = 0;
+            }
+            return (MusicTracks[currentIndex], currentIndex);
+
+        }
+    }
+
+
 }
 
 

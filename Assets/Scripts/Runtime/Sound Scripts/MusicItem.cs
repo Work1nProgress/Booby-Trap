@@ -40,4 +40,17 @@ public class MusicItem : MonoBehaviour
         m_AudioSource.Stop();
 
     }
+
+
+
+    public void Despawn()
+    {
+        IsPlaying = false;
+    }
+
+    public void Spawn()
+    {
+        transform.parent = null;
+        IsPlaying = true;
+    }
 }
