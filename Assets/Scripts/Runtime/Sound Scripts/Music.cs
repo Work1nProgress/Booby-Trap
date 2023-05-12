@@ -76,6 +76,8 @@ public class MusicPlaylist
             }
 
             var trackIndex = Random.Range(0, candidates.Length);
+
+            Debug.Log($"play randomized {MusicTracks[candidates[trackIndex]]}");
             return (MusicTracks[candidates[trackIndex]], trackIndex);
 
         }
@@ -86,6 +88,7 @@ public class MusicPlaylist
             {
                 currentIndex = 0;
             }
+//            Debug.Log($"play next {MusicTracks[currentIndex]}");
             return (MusicTracks[currentIndex], currentIndex);
 
         }

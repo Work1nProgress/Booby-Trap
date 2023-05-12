@@ -25,7 +25,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
 
 
     MusicPlaylist m_CurrentPlaylist;
-    MusicTrack m_CurrentTrack;
+    MusicTrack m_CurrentTrack, m_NextTrack;
 
 
 
@@ -35,8 +35,10 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     Queue<MusicItem> PoolQueue;
     Dictionary<string, MusicItem> m_Playing;
 
-    IEnumerator CurrentTracker, NextTracker;
+    IEnumerator CurrentTracker;
 
+    [SerializeField]
+    float DeltaTime;
 
 
 
@@ -57,7 +59,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         {
             if (playlist.Crossfade)
             {
-                maxLayers = Mathf.Max(maxLayers, 2);
+                maxLayers *= 2;
                 break;
             }
         }
@@ -73,6 +75,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
             audioSource.spatialBlend = 0;
             audioSource.gameObject.name = $"MusicItem_{i}";
             audioSource.outputAudioMixerGroup = Mixer;
+            audioSource.playOnAwake = false;
             m_ClipPool[i] = audioSource.gameObject.AddComponent<MusicItem>().Init(audioSource);
             m_ClipPool[i].transform.SetParent(transform,false);
             m_ClipPool[i].gameObject.SetActive(false);
@@ -90,46 +93,62 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         if (m_CurrentPlaylist?.Name == musicName)
         {
 
-            Debug.Log($"Music {musicName} already playing");
+            Debug.LogWarning($"Music {musicName} already playing");
             return;
         }
 
         if (m_CurrentTrack != null)
         {
-            m_Playing[m_CurrentTrack.Name].Stop();
-            var item = m_Playing[m_CurrentTrack.Name];
-            m_Playing.Remove(m_CurrentTrack.Name);
-            item.Stop();
-            item.Despawn();
-            item.gameObject.name = $"MusicItem_{Array.FindIndex(m_ClipPool, x => x == item)}";
-            PoolQueue.Enqueue(item);
-            item.transform.SetParent(transform);
+            RemoveCurrentTrack();
         }
+        var itemNew = CreateNewItem(musicName);
+        m_CurrentTrack = itemNew.track;
+        itemNew.item.Play();
 
+        RemoveCoroutine(CurrentTracker);
+        StartCoroutine(CurrentTracker = Tracker(itemNew.item.Length, m_CurrentPlaylist.CrossfadeTime));
+    }
+
+    void PlayNextCrossfaded()
+    {
+
+        var trackInfo = m_CurrentPlaylist.GetTrack(m_ClipIndex);
+        m_ClipIndex = trackInfo.trackIndex;
+        var itemNew = CreateNewItem(trackInfo.name);
+        m_NextTrack = itemNew.track;
+        itemNew.item.SetVolume(0);
+        itemNew.item.Play();
+       
+    }
+
+
+    (MusicItem item, MusicTrack track) CreateNewItem(string musicName)
+    {
         var itemNew = PoolQueue.Dequeue();
         itemNew.Spawn();
         itemNew.gameObject.SetActive(true);
-      
+
         var track = GetTrack(musicName);
 
         if (track == null)
         {
-            Debug.Log($"Track {musicName} not found.");
-            return;
+            Debug.LogWarning($"Track {musicName} not found.");
+            return default;
         }
-        m_CurrentTrack = track;
-        m_Playing.Add(m_CurrentTrack.Name, itemNew);
+
+        m_Playing.Add(musicName, itemNew);
         itemNew.gameObject.name = $"Music_{musicName}";
-        itemNew.SetAndPlay(track.Music, track.Volume);
-        StartCoroutine(CurrentTracker = Tracker(track.Music.length));
+        itemNew.Set(track.Music, track.Volume);
+        return (itemNew, track);
     }
+
+    
 
     public void PlayPlaylist(string playlist)
     {
         if (m_CurrentPlaylist?.Name == playlist)
         {
-
-            Debug.Log($"Playlist {playlist} already playing");
+            Debug.LogWarning($"Playlist {playlist} already playing");
             return;
         }
         Array.Find(Playlists, x => x.Name == playlist);
@@ -141,47 +160,98 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     }
 
     private MusicTrack GetTrack(string name) {
-        return Array.Find(Tracks, x => x.Name == name);
-        
+        return Array.Find(Tracks, x => x.Name == name);      
     }
+
+
+    void RemoveCurrentTrack()
+    {
+
+        m_Playing[m_CurrentTrack.Name].Stop();
+        var item = m_Playing[m_CurrentTrack.Name];
+        m_Playing.Remove(m_CurrentTrack.Name);
+        item.Stop();
+        item.Despawn();
+        item.gameObject.name = $"MusicItem_{Array.FindIndex(m_ClipPool, x => x == item)}";
+        PoolQueue.Enqueue(item);
+        item.transform.SetParent(transform);
+    }
+
+
 
     public void NextTrack()
     {
         var trackInfo = m_CurrentPlaylist.GetTrack(m_ClipIndex);
-        m_CurrentPlaylist.GetTrack(m_ClipIndex);
         m_ClipIndex = trackInfo.trackIndex;
         PlayMusic(trackInfo.name);
     }
 
 
 
-    IEnumerator Tracker(float length)
+    IEnumerator Tracker(float length, float fadeTime)
     {
-        yield return new WaitForSeconds(length);
-        NextTrack();
+
+        if (fadeTime > 0)
+        {
+
+            yield return new WaitForSecondsRealtime(length - fadeTime / 2f);
+      
+
+            bool isCrossfading = true;
+
+            float timer = 0;
+
+          
+            PlayNextCrossfaded();
+         
+            while (isCrossfading)
+            {
+                
+
+                if (timer <= fadeTime)
+                {
+                    float t = timer / fadeTime;
+                    m_Playing[m_CurrentTrack.Name].SetVolume((1-t) * m_CurrentTrack.Volume);
+                    m_Playing[m_NextTrack.Name].SetVolume(t * m_NextTrack.Volume);
+
+                    yield return new WaitForSecondsRealtime(DeltaTime);
+                }
+                else
+                {
+                    m_Playing[m_CurrentTrack.Name].SetVolume(0);
+                    m_Playing[m_NextTrack.Name].SetVolume(m_NextTrack.Volume);
+                    RemoveCurrentTrack();
+                    m_CurrentTrack = m_NextTrack;
+                    isCrossfading = false;
+                    RemoveCoroutine(CurrentTracker);
+                    StartCoroutine(CurrentTracker = Tracker(m_CurrentTrack.Music.length - timer, m_CurrentPlaylist.CrossfadeTime));
+                }
+                timer += DeltaTime;
+            }
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(length);
+            NextTrack();
+        }
     }
 
-    private int GetNextIndex()
-    {
-        m_ClipIndex++;
-        if (m_ClipIndex >= m_CurrentPlaylist.MusicTracks.Length)
-            m_ClipIndex = 0;
+  
 
-        return m_ClipIndex;
+    void RemoveCoroutine(IEnumerator enumerator)
+    {
+        if (enumerator != null)
+        {
+            StopCoroutine(enumerator);
+            enumerator = null;
+        }
     }
 
-    private int GetRandomIndex()
-    {
-        return Random.Range(0, m_CurrentPlaylist.MusicTracks.Length);
-    }
 
-    private void ChangeMusic(int index)
-    {
-        index = Mathf.Clamp(index, 0, m_CurrentPlaylist.MusicTracks.Length - 1);
 
-        //_source.Stop();
-        //_source.clip = _musicClips[index];
-        //_source.Play();
-        //Debug.Log("Play new music");
-    }
+    
+
+   
+
+
 }
