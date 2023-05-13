@@ -16,20 +16,7 @@ public class ControllerGameFlow : GenericSingleton<ControllerGameFlow>
         _currentScene = SceneManager.GetActiveScene().name;
     }
 
-
-    private void Start()
-    {
-        int a = 0;
-
-        a = Utils.AddFlags(a, 1, 2, 3, 4, 5);
-        Debug.Log(string.Join("_", Utils.FlagsToList(a)));
-
-        int b = 2;
-        Debug.Log(string.Join("_", Utils.FlagsToList(b)));
-        a = Utils.RemoveFlags(a, b);
-        Debug.Log(string.Join("_", Utils.FlagsToList(a)));
-
-    }
+   
 
     public void LoadNewScene(string sceneName)
     {

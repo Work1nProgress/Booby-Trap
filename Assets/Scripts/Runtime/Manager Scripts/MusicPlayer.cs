@@ -23,15 +23,9 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
 
 
     MusicPlaylist m_CurrentPlaylist;
-    LayeredTrack m_CurrentTrack, m_NextTrack;
+    (LayeredTrack track, MusicItemLayered item) m_Current, m_Next;
 
-
-
-
-
-    MusicItemLayered[] m_ClipPool;
-    Queue<MusicItemLayered> PoolQueue;
-    Dictionary<string, MusicItemLayered> m_Playing;
+    Queue<MusicItemLayered> m_ItemQueue = new Queue<MusicItemLayered>();
 
     IEnumerator CurrentTracker;
 
@@ -44,81 +38,27 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     {
         base.Awake();
 
-        int maxLayers = 1;
-        foreach (var layered in Tracks)
+        for (int i = 0; i < 2; i++)
         {
-            if (layered.LayerCount > maxLayers)
-            {
-                maxLayers = layered.LayerCount;
-            }
+            m_ItemQueue.Enqueue(CreateLayeredMusicItem());
         }
 
-        foreach (var playlist in Playlists)
-        {
-            if (playlist.Crossfade)
-            {
-                maxLayers *= 2;
-                break;
-            }
-        }
-
-
-        m_ClipPool = new MusicItemLayered[maxLayers];
-        PoolQueue = new Queue<MusicItemLayered>();
-        m_Playing = new Dictionary<string, MusicItemLayered>();
-
-        for (int i = 0; i < maxLayers; i++)
-        {
-            m_ClipPool[i] = new GameObject().AddComponent<MusicItemLayered>().Init();
-            m_ClipPool[i].transform.SetParent(transform,false);
-            m_ClipPool[i].gameObject.SetActive(false);
-            PoolQueue.Enqueue(m_ClipPool[i]);
-        }
-
-      
     }
 
-
-
-    public void PlayMusic(string musicName)
+    MusicItemLayered CreateLayeredMusicItem()
     {
-
-        if (m_CurrentPlaylist?.Name == musicName)
-        {
-
-            Debug.LogWarning($"Music {musicName} already playing");
-            return;
-        }
-
-        if (m_CurrentTrack != null)
-        {
-            RemoveCurrentTrack();
-        }
-        var itemNew = CreateNewItem(musicName);
-        m_CurrentTrack = itemNew.track;
-        itemNew.item.Play(1);
-
-        RemoveCoroutine(CurrentTracker);
-        StartCoroutine(CurrentTracker = Tracker(m_CurrentTrack.Length, m_CurrentPlaylist.CrossfadeTime));
+       var item = new GameObject().AddComponent<MusicItemLayered>().Init();
+       item.transform.SetParent(transform, false);
+       item.gameObject.SetActive(false);
+       return item;
     }
 
-    void PlayNextCrossfaded()
+    (LayeredTrack track, MusicItemLayered item) InitializeNextItem(string musicName)
     {
 
-        var trackInfo = m_CurrentPlaylist.GetTrack(m_ClipIndex);
-        m_ClipIndex = trackInfo.trackIndex;
-        var itemNew = CreateNewItem(trackInfo.name);
-        m_NextTrack = itemNew.track;
-        itemNew.item.SetVolumePercent(0);
-        itemNew.item.Play();
-       
-    }
-
-
-    (MusicItemLayered item, LayeredTrack track) CreateNewItem(string musicName)
-    {
-        var itemNew = PoolQueue.Dequeue();
-        itemNew.gameObject.SetActive(true);
+        Debug.Log(musicName);
+        var item = m_ItemQueue.Dequeue();
+        item.gameObject.SetActive(true);
 
         var track = GetTrack(musicName);
 
@@ -128,71 +68,214 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
             return default;
         }
 
-        m_Playing.Add(musicName, itemNew);
-        itemNew.gameObject.name = $"Music_{musicName}";
-        itemNew.Set(track);
-        return (itemNew, track);
+        item.gameObject.name = $"Music_{musicName}";
+        item.Set(track);
+        return (track, item);
     }
 
-    
 
-    public void PlayPlaylist(string playlist)
+
+    public void PlayMusic(string musicName, params int[] layers)
+    {
+       
+        int[] defaultLayers = new int[] { 0 };
+        if (layers.Length > 0)
+        {
+            defaultLayers = layers;
+        }
+
+        Debug.Log($"play music {musicName}");
+        var layersFromName = GetLayersFromName(musicName);
+        if (layersFromName != null)
+        {
+            defaultLayers = layersFromName;
+        }
+
+        if (m_CurrentPlaylist?.Name == musicName)
+        {
+
+            Debug.LogWarning($"Music {musicName} already playing");
+            return;
+        }
+        float crossfade = 0;
+        if (m_CurrentPlaylist != null)
+        {
+            crossfade = m_CurrentPlaylist.CrossfadeTime;
+        }
+
+        if (m_Current.track != null)
+        {
+            RemoveTrack(ref m_Current);
+        }
+        m_Current= InitializeNextItem(musicName);
+
+        m_Current.item.Play(defaultLayers);
+
+        RemoveCoroutine(CurrentTracker);
+        Debug.Log($"start tracker for music {musicName}");
+        StartCoroutine(CurrentTracker = Tracker(m_Current.track.Length, crossfade));
+    }
+
+    public void AddLayers(string playlistName, params int[] layers)
+    {
+        if (m_CurrentPlaylist != null && playlistName != m_CurrentPlaylist.Name)
+        {
+            return;
+        }
+        if (m_Current.item != null)
+        {
+            m_Current.item.Play(layers);
+        }
+        if (m_Next.item != null)
+        {
+            m_Next.item.Play(layers);
+        }
+    }
+
+    public void RemoveLayers(string playlistName, params int[] layers)
+    {
+        if (m_CurrentPlaylist != null && playlistName != m_CurrentPlaylist.Name)
+        {
+            return;
+        }
+        if (m_CurrentPlaylist != null && playlistName != m_CurrentPlaylist.Name)
+        {
+            return;
+        }
+        if (m_Current.item != null)
+        {
+            m_Current.item.Stop(layers);
+        }
+        if (m_Next.item != null)
+        {
+            m_Next.item.Stop(layers);
+        }
+    }
+
+    public void PlayPlaylist(string playlist, params int[] layers)
     {
         if (m_CurrentPlaylist?.Name == playlist)
         {
             Debug.LogWarning($"Playlist {playlist} already playing");
             return;
         }
-        Array.Find(Playlists, x => x.Name == playlist);
         var nextPlaylist = Array.Find(Playlists, x => x.Name == playlist);
+
+        if (nextPlaylist == null)
+        {
+            Debug.LogWarning($"Playlist {playlist} not found");
+            return;
+        }
+
+        if(m_CurrentPlaylist != null)
+        {
+            StopPlaying();
+           
+        }
         m_CurrentPlaylist = nextPlaylist;
         m_ClipIndex = -1;
-        NextTrack();
+        NextTrack(layers);
 
     }
+
+    void PlayNextCrossfaded()
+    {
+        m_ClipIndex = m_CurrentPlaylist.GetTrack(m_ClipIndex);
+        m_Next = InitializeNextItem(m_CurrentPlaylist.MusicTracks[m_ClipIndex]);
+        if (m_Next.item == null)
+        {
+            return;
+        }
+        m_Next.item.SetVolumePercent(0);
+
+        var layersFromName = GetLayersFromName(m_CurrentPlaylist.MusicTracks[m_ClipIndex]);
+        if (layersFromName != null)
+        {
+            m_Next.item.Play(layersFromName);
+        }
+        else
+        {
+            m_Next.item.Play(m_Current.item.CurrentLayers);
+        }
+
+       
+       
+    }
+    const string mainSeparator = ";";
+    const string layerSeparator = "_";
+    int[] GetLayersFromName(string _name)
+    {
+        if (_name.Contains(mainSeparator))
+        {
+            var split = _name.Split(mainSeparator);
+           
+            var layerString = split[1].Split(layerSeparator);
+            int[] layers = new int[layerString.Length];
+            for (int i = 0; i < layerString.Length; i++)
+            {
+                if (int.TryParse(layerString[i], out var layer))
+                {
+                    layers[i] = layer;
+                }
+                else
+                {
+                    Debug.LogWarning($"Music {_name} has invalid layers");
+                }
+
+            }
+            return layers;
+        }
+        return null;
+    }
+
+    public void NextTrack(params int [] layers)
+    {
+        m_ClipIndex = m_CurrentPlaylist.GetTrack(m_ClipIndex);
+        PlayMusic(m_CurrentPlaylist.MusicTracks[m_ClipIndex], layers);
+    }
+
+    void RemoveTrack(ref (LayeredTrack track, MusicItemLayered item) trackData)
+    {
+        trackData.item.StopAndShutDown();
+        trackData.item.gameObject.name = $"MusicItem";
+        trackData.item.transform.SetParent(transform);
+        m_ItemQueue.Enqueue(trackData.item);
+        trackData = default;
+    }
+
 
     private LayeredTrack GetTrack(string name) {
-        return Array.Find(Tracks, x => x.Name == name);      
+        return Array.Find(Tracks, x => x.Name == name.Split(mainSeparator)[0]);      
     }
 
-
-    void RemoveCurrentTrack()
+    public void StopPlaying()
     {
 
-        m_Playing[m_CurrentTrack.Name].Stop();
-        var item = m_Playing[m_CurrentTrack.Name];
-        m_Playing.Remove(m_CurrentTrack.Name);
-        item.StopAndShutDown();
-        item.gameObject.name = $"MusicItem_{Array.FindIndex(m_ClipPool, x => x == item)}";
-        PoolQueue.Enqueue(item);
-        item.transform.SetParent(transform);
+        RemoveCoroutine(CurrentTracker);
+        if (m_Current.track != null)
+        {
+            RemoveTrack(ref m_Current);
+        }
+        if (m_Next.track != null)
+        {
+            RemoveTrack(ref m_Next);
+        }
+        m_CurrentPlaylist = default;
+       
     }
-
-
-
-    public void NextTrack()
-    {
-        var trackInfo = m_CurrentPlaylist.GetTrack(m_ClipIndex);
-        m_ClipIndex = trackInfo.trackIndex;
-        PlayMusic(trackInfo.name);
-    }
-
 
 
     IEnumerator Tracker(float length, float fadeTime)
     {
-
         if (fadeTime > 0)
         {
-
             yield return new WaitForSecondsRealtime(length - fadeTime / 2f);
-      
+
 
             bool isCrossfading = true;
 
             float timer = 0;
 
-          
             PlayNextCrossfaded();
          
             while (isCrossfading)
@@ -202,20 +285,21 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                 if (timer <= fadeTime)
                 {
                     float t = timer / fadeTime;
-                    m_Playing[m_CurrentTrack.Name].SetVolumePercent(1-t);
-                    m_Playing[m_NextTrack.Name].SetVolumePercent(t);
+                    m_Current.item.SetVolumePercent(1-t);
+                    m_Next.item.SetVolumePercent(t);
 
                     yield return new WaitForSeconds(DeltaTime);
                 }
                 else
                 {
-                    m_Playing[m_CurrentTrack.Name].SetVolumePercent(0);
-                    m_Playing[m_NextTrack.Name].SetVolumePercent(1);
-                    RemoveCurrentTrack();
-                    m_CurrentTrack = m_NextTrack;
+                    m_Current.item.SetVolumePercent(0);
+                    m_Next.item.SetVolumePercent(1);
+                    RemoveTrack(ref m_Current);
+                    m_Current = m_Next;
+                    m_Next = default;
                     isCrossfading = false;
                     RemoveCoroutine(CurrentTracker);
-                    StartCoroutine(CurrentTracker = Tracker(m_CurrentTrack.Length - timer, m_CurrentPlaylist.CrossfadeTime));
+                    StartCoroutine(CurrentTracker = Tracker(m_Current.track.Length - timer, m_CurrentPlaylist.CrossfadeTime));
                 }
                 timer += DeltaTime;
             }

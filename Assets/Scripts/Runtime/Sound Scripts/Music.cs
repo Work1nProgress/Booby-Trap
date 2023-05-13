@@ -80,7 +80,7 @@ public class MusicPlaylist
     public bool Randomize;
     public string[] MusicTracks;
 
-    public (string name, int trackIndex) GetTrack(int currentIndex = -1)
+    public int GetTrack(int currentIndex = -1)
     {
 
         if (Randomize)
@@ -104,9 +104,7 @@ public class MusicPlaylist
             }
 
             var trackIndex = Random.Range(0, candidates.Length);
-
-            Debug.Log($"play randomized {MusicTracks[candidates[trackIndex]]}");
-            return (MusicTracks[candidates[trackIndex]], trackIndex);
+            return trackIndex;
 
         }
         else
@@ -116,8 +114,7 @@ public class MusicPlaylist
             {
                 currentIndex = 0;
             }
-//            Debug.Log($"play next {MusicTracks[currentIndex]}");
-            return (MusicTracks[currentIndex], currentIndex);
+            return currentIndex;
 
         }
     }

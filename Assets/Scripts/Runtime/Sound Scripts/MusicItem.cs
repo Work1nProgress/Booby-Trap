@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class MusicItem : PoolObject
 {
+    [SerializeField]
     AudioSource m_AudioSource;
     public float Length => m_AudioSource.clip.length;
     public float Time => m_AudioSource.time;
-    public float TimeSamples => m_AudioSource.timeSamples;
+    public int TimeSamples => m_AudioSource.timeSamples;
     public bool IsPlaying => m_AudioSource.isPlaying;
 
-    public MusicItem Init(AudioSource audioSource)
-    {
-        m_AudioSource = audioSource;
-        return this;
-    }
+   
 
 
     public void Play()
@@ -24,10 +21,10 @@ public class MusicItem : PoolObject
     }
 
 
-    public virtual void Set(MusicTrack track)
+    public virtual void Set(MusicTrack track, float volume)
     {
         m_AudioSource.clip = track.Music;
-        m_AudioSource.volume = track.Volume;
+        m_AudioSource.volume = volume;
     }
 
     public virtual void SetVolume(float volume)
@@ -38,6 +35,7 @@ public class MusicItem : PoolObject
     public void SetTime(float time)
     {
         m_AudioSource.time = time;
+        
     }
 
     public void Stop()

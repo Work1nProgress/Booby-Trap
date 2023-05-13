@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class MusicItemLayered : MonoBehaviour
 {
 
@@ -12,8 +12,8 @@ public class MusicItemLayered : MonoBehaviour
 
 
 
-    int m_CurrentLayers;
-    public int CurrentLayers => m_CurrentLayers;
+    bool[] m_CurrentLayers;
+    public bool[] CurrentLayers => m_CurrentLayers;
 
 
 
@@ -32,6 +32,7 @@ public class MusicItemLayered : MonoBehaviour
         }
     }
 
+  
 
 
 
@@ -46,6 +47,7 @@ public class MusicItemLayered : MonoBehaviour
         for (int i = m_SubItems.Length - 1; i >= 0; i--)
         {
             m_SubItems[i].Stop();
+            m_CurrentLayers[i] = false;
             PoolManager.Despawn(m_SubItems[i]);
         }
     }
@@ -54,13 +56,21 @@ public class MusicItemLayered : MonoBehaviour
     public void Set(LayeredTrack track)
     {
 
-        m_CurrentLayers = 0;
+        if (m_CurrentLayers != null && m_CurrentLayers.Length == track.LayerCount)
+        {
+            System.Array.Fill(m_CurrentLayers, false);
+        }
+        else
+        {
+            m_CurrentLayers = new bool[track.LayerCount];
+        }
         m_Track = track;
         m_SubItems = new MusicItem[m_Track.LayerCount];
 
             for (int i = 0; i < m_Track.LayerCount; i++)
             {
                 m_SubItems[i] = PoolManager.Spawn<MusicItem>("MusicItem", transform);
+                m_SubItems[i].Set(m_Track.Tracks[i], m_Track.Volume * m_Track.Tracks[i].Volume);
                 m_SubItems[i].gameObject.SetActive(false);
             }
         
@@ -69,28 +79,37 @@ public class MusicItemLayered : MonoBehaviour
 
     public void SetVolumePercent(float percent)
     {
-        for (int i = 0; i < m_SubItems[i].Length; i++)
+        for (int i = 0; i < m_SubItems.Length; i++)
         {
-            m_SubItems[i].SetVolume(m_Track.Tracks[i].Volume * percent);
+            m_SubItems[i].SetVolume(m_Track.Volume * m_Track.Tracks[i].Volume * percent);
 
         }
+    }
+
+    public void Play(bool[] flags)
+    {
+        var trueFlags = System.Array.FindAll(flags, x => x);
+        var layers = new int[trueFlags.Length];
+        int currentIndex = 0;
+        for (int i = 0; i < flags.Length; i++)
+        {
+            if (flags[i])
+            {
+                layers[currentIndex] = i;
+                currentIndex++;
+            }
+        }
+        Play(layers);
     }
 
 
     public void Play(params int[] layers)
     {
-
-        
-
-        int m_flags = Utils.AddFlags(m_CurrentLayers, layers);
-        if (m_CurrentLayers == m_flags)
+        if (layers.Length == 0)
         {
-            Debug.Log($"already playing same layers");
-            return;
+            layers = new int[]{0};
         }
-        m_CurrentLayers = m_flags;
-        var flagList = Utils.FlagsToList(m_CurrentLayers);
-        foreach (var layer in flagList)
+        foreach (var layer in layers)
         {
             if (!IsLayerValid(layer))
             {
@@ -98,37 +117,34 @@ public class MusicItemLayered : MonoBehaviour
             }
             if (!m_SubItems[layer].IsPlaying)
             {
+                m_SubItems[layer].gameObject.SetActive(true);
                 m_SubItems[layer].SetTime(GetCurrentTime);
                 m_SubItems[layer].Play();
+                m_CurrentLayers[layer] = true;
             }
-        }
+        }     
     }
 
     public void Stop(params int[] layers)
     {
-        m_CurrentLayers = Utils.RemoveFlags(m_CurrentLayers, layers);
         foreach (var layer in layers)
         {
             if (!IsLayerValid(layer))
             {
                 continue;
             }
+
             if (m_SubItems[layer].IsPlaying)
             {
                 m_SubItems[layer].Stop();
+                m_SubItems[layer].gameObject.SetActive(false);
+                m_CurrentLayers[layer] = false;
             }
-        }
-      
+        }   
     }
 
     bool IsLayerValid(int layer)
     {
         return layer >= 0 && layer < m_SubItems.Length;
     }
-
-
-
-
-
-
 }
