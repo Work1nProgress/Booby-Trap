@@ -222,6 +222,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                     Debug.LogWarning($"Music {_name} has invalid layers");
                 }
 
+
             }
             return layers;
         }
