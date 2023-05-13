@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,15 +19,19 @@ public static class Utils
         int maxValue = Mathf.FloorToInt(Mathf.Log(flags, 2));
         for (int i = 0; i <= maxValue; i++)
         {
-            bool hasI = (flags & (int)Mathf.Pow(2,i)) != 0;
-            if (hasI)
+            if ((flags & (int)Mathf.Pow(2, i)) != 0)
             {
                 results.Add(i);
             }
-
         }
-
         return results;
+    }
+
+    public static string FlagsToString(int flags)
+    {
+
+        return Convert.ToString(flags, 2);
+      
     }
 
     public static int AddFlags(int flags, params int[] toAdd)

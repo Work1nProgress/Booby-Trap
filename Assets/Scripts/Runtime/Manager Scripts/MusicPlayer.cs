@@ -9,31 +9,29 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
 {
 
     [SerializeField]
-    AudioMixerGroup Mixer;
+    public AudioMixerGroup Mixer;
 
     [SerializeField]
     MusicPlaylist[] Playlists;
 
-    [SerializeField]
-    LayeredMusic[] LayeredTracks;
 
     [SerializeField]
-    MusicTrack[] Tracks;
+    LayeredTrack[] Tracks;
 
 
     int m_ClipIndex;
 
 
     MusicPlaylist m_CurrentPlaylist;
-    MusicTrack m_CurrentTrack, m_NextTrack;
+    LayeredTrack m_CurrentTrack, m_NextTrack;
 
 
 
 
 
-    MusicItem[] m_ClipPool;
-    Queue<MusicItem> PoolQueue;
-    Dictionary<string, MusicItem> m_Playing;
+    MusicItemLayered[] m_ClipPool;
+    Queue<MusicItemLayered> PoolQueue;
+    Dictionary<string, MusicItemLayered> m_Playing;
 
     IEnumerator CurrentTracker;
 
@@ -47,7 +45,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         base.Awake();
 
         int maxLayers = 1;
-        foreach (var layered in LayeredTracks)
+        foreach (var layered in Tracks)
         {
             if (layered.LayerCount > maxLayers)
             {
@@ -65,18 +63,13 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         }
 
 
-        m_ClipPool = new MusicItem[maxLayers];
-        PoolQueue = new Queue<MusicItem>();
-        m_Playing = new Dictionary<string, MusicItem>();
+        m_ClipPool = new MusicItemLayered[maxLayers];
+        PoolQueue = new Queue<MusicItemLayered>();
+        m_Playing = new Dictionary<string, MusicItemLayered>();
 
         for (int i = 0; i < maxLayers; i++)
         {
-            var audioSource = new GameObject().AddComponent<AudioSource>();
-            audioSource.spatialBlend = 0;
-            audioSource.gameObject.name = $"MusicItem_{i}";
-            audioSource.outputAudioMixerGroup = Mixer;
-            audioSource.playOnAwake = false;
-            m_ClipPool[i] = audioSource.gameObject.AddComponent<MusicItem>().Init(audioSource);
+            m_ClipPool[i] = new GameObject().AddComponent<MusicItemLayered>().Init();
             m_ClipPool[i].transform.SetParent(transform,false);
             m_ClipPool[i].gameObject.SetActive(false);
             PoolQueue.Enqueue(m_ClipPool[i]);
@@ -103,10 +96,10 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         }
         var itemNew = CreateNewItem(musicName);
         m_CurrentTrack = itemNew.track;
-        itemNew.item.Play();
+        itemNew.item.Play(1);
 
         RemoveCoroutine(CurrentTracker);
-        StartCoroutine(CurrentTracker = Tracker(itemNew.item.Length, m_CurrentPlaylist.CrossfadeTime));
+        StartCoroutine(CurrentTracker = Tracker(m_CurrentTrack.Length, m_CurrentPlaylist.CrossfadeTime));
     }
 
     void PlayNextCrossfaded()
@@ -116,16 +109,15 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         m_ClipIndex = trackInfo.trackIndex;
         var itemNew = CreateNewItem(trackInfo.name);
         m_NextTrack = itemNew.track;
-        itemNew.item.SetVolume(0);
+        itemNew.item.SetVolumePercent(0);
         itemNew.item.Play();
        
     }
 
 
-    (MusicItem item, MusicTrack track) CreateNewItem(string musicName)
+    (MusicItemLayered item, LayeredTrack track) CreateNewItem(string musicName)
     {
         var itemNew = PoolQueue.Dequeue();
-        itemNew.Spawn();
         itemNew.gameObject.SetActive(true);
 
         var track = GetTrack(musicName);
@@ -138,7 +130,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
 
         m_Playing.Add(musicName, itemNew);
         itemNew.gameObject.name = $"Music_{musicName}";
-        itemNew.Set(track.Music, track.Volume);
+        itemNew.Set(track);
         return (itemNew, track);
     }
 
@@ -159,7 +151,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
 
     }
 
-    private MusicTrack GetTrack(string name) {
+    private LayeredTrack GetTrack(string name) {
         return Array.Find(Tracks, x => x.Name == name);      
     }
 
@@ -170,8 +162,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         m_Playing[m_CurrentTrack.Name].Stop();
         var item = m_Playing[m_CurrentTrack.Name];
         m_Playing.Remove(m_CurrentTrack.Name);
-        item.Stop();
-        item.Despawn();
+        item.StopAndShutDown();
         item.gameObject.name = $"MusicItem_{Array.FindIndex(m_ClipPool, x => x == item)}";
         PoolQueue.Enqueue(item);
         item.transform.SetParent(transform);
@@ -211,27 +202,27 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                 if (timer <= fadeTime)
                 {
                     float t = timer / fadeTime;
-                    m_Playing[m_CurrentTrack.Name].SetVolume((1-t) * m_CurrentTrack.Volume);
-                    m_Playing[m_NextTrack.Name].SetVolume(t * m_NextTrack.Volume);
+                    m_Playing[m_CurrentTrack.Name].SetVolumePercent(1-t);
+                    m_Playing[m_NextTrack.Name].SetVolumePercent(t);
 
-                    yield return new WaitForSecondsRealtime(DeltaTime);
+                    yield return new WaitForSeconds(DeltaTime);
                 }
                 else
                 {
-                    m_Playing[m_CurrentTrack.Name].SetVolume(0);
-                    m_Playing[m_NextTrack.Name].SetVolume(m_NextTrack.Volume);
+                    m_Playing[m_CurrentTrack.Name].SetVolumePercent(0);
+                    m_Playing[m_NextTrack.Name].SetVolumePercent(1);
                     RemoveCurrentTrack();
                     m_CurrentTrack = m_NextTrack;
                     isCrossfading = false;
                     RemoveCoroutine(CurrentTracker);
-                    StartCoroutine(CurrentTracker = Tracker(m_CurrentTrack.Music.length - timer, m_CurrentPlaylist.CrossfadeTime));
+                    StartCoroutine(CurrentTracker = Tracker(m_CurrentTrack.Length - timer, m_CurrentPlaylist.CrossfadeTime));
                 }
                 timer += DeltaTime;
             }
         }
         else
         {
-            yield return new WaitForSecondsRealtime(length);
+            yield return new WaitForSeconds(length);
             NextTrack();
         }
     }

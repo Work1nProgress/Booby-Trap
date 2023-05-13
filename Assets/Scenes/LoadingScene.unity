@@ -283,10 +283,10 @@ MonoBehaviour:
   Tracks:
   - Name: perc1
     Volume: 1
-    m_AudioClip: {fileID: 8300000, guid: 320fe56a7dd17495da1809864360eb25, type: 3}
+    m_AudioClip: {fileID: 8300000, guid: 36fcd3ccedbbc481e87af796ac2f5a47, type: 3}
   - Name: perc2
     Volume: 1
-    m_AudioClip: {fileID: 8300000, guid: fd787dde6d24f494faedfe2c0cffcad6, type: 3}
+    m_AudioClip: {fileID: 8300000, guid: adc623b0ab5774cc58548c11e9e87b1f, type: 3}
   DeltaTime: 0.05
 --- !u!4 &1117735702
 Transform:
