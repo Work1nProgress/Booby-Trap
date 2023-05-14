@@ -33,7 +33,39 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     float DeltaTime;
 
 
+    PlayState m_State;
 
+
+    string m_QueuedTrack;
+    int[] m_QueuedLayers;
+
+    int[] m_PlaylistCurrentLayers;
+
+    bool m_LoopSingle;
+    float m_CrossfadeTimeSingle;
+    float m_CurrentFadePercent;
+    float m_PreviousFadePercent = 1;
+
+    float GetPlaylistCrossfade
+    {
+        get
+        {
+            if (m_CurrentPlaylist == null)
+            {
+                return 0f;
+            }
+            else
+            {
+                return m_CurrentPlaylist.Crossfade ? m_CurrentPlaylist.CrossfadeTime : 0f;
+            }
+        }
+
+    }
+
+
+
+
+    #region Initialization
     protected override void Awake()
     {
         base.Awake();
@@ -42,6 +74,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         {
             m_ItemQueue.Enqueue(CreateLayeredMusicItem());
         }
+        m_State = PlayState.None;
 
     }
 
@@ -56,7 +89,6 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     (LayeredTrack track, MusicItemLayered item) InitializeNextItem(string musicName)
     {
 
-        Debug.Log(musicName);
         var item = m_ItemQueue.Dequeue();
         item.gameObject.SetActive(true);
 
@@ -73,48 +105,77 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         return (track, item);
     }
 
+    #endregion
 
 
-    public void PlayMusic(string musicName, params int[] layers)
+
+#region Public Methods
+    public void PlayMusic(string musicName, float fadeIn = 0, bool loop = false, float crossFade= 0, params int[] layers)
     {
-       
-        int[] defaultLayers = new int[] { 0 };
-        if (layers.Length > 0)
-        {
-            defaultLayers = layers;
-        }
+        m_QueuedTrack = musicName;
+        m_QueuedLayers = layers;
+        m_LoopSingle = loop;
+        m_CrossfadeTimeSingle = crossFade;
+        NextSong(fadeIn);
 
-        Debug.Log($"play music {musicName}");
-        var layersFromName = GetLayersFromName(musicName);
-        if (layersFromName != null)
-        {
-            defaultLayers = layersFromName;
-        }
+    }
 
-        if (m_CurrentPlaylist?.Name == musicName)
+    public void PlayPlaylist(string playlist, float fadeIn = 0, params int[] layers)
+    {
+        if (m_CurrentPlaylist?.Name == playlist)
         {
-
-            Debug.LogWarning($"Music {musicName} already playing");
+            Debug.LogWarning($"Playlist {playlist} already playing");
             return;
         }
-        float crossfade = 0;
-        if (m_CurrentPlaylist != null)
+        var nextPlaylist = Array.Find(Playlists, x => x.Name == playlist);
+
+        if (nextPlaylist == null)
         {
-            crossfade = m_CurrentPlaylist.CrossfadeTime;
+            Debug.LogWarning($"Playlist {playlist} not found");
+            return;
         }
 
-        if (m_Current.track != null)
-        {
-            RemoveTrack(ref m_Current);
-        }
-        m_Current= InitializeNextItem(musicName);
 
-        m_Current.item.Play(defaultLayers);
+        m_QueuedLayers = layers;
+        m_CurrentPlaylist = nextPlaylist;
+
+        m_ClipIndex = m_CurrentPlaylist.GetTrack(-1);
+        m_QueuedTrack = m_CurrentPlaylist.MusicTracks[m_ClipIndex];
+
+        NextSong(fadeIn);
+    }
+
+    public void StopPlaying(float fadeOut = 0)
+    {
+
+
+
+        m_CurrentPlaylist = null;
+        if (m_State == PlayState.None)
+        {
+            return;
+        }
 
         RemoveCoroutine(CurrentTracker);
-        Debug.Log($"start tracker for music {musicName}");
-        StartCoroutine(CurrentTracker = Tracker(m_Current.track.Length, crossfade));
+        if (fadeOut > 0)
+        {
+            StartCoroutine(CurrentTracker = FadeOutCoroutine(fadeOut));
+        }
+        else
+        {
+
+            RemoveTrack(ref m_Current);
+
+            if (m_Next.item != null)
+            {
+                RemoveTrack(ref m_Next);
+            }
+            m_State = PlayState.None;
+        }
+
     }
+
+
 
     public void AddLayers(string playlistName, params int[] layers)
     {
@@ -152,55 +213,49 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         }
     }
 
-    public void PlayPlaylist(string playlist, params int[] layers)
+
+
+    #endregion
+
+    void PlayTrack(string trackName, ref (LayeredTrack track, MusicItemLayered item) trackData, float volume = 1f)
     {
-        if (m_CurrentPlaylist?.Name == playlist)
-        {
-            Debug.LogWarning($"Playlist {playlist} already playing");
-            return;
-        }
-        var nextPlaylist = Array.Find(Playlists, x => x.Name == playlist);
 
-        if (nextPlaylist == null)
+        if (m_CurrentPlaylist?.Name == trackName)
         {
-            Debug.LogWarning($"Playlist {playlist} not found");
+
+            Debug.LogWarning($"Music {trackName} already playing");
             return;
         }
 
-        if(m_CurrentPlaylist != null)
+        trackData = InitializeNextItem(trackName);
+        trackData.item.SetVolumePercent(volume);
+        if (m_CurrentPlaylist == null)
         {
-            StopPlaying();
-           
-        }
-        m_CurrentPlaylist = nextPlaylist;
-        m_ClipIndex = -1;
-        NextTrack(layers);
-
-    }
-
-    void PlayNextCrossfaded()
-    {
-        m_ClipIndex = m_CurrentPlaylist.GetTrack(m_ClipIndex);
-        m_Next = InitializeNextItem(m_CurrentPlaylist.MusicTracks[m_ClipIndex]);
-        if (m_Next.item == null)
-        {
-            return;
-        }
-        m_Next.item.SetVolumePercent(0);
-
-        var layersFromName = GetLayersFromName(m_CurrentPlaylist.MusicTracks[m_ClipIndex]);
-        if (layersFromName != null)
-        {
-            m_Next.item.Play(layersFromName);
+            trackData.item.Play(m_QueuedLayers);
         }
         else
         {
-            m_Next.item.Play(m_Current.item.CurrentLayers);
-        }
+            if (m_QueuedLayers != null)
+            {
+                trackData.item.Play(m_QueuedLayers);
+            }
+            else
+            {
+                var layersFromName = GetLayersFromName(m_QueuedTrack);
+                if (layersFromName != null)
+                {
+                    trackData.item.Play(layersFromName);
+                }
+                else
+                {
+                    trackData.item.Play(m_PlaylistCurrentLayers);
+                }
 
-       
+            }
+        }
        
     }
+
     const string mainSeparator = ";";
     const string layerSeparator = "_";
     int[] GetLayersFromName(string _name)
@@ -229,11 +284,6 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         return null;
     }
 
-    public void NextTrack(params int [] layers)
-    {
-        m_ClipIndex = m_CurrentPlaylist.GetTrack(m_ClipIndex);
-        PlayMusic(m_CurrentPlaylist.MusicTracks[m_ClipIndex], layers);
-    }
 
     void RemoveTrack(ref (LayeredTrack track, MusicItemLayered item) trackData)
     {
@@ -244,72 +294,246 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         trackData = default;
     }
 
+    
+
 
     private LayeredTrack GetTrack(string name) {
         return Array.Find(Tracks, x => x.Name == name.Split(mainSeparator)[0]);      
     }
 
-    public void StopPlaying()
+
+    void NextSong(float fadeTime)
     {
 
-        RemoveCoroutine(CurrentTracker);
-        if (m_Current.track != null)
+        switch (m_State)
         {
-            RemoveTrack(ref m_Current);
-        }
-        if (m_Next.track != null)
-        {
-            RemoveTrack(ref m_Next);
-        }
-        m_CurrentPlaylist = default;
-       
-    }
+            case PlayState.None:
 
-
-    IEnumerator Tracker(float length, float fadeTime)
-    {
-        if (fadeTime > 0)
-        {
-            yield return new WaitForSecondsRealtime(length - fadeTime / 2f);
-
-
-            bool isCrossfading = true;
-
-            float timer = 0;
-
-            PlayNextCrossfaded();
-         
-            while (isCrossfading)
-            {
-                
-
-                if (timer <= fadeTime)
+                m_PreviousFadePercent = 1;
+                if (fadeTime > 0)
                 {
-                    float t = timer / fadeTime;
-                    m_Current.item.SetVolumePercent(1-t);
-                    m_Next.item.SetVolumePercent(t);
-
-                    yield return new WaitForSeconds(DeltaTime);
+                    PlayTrack(m_QueuedTrack, ref m_Current, 0);
+                    StartCoroutine(CurrentTracker = FadeInCoroutine(fadeTime));
                 }
                 else
                 {
-                    m_Current.item.SetVolumePercent(0);
-                    m_Next.item.SetVolumePercent(1);
-                    RemoveTrack(ref m_Current);
-                    m_Current = m_Next;
-                    m_Next = default;
-                    isCrossfading = false;
-                    RemoveCoroutine(CurrentTracker);
-                    StartCoroutine(CurrentTracker = Tracker(m_Current.track.Length - timer, m_CurrentPlaylist.CrossfadeTime));
+                    PlayTrack(m_QueuedTrack, ref m_Current);
+                    m_State = PlayState.Playing;
+                    if (m_CurrentPlaylist == null)
+                    {
+                        StartCoroutine(CurrentTracker = PlayingCoroutine(m_CrossfadeTimeSingle));
+                    }
+                    else
+                    {
+                        m_QueuedLayers = null;
+                        StartCoroutine(CurrentTracker = PlayingCoroutine(GetPlaylistCrossfade));
+                    }
                 }
-                timer += DeltaTime;
-            }
+                break;
+
+            case PlayState.FadeIn:
+            case PlayState.CrossFade:
+            case PlayState.Playing:
+            case PlayState.FadeOut:
+                RemoveCoroutine(CurrentTracker);
+                if (m_State == PlayState.CrossFade)
+                {
+                    if (m_Next.item != null)
+                    {
+                        CleanUpAfterCrossfade();
+                    }
+                }
+                if (fadeTime > 0)
+                {
+                    PlayTrack(m_QueuedTrack, ref m_Next, 0);
+                    StartCoroutine(CurrentTracker = CrossFadeCoroutine(fadeTime));
+                }
+                else
+                {
+
+                    if (m_State != PlayState.FadeOut)
+                    {
+                        m_PlaylistCurrentLayers = m_Current.item.CurrentLayers;
+                    }
+
+                    PlayTrack(m_QueuedTrack, ref m_Next);
+                    CleanUpAfterCrossfade();
+                    if (m_CurrentPlaylist == null)
+                    {
+                        StartCoroutine(CurrentTracker = PlayingCoroutine(m_CrossfadeTimeSingle));
+                    }
+                    else
+                    {
+                        m_QueuedLayers = null;
+                        StartCoroutine(CurrentTracker = PlayingCoroutine(GetPlaylistCrossfade));
+                    }
+                }
+
+                
+                break;
         }
-        else
+
+    }
+
+    void OnCoroutineEnd(PlayState state)
+    {
+        switch (state)
         {
-            yield return new WaitForSeconds(length);
-            NextTrack();
+            case PlayState.None:
+                break;
+
+            case PlayState.FadeInComplete:
+            case PlayState.CrossFadeComplete:
+                RemoveCoroutine(CurrentTracker);
+                if (m_CurrentPlaylist == null)
+                {
+                    StartCoroutine(CurrentTracker = PlayingCoroutine(m_CrossfadeTimeSingle));
+                }
+                else
+                {
+                    m_QueuedLayers = null;
+                    StartCoroutine(CurrentTracker = PlayingCoroutine(GetPlaylistCrossfade));
+                }
+
+                break;
+            case PlayState.PlayingComplete:
+                RemoveCoroutine(CurrentTracker);
+                if (m_CurrentPlaylist == null)
+                {
+                    if (m_LoopSingle)
+                    {
+                        PlayTrack(m_QueuedTrack, ref m_Next);
+                      
+                        StartCoroutine(CurrentTracker = CrossFadeCoroutine(m_CrossfadeTimeSingle));
+                    }
+
+                }
+                else
+                {
+
+                    m_ClipIndex = m_CurrentPlaylist.GetTrack(m_ClipIndex);
+                    m_QueuedTrack = m_CurrentPlaylist.MusicTracks[m_ClipIndex];
+
+                    if (m_CurrentPlaylist.Crossfade)
+                    {
+
+                        PlayTrack(m_QueuedTrack, ref m_Next, 0);
+                        StartCoroutine(CurrentTracker = CrossFadeCoroutine(m_CurrentPlaylist.CrossfadeTime));
+                    }
+                    else
+                    {
+                        PlayTrack(m_QueuedTrack, ref m_Current);
+                        StartCoroutine(CurrentTracker = PlayingCoroutine(0));
+                    }
+                }
+                break;
         }
+    }
+
+
+
+
+    IEnumerator PlayingCoroutine(float shortenByTime)
+    {
+
+        yield return new WaitForSeconds(m_Current.track.Length - m_Current.item.GetCurrentTime - shortenByTime);
+        OnCoroutineEnd(PlayState.PlayingComplete);
+    }
+
+    IEnumerator FadeInCoroutine(float fadeInTime)
+    {
+        m_State = PlayState.FadeIn;
+        float timer = 0;
+        while (m_State == PlayState.FadeIn)
+        {
+            if (timer <= fadeInTime)
+            {
+                m_CurrentFadePercent = timer / fadeInTime;
+                m_Current.item.SetVolumePercent(m_CurrentFadePercent * m_PreviousFadePercent);
+
+                yield return new WaitForSeconds(DeltaTime);
+            }
+            else
+            {
+                m_CurrentFadePercent = 1;
+                m_Current.item.SetVolumePercent(1);
+                m_State = PlayState.Playing;
+            }
+            timer += DeltaTime;
+        }
+        OnCoroutineEnd(PlayState.FadeInComplete);
+    }
+
+    IEnumerator CrossFadeCoroutine(float crossFadeTime)
+    {
+        m_State = PlayState.CrossFade;
+        float timer = 0;
+        while (m_State == PlayState.CrossFade)
+        {
+            if (timer <= crossFadeTime)
+            {
+                m_CurrentFadePercent = timer / crossFadeTime;
+                m_Current.item.SetVolumePercent((1 - m_CurrentFadePercent) * m_PreviousFadePercent);
+                m_Next.item.SetVolumePercent(m_CurrentFadePercent);
+
+                yield return new WaitForSeconds(DeltaTime);
+            }
+            else
+            {
+                m_CurrentFadePercent = 1;
+                m_Current.item.SetVolumePercent(0);
+                m_Next.item.SetVolumePercent(1);
+                CleanUpAfterCrossfade();
+                m_State = PlayState.Playing;
+            }
+            timer += DeltaTime;
+        }
+        OnCoroutineEnd(PlayState.CrossFadeComplete);
+    }
+
+    IEnumerator FadeOutCoroutine(float fadeOutTime)
+    {
+        m_State = PlayState.FadeOut;
+        float timer = 0;
+        while (m_State == PlayState.FadeOut)
+        {
+            if (timer <= fadeOutTime)
+            {
+                m_CurrentFadePercent = timer / fadeOutTime;
+                if (m_Current.item != null)
+                {
+                    m_Current.item.SetVolumePercent((1 - m_CurrentFadePercent) * m_PreviousFadePercent);
+                }
+                if (m_Next.item != null)
+                {
+                    m_Next.item.SetVolumePercent((1 - m_CurrentFadePercent) * m_PreviousFadePercent);
+                }
+
+                yield return new WaitForSeconds(DeltaTime);
+            }
+            else
+            {
+                m_CurrentFadePercent = 1;
+                m_Current.item.SetVolumePercent(0);
+                
+                RemoveTrack(ref m_Current);
+
+                if (m_Next.item!=  null)
+                {
+                    RemoveTrack(ref m_Next);
+                }
+                m_State = PlayState.None;
+            }
+            timer += DeltaTime;
+        }
+        RemoveCoroutine(CurrentTracker);
+    }
+
+    void CleanUpAfterCrossfade()
+    {
+        RemoveTrack(ref m_Current);
+        m_Current = m_Next;
+        m_Next = default;
     }
 
   
@@ -318,8 +542,8 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     {
         if (enumerator != null)
         {
+            m_PreviousFadePercent = m_CurrentFadePercent;
             StopCoroutine(enumerator);
-            enumerator = null;
         }
     }
 
@@ -330,4 +554,16 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
    
 
 
+}
+
+public enum PlayState
+{
+    None,
+    FadeIn,
+    FadeInComplete,
+    Playing,
+    PlayingComplete,
+    CrossFade,
+    CrossFadeComplete,
+    FadeOut
 }

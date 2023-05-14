@@ -11,6 +11,6 @@ public class ControllerLoadingScene : MonoBehaviour
 
         //TODO load save file
 
-      //  ControllerGameFlow.Instance.LoadNewScene(mainMenuScene);
+        ControllerGameFlow.Instance.LoadNewScene(mainMenuScene);
     }
 }

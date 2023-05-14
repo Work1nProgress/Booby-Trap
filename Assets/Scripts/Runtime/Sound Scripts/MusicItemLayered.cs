@@ -13,11 +13,29 @@ public class MusicItemLayered : MonoBehaviour
 
 
     bool[] m_CurrentLayers;
-    public bool[] CurrentLayers => m_CurrentLayers;
+    public int[] CurrentLayers
+    {
+        get
+        {
+            var trueFlags = System.Array.FindAll(m_CurrentLayers, x => x);
+            var layers = new int[trueFlags.Length];
+            int currentIndex = 0;
+            for (int i = 0; i < m_CurrentLayers.Length; i++)
+            {
+                if (m_CurrentLayers[i])
+                {
+                    layers[currentIndex] = i;
+                    currentIndex++;
+                }
+            }
+            return layers;
+
+        }
+
+    }
 
 
-
-    float GetCurrentTime
+    public float GetCurrentTime
     {
         get
         {
@@ -86,26 +104,12 @@ public class MusicItemLayered : MonoBehaviour
         }
     }
 
-    public void Play(bool[] flags)
-    {
-        var trueFlags = System.Array.FindAll(flags, x => x);
-        var layers = new int[trueFlags.Length];
-        int currentIndex = 0;
-        for (int i = 0; i < flags.Length; i++)
-        {
-            if (flags[i])
-            {
-                layers[currentIndex] = i;
-                currentIndex++;
-            }
-        }
-        Play(layers);
-    }
+   
 
 
     public void Play(params int[] layers)
     {
-        if (layers.Length == 0)
+        if (layers == null || layers.Length == 0)
         {
             layers = new int[]{0};
         }
