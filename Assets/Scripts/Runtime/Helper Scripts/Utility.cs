@@ -1,56 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public static class Utils
-{
-
-    public static List<int> FlagsToList(int flags)
-    {
-
-        var results = new List<int>();
-        if (flags == 0)
-        {
-            return results;
-        }
-        int maxValue = Mathf.FloorToInt(Mathf.Log(flags, 2));
-        for (int i = 0; i <= maxValue; i++)
-        {
-            bool hasI = (flags & (int)Mathf.Pow(2,i)) != 0;
-            if (hasI)
-            {
-                results.Add(i);
-            }
-
-        }
-
-        return results;
-    }
-
-    public static int AddFlags(int flags, params int[] toAdd)
-    {
-        foreach (var flag in toAdd)
-        {
-            flags |= 1 << flag;
-        }
-        return flags;
-
-    }
-
-    public static int RemoveFlags(int flags, params int[] toRemove)
-    {
-        foreach (var flag in toRemove)
-        {
-            flags &= ~ (flag+1);
-        }
-        return flags;
-
-    }
-
-
-}
 
 public class CountdownTimer
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PoolManager : LocalSingleton<PoolManager>
+public class PoolManager : GenericSingleton<PoolManager>
 {
     private static Dictionary<string,Pool> _poolDictionary;
 
@@ -11,8 +11,9 @@ public class PoolManager : LocalSingleton<PoolManager>
     List<PoolDefinition> pooledObjects;
 
     
-    public void Init()
+    protected override void Awake()
     {
+        base.Awake();
         _poolDictionary = new Dictionary<string, Pool>();
         foreach (var poolDeifinition in pooledObjects)
         {

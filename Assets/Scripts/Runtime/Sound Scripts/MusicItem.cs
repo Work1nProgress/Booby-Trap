@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicItem : MonoBehaviour
+public class MusicItem : PoolObject
 {
+    [SerializeField]
     AudioSource m_AudioSource;
-    public bool IsPlaying;
     public float Length => m_AudioSource.clip.length;
     public float Time => m_AudioSource.time;
-    public float TimeSamples => m_AudioSource.timeSamples;
+    public int TimeSamples => m_AudioSource.timeSamples;
+    public bool IsPlaying => m_AudioSource.isPlaying;
 
-    public MusicItem Init(AudioSource audioSource)
-    {
-        m_AudioSource = audioSource;
-        return this;
-    }
+   
 
 
     public void Play()
@@ -24,41 +21,26 @@ public class MusicItem : MonoBehaviour
     }
 
 
-    public void Set(AudioClip clip, float volume, float time = 0)
+    public virtual void Set(MusicTrack track, float volume)
     {
-        m_AudioSource.clip = clip;
+        m_AudioSource.clip = track.Music;
         m_AudioSource.volume = volume;
-        m_AudioSource.time = time;
     }
 
     public virtual void SetVolume(float volume)
     {
-
         m_AudioSource.volume = volume;
     }
 
-    public void SetAndPlay(AudioClip clip, float volume, float time = 0)
+    public void SetTime(float time)
     {
-        Set(clip, volume, time);
-        m_AudioSource.Play();
+        m_AudioSource.time = time;
+        
     }
 
     public void Stop()
     {
         m_AudioSource.Stop();
 
-    }
-
-
-
-    public void Despawn()
-    {
-        IsPlaying = false;
-    }
-
-    public void Spawn()
-    {
-        transform.parent = null;
-        IsPlaying = true;
     }
 }

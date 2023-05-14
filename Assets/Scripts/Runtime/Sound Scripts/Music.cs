@@ -7,7 +7,6 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class MusicTrack
 {
-    public string Name;
     [Range(0, 1f)]
     public float Volume = 1f;
 
@@ -19,7 +18,7 @@ public class MusicTrack
 }
 
 [System.Serializable]
-public class LayeredMusic
+public class LayeredTrack
 {
     public string Name;
     [Range(0, 1f)]
@@ -27,6 +26,8 @@ public class LayeredMusic
 
     [SerializeField]
     MusicTrack[] Layers;
+
+    public MusicTrack[] Tracks => Layers;
 
     public int LayerCount =>Layers.Length;
 
@@ -39,6 +40,33 @@ public class LayeredMusic
         }
         return musicLayers;
     }
+
+    [System.NonSerialized]
+    float m_Length;
+    public float Length
+    {
+        get
+        {
+            if (m_Length > 0)
+            {
+                return m_Length;
+            }
+            else
+            {
+                for (int i = 0; i < Layers.Length; i++)
+                {
+                    if (Layers[i].Music.length > m_Length)
+                    {
+                        m_Length = Layers[i].Music.length;
+                    }
+                }
+                return m_Length;
+            }
+
+        }
+
+    }
+
 }
 
 
@@ -52,7 +80,7 @@ public class MusicPlaylist
     public bool Randomize;
     public string[] MusicTracks;
 
-    public (string name, int trackIndex) GetTrack(int currentIndex = -1)
+    public int GetTrack(int currentIndex = -1)
     {
 
         if (Randomize)
@@ -76,9 +104,7 @@ public class MusicPlaylist
             }
 
             var trackIndex = Random.Range(0, candidates.Length);
-
-            Debug.Log($"play randomized {MusicTracks[candidates[trackIndex]]}");
-            return (MusicTracks[candidates[trackIndex]], trackIndex);
+            return trackIndex;
 
         }
         else
@@ -88,8 +114,7 @@ public class MusicPlaylist
             {
                 currentIndex = 0;
             }
-//            Debug.Log($"play next {MusicTracks[currentIndex]}");
-            return (MusicTracks[currentIndex], currentIndex);
+            return currentIndex;
 
         }
     }
