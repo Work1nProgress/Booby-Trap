@@ -14,8 +14,20 @@ public class LayerTester : MonoBehaviour
 
     public void PlaylistAuto()
     {
-        MusicPlayer.Instance.PlayPlaylist("testPlaylistAuto");
+        MusicPlayer.Instance.PlayPlaylist("testPlaylistAuto", 1);
     }
+
+    public void SongNormal()
+    {
+        MusicPlayer.Instance.PlayMusic("Test Song", layers:new int[]{ 1,2,3});
+    }
+
+    public void SongLoop()
+    {
+        MusicPlayer.Instance.PlayMusic("Test Song",3, true, 5, 1,2,3);
+    }
+
+  
 
     public void PlaylistManual()
     {
@@ -30,7 +42,7 @@ public class LayerTester : MonoBehaviour
 
         if (startLayers.Count > 0)
         {
-            MusicPlayer.Instance.PlayPlaylist("testPlaylistManual", startLayers.ToArray());
+            MusicPlayer.Instance.PlayPlaylist("testPlaylistManual", layers:startLayers.ToArray());
         }
         else
         {
