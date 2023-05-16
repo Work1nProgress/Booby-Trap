@@ -3,24 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class EntityController : StateHandler
 {
+    private Rigidbody2D _rigidbody;
+    public Rigidbody2D Rigidbody => _rigidbody;
 
-}
+    [SerializeField] private float _movementSpeed;
+    public float MovementSpeed => _movementSpeed;
 
-[Serializable]
-public abstract class EntityBehavior
-{
-    [SerializeField] private ActionType _type;
-    public ActionType Type => _type;
-
-    public abstract void Execute();
-
-    public enum ActionType
+    private void Awake()
     {
-        ENTER,
-        EXIT,
-        UPDATE,
-        FIXED
+        _rigidbody = GetComponent<Rigidbody2D>();
+
+        Initialize(this);
     }
 }
+
