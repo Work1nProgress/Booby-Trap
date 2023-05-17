@@ -6,24 +6,24 @@ using UnityEngine;
 
 public class StateHandler : MonoBehaviour
 {
-    [SerializeField] private string _entryState;
-    [SerializeField] StatePair[] _entityStates;
+    [Header("State Handling")]
+    [SerializeField] private string _initialState;
+    [SerializeField] StateData[] _entityStates;
 
     private Dictionary<string, EntityState> _states;
     private EntityState _currentState;
-
     public void Initialize(EntityController controller)
     {
         _states = new Dictionary<string, EntityState>();
         
-        foreach (StatePair pair in _entityStates)
+        foreach (StateData data in _entityStates)
         {
-            EntityState state = Instantiate(pair.state);
-            state.Initialize(controller, pair.name);
+            EntityState state = Instantiate(data.state);
+            state.Initialize(controller, data);
             AddState(state);
         }
 
-        ChangeState(_entryState);
+        ChangeState(_initialState);
     }
     protected bool AddState(EntityState state) => _states.TryAdd(state.stateName, state);
     protected bool RemoveState(string stateName) => _states.Remove(stateName);
@@ -71,11 +71,17 @@ public class StateHandler : MonoBehaviour
     {
         _currentState.ClearEvents();
     }
+    
 }
 
 [Serializable]
-public struct StatePair
+public struct StateData
 {
-    public string name;
+    public string stateName;
+    public string nextState;
+    public string altState;
     public EntityState state;
+    public bool timedState;
+    public bool timerAltState;
+    public float stateTime;
 }

@@ -11,10 +11,10 @@ public class EntityState : ScriptableObject
     public delegate void ChangeStateSignature(string state);
     public event ChangeStateSignature OnChangeStateRequest;
 
-    [SerializeField] private string _nextState;
+    private string _nextState;
     public string nextState => _nextState;
 
-    [SerializeField] private string _altState;
+    private string _altState;
     public string altState => _altState;
 
     [SerializeField] private EntityBehavior[] _EnterStateBehaviors;
@@ -24,22 +24,27 @@ public class EntityState : ScriptableObject
 
     EntityController _controller;
 
-    [SerializeField] private bool _timedState = false;
-    [SerializeField] private float _stateTime;
+    private bool _timedState = false;
+    private float _stateTime;
     CountdownTimer _stateTimer;
 
-
-
-    public void Initialize(EntityController controller, string name)
+    public void Initialize(EntityController controller, StateData data)
     {
+        _nextState = data.nextState;
+        _altState = data.altState;
+        _timedState = data.timedState;
+        _stateTime = _timedState ? data.stateTime : 0;
+
         _stateTimer = _timedState ? 
             new CountdownTimer(
                 _stateTime, false, false,
+                data.timerAltState ?
+                () => ToAltState():
                 () => ToNextState())
             : null;
 
         _controller = controller;
-        _name = name;
+        _name = data.stateName;
     }
 
     #region State Executors
@@ -47,11 +52,20 @@ public class EntityState : ScriptableObject
     {
         foreach (EntityBehavior behavior in _EnterStateBehaviors)
             behavior.Execute(this, _controller);
+
+        if (_stateTimer != null)
+            _stateTimer.Resume();
     }
     public virtual void ExitState()
     {
         foreach (EntityBehavior behavior in _ExitStateBehaviors)
             behavior.Execute(this, _controller);
+
+        if(_stateTimer != null)
+        {
+            _stateTimer.Reset();
+            _stateTimer.Pause();
+        }
     }
     public virtual void UpdateState(float deltaTime)
     {
@@ -68,7 +82,7 @@ public class EntityState : ScriptableObject
     #region State Transitioners
     protected void ChangeState(string state)
     {
-        if (OnChangeStateRequest != null && state != "")
+        if (OnChangeStateRequest != null && state != null)
             OnChangeStateRequest.Invoke(state);
     }
     public void ToNextState() => ChangeState(_nextState);
