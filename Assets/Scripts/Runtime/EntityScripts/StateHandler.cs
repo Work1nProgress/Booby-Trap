@@ -7,7 +7,7 @@ using UnityEngine;
 public class StateHandler : MonoBehaviour
 {
     [SerializeField] private string _entryState;
-    [SerializeField] StatePair[] _statePairs;
+    [SerializeField] StatePair[] _entityStates;
 
     private Dictionary<string, EntityState> _states;
     private EntityState _currentState;
@@ -16,7 +16,7 @@ public class StateHandler : MonoBehaviour
     {
         _states = new Dictionary<string, EntityState>();
         
-        foreach (StatePair pair in _statePairs)
+        foreach (StatePair pair in _entityStates)
         {
             EntityState state = Instantiate(pair.state);
             state.Initialize(controller, pair.name);
@@ -25,7 +25,7 @@ public class StateHandler : MonoBehaviour
 
         ChangeState(_entryState);
     }
-    protected bool AddState(EntityState state) => _states.TryAdd(state.Name, state);
+    protected bool AddState(EntityState state) => _states.TryAdd(state.stateName, state);
     protected bool RemoveState(string stateName) => _states.Remove(stateName);
     protected void ChangeState(string stateName)
     {
@@ -35,7 +35,7 @@ public class StateHandler : MonoBehaviour
             if (_currentState != null)
             {
                 _currentState.ExitState();
-                _currentState.OnChangeStateRequest -= ChangeState;
+                _currentState.ClearEvents();
             }
 
             _currentState = newState;
@@ -65,6 +65,11 @@ public class StateHandler : MonoBehaviour
     {
         if (_currentState != null)
             _currentState.FixedUpdateState(Time.fixedDeltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        _currentState.ClearEvents();
     }
 }
 

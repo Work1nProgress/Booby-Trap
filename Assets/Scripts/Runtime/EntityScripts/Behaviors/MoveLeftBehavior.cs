@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Move Left", menuName = "Entities/Behavior/Move Left")]
 public class MoveLeftBehavior : EntityBehavior
 {
-    public override void Execute(EntityController controller, float deltaTime)
+    public override void Execute(EntityState state, EntityController controller, float deltaTime)
     {
         controller.Rigidbody.AddForce(
             Vector2.left * controller.MovementSpeed,
