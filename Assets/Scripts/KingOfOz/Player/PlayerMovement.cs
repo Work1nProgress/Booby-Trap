@@ -10,25 +10,47 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float walkSpeed = 10;    
+    [SerializeField][Range(1, 20)] 
+    float runSpeed = 10;    
 
     [Header("Jumping and falling")]
-    public float jumpPower = 20;
-    public float gravityMultiplier = 1;
-    public float maxJumpHeight = 3;
+    [SerializeField] //[Range(1, 100)]
+    float maxJumpForce = 10;
+    [SerializeField]//[Range(0, 10)] 
 
+    float jumpIncreaseRate = 1;
+        [SerializeField][Range(0, 10)] 
+    float gravityMultiplier = 1;
+    [SerializeField] ForceMode2D forceType = ForceMode2D.Impulse;     
+
+    [Header("Dash Attack")]
+    [SerializeField] float dashForce = 10;
+
+    [Header("Vault Attack")]
+    [SerializeField] float forwardForce = 10;
+    [SerializeField] float upwardForce = 20;
+
+    /*
     [Header("Climbing")]
     public float climbSpeed = 1;
     [Range(0, 0.5f)]
-    public float toleranceFromCenter = 0.1f;
+    public float toleranceFromCenter = 0.1f;*/
 
     [Header("Layers")]
     public LayerMask groundLayer;
 
     // raycasts
+    [Header("Ground Checks")]
+    [SerializeField]
     private Vector2 leftOffset = new Vector2(-0.4f, -1);
+    [SerializeField]
     private Vector2 rightOffset = new Vector2(0.4f, -1);
+    [SerializeField]
     private float castDistance = 0.2f;
+
+    [Header("Debugging")]
+    [SerializeField] Vector2 velocity;
+    [SerializeField] float jumpForce = 0;
 
     // components
     private Rigidbody2D body;
@@ -60,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        jumpPressed = Input.GetButtonDown("Jump");
+        jumpPressed = Input.GetButtonDown ("Jump");
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
 
@@ -71,8 +93,11 @@ public class PlayerMovement : MonoBehaviour
         {
             jumping = false;
 
-            if(!onGround)
+            if (!onGround)
+            {
+                jumpForce = 0;
                 falling = true;
+            }
         }
 
         /*
@@ -96,22 +121,24 @@ public class PlayerMovement : MonoBehaviour
 
         // switch animation if falling
         animator.SetFloat("yVelocity", body.velocity.y);
-        animator.SetBool("onGround", onGround);        
+        animator.SetBool("onGround", onGround);
+
+        velocity = body.velocity;
     }
 
     private void HorizontalMovement()
     {
         // horizontal movement
         if (inputX < 0)
-            body.velocity =new Vector2(-walkSpeed, body.velocity.y);
+            body.velocity =new Vector2(-runSpeed, body.velocity.y);
         else if (inputX > 0)
-            body.velocity = new Vector2(walkSpeed, body.velocity.y);
+            body.velocity = new Vector2(runSpeed, body.velocity.y);
         else if (onGround)
             body.velocity = new Vector2(0, body.velocity.y);
     }
 
     private void VerticalMovement()
-    {        
+    {             
         if (jumpPressed && onGround)
         {
             if (!jumping)
@@ -124,19 +151,31 @@ public class PlayerMovement : MonoBehaviour
             }
 
             jumping = true;
-            jumpPoint = transform.position;
+            //jumpPoint = transform.position;
             body.gravityScale = gravityMultiplier;
 
-            body.velocity = new Vector2(body.velocity.x, jumpPower);
+            body.AddForce(Vector2.up * jumpForce, forceType);
+
+            //body.velocity = new Vector2(body.velocity.x, jumpForce);
         }
-        
+
+        // build up force while jump is held down
+        if (jumping && Input.GetButton("Jump"))
+        {
+            if (jumpForce < maxJumpForce)
+                 jumpForce += jumpIncreaseRate;
+        }
+
+
+        /*
         if (jumping && Vector2.Distance(transform.position, jumpPoint) > maxJumpHeight)
         {
             Debug.Log("Hit max jump height");
             body.velocity = new Vector2(body.velocity.x, Physics.gravity.y);            
-        }
+        }*/
 
     }
+
 
     private void LateUpdate()
     {
@@ -153,7 +192,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D leftCheck = Physics2D.Raycast((Vector2)transform.position + leftOffset, Vector2.down, castDistance, groundLayer);
         RaycastHit2D rightCheck = Physics2D.Raycast((Vector2)transform.position + rightOffset, Vector2.down, castDistance, groundLayer);
 
-        //Debug.DrawRay((Vector2)transform.position + leftOffset, Vector2.down * castDistance, Color.yellow);
         //Debug.DrawRay((Vector2)transform.position + rightOffset, Vector2.down * castDistance, Color.yellow);
 
         if (leftCheck || rightCheck)
@@ -180,7 +218,10 @@ public class PlayerMovement : MonoBehaviour
         {
             if(sound != null)
                 sound.PlaySound(sound.landSound);
+
             falling = false;
+            jumping = false;
+            jumpForce = 0;
         }
     }
 
@@ -190,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
             body.velocity = Vector2.zero;
     }
 
+    /*
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 11) // climbable layer
@@ -208,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
                 body.velocity = new Vector2(body.velocity.x, inputY * climbSpeed);
             }
         }
-    }
+    }*/
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -217,6 +259,12 @@ public class PlayerMovement : MonoBehaviour
             body.gravityScale = gravityMultiplier;
         }
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay((Vector2) transform.position + leftOffset, Vector2.down * castDistance);
+        Gizmos.DrawRay((Vector2) transform.position + rightOffset, Vector2.down * castDistance);
+    }
 
 }
