@@ -29,7 +29,7 @@ public class HUD : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
         healthText.text = player.startingHealth.ToString();
-        ammoText.text = player.startingAmmo.ToString();
+        //ammoText.text = player.startingAmmo.ToString();
     }
 
     private void Update()

@@ -35,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator animator;
 
-    private PlayerSound sound;
+    private PlayerController controller;
+    private PlayerSound sound;    
 
     private bool onGround = false;
     private float inputX, inputY;
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
 
+        controller = GetComponent<PlayerController>();
         sound = GetComponent<PlayerSound>();
     }
 
@@ -94,10 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
         // switch animation if falling
         animator.SetFloat("yVelocity", body.velocity.y);
-        animator.SetBool("onGround", onGround);
-
-        if (Input.GetButtonDown("Fire1"))
-            animator.SetTrigger("attack");
+        animator.SetBool("onGround", onGround);        
     }
 
     private void HorizontalMovement()

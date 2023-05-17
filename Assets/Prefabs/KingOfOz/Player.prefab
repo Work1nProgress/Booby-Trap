@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5268727191591925644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3923034743728385882}
+  m_Layer: 6
+  m_Name: Weapon Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3923034743728385882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268727191591925644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2755, y: -0.0142, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5368626787839533214}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5368626787839533185
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +66,8 @@ Transform:
   m_LocalPosition: {x: 0.496, y: -2.97, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3923034743728385882}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,8 +136,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0020353794, y: -0.027422747}
-  m_Size: {x: 0.24000025, y: 0.37927374}
+  m_Offset: {x: -0.0020353794, y: -0.026283344}
+  m_Size: {x: 0.24000025, y: 0.37699494}
   m_Direction: 0
 --- !u!50 &5368626787839533184
 Rigidbody2D:
@@ -252,20 +284,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5368626787839533185}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10b74361528bc4147b37d14f1eedb2c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  startingAmmo: 10
-  ammoPerPickup: 15
-  bulletPrefab: {fileID: 3145742431903383923, guid: 4005ebe8456444845829aa225bb3ef58, type: 3}
-  gunPivot: {fileID: 0}
-  crosshair: {fileID: 0}
-  spawnOffsetDistance: 1.5
-  delayBetweenShot: 0.2
-  continuousFire: 1
+  weaponPoint: {fileID: 3923034743728385882}
+  weaponRadius: 0.1
+  weaponDamage: 1
+  attackRange: 1
+  attackDirection: {x: 1, y: 0}
 --- !u!114 &5368626787839533212
 MonoBehaviour:
   m_ObjectHideFlags: 0

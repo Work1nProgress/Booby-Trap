@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -9,9 +10,10 @@ public class PlayerController : MonoBehaviour
     #region public variables
     [Header("Player Stats")]
     public int startingHealth = 10;
-    public int startingAmmo = 0;
-    public int ammoPerPickup = 5;
+    //public int startingAmmo = 0;
+    //public int ammoPerPickup = 5;
 
+    /*
     [Header("Projectile Firing")]
     public GameObject bulletPrefab;
     public Transform gunPivot;
@@ -27,17 +29,25 @@ public class PlayerController : MonoBehaviour
     public bool rotateWithMouseWheel = false;
     public float mouseScrollSpeed = 1;
     */
+
+    [Header("Melee Combat")]
+    [SerializeField] Transform weaponPoint;
+    [SerializeField] float weaponRadius = 0.1f;
+    [SerializeField] uint weaponDamage = 1;
+    [SerializeField] float attackRange = 1.0f;
+    [SerializeField]
+    private Vector2 attackDirection = Vector2.right;
     #endregion
 
     // private varialbes
-    private bool canShoot = true;
+    private bool canAttack = true;
     private int health;
     //private int ammo;
     private Portal portal = null;
 
     // aiming
-    private LineRenderer aimingLine;
-    private float pivotAngle = 0;
+    //private LineRenderer aimingLine;
+    //private float pivotAngle = 0;
 
     // components
     Animator animator;    
@@ -46,6 +56,10 @@ public class PlayerController : MonoBehaviour
     //GameManager gameManager;
     HUD gui;
     PlayerSound sound;
+
+    public bool FacingLeft { get; set; } = false;
+
+    private SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -57,13 +71,15 @@ public class PlayerController : MonoBehaviour
         health = startingHealth;
         //ammo = startingAmmo;
 
-        aimingLine = GetComponentInChildren<LineRenderer>();
+        //aimingLine = GetComponentInChildren<LineRenderer>();
         animator = GetComponent<Animator>();
 
-        gunPivot.gameObject.SetActive(false);
+        //gunPivot.gameObject.SetActive(false);
 
         //if(!followCursorPosition)
-            //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -72,7 +88,7 @@ public class PlayerController : MonoBehaviour
         //if (!gameManager.GameRunning)
             //return;
 
-        //UpdateFireInput();
+        UpdateAttackInput();
 
         // up pressed while standing infront of a portal
         if (Input.GetAxis("Vertical") > 0 && portal)
@@ -86,11 +102,13 @@ public class PlayerController : MonoBehaviour
         {
             gameManager.EndGame();
         }*/
+
     }
 
-    /*
-    private void UpdateFireInput()
+    
+    private void UpdateAttackInput()
     {
+        /*
         if (Input.GetButton("Fire1") || Input.GetButton("Fire2"))
         {
             if (Input.GetButtonDown("Fire1"))
@@ -116,8 +134,38 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(gameManager.ShowAlert());
                 sound.PlaySound(sound.outOfAmmoSound);
             }
+        }*/        
+
+        float verticalInput = Input.GetAxis("Vertical");
+        animator.SetFloat("vInput", verticalInput);
+
+        // update attack direction
+        if (verticalInput > 0)
+        {
+            attackDirection = Vector2.up;
+            //animator.SetBool("verticalAttack", true);
         }
-    }*/
+        else if (verticalInput < 0)
+        {
+            attackDirection = Vector2.down;
+            //animator.SetBool("verticalAttack", true);
+        }
+        else
+        {
+            animator.SetBool("verticalAttack", false);
+
+            if (sprite.flipX) // faceing left
+                attackDirection = Vector2.left;
+            else
+                attackDirection = Vector2.right;
+        }        
+
+        if (Input.GetButtonDown("Fire1") && canAttack)
+        {
+            animator.SetTrigger("attack");
+            canAttack = false;                        
+        }
+    }
 
     /*
     private IEnumerator FireShot()
@@ -142,9 +190,26 @@ public class PlayerController : MonoBehaviour
         canShoot = true;
     }*/
 
+    // Invoked from animation even on attack animation
     public void PerformMeleeAttack()
+    {       
+        var collisions = Physics2D.CircleCastAll(transform.position, weaponRadius, attackDirection, attackRange);
+
+        foreach (var hit in collisions)
+        {
+            var enemy = hit.transform.GetComponent<EnemyController>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(weaponDamage);
+            }
+        }        
+    }
+
+    // Invoked from animation even on attack animation
+    public void AttackFinished()
     {
-        Debug.Log("Attack from spear registered");
+        canAttack = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -269,5 +334,10 @@ public class PlayerController : MonoBehaviour
         }
     }    */
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + ((Vector3)attackDirection * attackRange), weaponRadius);
+    }
 
 }
