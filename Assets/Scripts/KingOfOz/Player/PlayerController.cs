@@ -20,17 +20,19 @@ public class PlayerController : MonoBehaviour
     public float delayBetweenShot = 0.1f;
     public bool continuousFire = true;
 
+    /*
     [Header("Aiming")]
     public float aimingLineLength = 5;
     public bool followCursorPosition = false;
     public bool rotateWithMouseWheel = false;
-    public float mouseScrollSpeed = 1;    
+    public float mouseScrollSpeed = 1;
+    */
     #endregion
 
     // private varialbes
     private bool canShoot = true;
     private int health;
-    private int ammo;
+    //private int ammo;
     private Portal portal = null;
 
     // aiming
@@ -41,36 +43,36 @@ public class PlayerController : MonoBehaviour
     Animator animator;    
 
     // singleton classes
-    GameManager gameManager;
+    //GameManager gameManager;
     HUD gui;
     PlayerSound sound;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameManager.Instance;
+        //gameManager = GameManager.Instance;
         gui = HUD.Instance;
         sound = GetComponent<PlayerSound>();
 
         health = startingHealth;
-        ammo = startingAmmo;
+        //ammo = startingAmmo;
 
         aimingLine = GetComponentInChildren<LineRenderer>();
         animator = GetComponent<Animator>();
 
         gunPivot.gameObject.SetActive(false);
 
-        if(!followCursorPosition)
-            Cursor.lockState = CursorLockMode.Locked;
+        //if(!followCursorPosition)
+            //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gameManager.GameRunning)
-            return;
+        //if (!gameManager.GameRunning)
+            //return;
 
-        UpdateFireInput();
+        //UpdateFireInput();
 
         // up pressed while standing infront of a portal
         if (Input.GetAxis("Vertical") > 0 && portal)
@@ -79,12 +81,14 @@ public class PlayerController : MonoBehaviour
             portal.EnterPortal();
         }
 
+        /*
         if (transform.position.y < gameManager.minYPosition)
         {
             gameManager.EndGame();
-        }
+        }*/
     }
 
+    /*
     private void UpdateFireInput()
     {
         if (Input.GetButton("Fire1") || Input.GetButton("Fire2"))
@@ -92,12 +96,12 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
                 gunPivot.gameObject.SetActive(true);
 
-            Aim();
+            //Aim();
         }
 
         if (Input.GetButtonUp("Fire1") || Input.GetButtonUp("Fire2"))
             gunPivot.gameObject.SetActive(false);
-
+        
         if (canShoot)
         {
             if (ammo > 0)
@@ -113,8 +117,9 @@ public class PlayerController : MonoBehaviour
                 sound.PlaySound(sound.outOfAmmoSound);
             }
         }
-    }
+    }*/
 
+    /*
     private IEnumerator FireShot()
     {
         canShoot = false;
@@ -129,12 +134,17 @@ public class PlayerController : MonoBehaviour
         
         bulletInstance.GetComponent<Bullet>().Direction = direction;
 
-        ammo--;
-        gui.SetAmmoText(ammo);
+        //ammo--;
+        //gui.SetAmmoText(ammo);
 
         yield return new WaitForSeconds(delayBetweenShot);
 
         canShoot = true;
+    }*/
+
+    public void PerformMeleeAttack()
+    {
+        Debug.Log("Attack from spear registered");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -149,7 +159,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "Ammo")
         {
-            AddAmmo(ammoPerPickup);
+            //AddAmmo(ammoPerPickup);
             GameObject.Destroy(collision.gameObject);
         }
 
@@ -183,17 +193,19 @@ public class PlayerController : MonoBehaviour
 
         if (health <=0)
         {
-            gameManager.EndGame();
+            //gameManager.EndGame();
         }
     }
 
+    /*
     private void AddAmmo(int Amount)
     {
         ammo += ammoPerPickup;
         gui.SetAmmoText(ammo);
         sound.PlaySound(sound.collectAmmoSound);
-    }
+    }*/
 
+    /*
     private void Aim()
     {
         Vector2 direction = new Vector2();
@@ -255,7 +267,7 @@ public class PlayerController : MonoBehaviour
             aimingLine.SetPosition(0, startPos);
             aimingLine.SetPosition(1, crosshair.position);
         }
-    }    
+    }    */
 
 
 }

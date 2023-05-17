@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-//[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -87,11 +86,18 @@ public class PlayerMovement : MonoBehaviour
         VerticalMovement();
 
         if (onGround && body.velocity.x != 0)
-            animator.SetBool("walking", true);
+            animator.SetBool("running", true);
         else if (!onGround || body.velocity.x == 0)
-            animator.SetBool("walking", false);
+            animator.SetBool("running", false);
 
         //Debug.Log("Velocity: " + body.velocity);
+
+        // switch animation if falling
+        animator.SetFloat("yVelocity", body.velocity.y);
+        animator.SetBool("onGround", onGround);
+
+        if (Input.GetButtonDown("Fire1"))
+            animator.SetTrigger("attack");
     }
 
     private void HorizontalMovement()
@@ -110,7 +116,13 @@ public class PlayerMovement : MonoBehaviour
         if (jumpPressed && onGround)
         {
             if (!jumping)
-                sound.PlaySound(sound.jumpSound);
+            {
+                animator.SetTrigger("jump");
+                //Debug.Log("Sent jump trigger");
+
+                if(sound!= null)
+                   sound.PlaySound(sound.jumpSound);
+            }
 
             jumping = true;
             jumpPoint = transform.position;
@@ -167,7 +179,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 3 && falling) // ground layer
         {
-            sound.PlaySound(sound.landSound);
+            if(sound != null)
+                sound.PlaySound(sound.landSound);
             falling = false;
         }
     }
