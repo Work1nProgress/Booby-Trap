@@ -9,14 +9,14 @@ public class WalkingEnemy : EnemyController
     [Range(0f, 10f)]
     public float minDistanceFromPlayer = 1;
 
-    private Animator animator;
+    private Animator animator;   
 
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
 
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();        
     }
 
     // Update is called once per frame
@@ -38,7 +38,8 @@ public class WalkingEnemy : EnemyController
                 hasFired = true;
                 Invoke("FireShot", timeBetweenShots);
             }
-        }
+        }        
+        
     }
 
     private void MoveTowardsPlayer()

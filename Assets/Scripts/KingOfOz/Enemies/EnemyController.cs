@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public int maxHealth = 5;
     public float visionRaidus = 5.0f;    
@@ -34,11 +34,11 @@ public abstract class EnemyController : MonoBehaviour
         gameManager = GameManager.Instance;
 
         // ignore collisions between player and enemy
-        if (GetComponent<BoxCollider2D>())
+        /*if (GetComponent<BoxCollider2D>())
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>());
 
         if(GetComponent<CapsuleCollider2D>())
-            Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), player.GetComponent<CapsuleCollider2D>());
+            Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), player.GetComponent<CapsuleCollider2D>());*/
     }
 
     void Update()
@@ -46,25 +46,39 @@ public abstract class EnemyController : MonoBehaviour
 
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(uint amount)
     {
-        health -= amount;
+        health -= (int) amount;
+
+        Debug.Log("enemy took " + amount + " damage. " + health + " health left.");
 
         if (health <= 0)
         {
-            gameManager.PlaySound(sound.dieSound);
+            Debug.Log("Enemy is dead");
+            //gameManager.PlaySound(sound.dieSound);
             GameObject.Destroy(gameObject);            
         }
         else
         {
-            sound.PlaySound(sound.damagedSound);
-        }
+            StartCoroutine(FlashDamage());
+
+            if(sound != null)
+                sound.PlaySound(sound.damagedSound);
+        }        
+        
+    }
+
+    IEnumerator FlashDamage()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     protected void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, visionRaidus);        
+        //Gizmos.DrawWireSphere(transform.position, visionRaidus);        
     }
 
 }
