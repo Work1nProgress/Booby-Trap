@@ -109,7 +109,14 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
 
 
 
-#region Public Methods
+    #region Public Methods
+
+
+    public void PlayMusic(string musicName, params int[] layers)
+    {
+        PlayMusic(musicName, 0, false, 0, layers);
+    }
+
     public void PlayMusic(string musicName, float fadeIn = 0, bool loop = false, float crossFade= 0, params int[] layers)
     {
         m_QueuedTrack = musicName;

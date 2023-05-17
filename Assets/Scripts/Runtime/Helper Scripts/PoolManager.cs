@@ -11,9 +11,8 @@ public class PoolManager : GenericSingleton<PoolManager>
     List<PoolDefinition> pooledObjects;
 
     
-    protected override void Awake()
+    public void Init()
     {
-        base.Awake();
         _poolDictionary = new Dictionary<string, Pool>();
         foreach (var poolDeifinition in pooledObjects)
         {
