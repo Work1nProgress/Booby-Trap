@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class EntityBehavior : ScriptableObject
 {
-    public virtual void Execute(EntityController controller) { }
-    public virtual void Execute(EntityController controller, float deltaTime) { }
+    public virtual void Execute(EntityState state, EntityController controller) { }
+    public virtual void Execute(EntityState state, EntityController controller, float deltaTime) { }
 }

@@ -6,26 +6,26 @@ using UnityEngine;
 
 public class StateHandler : MonoBehaviour
 {
-    [SerializeField] private string _entryState;
-    [SerializeField] StatePair[] _statePairs;
+    [Header("State Handling")]
+    [SerializeField] private string _initialState;
+    [SerializeField] StateData[] _entityStates;
 
     private Dictionary<string, EntityState> _states;
     private EntityState _currentState;
-
     public void Initialize(EntityController controller)
     {
         _states = new Dictionary<string, EntityState>();
         
-        foreach (StatePair pair in _statePairs)
+        foreach (StateData data in _entityStates)
         {
-            EntityState state = Instantiate(pair.state);
-            state.Initialize(controller, pair.name);
+            EntityState state = Instantiate(data.state);
+            state.Initialize(controller, data);
             AddState(state);
         }
 
-        ChangeState(_entryState);
+        ChangeState(_initialState);
     }
-    protected bool AddState(EntityState state) => _states.TryAdd(state.Name, state);
+    protected bool AddState(EntityState state) => _states.TryAdd(state.stateName, state);
     protected bool RemoveState(string stateName) => _states.Remove(stateName);
     protected void ChangeState(string stateName)
     {
@@ -35,7 +35,7 @@ public class StateHandler : MonoBehaviour
             if (_currentState != null)
             {
                 _currentState.ExitState();
-                _currentState.OnChangeStateRequest -= ChangeState;
+                _currentState.ClearEvents();
             }
 
             _currentState = newState;
@@ -66,11 +66,22 @@ public class StateHandler : MonoBehaviour
         if (_currentState != null)
             _currentState.FixedUpdateState(Time.fixedDeltaTime);
     }
+
+    private void OnDestroy()
+    {
+        _currentState.ClearEvents();
+    }
+    
 }
 
 [Serializable]
-public struct StatePair
+public struct StateData
 {
-    public string name;
+    public string stateName;
+    public string nextState;
+    public string altState;
     public EntityState state;
+    public bool timedState;
+    public bool timerAltState;
+    public float stateTime;
 }
