@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -145,7 +145,10 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetButtonDown("Fire3"))
             {
-                ThrowSpear(attackDirection);
+                if (spearPrefab != null)
+                {
+                    ThrowSpear(attackDirection);
+                }
             }
         }
     }
