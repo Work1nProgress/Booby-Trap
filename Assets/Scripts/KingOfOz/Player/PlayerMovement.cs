@@ -14,10 +14,10 @@ public class PlayerMovement : MonoBehaviour
     float runSpeed = 10;    
 
     [Header("Jumping and falling")]
+    [SerializeField] float initialJumpForce = 10;
     [SerializeField] //[Range(1, 100)]
     float maxJumpForce = 10;
     [SerializeField]//[Range(0, 10)] 
-
     float jumpIncreaseRate = 1;
         [SerializeField][Range(0, 10)] 
     float gravityMultiplier = 1;
@@ -29,12 +29,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Vault Attack")]
     [SerializeField] float forwardForce = 10;
     [SerializeField] float upwardForce = 20;
-
-    /*
-    [Header("Climbing")]
-    public float climbSpeed = 1;
-    [Range(0, 0.5f)]
-    public float toleranceFromCenter = 0.1f;*/
 
     [Header("Layers")]
     public LayerMask groundLayer;
@@ -82,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        jumpPressed = Input.GetButtonDown ("Jump");
+        jumpPressed = Input.GetButtonDown("Jump");
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
 
@@ -129,8 +123,16 @@ public class PlayerMovement : MonoBehaviour
     private void HorizontalMovement()
     {
         // horizontal movement
-        if (inputX < 0)
-            body.velocity =new Vector2(-runSpeed, body.velocity.y);
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if(sprite.flipX)
+                body.AddForce(Vector2.left * dashForce);
+            else
+                body.AddForce(Vector2.right * dashForce);
+        }
+
+        else if (inputX < 0)
+            body.velocity = new Vector2(-runSpeed, body.velocity.y);
         else if (inputX > 0)
             body.velocity = new Vector2(runSpeed, body.velocity.y);
         else if (onGround)
@@ -151,31 +153,28 @@ public class PlayerMovement : MonoBehaviour
             }
 
             jumping = true;
-            //jumpPoint = transform.position;
-            body.gravityScale = gravityMultiplier;
+            jumpForce = initialJumpForce;
 
-            body.AddForce(Vector2.up * jumpForce, forceType);
+            body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-            //body.velocity = new Vector2(body.velocity.x, jumpForce);
         }
 
         // build up force while jump is held down
         if (jumping && Input.GetButton("Jump"))
         {
             if (jumpForce < maxJumpForce)
-                 jumpForce += jumpIncreaseRate;
+            {
+
+                jumpForce += jumpIncreaseRate;
+                body.velocity = new Vector2(body.velocity.x, body.velocity.y + jumpForce * Time.deltaTime);
+            }
+
         }
+                //body.AddForce(Vector2.up * jumpForce * Time.deltaTime, forceType);
 
-
-        /*
-        if (jumping && Vector2.Distance(transform.position, jumpPoint) > maxJumpHeight)
-        {
-            Debug.Log("Hit max jump height");
-            body.velocity = new Vector2(body.velocity.x, Physics.gravity.y);            
-        }*/
+        body.gravityScale = gravityMultiplier;
 
     }
-
 
     private void LateUpdate()
     {
@@ -230,27 +229,6 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.layer == 11)
             body.velocity = Vector2.zero;
     }
-
-    /*
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 11) // climbable layer
-        {            
-            var collider = collision.GetComponent<TilemapCollider2D>();
-            Vector2 collisionPos = collider.ClosestPoint(transform.position);            
-
-            // check if infront of the collider range
-            if (transform.position.x <= collisionPos.x + toleranceFromCenter &&
-                transform.position.x >= collisionPos.x - toleranceFromCenter)
-            {
-                if (inputX == 0)
-                    body.velocity = new Vector2(0, body.velocity.y);
-
-                body.gravityScale = 0;
-                body.velocity = new Vector2(body.velocity.x, inputY * climbSpeed);
-            }
-        }
-    }*/
 
     private void OnTriggerExit2D(Collider2D collision)
     {

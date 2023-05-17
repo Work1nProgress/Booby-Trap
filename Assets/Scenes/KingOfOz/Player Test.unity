@@ -317,6 +317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Core)
       objectReference: {fileID: 0}
+    - target: {fileID: 2105744420777260722, guid: 37d51bab8f77c834e8364512df478d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2105744420777260723, guid: 37d51bab8f77c834e8364512df478d19, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -348,6 +352,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5368626787839533184, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533184, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
@@ -376,12 +384,48 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: runSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: forceType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
       propertyPath: walkSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: leftOffset.x
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: leftOffset.y
+      value: -0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: maxJumpForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: rightOffset.y
+      value: -0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: initialJumpForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: jumpIncreaseRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533212, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: gravityMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5368626787839533214, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
       propertyPath: m_RootOrder
@@ -435,7 +479,8 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.023891568
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8271725457972549873, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
 --- !u!1 &1869790197
 GameObject:
