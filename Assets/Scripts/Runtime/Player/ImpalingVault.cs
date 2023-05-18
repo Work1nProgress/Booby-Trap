@@ -36,7 +36,7 @@ public class ImpalingVault : MonoBehaviour
             {
                 movement.Jump(upwardForce);
 
-                body.AddForce(movement.FaceDirection * forwardForce, ForceMode2D.Impulse);
+                //body.AddForce(movement.FaceDirection * forwardForce, ForceMode2D.Impulse);
 
                 performingVault = true;
             }

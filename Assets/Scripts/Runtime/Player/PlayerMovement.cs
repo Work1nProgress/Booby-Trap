@@ -14,17 +14,16 @@ public class PlayerMovement : MonoBehaviour
     #region variable declaration
     [Header("Running")]
     [SerializeField]
-    [Tooltip("Top speed")][Range(0f, 50f)]
+    [Tooltip("Top speed")] [Range(0f, 50f)]
     float runSpeed = 10;
-    [SerializeField][Range(0f, 10f)]
+    [SerializeField] [Range(0f, 10f)]
     [Tooltip("Horizontal movement acceleration")]
     float runAcceleration = 5;
-    [SerializeField][Range(0f, 10f)]
+    [SerializeField] [Range(0f, 10f)]
     [Tooltip("Horizontal movement decceleration")]
     float runDecceleration = 5;
 
     [Header("Vertical Movement")]
-
     [Header("Jumping")]
     [Tooltip("Jumping force happens once")]
     [SerializeField][Range(0f, 20f)]
@@ -54,6 +53,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(0f, 5f)]
     [Tooltip("Gravity multiplier while falling and not holding jump")]
     float fallingGravity;
+    [SerializeField]
+    [Range(0f, 5f)]
+    [Tooltip("Gravity multiplier while falling after dashing")]
+    float fallingGravityAfterDash;
+
+    [SerializeField]
+
+    [Tooltip("Gravity multiplier while falling after dashing")]
+    float maximumFallSpeed;
 
     [Header("Hang Times")]
     [SerializeField][Range(0f, 5f)]
@@ -70,13 +78,33 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Meep Meep")]
     float coyoteTime;
 
+
+    [Header("Dash")]
+    [SerializeField]
+    [Range(1, 1000)]
+    float dashSpeed = 500;
+    [SerializeField]
+    [Range(0, 10)]
+    float dashAcceleration = 10;
+    [SerializeField]
+    [Range(0, 10)]
+    float dashCooldown = 3.0f;
+    [SerializeField]
+    [Range(0, 10)]
+    float dashDuration = 0.1f;
+    [SerializeField] private Vector2 dashCheckSize = new Vector2(0.49f, 0.03f);
+    [SerializeField] private Vector3 dashCheckPointLeft;
+    [SerializeField] private Vector3 dashCheckPointRight;
+
+    [Header("Vault")]
+
     [Header("Layers")]
-    public LayerMask _groundLayer;
+    public LayerMask groundLayer;
 
     // raycasts
     [Header("Ground Checks")]
-    [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.49f, 0.03f);
-    [SerializeField] private Vector3 _groundCheckPoint;
+    [SerializeField] private Vector2 groundCheckSize = new Vector2(0.49f, 0.03f);
+    [SerializeField] private Vector3 groundCheckPoint;
 
     [Header("Debugging")]
     [SerializeField] Vector2 velocity;
@@ -87,18 +115,33 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private PlayerSound sound;    
 
-    private float inputX, inputY;
+
+    //flags
     private bool jumping = false;
+    private bool falling = false;
+    private bool fallingFromDash = false;
+
+
+    //input
+    private float inputX, inputY;
     private bool jumpPressed = false;
     private bool jumpHeld = false;
+    private bool dashPressed = false;
 
-    //fields
+    //timers
     float LastOnGroundTime;
-    private bool falling = false;
+    float LastDashTime;
+    float LastDashDurationTime;
+
     #endregion
 
+    //private fields
+    float dashDirection;
+    float canDashDirection;
+
     // properties
-    public bool OnGround { get; set; }
+    public bool OnGround => LastOnGroundTime > 0;
+    public bool Dashing => LastDashDurationTime > 0;
 
     public Vector2 FaceDirection {
         get
@@ -123,16 +166,21 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         LastOnGroundTime -= Time.deltaTime;
+        LastDashTime -= Time.deltaTime;
+        LastDashDurationTime -= Time.deltaTime;
         jumpPressed = Input.GetButtonDown("Jump");
         jumpHeld = Input.GetButton("Jump");
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
+        dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
 
         GroundCheck();
 
         UpdateJump();
+        UpdateDash();
+
         
-        HorizontalMovement();
+       
         VerticalMovement();
 
         if (LastOnGroundTime > 0 && Mathf.Abs(body.velocity.x) > 0.2f && inputX != 0)
@@ -144,9 +192,14 @@ public class PlayerMovement : MonoBehaviour
 
         // switch animation if falling
         animator.SetFloat("yVelocity", body.velocity.y);
-        animator.SetBool("onGround", LastOnGroundTime > 0);
+        animator.SetBool("onGround", OnGround);
 
         velocity = body.velocity;
+    }
+
+    private void FixedUpdate()
+    {
+        HorizontalMovement();
     }
 
     private void LateUpdate()
@@ -182,41 +235,65 @@ public class PlayerMovement : MonoBehaviour
         {
             jumping = false;
 
-            if (LastOnGroundTime <= 0 && !falling)
+            if (!OnGround && !falling)
             {
 
                 falling = true;
             }
 
-            if (LastOnGroundTime > 0 && falling)
+            if (OnGround && falling)
             {
                 falling = false;
                 jumping = false;
             }
-            if (LastOnGroundTime <= 0 && falling)
+            if (!OnGround && falling)
             {
                 if (jumpHeld)
                 {
                     body.gravityScale = gravityMultiplier * fallingGravityJumpHeld;
 
                 }
+                else if (fallingFromDash)
+                {
+                    body.gravityScale = gravityMultiplier * fallingGravityAfterDash;
+                }
                 else
                 {
                     body.gravityScale = gravityMultiplier * fallingGravity;
                 }
+
+                body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, -maximumFallSpeed, 0));
             }
         }
     }
 
+    
+
     private void HorizontalMovement()
     {
+
+
+        float targetSpeed;
+
         //Calculate the direction we want to move in and our desired velocity
-        float targetSpeed = inputX * runSpeed;
+        if (Dashing)
+        {
+            targetSpeed = dashDirection * dashSpeed;
+        }
+        else
+        {
+            targetSpeed = inputX * runSpeed;
+        }
         //We can reduce are control using Lerp() this smooths changes to are direction and speed
         targetSpeed = Mathf.Lerp(body.velocity.x, targetSpeed, 1);
 
         float accelerationRate;
-        if (LastOnGroundTime > 0)
+
+        if (Dashing)
+        {
+            accelerationRate = dashAcceleration;
+        }
+        else if (OnGround)
         {
 
             accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration : runDecceleration;
@@ -227,7 +304,7 @@ public class PlayerMovement : MonoBehaviour
             accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration * jumpAcceleration : runDecceleration * jumpDecceleration;
         }
 
-        if ((jumping || falling) && Mathf.Abs(body.velocity.y) < hangTimeThreshold)
+        if (!Dashing && (jumping || falling) && Mathf.Abs(body.velocity.y) < hangTimeThreshold)
         {
             accelerationRate *= hangTimeAccelerationMult;
             targetSpeed *= hangTimeSpeedMult;
@@ -245,7 +322,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void VerticalMovement()
-    {             
+    {   if (Dashing)
+        {
+            body.gravityScale = 0;
+            return;
+        }
         if (jumpPressed && LastOnGroundTime > 0)
         {
             Jump(jumpForce);
@@ -257,26 +338,108 @@ public class PlayerMovement : MonoBehaviour
             body.gravityScale = gravityMultiplier * jumpGravity;
         }
     }
+    bool wasDashing;
+    private void UpdateDash()
+    {
+        //dash cooldown ended and dash input pressed
+        if (LastDashTime <= 0 && dashPressed && !fallingFromDash)
+        {
+            //if player is holding a direction
+            if (Mathf.Abs(inputX) > 0)
+            {
+                dashDirection = inputX;
+            }
+            //use the current facing direction
+            else
+            {
+                dashDirection = FaceDirection.x;
+            }
+            //check if player is already colliding with a wall
+            if (canDashDirection == 0 || dashDirection != canDashDirection)
+            {
+                LastDashDurationTime = dashDuration;
+                LastDashTime = dashCooldown;
+
+                body.velocity = new Vector2(body.velocity.x, 0);
+                falling = false;
+                jumping = false;
+            }
+            else
+            {
+                dashDirection = 0;
+
+            }
+        }
+
+        if (wasDashing && !Dashing)
+        {
+            EndDash();
+        }
+        wasDashing = Dashing;
+    }
 
     private void GroundCheck()
     {
-        OnGround = Physics2D.OverlapBox(transform.position + _groundCheckPoint, _groundCheckSize, 0, _groundLayer) && !jumping;
-        if (OnGround) {
-            LastOnGroundTime = coyoteTime;
+        canDashDirection = 0;
+        var dashCanceledLeft = Physics2D.OverlapBox(transform.position + dashCheckPointLeft, dashCheckSize, 0, groundLayer);
+        if (dashCanceledLeft)
+        {
+            if (Dashing && dashDirection < 0)
+            {
+                EndDash();
+            }
+            canDashDirection -= 1;
         }
-        
+
+        var dashCanceledRight = Physics2D.OverlapBox(transform.position + dashCheckPointRight, dashCheckSize, 0, groundLayer);
+        if (dashCanceledRight)
+        {
+            if (Dashing && dashDirection > 0)
+            {
+                EndDash();
+            }
+            canDashDirection += 1;
+        }
+
+
+        var onGround = Physics2D.OverlapBox(transform.position + groundCheckPoint, groundCheckSize, 0, groundLayer) && !jumping;
+        if (onGround)
+        {
+            LastOnGroundTime = coyoteTime;
+            fallingFromDash = false;
+            body.gravityScale = gravityMultiplier * fallingGravity;
+        }
+
+    }
+
+    void EndDash()
+    {
+        LastDashDurationTime = 0;
+        LastDashTime = dashCooldown;
+        dashDirection = 0;
+        LastOnGroundTime = 0;
+        wasDashing = false;
+        if (!OnGround)
+        {
+            falling = true;
+            fallingFromDash = true;
+            body.gravityScale = gravityMultiplier* fallingGravityAfterDash;
+        }
     }
 
     private bool CanJump()
     {
-        return LastOnGroundTime > 0 && !jumping;
+        return OnGround && !jumping;
     }   
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
 
-        Gizmos.DrawWireCube(transform.position + _groundCheckPoint, _groundCheckSize);
+        Gizmos.DrawWireCube(transform.position + groundCheckPoint, groundCheckSize);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.position + dashCheckPointLeft, dashCheckSize);
+        Gizmos.DrawWireCube(transform.position + dashCheckPointRight, dashCheckSize);
     }
 
 }
