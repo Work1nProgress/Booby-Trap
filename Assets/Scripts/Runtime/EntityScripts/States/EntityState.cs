@@ -28,7 +28,7 @@ public class EntityState : ScriptableObject
     private float _stateTime;
     CountdownTimer _stateTimer;
 
-    public void Initialize(EntityController controller, StateData data)
+    public void InitState(EntityController controller, StateData data)
     {
         _nextState = data.nextState;
         _altState = data.altState;
@@ -39,8 +39,8 @@ public class EntityState : ScriptableObject
             new CountdownTimer(
                 _stateTime, false, false,
                 data.timerAltState ?
-                () => ToAltState():
-                () => ToNextState())
+                () => ToAltState()
+                : () => ToNextState())
             : null;
 
         _controller = controller;

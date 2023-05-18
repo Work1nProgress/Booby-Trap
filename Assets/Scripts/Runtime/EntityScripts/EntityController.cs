@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EntityController : StateHandler
 {
-
-    
     private Rigidbody2D _rigidbody;
     public Rigidbody2D Rigidbody => _rigidbody;
 
@@ -15,11 +13,12 @@ public class EntityController : StateHandler
     [SerializeField] private float _movementSpeed;
     public float MovementSpeed => _movementSpeed;
 
-    private void Awake()
+    public override void Init(EntityStats stats)
     {
+        base.Init(stats);
+        
         _rigidbody = GetComponent<Rigidbody2D>();
-
-        Initialize(this);
+        InitStateHandler(this);
     }
 }
 
