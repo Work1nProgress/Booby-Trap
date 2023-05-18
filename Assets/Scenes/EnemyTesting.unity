@@ -2079,10 +2079,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7934ac300eaacbf4eac091e22782e6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entryState: moveLeft
+  _tempStats:
+    MaxHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _initialState: moveLeft
   _entityStates:
-  - name: moveLeft
+  - stateName: moveLeft
+    nextState: moveLeft
+    altState: 
     state: {fileID: 11400000, guid: ce1efc5e662fbfe45ad6bc22d33dec54, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 1
   _movementSpeed: 0.2
 --- !u!50 &1729644217
 Rigidbody2D:
