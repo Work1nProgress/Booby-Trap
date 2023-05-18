@@ -7,12 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    #region public variables
+    #region variable declaration
     [Header("Player Stats")]
     public int startingHealth = 10;
 
     [Header("Basic Attack")]
-    [SerializeField] Transform weaponPoint;
     [SerializeField] float weaponRadius = 0.1f;
     [SerializeField] uint weaponDamage = 1;
     [SerializeField] float attackRange = 1.0f;
@@ -21,15 +20,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Spear Throw")]
     public GameObject spearPrefab;
+    [SerializeField] KeyCode throwKey = KeyCode.F;
     [SerializeField] float spawnOffsetDistance;
-    //[SerializeField] float delayBetweenThrows;
-    //float timeSinceLastThrow;
-    #endregion
-
+    
     // private varialbes
     private bool canAttack = true;
     private int health;
-    private Portal portal = null;
+    private GameObject thrownSpear = null;
 
     // components
     Animator animator;    
@@ -37,11 +34,10 @@ public class PlayerController : MonoBehaviour
     // singleton classes
     //GameManager gameManager;
     HUD gui;
-    PlayerSound sound;
-
-    public bool FacingLeft { get; set; } = false;
+    PlayerSound sound;   
 
     private SpriteRenderer sprite;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +68,7 @@ public class PlayerController : MonoBehaviour
 
         UpdateAttackInput();
 
+        /*
         // up pressed while standing infront of a portal
         if (Input.GetAxis("Vertical") > 0 && portal)
         {
@@ -120,12 +117,7 @@ public class PlayerController : MonoBehaviour
                 canAttack = false;
             }
 
-            if(Input.GetButtonDown("Fire2"))
-            {
-
-            }
-
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetKeyDown(throwKey))
             {
                 if (spearPrefab != null)
                 {
@@ -137,14 +129,21 @@ public class PlayerController : MonoBehaviour
 
     private void ThrowSpear(Vector2 direction)
     {
+        if(thrownSpear != null)
+            GameObject.Destroy(thrownSpear);
+
         animator.SetTrigger("Throw"); // plays shooting animation
         Vector2 spawnPosition = (Vector2)transform.position + direction * spawnOffsetDistance;
-        Instantiate(spearPrefab, spawnPosition, Quaternion.Euler(direction));
+        thrownSpear = Instantiate(spearPrefab, spawnPosition, Quaternion.Euler(direction));
+        thrownSpear.GetComponent<Spear>().Direction = direction;
     }
 
     // Invoked from animation even on attack animation
     public void PerformMeleeAttack()
-    {       
+    {
+        if (thrownSpear != null)
+            GameObject.Destroy(thrownSpear);
+
         var collisions = Physics2D.CircleCastAll(transform.position, weaponRadius, attackDirection, attackRange);
 
         foreach (var hit in collisions)
@@ -185,19 +184,21 @@ public class PlayerController : MonoBehaviour
             TakeDamage(1);
         }
 
+        /*
         if(collision.gameObject.layer == 12) // portal layer
         {           
             portal = collision.GetComponent<Portal>();
-        }
+        }*/
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        /*
         if (collision.gameObject.layer == 12) // portal layer
         {            
             portal = null;
-        }
+        }*/
     }
 
     private void TakeDamage(int amount)

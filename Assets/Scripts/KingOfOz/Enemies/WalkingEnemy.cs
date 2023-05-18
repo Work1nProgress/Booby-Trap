@@ -111,11 +111,13 @@ public class WalkingEnemy : EnemyController
         {
             var newBullet = Instantiate(bulletPrefab, (Vector2)transform.position + offset, Quaternion.Euler(0, 0, 90));
 
+            /*
             if (transform.position.x < player.position.x)
                 newBullet.GetComponent<Bullet>().Direction = Vector2.right;
 
             if (transform.position.x > player.position.x)
                 newBullet.GetComponent<Bullet>().Direction = Vector2.left;
+            */
         }
 
         hasFired = false;

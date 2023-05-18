@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5368626787839533210}
   - component: {fileID: 5368626787839533212}
   - component: {fileID: 2223857374103354538}
+  - component: {fileID: 1586561324}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -171,15 +172,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  weaponPoint: {fileID: 0}
   weaponRadius: 0.35
   weaponDamage: 1
   attackRange: 0.9
   attackDirection: {x: 1, y: 0}
-  forwardForce: 10
-  upwardForce: 20
-  spearPrefab: {fileID: 0}
-  spawnOffsetDistance: 0
+  spearPrefab: {fileID: 8367903641598798094, guid: d231f441fdbc29e4d9620d0b25adc055, type: 3}
+  throwKey: 102
+  spawnOffsetDistance: 1
+  delayBetweenThrows: 0
 --- !u!114 &5368626787839533212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,3 +235,17 @@ MonoBehaviour:
     m_Bits: 8
   boxOffsetDistance: 0.5
   boxSize: {x: 0.17, y: 1.1}
+--- !u!114 &1586561324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368626787839533185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6faeb618edd9f448ab5a3b305ed0b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upwardForce: 15
+  forwardForce: 40

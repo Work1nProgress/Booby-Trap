@@ -166,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
         {
             body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
             animator.SetTrigger("jump");
-            //Debug.Log("Sent jump trigger");
 
             if (sound != null)
                 sound.PlaySound(sound.jumpSound);
