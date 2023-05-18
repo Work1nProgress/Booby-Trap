@@ -6,77 +6,69 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements.Experimental;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-
+    #region variable declaration
     [Header("Running")]
     [SerializeField]
-    [Tooltip("Top speed")]
+    [Tooltip("Top speed")][Range(0f, 50f)]
     float runSpeed = 10;
-    [SerializeField]
+    [SerializeField][Range(0f, 10f)]
     [Tooltip("Horizontal movement acceleration")]
     float runAcceleration = 5;
-    [SerializeField]
+    [SerializeField][Range(0f, 10f)]
     [Tooltip("Horizontal movement decceleration")]
     float runDecceleration = 5;
 
+    [Header("Vertical Movement")]
 
-    [Header("Jumping and falling")]
-
+    [Header("Jumping")]
     [Tooltip("Jumping force happens once")]
-    [SerializeField] float jumpForce = 10;
-    [Tooltip("Main gracity multiplier")]
-    [SerializeField][Range(0, 10)] 
-    float gravityMultiplier = 1;
-    [SerializeField] ForceMode2D forceType = ForceMode2D.Impulse;
-
-
-    [SerializeField]
+    [SerializeField][Range(0f, 20f)]
+    float jumpForce = 10;
+    
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Multiplier for horizontal movement acceleration in air")]
     float jumpAcceleration = 1;
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Multiplier for horizontal movement decceleration in air")]
     float jumpDecceleration = 1;
 
+    [Header("Gravity")]
+    [Tooltip("Overall gravity multiplier")]
     [SerializeField]
+    [Range(0, 10)]
+    float gravityMultiplier = 1;
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Gravity multiplier while jumping and holding jump")]
     float jumpGravityJumpHeld;
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Gravity multiplier while jumping and not holding jump")]
     float jumpGravity;
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Gravity multiplier while falling and holding jump")]
     float fallingGravityJumpHeld;
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Gravity multiplier while falling and not holding jump")]
     float fallingGravity;
 
-    [SerializeField]
+    [Header("Hang Times")]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Vertical velocity threshold at apex of jump to toggle better manouverability")]
     float hangTimeThreshold = 0.1f;
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Extra acceleration at apex")]
     float hangTimeAccelerationMult = 1.1f;
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Extra top speed at apex")]
     float hangTimeSpeedMult = 1.1f;
 
-    [SerializeField]
+    [SerializeField][Range(0f, 5f)]
     [Tooltip("Meep Meep")]
     float coyoteTime;
-
-
-
-
-
-    [Header("Dash Attack")]
-    [SerializeField] float dashForce = 10;
-
-    [Header("Vault Attack")]
-    [SerializeField] float forwardForce = 10;
-    [SerializeField] float upwardForce = 20;
 
     [Header("Layers")]
     public LayerMask _groundLayer;
@@ -85,31 +77,38 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Checks")]
     [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.49f, 0.03f);
     [SerializeField] private Vector3 _groundCheckPoint;
-    [SerializeField]
-    private float castDistance = 0.2f;
 
     [Header("Debugging")]
     [SerializeField] Vector2 velocity;
-
 
     // components
     private Rigidbody2D body;
     private SpriteRenderer sprite;
     private Animator animator;
-
-    private PlayerController controller;
     private PlayerSound sound;    
 
     private float inputX, inputY;
     private bool jumping = false;
     private bool jumpPressed = false;
     private bool jumpHeld = false;
-    private Vector2 jumpPoint;
-
 
     //fields
     float LastOnGroundTime;
     private bool falling = false;
+    #endregion
+
+    // properties
+    public bool OnGround { get; set; }
+
+    public Vector2 FaceDirection {
+        get
+        {
+            if(sprite.flipX)
+                return Vector2.left;
+            else
+                return Vector2.right;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -117,8 +116,6 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-
-        controller = GetComponent<PlayerController>();
         sound = GetComponent<PlayerSound>();
     }
 
@@ -131,9 +128,56 @@ public class PlayerMovement : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
 
-        PlayerOnGround();
+        GroundCheck();
 
+        UpdateJump();
+        
+        HorizontalMovement();
+        VerticalMovement();
 
+        if (LastOnGroundTime > 0 && Mathf.Abs(body.velocity.x) > 0.2f && inputX != 0)
+            animator.SetBool("running", true);
+        else if (LastOnGroundTime <= 0 || Mathf.Abs(body.velocity.x) < 0.2f)
+            animator.SetBool("running", false);
+
+        //Debug.Log("Velocity: " + body.velocity);
+
+        // switch animation if falling
+        animator.SetFloat("yVelocity", body.velocity.y);
+        animator.SetBool("onGround", LastOnGroundTime > 0);
+
+        velocity = body.velocity;
+    }
+
+    private void LateUpdate()
+    {
+        // update the face direction
+        if (body.velocity.x > 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing right
+            sprite.flipX = false;
+
+        if (body.velocity.x < 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing left
+            sprite.flipX = true;
+    }
+
+    public void Jump(float liftForce)
+    {
+        LastOnGroundTime = 0;
+        if (!jumping)
+        {
+            body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
+            animator.SetTrigger("jump");
+
+            if (sound != null)
+                sound.PlaySound(sound.jumpSound);
+        }
+
+        jumping = true;
+
+        body.AddForce(Vector2.up * (liftForce - body.velocity.y), ForceMode2D.Impulse);
+    }
+
+    private void UpdateJump()
+    {
         if (body.velocity.y <= 0)
         {
             jumping = false;
@@ -162,34 +206,10 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        HorizontalMovement();
-        VerticalMovement();
-
-        if (LastOnGroundTime > 0 && Mathf.Abs(body.velocity.x) > 0.2f)
-            animator.SetBool("running", true);
-        else if (LastOnGroundTime <= 0 || Mathf.Abs(body.velocity.x) < 0.2f)
-            animator.SetBool("running", false);
-
-        //Debug.Log("Velocity: " + body.velocity);
-
-        // switch animation if falling
-        animator.SetFloat("yVelocity", body.velocity.y);
-        animator.SetBool("onGround", LastOnGroundTime > 0);
-
-        velocity = body.velocity;
     }
 
     private void HorizontalMovement()
     {
-        // horizontal movement
-        if (Input.GetButtonDown("Fire2"))
-        {
-            if(sprite.flipX)
-                body.AddForce(Vector2.left * dashForce);
-            else
-                body.AddForce(Vector2.right * dashForce);
-        }
-
         //Calculate the direction we want to move in and our desired velocity
         float targetSpeed = inputX * runSpeed;
         //We can reduce are control using Lerp() this smooths changes to are direction and speed
@@ -228,24 +248,7 @@ public class PlayerMovement : MonoBehaviour
     {             
         if (jumpPressed && LastOnGroundTime > 0)
         {
-            LastOnGroundTime = 0;
-            if (!jumping)
-            {
-
-
-                body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
-                animator.SetTrigger("jump");
-                //Debug.Log("Sent jump trigger");
-
-                if(sound!= null)
-                   sound.PlaySound(sound.jumpSound);
-            }
-
-            jumping = true;
-
-            body.AddForce(Vector2.up * (jumpForce - body.velocity.y), ForceMode2D.Impulse);
-          
-
+            Jump(jumpForce);
         }
 
         // higher gravity if let go of jump
@@ -253,25 +256,12 @@ public class PlayerMovement : MonoBehaviour
         {
             body.gravityScale = gravityMultiplier * jumpGravity;
         }
-
-        
-
     }
 
-    private void LateUpdate()
+    private void GroundCheck()
     {
-        // update the face direction
-        if (body.velocity.x > 0 && Mathf.Abs(body.velocity.x)> 0.1f) // facing right
-            sprite.flipX = false;
-
-        if (body.velocity.x < 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing left
-            sprite.flipX = true;        
-    }
-
-    private void PlayerOnGround()
-    {
-        var onGround = Physics2D.OverlapBox(transform.position + _groundCheckPoint, _groundCheckSize, 0, _groundLayer) && !jumping;
-        if (onGround) {
+        OnGround = Physics2D.OverlapBox(transform.position + _groundCheckPoint, _groundCheckSize, 0, _groundLayer) && !jumping;
+        if (OnGround) {
             LastOnGroundTime = coyoteTime;
         }
         
@@ -279,10 +269,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-
         return LastOnGroundTime > 0 && !jumping;
-    }
-   
+    }   
 
     private void OnDrawGizmosSelected()
     {
