@@ -3913,10 +3913,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2223857374103354538, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
-      propertyPath: useCooldown
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5368626787839533185, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3967,11 +3963,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+--- !u!1 &1305159847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5368626787839533185, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+  m_PrefabInstance: {fileID: 1268307388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1586561316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5368626787839533214, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
   m_PrefabInstance: {fileID: 1268307388}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1586561324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305159847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6faeb618edd9f448ab5a3b305ed0b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upwardForce: 15
+  forwardForce: 30
 --- !u!1 &2005752910
 GameObject:
   m_ObjectHideFlags: 0

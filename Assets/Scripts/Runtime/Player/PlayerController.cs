@@ -11,34 +11,13 @@ public class PlayerController : MonoBehaviour
     [Header("Player Stats")]
     public int startingHealth = 10;
 
-    /*
-    [Header("Projectile Firing")]
-    public GameObject bulletPrefab;
-    public Transform gunPivot;
-    public Transform crosshair;
-    public float spawnOffsetDistance = 0.5f;
-    public float delayBetweenShot = 0.1f;
-    public bool continuousFire = true;
-
-    /*
-    [Header("Aiming")]
-    public float aimingLineLength = 5;
-    public bool followCursorPosition = false;
-    public bool rotateWithMouseWheel = false;
-    public float mouseScrollSpeed = 1;
-    */
-
     [Header("Basic Attack")]
     [SerializeField] Transform weaponPoint;
     [SerializeField] float weaponRadius = 0.1f;
     [SerializeField] uint weaponDamage = 1;
     [SerializeField] float attackRange = 1.0f;
     [SerializeField]
-    private Vector2 attackDirection = Vector2.right;
-
-    [Header("Vault Attack")]
-    [SerializeField] float forwardForce = 10;
-    [SerializeField] float upwardForce = 20;
+    private Vector2 attackDirection = Vector2.right;    
 
     [Header("Spear Throw")]
     public GameObject spearPrefab;
@@ -106,7 +85,6 @@ public class PlayerController : MonoBehaviour
             gameManager.EndGame();
         }*/
     }
-
     
     private void UpdateAttackInput()
     {    

@@ -97,6 +97,19 @@ public class PlayerMovement : MonoBehaviour
     private bool falling = false;
     #endregion
 
+    // properties
+    public bool OnGround { get; set; }
+
+    public Vector2 FaceDirection {
+        get
+        {
+            if(sprite.flipX)
+                return Vector2.left;
+            else
+                return Vector2.right;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -144,6 +157,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (body.velocity.x < 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing left
             sprite.flipX = true;
+    }
+
+    public void Jump(float liftForce)
+    {
+        LastOnGroundTime = 0;
+        if (!jumping)
+        {
+            body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
+            animator.SetTrigger("jump");
+            //Debug.Log("Sent jump trigger");
+
+            if (sound != null)
+                sound.PlaySound(sound.jumpSound);
+        }
+
+        jumping = true;
+
+        body.AddForce(Vector2.up * (liftForce - body.velocity.y), ForceMode2D.Impulse);
     }
 
     private void UpdateJump()
@@ -218,24 +249,7 @@ public class PlayerMovement : MonoBehaviour
     {             
         if (jumpPressed && LastOnGroundTime > 0)
         {
-            LastOnGroundTime = 0;
-            if (!jumping)
-            {
-
-
-                body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
-                animator.SetTrigger("jump");
-                //Debug.Log("Sent jump trigger");
-
-                if(sound!= null)
-                   sound.PlaySound(sound.jumpSound);
-            }
-
-            jumping = true;
-
-            body.AddForce(Vector2.up * (jumpForce - body.velocity.y), ForceMode2D.Impulse);
-          
-
+            Jump(jumpForce);
         }
 
         // higher gravity if let go of jump
@@ -247,8 +261,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void GroundCheck()
     {
-        var onGround = Physics2D.OverlapBox(transform.position + _groundCheckPoint, _groundCheckSize, 0, _groundLayer) && !jumping;
-        if (onGround) {
+        OnGround = Physics2D.OverlapBox(transform.position + _groundCheckPoint, _groundCheckSize, 0, _groundLayer) && !jumping;
+        if (OnGround) {
             LastOnGroundTime = coyoteTime;
         }
         
