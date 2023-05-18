@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Vector2 attackDirection = Vector2.right;
 
+    [Header("Vault Attack")]
+    [SerializeField] float forwardForce = 10;
+    [SerializeField] float upwardForce = 20;
+
     [Header("Spear Throw")]
     public GameObject spearPrefab;
     [SerializeField] float spawnOffsetDistance;
@@ -76,7 +80,7 @@ public class PlayerController : MonoBehaviour
         //gunPivot.gameObject.SetActive(false);
 
         //if(!followCursorPosition)
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
         sprite = GetComponent<SpriteRenderer>();
     }
