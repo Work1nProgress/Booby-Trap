@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using UnityEngine.UIElements.Experimental;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    enum MovementType
+    {
+        Standing,
+        Running,
+        Jumping,
+        Falling,
+        Dashing
+    }
+
     #region variable declaration
     [Header("Running")]
     [SerializeField]
@@ -95,8 +96,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 dashCheckPointLeft;
     [SerializeField] private Vector3 dashCheckPointRight;
 
-    [Header("Vault")]
-
     [Header("Layers")]
     public LayerMask groundLayer;
 
@@ -115,32 +114,38 @@ public class PlayerMovement : MonoBehaviour
     private PlayerSound sound;
 
     //flags
-    private bool jumping = false;
-    private bool falling = false;
     private bool fallingFromDash = false;
 
     //input
     private float inputX, inputY;
-    //private bool jumpPressed = false;
     private bool jumpHeld = false;
-    //private bool dashPressed = false;
-    private bool dashing;
 
     //timers
-    float LastOnGroundTime;
-    float LastDashTime;
-    float LastDashDurationTime;
+    float lastOnGroundTime;
+    float lastDashDuration;
 
-    //private fields
+    // dash timers
+    float timeSpentDashing;
+    float timeSinceLastDash;
+    float lastDashTime;
+    float dashStartTime;
+
+    //private variables
     float dashDirection;
     float canDashDirection;
-    bool wasDashing;
+    bool hasDashed = false;
+    bool onGround;
+    float accelerationRate;
+    float targetSpeed;
+
+    [SerializeField]
+    private MovementType state;
     #endregion
 
     #region public functions and properties
     // properties
-    public bool OnGround => LastOnGroundTime > 0;
-    public bool Dashing => LastDashDurationTime > 0;
+    public bool OnGround => lastOnGroundTime > 0;
+    //public bool Dashing => LastDashDurationTime > 0;
 
     public Vector2 FaceDirection {
         get
@@ -153,35 +158,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // functions
-    public void Jump()
-    {
-        if (LastOnGroundTime > 0)
-        {
-            LastOnGroundTime = 0;
-            if (!jumping)
-            {
-                body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
-                animator.SetTrigger("jump");
-
-                if (sound != null)
-                    sound.PlaySound(sound.jumpSound);
-            }
-
-            jumping = true;
-
-            body.AddForce(Vector2.up * (jumpForce - body.velocity.y), ForceMode2D.Impulse);
-        }
+    public void SetJumpState() { ChangeState(MovementType.Jumping); }
+    public void SetDashState() 
+    { 
+        if(timeSinceLastDash >= dashCooldown || !hasDashed)
+            ChangeState(MovementType.Dashing);
     }
-
-    public void StartDash()
-    {
-        dashing = true;
-    }
-
     #endregion
 
     #region start and update
-
     // Start is called before the first frame update
     void Start()
     {
@@ -189,33 +174,31 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         sound = GetComponent<PlayerSound>();
+
+        state = MovementType.Standing;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        LastOnGroundTime -= Time.deltaTime;
-        LastDashTime -= Time.deltaTime;
-        LastDashDurationTime -= Time.deltaTime;
-        //jumpPressed = Input.GetButtonDown("Jump");
+    {        
+        UpdateCooldowns();
+
         jumpHeld = Input.GetButton("Jump");
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
-        //dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
 
         GroundCheck();
 
-        UpdateJump();
-        UpdateDash();
-       
-        VerticalMovement();
+        if(inputX != 0 && onGround && state != MovementType.Running)
+            ChangeState(MovementType.Running);
 
-        if (LastOnGroundTime > 0 && Mathf.Abs(body.velocity.x) > 0.2f && inputX != 0)
-            animator.SetBool("running", true);
-        else if (LastOnGroundTime <= 0 || Mathf.Abs(body.velocity.x) < 0.2f)
-            animator.SetBool("running", false);
-
-        //Debug.Log("Velocity: " + body.velocity);
+        switch(state) 
+        {
+            case MovementType.Running: UpdateRun();  break;
+            case MovementType.Jumping: UpdateJump(); break;
+            case MovementType.Dashing: UpdateDash(); break;
+            case MovementType.Falling: UpdateFall(); break;
+        }
 
         // switch animation if falling
         animator.SetFloat("yVelocity", body.velocity.y);
@@ -226,67 +209,120 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HorizontalMovement();
+        if (state != MovementType.Standing)
+            HorizontalMovement();
+        else
+            body.velocity = new Vector2(0, body.velocity.y); // prevents player from sliding backwards
     }
 
     private void LateUpdate()
     {
         // update the face direction
-        if (body.velocity.x > 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing right
+        if (inputX > 0 && body.velocity.x > 0)// && Mathf.Abs(body.velocity.x) > 0.1f) // facing right
             sprite.flipX = false;
 
-        if (body.velocity.x < 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing left
+        if (inputX < 0 && body.velocity.x < 0)// && Mathf.Abs(body.velocity.x) > 0.1f) // facing left
             sprite.flipX = true;
     }
     #endregion
 
     #region private functions
+    private void ChangeState(MovementType newState)
+    {
+        if (state == newState)
+            return;
+
+        state = newState;
+
+        switch (state)
+        {
+            case MovementType.Standing:
+                animator.SetBool("running", false);
+                animator.SetBool("dashing", false);
+                body.velocity = Vector2.zero;
+            break;
+
+            case MovementType.Running:
+                animator.SetBool("running", true);
+            break;
+
+            case MovementType.Jumping:
+                StartJump();
+            break;
+
+            case MovementType.Dashing:
+                hasDashed = true;
+                dashStartTime = Time.time;
+                animator.SetBool("dashing", true);
+                body.gravityScale = 0;
+            break;
+        }
+    }
+
+    private void UpdateCooldowns()
+    {
+        lastOnGroundTime -= Time.deltaTime;
+        //LastDashTime -= Time.deltaTime;
+        //LastDashDurationTime -= Time.deltaTime;
+        timeSinceLastDash = Time.time - lastDashTime;
+    }
+
+    private void StartJump()
+    {
+        if (lastOnGroundTime > 0)
+        {
+            lastOnGroundTime = 0;
+
+            body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
+            animator.SetTrigger("jump");
+
+            if (sound != null)
+                sound.PlaySound(sound.jumpSound);            
+
+            body.AddForce(Vector2.up * (jumpForce - body.velocity.y), ForceMode2D.Impulse);
+        }
+    }
+
     private void UpdateJump()
     {
         if (body.velocity.y <= 0)
         {
-            jumping = false;
+            ChangeState(MovementType.Falling);
+        }
 
-            if (!OnGround && !falling)
+        // higher gravity if let go of jump
+        if (!Input.GetButton("Jump"))
+        {
+            body.gravityScale = gravityMultiplier * jumpGravity;
+        }
+    }
+    
+    private void UpdateFall()
+    {
+        if (!OnGround)
+        {
+            if (jumpHeld)
             {
+                body.gravityScale = gravityMultiplier * fallingGravityJumpHeld;
 
-                falling = true;
+            }
+            else if (fallingFromDash)
+            {
+                body.gravityScale = gravityMultiplier * fallingGravityAfterDash;
+            }
+            else
+            {
+                body.gravityScale = gravityMultiplier * fallingGravity;
             }
 
-            if (OnGround && falling)
-            {
-                falling = false;
-                jumping = false;
-            }
-            if (!OnGround && falling)
-            {
-                if (jumpHeld)
-                {
-                    body.gravityScale = gravityMultiplier * fallingGravityJumpHeld;
-
-                }
-                else if (fallingFromDash)
-                {
-                    body.gravityScale = gravityMultiplier * fallingGravityAfterDash;
-                }
-                else
-                {
-                    body.gravityScale = gravityMultiplier * fallingGravity;
-                }
-
-                body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, -maximumFallSpeed, 0));
-            }
+            body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, -maximumFallSpeed, 0));
         }
     }
 
-    
-
     private void HorizontalMovement()
     {
-        float targetSpeed;
-
         //Calculate the direction we want to move in and our desired velocity
-        if (Dashing)
+        if (state == MovementType.Dashing)
         {
             targetSpeed = dashDirection * dashSpeed;
         }
@@ -294,58 +330,61 @@ public class PlayerMovement : MonoBehaviour
         {
             targetSpeed = inputX * runSpeed;
         }
+
         //We can reduce are control using Lerp() this smooths changes to are direction and speed
         targetSpeed = Mathf.Lerp(body.velocity.x, targetSpeed, 1);
-
-        float accelerationRate;
-
-        if (Dashing)
+        
+        if (state == MovementType.Dashing)
         {
             accelerationRate = dashAcceleration;
         }
         else if (OnGround)
+        {
+            if (Mathf.Abs(targetSpeed) > 0.01f)
+                accelerationRate = runAcceleration;
+            else
+                accelerationRate = runDecceleration;
+        }
+        else
+        {
+            accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration * jumpAcceleration : runDecceleration * jumpDecceleration;
+        }
+        
+        if (lastDashDuration <= 0 && state == MovementType.Jumping || state == MovementType.Falling &&
+            Mathf.Abs(body.velocity.y) < hangTimeThreshold)
+        {
+            accelerationRate *= hangTimeAccelerationMult;
+            targetSpeed *= hangTimeSpeedMult;
+        }
+
+        //Calculate difference between current velocity and desired velocity
+        float speedDif = targetSpeed -body.velocity.x;
+        //Calculate force along x-axis to apply to thr player
+        float movement = speedDif * accelerationRate;
+        
+        //Convert this to a vector and apply to rigidbody
+        body.AddForce(movement * Vector2.right, ForceMode2D.Force);
+
+        if (OnGround && inputX == 0 && state != MovementType.Dashing)
+            ChangeState(MovementType.Standing);
+    }
+
+    private void UpdateRun()
+    {
+        if (OnGround)
         {
             accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration : runDecceleration;
         }
         else
         {
             accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration * jumpAcceleration : runDecceleration * jumpDecceleration;
-        }
-
-        if (!Dashing && (jumping || falling) && Mathf.Abs(body.velocity.y) < hangTimeThreshold)
-        {
-            accelerationRate *= hangTimeAccelerationMult;
-            targetSpeed *= hangTimeSpeedMult;
-        }
-
-
-        //Calculate difference between current velocity and desired velocity
-        float speedDif = targetSpeed -body.velocity.x;
-        //Calculate force along x-axis to apply to thr player
-        float movement = speedDif * accelerationRate;
-
-        //Convert this to a vector and apply to rigidbody
-        body.AddForce(movement * Vector2.right, ForceMode2D.Force);
-    }
-
-    private void VerticalMovement()
-    {   if (Dashing)
-        {
-            body.gravityScale = 0;
-            return;
         }        
-
-        // higher gravity if let go of jump
-        if (jumping && !Input.GetButton("Jump"))
-        {
-            body.gravityScale = gravityMultiplier * jumpGravity;
-        }
     }
    
     private void UpdateDash()
     {
         //dash cooldown ended and dash input pressed
-        if (LastDashTime <= 0 && dashing && !fallingFromDash)
+        if (!fallingFromDash)
         {
             //if player is holding a direction
             if (Mathf.Abs(inputX) > 0)
@@ -360,82 +399,98 @@ public class PlayerMovement : MonoBehaviour
             //check if player is already colliding with a wall
             if (canDashDirection == 0 || dashDirection != canDashDirection)
             {
-                LastDashDurationTime = dashDuration;
-                LastDashTime = dashCooldown;
+                lastDashDuration = dashDuration;
+               // LastDashTime = dashCooldown;
 
-                body.velocity = new Vector2(body.velocity.x, 0);
-                falling = false;
-                jumping = false;
+                body.velocity = new Vector2(body.velocity.x, 0);                
             }
             else
             {
                 dashDirection = 0;
-
             }
         }
 
-        if (wasDashing && !Dashing)
-        {
-            EndDash();
-        }
-        wasDashing = Dashing;
-    }
-
-    private void GroundCheck()
-    {
+        // check if there is a collision with a wall on the left
         canDashDirection = 0;
         var dashCanceledLeft = Physics2D.OverlapBox(transform.position + dashCheckPointLeft, dashCheckSize, 0, groundLayer);
         if (dashCanceledLeft)
         {
-            if (Dashing && dashDirection < 0)
+            if (dashDirection < 0)
             {
                 EndDash();
             }
             canDashDirection -= 1;
         }
 
+        // check if there is a collision with a wall on the right
         var dashCanceledRight = Physics2D.OverlapBox(transform.position + dashCheckPointRight, dashCheckSize, 0, groundLayer);
         if (dashCanceledRight)
         {
-            if (Dashing && dashDirection > 0)
+            if (dashDirection > 0)
             {
                 EndDash();
             }
             canDashDirection += 1;
         }
 
+        timeSpentDashing = Time.time - dashStartTime;
 
-        var onGround = Physics2D.OverlapBox(transform.position + groundCheckPoint, groundCheckSize, 0, groundLayer) && !jumping;
+        if (timeSpentDashing >= dashDuration)
+            EndDash();
+
+        /*
+        if (wasDashing && !Dashing)
+        {
+            EndDash();
+        }
+        wasDashing = Dashing;*/
+    }
+
+    private void GroundCheck()
+    {
+        onGround = Physics2D.OverlapBox(transform.position + groundCheckPoint, groundCheckSize, 0, groundLayer) && 
+                   state != MovementType.Jumping;
+
         if (onGround)
         {
-            LastOnGroundTime = coyoteTime;
+            lastOnGroundTime = coyoteTime;
             fallingFromDash = false;
             body.gravityScale = gravityMultiplier * fallingGravity;
+
+            if (state == MovementType.Jumping)
+                state = MovementType.Standing;
         }
 
     }
 
     void EndDash()
     {
-        LastDashDurationTime = 0;
-        LastDashTime = dashCooldown;
+        lastDashDuration = 0;
+        //LastDashTime = dashCooldown;
         dashDirection = 0;
-        LastOnGroundTime = 0;
-        wasDashing = false;
+        lastOnGroundTime = 0;        
+
         if (!OnGround)
         {
-            falling = true;
             fallingFromDash = true;
+
+            ChangeState(MovementType.Falling);
             body.gravityScale = gravityMultiplier* fallingGravityAfterDash;
         }
+        else 
+        {
+            ChangeState(MovementType.Standing);
+        }
 
-        dashing = false;
+        lastDashTime = Time.time;
+        animator.SetBool("dashing", false);
     }
 
+    /*
     private bool CanJump()
     {
         return OnGround && !jumping;
-    }   
+    }*/
 
     private void OnDrawGizmosSelected()
     {
