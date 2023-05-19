@@ -67,7 +67,7 @@ public class FlyingEnemy : EnemyController
     private void FireShot()
     {
         var bullet = Instantiate(bulletPrefab, (Vector2)transform.position + bulletSpawnOffset, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Direction = Vector2.down;
+        //bullet.GetComponent<Bullet>().Direction = Vector2.down;
 
         hasFired = false;
 
