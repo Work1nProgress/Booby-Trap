@@ -78,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Meep Meep")]
     float coyoteTime;
 
-
     [Header("Dash")]
     [SerializeField]
     [Range(1, 1000)]
@@ -113,32 +112,32 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D body;
     private SpriteRenderer sprite;
     private Animator animator;
-    private PlayerSound sound;    
-
+    private PlayerSound sound;
 
     //flags
     private bool jumping = false;
     private bool falling = false;
     private bool fallingFromDash = false;
 
-
     //input
     private float inputX, inputY;
-    private bool jumpPressed = false;
+    //private bool jumpPressed = false;
     private bool jumpHeld = false;
-    private bool dashPressed = false;
+    //private bool dashPressed = false;
+    private bool dashing;
 
     //timers
     float LastOnGroundTime;
     float LastDashTime;
     float LastDashDurationTime;
 
-    #endregion
-
     //private fields
     float dashDirection;
     float canDashDirection;
+    bool wasDashing;
+    #endregion
 
+    #region public functions and properties
     // properties
     public bool OnGround => LastOnGroundTime > 0;
     public bool Dashing => LastDashDurationTime > 0;
@@ -152,6 +151,36 @@ public class PlayerMovement : MonoBehaviour
                 return Vector2.right;
         }
     }
+
+    // functions
+    public void Jump()
+    {
+        if (LastOnGroundTime > 0)
+        {
+            LastOnGroundTime = 0;
+            if (!jumping)
+            {
+                body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
+                animator.SetTrigger("jump");
+
+                if (sound != null)
+                    sound.PlaySound(sound.jumpSound);
+            }
+
+            jumping = true;
+
+            body.AddForce(Vector2.up * (jumpForce - body.velocity.y), ForceMode2D.Impulse);
+        }
+    }
+
+    public void StartDash()
+    {
+        dashing = true;
+    }
+
+    #endregion
+
+    #region start and update
 
     // Start is called before the first frame update
     void Start()
@@ -168,18 +197,16 @@ public class PlayerMovement : MonoBehaviour
         LastOnGroundTime -= Time.deltaTime;
         LastDashTime -= Time.deltaTime;
         LastDashDurationTime -= Time.deltaTime;
-        jumpPressed = Input.GetButtonDown("Jump");
+        //jumpPressed = Input.GetButtonDown("Jump");
         jumpHeld = Input.GetButton("Jump");
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
-        dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
+        //dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
 
         GroundCheck();
 
         UpdateJump();
         UpdateDash();
-
-        
        
         VerticalMovement();
 
@@ -211,24 +238,9 @@ public class PlayerMovement : MonoBehaviour
         if (body.velocity.x < 0 && Mathf.Abs(body.velocity.x) > 0.1f) // facing left
             sprite.flipX = true;
     }
+    #endregion
 
-    public void Jump(float liftForce)
-    {
-        LastOnGroundTime = 0;
-        if (!jumping)
-        {
-            body.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
-            animator.SetTrigger("jump");
-
-            if (sound != null)
-                sound.PlaySound(sound.jumpSound);
-        }
-
-        jumping = true;
-
-        body.AddForce(Vector2.up * (liftForce - body.velocity.y), ForceMode2D.Impulse);
-    }
-
+    #region private functions
     private void UpdateJump()
     {
         if (body.velocity.y <= 0)
@@ -271,8 +283,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void HorizontalMovement()
     {
-
-
         float targetSpeed;
 
         //Calculate the direction we want to move in and our desired velocity
@@ -295,9 +305,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (OnGround)
         {
-
             accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration : runDecceleration;
-
         }
         else
         {
@@ -314,7 +322,6 @@ public class PlayerMovement : MonoBehaviour
         //Calculate difference between current velocity and desired velocity
         float speedDif = targetSpeed -body.velocity.x;
         //Calculate force along x-axis to apply to thr player
-
         float movement = speedDif * accelerationRate;
 
         //Convert this to a vector and apply to rigidbody
@@ -326,11 +333,7 @@ public class PlayerMovement : MonoBehaviour
         {
             body.gravityScale = 0;
             return;
-        }
-        if (jumpPressed && LastOnGroundTime > 0)
-        {
-            Jump(jumpForce);
-        }
+        }        
 
         // higher gravity if let go of jump
         if (jumping && !Input.GetButton("Jump"))
@@ -338,11 +341,11 @@ public class PlayerMovement : MonoBehaviour
             body.gravityScale = gravityMultiplier * jumpGravity;
         }
     }
-    bool wasDashing;
+   
     private void UpdateDash()
     {
         //dash cooldown ended and dash input pressed
-        if (LastDashTime <= 0 && dashPressed && !fallingFromDash)
+        if (LastDashTime <= 0 && dashing && !fallingFromDash)
         {
             //if player is holding a direction
             if (Mathf.Abs(inputX) > 0)
@@ -425,6 +428,8 @@ public class PlayerMovement : MonoBehaviour
             fallingFromDash = true;
             body.gravityScale = gravityMultiplier* fallingGravityAfterDash;
         }
+
+        dashing = false;
     }
 
     private bool CanJump()
@@ -441,5 +446,6 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + dashCheckPointLeft, dashCheckSize);
         Gizmos.DrawWireCube(transform.position + dashCheckPointRight, dashCheckSize);
     }
+    #endregion
 
 }

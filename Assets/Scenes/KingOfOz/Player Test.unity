@@ -6980,6 +6980,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onJumpInput.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1586561317}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpawnSpear
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+      propertyPath: onSpearThrow.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5368626787839533214, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -7031,6 +7063,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5368626787839533214, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
   m_PrefabInstance: {fileID: 1268307388}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1586561317 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5368626787839533210, guid: 05706ecfa9a96eb4787f522d6bb0a79f, type: 3}
+  m_PrefabInstance: {fileID: 1268307388}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b74361528bc4147b37d14f1eedb2c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2005752910
 GameObject:
   m_ObjectHideFlags: 0
@@ -7087,7 +7130,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
