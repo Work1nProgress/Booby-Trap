@@ -4,7 +4,8 @@ public class ControllerLoadingScene : MonoBehaviour
 {
 
 
-    string mainMenuScene = "MainMenuScene";
+    //string mainMenuScene = "MainMenuScene";
+    string mainMenuScene = "RoomTestScene";
 
     void Start()
     {
