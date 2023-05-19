@@ -17,12 +17,10 @@ public class EntityState : ScriptableObject
     private string _altState;
     public string altState => _altState;
 
-    [SerializeField] private EntityBehavior[] _EnterStateBehaviors;
-    [SerializeField] private EntityBehavior[] _UpdateStateBehaviors;
-    [SerializeField] private EntityBehavior[] _FixedStateBehaviors;
-    [SerializeField] private EntityBehavior[] _ExitStateBehaviors;
+    protected EntityController _controller;
 
-    EntityController _controller;
+    private Dictionary<string, bool> _stateBools;
+    public Dictionary<string, bool> StateBools => _stateBools;
 
     private bool _timedState = false;
     private float _stateTime;
@@ -45,21 +43,18 @@ public class EntityState : ScriptableObject
 
         _controller = controller;
         _name = data.stateName;
+
+        _stateBools = new Dictionary<string, bool>();
     }
 
     #region State Executors
     public virtual void EnterState()
     {
-        foreach (EntityBehavior behavior in _EnterStateBehaviors)
-            behavior.Execute(this, _controller);
-
         if (_stateTimer != null)
             _stateTimer.Resume();
     }
     public virtual void ExitState()
     {
-        foreach (EntityBehavior behavior in _ExitStateBehaviors)
-            behavior.Execute(this, _controller);
 
         if(_stateTimer != null)
         {
@@ -67,16 +62,8 @@ public class EntityState : ScriptableObject
             _stateTimer.Pause();
         }
     }
-    public virtual void UpdateState(float deltaTime)
-    {
-        foreach (EntityBehavior behavior in _UpdateStateBehaviors)
-            behavior.Execute(this, _controller, Time.deltaTime);
-    }
-    public virtual void FixedUpdateState(float deltaTime)
-    {
-        foreach (EntityBehavior behavior in _FixedStateBehaviors)
-            behavior.Execute(this, _controller, Time.fixedDeltaTime);
-    }
+    public virtual void UpdateState(float deltaTime) { }
+    public virtual void FixedUpdateState(float deltaTime) { }
     #endregion
 
     #region State Transitioners
