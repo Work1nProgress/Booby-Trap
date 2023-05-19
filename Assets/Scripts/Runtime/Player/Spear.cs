@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,4 +68,10 @@ public class Spear : MonoBehaviour
            // GameObject.Destroy(gameObject);
     }
 
+    public IEnumerator DisabaleCollider(float timeLength)
+    {
+        GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(timeLength);
+        GetComponent<Collider2D>().enabled = true;
+    }
 }

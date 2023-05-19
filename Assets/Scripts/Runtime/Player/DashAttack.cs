@@ -13,7 +13,7 @@ public class DashAttack : MonoBehaviour
     [SerializeField]
     bool useCooldown = true;
     [SerializeField][Range(0, 10)]
-    float coolDownTime = 3.0f;
+    float dashCoolDown = 3.0f;
     [SerializeField]
     bool dashReady = true;
 
@@ -43,7 +43,7 @@ public class DashAttack : MonoBehaviour
     void Update()
     {
         if (useCooldown)
-            dashReady = ((Time.time - lastDashTime) > coolDownTime);
+            dashReady = ((Time.time - lastDashTime) > dashCoolDown);
         else
             dashReady = true;
 
