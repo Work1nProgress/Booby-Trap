@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ImpalingVault : MonoBehaviour
 {
+    /*
     [Header("Movement")]
     [SerializeField][Range (1, 100)]
     float upwardForce = 20;
@@ -34,14 +35,14 @@ public class ImpalingVault : MonoBehaviour
         {
             if (movement.OnGround)
             {
-                movement.Jump(upwardForce);
+                movement.Jump();
 
-                body.AddForce(movement.FaceDirection * forwardForce, ForceMode2D.Impulse);
+                //body.AddForce(movement.FaceDirection * forwardForce, ForceMode2D.Impulse);
 
                 performingVault = true;
             }
         }
             
-    }
+    }*/
 
 }

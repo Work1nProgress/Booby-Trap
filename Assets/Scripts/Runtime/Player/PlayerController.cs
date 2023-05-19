@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -11,6 +12,13 @@ public class PlayerController : MonoBehaviour
     [Header("Player Stats")]
     public int startingHealth = 10;
 
+    [Header("Player Input")]
+    [SerializeField] string jumpButton = "Jump";
+    [SerializeField] string basicAttackButton = "Fire1";
+    [SerializeField] string dashingThrustButton = "Fire2";
+    [SerializeField] string spearThrowControllerAxis = "9th";
+    [SerializeField] KeyCode spearThrowKey = KeyCode.F;
+
     [Header("Basic Attack")]
     [SerializeField] float weaponRadius = 0.1f;
     [SerializeField] uint weaponDamage = 1;
@@ -19,22 +27,26 @@ public class PlayerController : MonoBehaviour
     private Vector2 attackDirection = Vector2.right;    
 
     [Header("Spear Throw")]
-    public GameObject spearPrefab;
-    [SerializeField] KeyCode throwKey = KeyCode.F;
+    public GameObject spearPrefab;    
     [SerializeField] float spawnOffsetDistance;
-    
+    [Tooltip("How long the collider of the spehere will be disabled when dropping through it")]
+    [SerializeField] float fallThroughTime = 1.0f;
+
     // private varialbes
     private bool canAttack = true;
     private int health;
     private GameObject thrownSpear = null;
 
+    private bool onSpear = true;
+
     // components
     Animator animator;    
 
     // singleton classes
-    //GameManager gameManager;
     HUD gui;
-    PlayerSound sound;   
+    PlayerSound sound;
+
+    public UnityEvent onJumpInput, OnDash, onSpearThrow;
 
     private SpriteRenderer sprite;
     #endregion
@@ -42,19 +54,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gameManager = GameManager.Instance;
         gui = HUD.Instance;
         sound = GetComponent<PlayerSound>();
 
         health = startingHealth;
-        //ammo = startingAmmo;
-
-        //aimingLine = GetComponentInChildren<LineRenderer>();
         animator = GetComponent<Animator>();
 
-        //gunPivot.gameObject.SetActive(false);
-
-        //if(!followCursorPosition)
         Cursor.lockState = CursorLockMode.Locked;
 
         sprite = GetComponent<SpriteRenderer>();
@@ -66,7 +71,7 @@ public class PlayerController : MonoBehaviour
         //if (!gameManager.GameRunning)
             //return;
 
-        UpdateAttackInput();
+        UpdateInput();
 
         /*
         // up pressed while standing infront of a portal
@@ -83,10 +88,22 @@ public class PlayerController : MonoBehaviour
         }*/
     }
     
-    private void UpdateAttackInput()
+    private void UpdateInput()
     {    
         float verticalInput = Input.GetAxis("Vertical");
         animator.SetFloat("vInput", verticalInput);
+
+        // drop through spear input
+        if (verticalInput < 0 && Input.GetButtonDown(jumpButton))
+        {
+            if(onSpear)
+            {
+                Spear spear = thrownSpear.GetComponent<Spear>();
+                StartCoroutine(spear.DisabaleCollider(fallThroughTime));
+            }
+        }
+        else if (Input.GetButtonDown(jumpButton))
+            onJumpInput.Invoke();
 
         // update attack direction
         if (verticalInput > 0)
@@ -111,31 +128,38 @@ public class PlayerController : MonoBehaviour
 
         if (canAttack)
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown(basicAttackButton))
             {
                 animator.SetTrigger("attack");
                 canAttack = false;
             }
 
-            if (Input.GetKeyDown(throwKey))
+            if (Input.GetKeyDown(spearThrowKey))
             {
                 if (spearPrefab != null)
                 {
-                    ThrowSpear(attackDirection);
+                    onSpearThrow.Invoke();
                 }
             }
         }
+
+        if(Input.GetButtonDown(dashingThrustButton) || Input.GetKeyDown(KeyCode.K))
+        {
+            OnDash.Invoke();
+        }
+
+        
     }
 
-    private void ThrowSpear(Vector2 direction)
+    public void SpawnSpear()
     {
         if(thrownSpear != null)
             GameObject.Destroy(thrownSpear);
 
-        animator.SetTrigger("Throw"); // plays shooting animation
-        Vector2 spawnPosition = (Vector2)transform.position + direction * spawnOffsetDistance;
-        thrownSpear = Instantiate(spearPrefab, spawnPosition, Quaternion.Euler(direction));
-        thrownSpear.GetComponent<Spear>().Direction = direction;
+        animator.SetTrigger("throw"); // plays shooting animation
+        Vector2 spawnPosition = (Vector2)transform.position + attackDirection * spawnOffsetDistance;
+        thrownSpear = Instantiate(spearPrefab, spawnPosition, Quaternion.Euler(attackDirection));
+        thrownSpear.GetComponent<Spear>().Direction = attackDirection;
     }
 
     // Invoked from animation even on attack animation
@@ -165,9 +189,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject == thrownSpear)
+        {
+            //Debug.Log("You have landed on top of your spear");
+            onSpear = true;
+        }
+
         if(collision.gameObject.layer == 9) // enemy projectile layer
         {
             TakeDamage(1);            
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject == thrownSpear)
+        {
+            //Debug.Log("You have left the spear");
+            onSpear = false;
         }
     }
 
