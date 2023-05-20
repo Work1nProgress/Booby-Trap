@@ -26,7 +26,6 @@ public class FlyingSpear : Spear
 
     public void Init(float speed, float lifeTime, float range, float echoSpeed, int direction, float inheritSpeed, UnityAction OnDespawnedCallback)
     {
-       
         m_RigidBody.velocity = new Vector2(speed* direction + echoSpeed * inheritSpeed, 0);
         m_Range = range;
         m_StartPositon = transform.position;
@@ -54,8 +53,6 @@ public class FlyingSpear : Spear
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-
         var spear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, transform.position + m_Direction * stuckOffset, Quaternion.Euler(0, 0, 90));
         spear.Init(m_Lifetime,
            m_Direction,

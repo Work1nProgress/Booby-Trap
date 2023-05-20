@@ -48,23 +48,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9727ba72418a14133b55d33a67bd9e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RunSpeed: 10
-  runAcceleration: 5
-  runDecceleration: 5
+  m_RunSpeed: 12
+  runAcceleration: 6
+  runDecceleration: 15
   jumpForce: 10
-  jumpAcceleration: 1
-  jumpDecceleration: 1
+  jumpAcceleration: 2
+  jumpDecceleration: 2
   gravityMultiplier: 1
   jumpGravityJumpHeld: 1.7
-  jumpGravity: 3
+  jumpGravity: 14
   fallingGravityJumpHeld: 2
   fallingGravity: 4
   fallingGravityAfterDash: 1.7
-  maximumFallSpeed: 50
+  maximumFallSpeed: 100
   hangTimeThreshold: 0.1
   hangTimeAccelerationMult: 1.1
   hangTimeSpeedMult: 1.1
-  coyoteTime: 0.7
+  coyoteTime: 0.2
   m_RigidBody: {fileID: 4492751368146734884}
   m_PlayerSprite: {fileID: 4492751368146734891}
   groundLayer:
@@ -90,14 +90,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_MaxNumberOfSpearsInGame: 0
-  m_MaxSpearsOnPlayer: 1
+  m_MaxSpearsOnPlayer: 2
   m_SpearRegenTime: 1
   SpearCollector: 0
   m_ThrowCooldown: 1
-  m_SpearFlySpeed: 5
+  m_SpearFlySpeed: 1
   m_SpearLifetime: 0
   m_SpearRange: 0
-  m_InheritSpeed: 0
+  m_InheritSpeed: 1
   m_MovementController: {fileID: 4492751368146734888}
 --- !u!50 &4492751368146734884
 Rigidbody2D:
