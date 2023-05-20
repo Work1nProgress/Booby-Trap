@@ -8,14 +8,44 @@ public class ControllerGame : ControllerLocal
     static ControllerGame m_Instance;
     public static ControllerGame Instance => m_Instance;
 
+
+    
+
+
+
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
+       
         base.Init();
         m_Instance = this;
-        PoolManager.Instance.Init();
+
+
+
 
         
+    }
+
+    //move this in some kind of spear controller script
+    public List<Spear> Spears = new List<Spear>();
+
+    public void RemoveSpear(int index = 0)
+    {
+        var toRemove = Instance.Spears[index];
+        Instance.Spears.RemoveAt(index);
+        PoolManager.Despawn(toRemove);
+    }
+
+    public void RemoveSpear(Spear spear)
+    {
+
+        RemoveSpear(GetSpearIndex(spear));
+
+    }
+
+    public int GetSpearIndex(Spear spear)
+    {
+        return Spears.IndexOf(spear);
     }
 }
 

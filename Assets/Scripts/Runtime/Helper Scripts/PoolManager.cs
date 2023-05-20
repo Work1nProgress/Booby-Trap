@@ -11,33 +11,14 @@ public class PoolManager : GenericSingleton<PoolManager>
     List<PoolDefinition> pooledObjects;
 
     
-    public void Init()
+    protected override void Awake()
     {
+        base.Awake();
         _poolDictionary = new Dictionary<string, Pool>();
         foreach (var poolDeifinition in pooledObjects)
         {
             CreatePool(poolDeifinition);
         }
-    }
-
-    public void CreatePool(GameObject prefab,int poolSize)
-    {
-        string id = prefab.name;
-
-        if(_poolDictionary.ContainsKey(id) == false)
-        {
-            _poolDictionary.Add(id, new Pool(null));
-
-            GameObject poolObjectsContainer = new GameObject(prefab.name + " pool");
-            poolObjectsContainer.transform.parent = transform;
-        
-            for(int i = 0; i < poolSize; i++)
-            {
-                ObjectInstance objectInPool = new ObjectInstance(Instantiate(prefab), prefab.name);
-                objectInPool.SetParent(poolObjectsContainer.transform);
-                _poolDictionary[id].queue.Enqueue(objectInPool);
-            }
-        }    
     }
 
     void CreatePool(PoolDefinition poolDefinition)
@@ -117,21 +98,7 @@ public class PoolManager : GenericSingleton<PoolManager>
         }
     }
 
-    public void ReuseObject(GameObject prefab,Vector3 position,Quaternion rotation)
-    {
-        string id = prefab.name;
-
-        if(!_poolDictionary.ContainsKey(id))
-        {
-            Debug.LogError(prefab.name + " Pool not found!!");
-            return;
-        }
-
-
-        ObjectInstance objectInPool = _poolDictionary[id].queue.Dequeue();
-        objectInPool.Reuse(null,position,rotation);
-        _poolDictionary[id].queue.Enqueue(objectInPool);
-    }
+   
 }
 
 [System.Serializable]

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6443542348756817515}
   - component: {fileID: 6443542348756817512}
   - component: {fileID: 1834796855}
-  - component: {fileID: 6443542347090940256}
   m_Layer: 0
   m_Name: ControllerGameFlow
   m_TagString: Untagged
@@ -56,17 +55,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47b28cc790b6a4894a285193d7eac353, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6443542347090940256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6443542348756817514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 246ebfec6ced84c28bef59f0605ddab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
