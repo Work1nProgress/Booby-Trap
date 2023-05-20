@@ -70,6 +70,7 @@ public class StateHandler : EntityBase
 
     private void OnDestroy()
     {
+        if(_currentState != null)
         _currentState.ClearEvents();
     }
     
