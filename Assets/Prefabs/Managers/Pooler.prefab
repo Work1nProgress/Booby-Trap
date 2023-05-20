@@ -48,3 +48,9 @@ MonoBehaviour:
   - poolObject: {fileID: 3382101926545384584, guid: 419a19735a3a248e3bcf551a3b82926c, type: 3}
     initialPoolSize: 10
     maxPoolSize: 10
+  - poolObject: {fileID: 9086105760571377882, guid: acaf9819a58394f519eeda6a88601e36, type: 3}
+    initialPoolSize: 10
+    maxPoolSize: 10
+  - poolObject: {fileID: 4086129220584096523, guid: 8e9d1e2a014394eec82b34fc3eba94ca, type: 3}
+    initialPoolSize: 10
+    maxPoolSize: 10
