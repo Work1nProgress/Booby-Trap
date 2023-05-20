@@ -2047,6 +2047,50 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
+--- !u!1 &583081989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 583081991}
+  - component: {fileID: 583081990}
+  m_Layer: 0
+  m_Name: Controllers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &583081990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583081989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b28cc790b6a4894a285193d7eac353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &583081991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583081989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.2386003, y: -1.0497453, z: 0.022335354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1729644215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,10 +2123,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7934ac300eaacbf4eac091e22782e6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entryState: moveLeft
+  _tempStats:
+    MaxHealth: 2
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _initialState: Patrol
   _entityStates:
-  - name: moveLeft
-    state: {fileID: 11400000, guid: ce1efc5e662fbfe45ad6bc22d33dec54, type: 2}
+  - stateName: Patrol
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 8cf6274a39ddd994081eaf1bc1b4cf89, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 2
   _movementSpeed: 0.2
 --- !u!50 &1729644217
 Rigidbody2D:
@@ -2190,11 +2244,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729644215}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.19, y: 0.18, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.005846863, w: 0.9999829}
+  m_LocalPosition: {x: 6.24, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.67}

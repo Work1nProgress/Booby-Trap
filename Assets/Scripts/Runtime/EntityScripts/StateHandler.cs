@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class StateHandler : MonoBehaviour
+public class StateHandler : EntityBase
 {
     [Header("State Handling")]
     [SerializeField] private string _initialState;
@@ -12,14 +12,15 @@ public class StateHandler : MonoBehaviour
 
     private Dictionary<string, EntityState> _states;
     private EntityState _currentState;
-    public void Initialize(EntityController controller)
+
+    public void InitStateHandler(EntityController controller)
     {
         _states = new Dictionary<string, EntityState>();
         
         foreach (StateData data in _entityStates)
         {
             EntityState state = Instantiate(data.state);
-            state.Initialize(controller, data);
+            state.InitState(controller, data);
             AddState(state);
         }
 
@@ -69,6 +70,7 @@ public class StateHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        if(_currentState != null)
         _currentState.ClearEvents();
     }
     
