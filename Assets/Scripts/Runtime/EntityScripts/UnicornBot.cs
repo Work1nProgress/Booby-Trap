@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UnicornBot : EntityBase
+public class UnicornBot : EntityBase, ILineOfSightEntity
 {
     [SerializeField] private float trotSpeed = 1f;
     [SerializeField] private float gallopSpeed = 2f;
@@ -42,8 +42,7 @@ public class UnicornBot : EntityBase
             transform.localScale = new Vector2((-Mathf.Sign(_rigidbody2D.velocity.x)), transform.localScale.y);
         }
     }
-
-    public void Enrage()
+    public void EnteredLOS()
     {
         _enrageTimer = enrageDuration;
         _enraged = true;
