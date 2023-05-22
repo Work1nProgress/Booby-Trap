@@ -20,13 +20,22 @@ public class FlyingSpear : Spear
     [SerializeField]
     Rigidbody2D m_RigidBody;
 
-    Vector3 stuckOffset = new Vector3(0.23225f, 0, 0);
+
 
 
 
     public void Init(float speed, float lifeTime, float range, float echoSpeed, int direction, float inheritSpeed, UnityAction OnDespawnedCallback)
     {
-        m_RigidBody.velocity = new Vector2(speed* direction + echoSpeed * inheritSpeed, 0);
+        if (direction == 0)
+        {
+            m_RigidBody.velocity = new Vector2(0,speed + echoSpeed * inheritSpeed);
+
+        }
+        else
+        {
+            m_RigidBody.velocity = new Vector2(speed * direction + echoSpeed * inheritSpeed, 0);
+        }
+
         m_Range = range;
         m_StartPositon = transform.position;
         Init(lifeTime, direction, OnDespawnedCallback);
@@ -53,7 +62,7 @@ public class FlyingSpear : Spear
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var spear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, transform.position + m_Direction * stuckOffset, Quaternion.Euler(0, 0, 90));
+        var spear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, transform.position + m_Direction * StuckOffset, Quaternion.Euler(0, 0, 90));
         spear.Init(m_Lifetime,
            m_Direction,
             m_OnDespawnedCallback);
