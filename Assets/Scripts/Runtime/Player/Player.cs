@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Player : EntityBase
 {
-
-
     //these settings will be moved somwhere else later (hopefully)
     [SerializeField]
     [Tooltip("Amount of spears in scene before the previous ones dissapear (0 for infinite)")]
