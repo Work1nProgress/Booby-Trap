@@ -51,11 +51,11 @@ MonoBehaviour:
   m_RunSpeed: 12
   runAcceleration: 6
   runDecceleration: 15
-  jumpForce: 10
+  jumpForce: 12
   jumpAcceleration: 2
   jumpDecceleration: 2
   gravityMultiplier: 1
-  jumpGravityJumpHeld: 1.7
+  jumpGravityJumpHeld: 1.2
   jumpGravity: 14
   fallingGravityJumpHeld: 2
   fallingGravity: 4
@@ -90,12 +90,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_MaxNumberOfSpearsInGame: 0
-  m_MaxSpearsOnPlayer: 2
+  m_MaxSpearsOnPlayer: 5
   m_SpearRegenTime: 1
   SpearCollector: 0
   m_ThrowCooldown: 1
-  m_SpearFlySpeed: 1
-  m_SpearLifetime: 0
+  m_SpearFlySpeed: 10
+  m_SpearLifetime: 10
   m_SpearRange: 0
   m_InheritSpeed: 1
   m_MovementController: {fileID: 4492751368146734888}

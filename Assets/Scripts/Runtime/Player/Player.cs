@@ -57,6 +57,18 @@ public class Player : EntityBase
     bool CanThrowSpear => (m_CurrentSpearAmount > 0 || m_MaxSpearsOnPlayer < 0) && (m_ThrowTimer < 0 || m_ThrowCooldown == 0);
 
 
+
+    private void OnEnable()
+    {
+        ControllerInput.Instance.Attack.AddListener(OnThrow);
+        ControllerInput.Instance.Throw.AddListener(OnAttack);
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     private void Start()
     {
         m_CurrentSpearAmount = m_MaxSpearsOnPlayer;
@@ -66,7 +78,8 @@ public class Player : EntityBase
     {
         m_ThrowTimer -= Time.deltaTime;
 
-        if (!SpearCollector) {
+        if (!SpearCollector)
+        {
             m_RegenTimer -= Time.deltaTime;
             if (m_RegenTimer <= 0)
             {
@@ -74,10 +87,11 @@ public class Player : EntityBase
             }
         }
 
-        m_SpearButtonPressed = Input.GetButton("Fire1");
+    }
 
-
-        if (CanThrowSpear && m_SpearButtonPressed)
+    void OnThrow()
+    {
+        if (CanThrowSpear)
         {
             m_ThrowTimer = m_ThrowCooldown;
             var spear = PoolManager.Spawn<FlyingSpear>("FlyingSpear", null, transform.position, Quaternion.Euler(0, 0, 90));
@@ -99,6 +113,10 @@ public class Player : EntityBase
             m_CurrentSpearAmount--;
             m_CurrentSpearAmount = Mathf.Min(m_CurrentSpearAmount + 1, m_MaxSpearsOnPlayer);
         }
+    }
+
+    void OnAttack()
+    {
 
     }
 
