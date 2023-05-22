@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EntityBase : MonoBehaviour
+public class EntityBase : PoolObject
 {
     //temporary for prefab initialization
     [SerializeField] EntityStats _tempStats;
@@ -34,7 +34,10 @@ public class EntityBase : MonoBehaviour
     {
         int newHealth = Mathf.Clamp(_health + ammount, 0, _maxHealth);
         if (newHealth <= 0)
+        {
             OnDeath.Invoke();
+            PoolManager.Despawn(this);
+        }
     }
 }
 

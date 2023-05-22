@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac923f4f778664706856fedec7339a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 
   _tempStats:
     MaxHealth: 1
   OnDeath:
@@ -99,6 +100,14 @@ MonoBehaviour:
   m_SpearRange: 0
   m_InheritSpeed: 1
   m_MovementController: {fileID: 4492751368146734888}
+  m_HorizontalRange: {x: 0.5, y: 0.5}
+  m_UpRange: {x: 0.5, y: 0.5}
+  m_DownRange: {x: 0.5, y: 0.5}
+  m_ReloadTime: 1
+  m_Damage: 1
+  offsetHorizontal: 0.8
+  offsetUp: 1
+  offsetDown: -0.2
 --- !u!50 &4492751368146734884
 Rigidbody2D:
   serializedVersion: 4

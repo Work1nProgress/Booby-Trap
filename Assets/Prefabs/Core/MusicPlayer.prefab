@@ -54,8 +54,8 @@ MonoBehaviour:
     - spearmaiden
   Tracks:
   - Name: spearmaiden
-    Volume: 0
+    Volume: 0.58
     Layers:
     - Volume: 1
-      m_AudioClip: {fileID: 8300000, guid: 140d2c1dca6824711b5615b206ac7114, type: 3}
+      m_AudioClip: {fileID: 8300000, guid: 5f2168dbfa2b247a2a465d252cf89ee8, type: 3}
   DeltaTime: 0.05

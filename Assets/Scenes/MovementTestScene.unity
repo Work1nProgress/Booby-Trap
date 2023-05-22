@@ -650,6 +650,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: Echo
       objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734886, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_Damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: offsetUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: offsetDown
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_UpRange.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_UpRange.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_ReloadTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_DownRange.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_DownRange.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: offsetHorizontal
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_HorizontalRange.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_HorizontalRange.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_RootOrder
       value: 1
