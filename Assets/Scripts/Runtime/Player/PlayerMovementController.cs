@@ -156,8 +156,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         UpdateVerticalMovement();
 
-
-
         //UPDATE HORIZONTAL MOVEMENT
         float targetSpeed;
 
@@ -168,7 +166,9 @@ public class PlayerMovementController : MonoBehaviour
         }
         else
         {
-            targetSpeed = inputX * m_RunSpeed;
+            {
+                targetSpeed = ForwardBackwardOrStandStill(inputX) * m_RunSpeed;
+            }
         }
         //We can reduce are control using Lerp() this smooths changes to are direction and speed
         targetSpeed = Mathf.Lerp(m_RigidBody.velocity.x, targetSpeed, 1);
@@ -416,6 +416,16 @@ public class PlayerMovementController : MonoBehaviour
             Gizmos.DrawWireCube(transform.position + dashCheckPointLeft, dashCheckSize);
             Gizmos.DrawWireCube(transform.position + dashCheckPointRight, dashCheckSize);
         }
+    }
+
+    private int ForwardBackwardOrStandStill(float number)
+    {
+        return number switch
+        {
+            > 0.4f => 1,
+            < -0.4f => -1,
+            _ => 0
+        };
     }
 
 }
