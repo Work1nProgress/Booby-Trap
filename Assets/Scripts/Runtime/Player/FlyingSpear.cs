@@ -57,11 +57,22 @@ public class FlyingSpear : Spear
                 return;
             }
         }
+
        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.layer == 7){
+            var entity = collision.gameObject.GetComponent<EntityBase>();
+            if (entity != null)
+            {
+                entity.Damage(1);
+                Remove();
+                return;
+            }
+        }
+
         var spear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, transform.position + m_Direction * StuckOffset, Quaternion.Euler(0, 0, 90));
         spear.Init(m_Lifetime,
            m_Direction,
@@ -73,7 +84,21 @@ public class FlyingSpear : Spear
         Remove();
     }
 
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 7)
+        {
+            var entity = collision.gameObject.GetComponent<EntityBase>();
+            if (entity != null)
+            {
+                entity.Damage(1);
+                Remove();
+                return;
+            }
+        }
+    }
+
+
 
 
 

@@ -14,6 +14,7 @@ public class EntityBase : PoolObject
     public int Health => _health;
 
     public UnityEvent OnDeath;
+    public UnityEvent OnHit = new UnityEvent();
 
     private void Awake()
     {
@@ -32,12 +33,25 @@ public class EntityBase : PoolObject
 
     private void ChangeHealth(int ammount)
     {
+
+      
         int newHealth = Mathf.Clamp(_health + ammount, 0, _maxHealth);
+        _health = newHealth;
+        if (ammount < 0)
+        {
+            OnHit.Invoke();
+        }
         if (newHealth <= 0)
         {
             OnDeath.Invoke();
-            PoolManager.Despawn(this);
+            OnKill();
         }
+       
+    }
+
+    protected virtual void OnKill()
+    {
+        Destroy(this.gameObject);
     }
 }
 

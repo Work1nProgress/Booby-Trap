@@ -28,6 +28,5 @@ public class Slash : PoolObjectTimed
     {
         Timer -= Time.deltaTime;
         spriteRenderer.material.SetFloat("_Cutoff", Mathf.Min(0.99f, 1f - (Timer / duration) * 0.5f));
-        Debug.Log($"{Mathf.Min(0.99f, 1f - (Timer / duration) * 0.5f)}");
     }
 }

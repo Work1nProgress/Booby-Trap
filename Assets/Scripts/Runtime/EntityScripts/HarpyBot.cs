@@ -1,7 +1,7 @@
 using Pathfinding;
 using UnityEngine;
 
-public class HarpyBot : MonoBehaviour
+public class HarpyBot : EnemyBase
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Transform[] waypoints;
@@ -31,7 +31,7 @@ public class HarpyBot : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
 
-        InvokeRepeating(nameof(UpdatePath), 0f, .5f);
+       
     }
 
     private void OnPathComplete(Path p)
@@ -42,7 +42,7 @@ public class HarpyBot : MonoBehaviour
         _currentPathpoint = 0;
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
         LookForThePlayer();
         
@@ -54,6 +54,8 @@ public class HarpyBot : MonoBehaviour
         {
             ChaseThePlayer();
         }
+        base.FixedUpdate();
+
     }
 
     private void UpdatePath()
@@ -67,12 +69,14 @@ public class HarpyBot : MonoBehaviour
     private void LookForThePlayer()
     {
         var distanceToPlayer = Vector3.Distance(_player.position, transform.position);
-        if (distanceToPlayer < lookRadius)
+        if (distanceToPlayer < lookRadius  && !_playerDetected)
         {
             _playerDetected = true;
+            InvokeRepeating(nameof(UpdatePath), 0f, .5f);
         } else if (distanceToPlayer > losePlayerRadius)
         {
             _playerDetected = false;
+            CancelInvoke(nameof(UpdatePath));
         }
     }
 
@@ -82,8 +86,18 @@ public class HarpyBot : MonoBehaviour
 
         _reachedEndOfPath = _currentPathpoint >= _path.vectorPath.Count;
 
-        Vector2 direction = ((Vector2) _path.vectorPath[_currentPathpoint] - _rigidbody2D.position).normalized;
-        Move(direction);
+        // handle this that after one attack of the player there is a timeout where the harpy loses aggro
+        try
+        {
+            Vector2 direction = ((Vector2)_path.vectorPath[_currentPathpoint] - _rigidbody2D.position).normalized;
+            Move(direction);
+        }
+        catch
+        {
+            _playerDetected = false;
+            return;
+        }
+        
         
         
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ControllerGame : ControllerLocal
@@ -9,21 +10,26 @@ public class ControllerGame : ControllerLocal
     public static ControllerGame Instance => m_Instance;
 
 
-    
 
+    public Player player;
+    Vector3 m_StartingPlayerPos;
 
+    [SerializeField]
+    TMP_Text LabelHealth;
 
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
-       
+
         base.Init();
         m_Instance = this;
 
+        player = FindFirstObjectByType<Player>();
+        m_StartingPlayerPos = player.transform.position;
 
-
-
-        
+        player.OnHit.AddListener(UpdatePlayerHealth);
+        player.OnDeath.AddListener(OnPlayerDeath);
+        UpdatePlayerHealth();
     }
 
     //move this in some kind of spear controller script
@@ -48,6 +54,20 @@ public class ControllerGame : ControllerLocal
     {
         return Spears.IndexOf(spear);
     }
+
+    public void UpdatePlayerHealth()
+    {
+
+        LabelHealth.text = $"Health: {player.Health}";
+    }
+
+    public void OnPlayerDeath(){
+        player.Heal(3);
+        player.transform.position = m_StartingPlayerPos;
+        UpdatePlayerHealth();
+     }
+
+
 }
 
 
