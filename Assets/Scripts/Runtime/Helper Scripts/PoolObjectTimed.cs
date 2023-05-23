@@ -8,7 +8,7 @@ public class PoolObjectTimed : PoolObject
     [SerializeField]
     bool autoKill;
     [SerializeField]
-    float duration;
+    protected float duration;
     CountdownTimer timer;
     public override void Reuse()
     {
@@ -34,6 +34,6 @@ public class PoolObjectTimed : PoolObject
 
     private void OnDestroy()
     {
-        timer.Dispose();
+        timer?.Dispose();
     }
 }

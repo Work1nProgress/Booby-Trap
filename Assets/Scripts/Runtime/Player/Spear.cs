@@ -9,6 +9,7 @@ public class Spear : PoolObject
     protected float m_Lifetime;
     protected UnityAction m_OnDespawnedCallback;
     protected int m_Direction;
+    public static Vector3 StuckOffset = new Vector3(0.23225f, 0, 0);
 
     [SerializeField]
     protected SpriteRenderer m_SpriteRenderer;

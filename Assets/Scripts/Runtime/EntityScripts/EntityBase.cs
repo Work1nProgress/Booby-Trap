@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EntityBase : MonoBehaviour
+public class EntityBase : PoolObject
 {
     //temporary for prefab initialization
     [SerializeField] EntityStats _tempStats;
@@ -14,6 +14,7 @@ public class EntityBase : MonoBehaviour
     public int Health => _health;
 
     public UnityEvent OnDeath;
+    public UnityEvent OnHit = new UnityEvent();
 
     private void Awake()
     {
@@ -32,9 +33,25 @@ public class EntityBase : MonoBehaviour
 
     private void ChangeHealth(int ammount)
     {
+
+      
         int newHealth = Mathf.Clamp(_health + ammount, 0, _maxHealth);
+        _health = newHealth;
+        if (ammount < 0)
+        {
+            OnHit.Invoke();
+        }
         if (newHealth <= 0)
+        {
             OnDeath.Invoke();
+            OnKill();
+        }
+       
+    }
+
+    protected virtual void OnKill()
+    {
+        Destroy(this.gameObject);
     }
 }
 
