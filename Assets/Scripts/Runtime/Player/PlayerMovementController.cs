@@ -167,7 +167,7 @@ public class PlayerMovementController : MonoBehaviour
         else
         {
             {
-                targetSpeed = ForwardBackwardOrStandStill(inputX) * m_RunSpeed;
+                targetSpeed = inputX * m_RunSpeed;
             }
         }
         //We can reduce are control using Lerp() this smooths changes to are direction and speed
@@ -417,15 +417,4 @@ public class PlayerMovementController : MonoBehaviour
             Gizmos.DrawWireCube(transform.position + dashCheckPointRight, dashCheckSize);
         }
     }
-
-    private int ForwardBackwardOrStandStill(float number)
-    {
-        return number switch
-        {
-            > 0.4f => 1,
-            < -0.4f => -1,
-            _ => 0
-        };
-    }
-
 }

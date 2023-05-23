@@ -1555,9 +1555,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.0013755158
-    width: 0.9993193
-    height: 0.99587345
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1940,6 +1940,10 @@ PrefabInstance:
     - target: {fileID: 7110510423519493817, guid: ee038c2f61dbb99458683b7538ca95c9, type: 3}
       propertyPath: m_Name
       value: Unicorn Bot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110510423519493821, guid: ee038c2f61dbb99458683b7538ca95c9, type: 3}
+      propertyPath: _tempStats.MaxHealth
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7110510423519493822, guid: ee038c2f61dbb99458683b7538ca95c9, type: 3}
       propertyPath: m_RootOrder
