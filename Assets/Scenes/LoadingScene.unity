@@ -353,26 +353,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 1943923767521085730, guid: 850584d11269547f3a43f099533240cb, type: 3}
-      propertyPath: Tracks.Array.data[0].Volume
-      value: 0.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 1943923767521085730, guid: 850584d11269547f3a43f099533240cb, type: 3}
-      propertyPath: Tracks.Array.data[0].Layers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1943923767521085730, guid: 850584d11269547f3a43f099533240cb, type: 3}
-      propertyPath: Tracks.Array.data[0].Layers.Array.data[1].Volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1943923767521085730, guid: 850584d11269547f3a43f099533240cb, type: 3}
-      propertyPath: Tracks.Array.data[0].Layers.Array.data[0].m_AudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 5f2168dbfa2b247a2a465d252cf89ee8, type: 3}
-    - target: {fileID: 1943923767521085730, guid: 850584d11269547f3a43f099533240cb, type: 3}
-      propertyPath: Tracks.Array.data[0].Layers.Array.data[1].m_AudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 140d2c1dca6824711b5615b206ac7114, type: 3}
     - target: {fileID: 1943923767521085731, guid: 850584d11269547f3a43f099533240cb, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -27,6 +27,7 @@ public class ControllerGame : ControllerLocal
     }
 
     //move this in some kind of spear controller script
+    [HideInInspector]
     public List<Spear> Spears = new List<Spear>();
 
     public void RemoveSpear(int index = 0)

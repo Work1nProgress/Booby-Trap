@@ -97,12 +97,12 @@ public class PlayerMovementController : MonoBehaviour
 
 
     private bool jumping = false;
+    private bool falling = false;
     private bool fallingFromDash = false;
     private bool standingOnSpear = false;
 
 
     private float inputX, inputY;
-    private bool jumpPressed = false;
     private bool jumpHeld = false;
     private bool dashPressed = false;
 
@@ -119,16 +119,28 @@ public class PlayerMovementController : MonoBehaviour
     public bool FacingRight => !m_PlayerSprite.flipX;
 
 
+
+    private void OnEnable()
+    {
+        ControllerInput.Instance.Horizontal.AddListener(OnHorizontal);
+        ControllerInput.Instance.Vertical.AddListener(OnVertical);
+        ControllerInput.Instance.Jump.AddListener(OnJump);
+    }
+
+    private void OnDisable()
+    {
+        ControllerInput.Instance.Horizontal.RemoveListener(OnHorizontal);
+        ControllerInput.Instance.Vertical.RemoveListener(OnVertical);
+        ControllerInput.Instance.Jump.RemoveListener(OnJump);
+    }
+
+
     // Update is called once per frame
     void Update()
     {
         LastOnGroundTime -= Time.deltaTime;
         LastDashTime -= Time.deltaTime;
         LastDashDurationTime -= Time.deltaTime;
-        jumpPressed = Input.GetButton("Jump");
-        jumpHeld = Input.GetButton("Jump");
-        inputX = Input.GetAxisRaw("Horizontal");
-        inputY = Input.GetAxisRaw("Vertical");
         if (allowDashing)
         {
             dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
@@ -136,25 +148,6 @@ public class PlayerMovementController : MonoBehaviour
 
         GroundCheck();
 
-        //lets jump 
-        if (jumpPressed && OnGround && !jumping)
-        {
-            if (inputY < 0 && standingOnSpear)
-            {
-                return;
-            }
-
-            jumping = true;
-
-            //no more coyote time
-            LastOnGroundTime = 0;
-
-            m_RigidBody.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
-
-
-            //more force applied if we are falling down (Wil. E. Coyote)
-            m_RigidBody.AddForce(Vector2.up * (jumpForce - m_RigidBody.velocity.y), ForceMode2D.Impulse);
-        }
 
 
     }
@@ -234,7 +227,7 @@ public class PlayerMovementController : MonoBehaviour
 
 
         //we landed
-        if (OnGround && jumping)
+        if (OnGround && jumping && m_RigidBody.velocity.y <= 0)
         {
             jumping = false;
         }
@@ -244,7 +237,8 @@ public class PlayerMovementController : MonoBehaviour
             //we are falling
             if (m_RigidBody.velocity.y <= 0)
             {
-
+                falling = true;
+                jumping = false;
                 // apply correct gravity scale
                 if (jumpHeld)
                 {
@@ -262,9 +256,9 @@ public class PlayerMovementController : MonoBehaviour
                 m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, Mathf.Clamp(m_RigidBody.velocity.y, -maximumFallSpeed, 0));
             }
             // apply correct gravity scale for jump
-            else
+            else if(!jumpHeld)
             {
-                m_RigidBody.gravityScale = gravityMultiplier * (jumpPressed ? jumpGravityJumpHeld : jumpGravity);
+                m_RigidBody.gravityScale = gravityMultiplier * jumpGravity;
             }
 
         }
@@ -341,11 +335,13 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         var collider = Physics2D.OverlapBox(transform.position + groundCheckPoint, groundCheckSize, 0, groundLayer);
-        if (collider != null)
+        if (collider != null && !jumping)
         {
             standingOnSpear = collider.gameObject.CompareTag("Spear");
             LastOnGroundTime = coyoteTime;
             fallingFromDash = false;
+         
+            falling = false;
             m_RigidBody.gravityScale = gravityMultiplier * fallingGravity;
         }
         else
@@ -368,6 +364,44 @@ public class PlayerMovementController : MonoBehaviour
             m_RigidBody.gravityScale = gravityMultiplier * fallingGravityAfterDash;
         }
     }
+
+
+    #region input
+    void OnJump(bool value)
+    {
+        jumpHeld = value;
+        if (value && OnGround && !jumping)
+        {
+            if (inputY < 0 && standingOnSpear)
+            {
+                return;
+            }
+            jumping = true;
+
+            //no more coyote time
+            LastOnGroundTime = 0;
+
+            m_RigidBody.gravityScale = gravityMultiplier * jumpGravityJumpHeld;
+
+
+            //more force applied if we are falling down (Wil. E. Coyote)
+            m_RigidBody.AddForce(Vector2.up * (jumpForce - m_RigidBody.velocity.y), ForceMode2D.Impulse);
+        }
+    }
+
+    
+
+    void OnHorizontal(float value)
+    {
+        inputX = value;
+    }
+
+    void OnVertical(float value)
+    {
+        inputY = value;
+    }
+
+    #endregion
 
 
 
