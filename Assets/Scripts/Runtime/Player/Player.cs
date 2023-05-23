@@ -67,6 +67,9 @@ public class Player : EntityBase
     [SerializeField]
     float offsetHorizontal, offsetUp, offsetDown;
 
+    [SerializeField]
+    [Tooltip("IFrames")]
+    float InvulTime = 1f;
 
 
     bool m_SpearButtonPressed = false;
@@ -76,10 +79,14 @@ public class Player : EntityBase
 
     float m_ThrowTimer;
     float m_RegenTimer;
+    float m_InvulTimer;
     int m_CurrentSpearAmount;
 
 
     float inputY;
+
+    [SerializeField]
+    PlayerMovementController PlayerMovementController;
 
 
     bool CanThrowSpear => (m_CurrentSpearAmount > 0 || m_MaxSpearsOnPlayer < 0) && (m_ThrowTimer < 0 || m_ThrowCooldown == 0);
@@ -109,6 +116,7 @@ public class Player : EntityBase
     {
         m_AttackTimer -= Time.deltaTime;
         m_ThrowTimer -= Time.deltaTime;
+        m_InvulTimer -= Time.deltaTime;
 
         if (!SpearCollector)
         {
@@ -171,6 +179,25 @@ public class Player : EntityBase
         }
     }
 
+    public void AttackForce(Vector3 position, float force)
+    {
+        if (m_InvulTimer > 0)
+        {
+            return;
+        }
+        PlayerMovementController.RigidBody.AddForce((transform.position -position).normalized * force, ForceMode2D.Impulse);
+    }
+
+    public override void Damage(int ammount)
+    {
+        if (m_InvulTimer > 0)
+        {
+            return;
+        }
+        m_InvulTimer = InvulTime;
+        base.Damage(ammount);
+    }
+
     void OnAttack()
     {
         if (m_AttackTimer > 0)
@@ -184,9 +211,10 @@ public class Player : EntityBase
             hit = Physics2D.OverlapBox(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
 
 
-            var slash = PoolManager.Spawn<Slash>("Slash", null, transform.position + new Vector3(offsetHorizontal * direction, 0, 0), Quaternion.Euler(0, 0, -90));
+            var slash = PoolManager.Spawn<Slash>("Slash", transform,default, Quaternion.Euler(0, 0, -90));
+            slash.transform.localPosition = new Vector3(offsetHorizontal * direction, 0, 0);
             slash.transform.localScale = new Vector3(1, direction, 1);
-
+        
         }
         else if (inputY > 0)
         {
@@ -194,13 +222,17 @@ public class Player : EntityBase
             hit = Physics2D.OverlapBox(transform.position + new Vector3(0, offsetUp, 0), m_UpRange, 0, LayerMask.GetMask("Enemy"));
            
 
-            var slash = PoolManager.Spawn<Slash>("Slash", null, transform.position + new Vector3(0,offsetUp, 0),  Quaternion.Euler(0,0,0));
+            var slash = PoolManager.Spawn<Slash>("Slash", transform,default,  Quaternion.Euler(0,0,0));
+            slash.transform.localPosition = new Vector3(0, offsetUp, 0);
             slash.transform.localScale = new Vector3(direction, 1, 1);
         }
         if (hit != null)
         {
             var entity = hit.gameObject.GetComponent<EntityBase>();
-            entity.Damage(m_Damage);
+            if (entity != null)
+            {
+                entity.Damage(m_Damage);
+            }
         }
         m_AttackTimer = m_ReloadTime;
     }
@@ -209,6 +241,13 @@ public class Player : EntityBase
     {
         inputY = value;
     }
+
+    protected override void OnKill()
+    {
+       
+    }
+
+
 
 
     void ReturnSpear() {
@@ -224,5 +263,14 @@ public class Player : EntityBase
         m_CurrentSpearAmount = Mathf.Min(m_CurrentSpearAmount + 1, m_MaxSpearsOnPlayer);
     }
 
-   
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        int direction = m_MovementController.FacingRight ? 1 : -1;
+        Gizmos.DrawWireCube(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + new Vector3(0, offsetUp, 0), m_UpRange);
+    }
+
+
 }

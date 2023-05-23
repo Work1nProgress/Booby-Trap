@@ -86,8 +86,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   _tempStats:
-    MaxHealth: 1
+    MaxHealth: 3
   OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
     m_PersistentCalls:
       m_Calls: []
   m_MaxNumberOfSpearsInGame: 0
@@ -108,6 +111,8 @@ MonoBehaviour:
   offsetHorizontal: 0.8
   offsetUp: 1
   offsetDown: -0.2
+  InvulTime: 1
+  PlayerMovementController: {fileID: 4492751368146734888}
 --- !u!50 &4492751368146734884
 Rigidbody2D:
   serializedVersion: 4
