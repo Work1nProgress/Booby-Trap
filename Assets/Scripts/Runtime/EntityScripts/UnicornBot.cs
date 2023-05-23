@@ -18,9 +18,9 @@ public class UnicornBot : EnemyBase, ILineOfSightEntity
 
 
 
-
-    void Awake()
+    public override void  Awake()
     {
+        base.Awake();
         groundLayer = LayerMask.GetMask("Ground");
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }

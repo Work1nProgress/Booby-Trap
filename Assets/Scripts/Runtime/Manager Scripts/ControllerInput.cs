@@ -47,13 +47,25 @@ public class ControllerInput : GenericSingleton<ControllerInput>
 
     void OnHorizontal(InputValue inputValue)
     {
-        Horizontal.Invoke(inputValue.Get<float>());
+        var horizontalInputRaw = inputValue.Get<float>();
+        Horizontal.Invoke(TristateReduction(horizontalInputRaw));
 
     }
 
     void OnVertical(InputValue inputValue)
     {
-        Vertical.Invoke(inputValue.Get<float>());
+        var vertInputRaw = inputValue.Get<float>();
+        Vertical.Invoke(TristateReduction(vertInputRaw));
 
+    }
+    
+    private int TristateReduction(float number)
+    {
+        return number switch
+        {
+            > 0.4f => 1,
+            < -0.4f => -1,
+            _ => 0
+        };
     }
 }
