@@ -16,15 +16,8 @@ public class EnemyBase : EntityBase
     float AttackForce;
 
 
-
-
-
-
-
-
     protected virtual void FixedUpdate()
     {
-       
         if (Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position) < Range)
         {
 
