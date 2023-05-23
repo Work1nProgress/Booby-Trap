@@ -305,6 +305,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4963573132879665347, guid: 46fe1795bedaf47b39d75b2d848b6065, type: 3}
+      propertyPath: _tempStats.MaxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963573132879665347, guid: 46fe1795bedaf47b39d75b2d848b6065, type: 3}
       propertyPath: waypoints.Array.size
       value: 2
       objectReference: {fileID: 0}

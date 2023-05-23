@@ -21,8 +21,9 @@ public class HarpyBot : EnemyBase
 
     [SerializeField] private Transform _player;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         if (waypoints.Length > 2)
         {
             _currentWaypoint = 0;
