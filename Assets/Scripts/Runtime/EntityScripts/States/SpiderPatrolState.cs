@@ -15,8 +15,6 @@ public class SpiderPatrolState : EntityState
 
     public override void ExitState()
     {
-        _controller.Jump(20);
-
         base.ExitState();
     }
 
@@ -24,9 +22,27 @@ public class SpiderPatrolState : EntityState
     {
         base.FixedUpdateState(deltaTime);
 
-        _controller.Rigidbody.MovePosition(
+        RaycastHit2D cliffHit = Physics2D.Raycast(_movingRight ?
+            _controller.Rigidbody.position + new Vector2(0.55f, 0) :
+            _controller.Rigidbody.position - new Vector2(0.55f, 0),
+            Vector2.down,
+            0.55f,
+            LayerMask.GetMask("Ground"));
+        RaycastHit2D wallHit = Physics2D.Raycast(_movingRight ?
+            _controller.Rigidbody.position + new Vector2(0.55f, 0) :
+            _controller.Rigidbody.position - new Vector2(0.55f, 0),
             _movingRight ?
-            _controller.Rigidbody.position + Vector2.right * _controller.MovementSpeed * deltaTime
-            : _controller.Rigidbody.position - Vector2.right * _controller.MovementSpeed * deltaTime);
+            Vector2.right:
+            Vector2.right * -1,
+            0.1f,
+            LayerMask.GetMask("Ground"));
+
+        if (wallHit.collider != null)
+            if (_movingRight) _controller.RotateCounterClockwise();
+            else _controller.RotateClockwise();
+
+        _controller.Move(_controller.MovementSpeed, _movingRight);
     }
+
+    
 }
