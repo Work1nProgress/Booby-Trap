@@ -16,7 +16,7 @@ public class EntityBase : PoolObject
     public UnityEvent OnDeath;
     public UnityEvent OnHit = new UnityEvent();
 
-    private void Awake()
+    public virtual void Awake()
     {
         Init(_tempStats);
     }

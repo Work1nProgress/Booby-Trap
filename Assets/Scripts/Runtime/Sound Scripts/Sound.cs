@@ -6,33 +6,50 @@ public class Sound
 {
     public string SoundName;
 
-    public bool Randomize;
-    [SerializeField]private SoundItem[] soundItems;
+    public PlaySubitemType PlaySubitemType;
+    [SerializeField]
+    private SoundItem[] soundItems;
 
-    public SoundItem SoundItem
+    public SoundItem SoundItem(SoundItem prev)
     {
-        get
+
+
+        if (prev != null)
         {
-            if (Randomize)
+            switch (PlaySubitemType)
             {
-                return soundItems[Random.Range(0, soundItems.Length)];
-            }
-            else
-            {
-                return soundItems[0];
+                case PlaySubitemType.RandomNotSameTwice:
+                    var si = System.Array.FindAll(soundItems, x => x != prev);
+                    return si[Random.Range(0, si.Length)];
+
             }
         }
+            return soundItems[Random.Range(0, soundItems.Length)];
+
+
+
 
     }
 }
 
-[System.Serializable]
+    [System.Serializable]
     public class SoundItem{
     public AudioClip AudioClip;
 
     [Range(-0.5f, 0.5f)]
     public float Volume = 0.5f;
-    public bool RandomPitchAmplitude;
+    public float PitchShift;
+    public float RandomPitch;
+    public bool UseCustomSpatialBlend;
+    public float DopplerLevel;
 
 
+
+
+}
+
+public enum PlaySubitemType
+{
+    Random,
+    RandomNotSameTwice
 }

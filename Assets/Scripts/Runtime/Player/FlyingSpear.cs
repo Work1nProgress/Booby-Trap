@@ -20,6 +20,8 @@ public class FlyingSpear : Spear
     [SerializeField]
     Rigidbody2D m_RigidBody;
 
+    bool hitTarget = false;
+
 
 
 
@@ -38,6 +40,7 @@ public class FlyingSpear : Spear
 
         m_Range = range;
         m_StartPositon = transform.position;
+        hitTarget = false;
         Init(lifeTime, direction, OnDespawnedCallback);
     }
 
@@ -63,12 +66,13 @@ public class FlyingSpear : Spear
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 7){
+        hitTarget = true;
+        if (collision.gameObject.layer == 7){
             var entity = collision.gameObject.GetComponent<EntityBase>();
             if (entity != null)
             {
                 entity.Damage(1);
-                Remove();
+                RemoveAndNotify();
                 return;
             }
         }
@@ -88,11 +92,16 @@ public class FlyingSpear : Spear
     {
         if (collision.gameObject.layer == 7)
         {
+           
             var entity = collision.gameObject.GetComponent<EntityBase>();
             if (entity != null)
             {
                 entity.Damage(1);
-                Remove();
+                if (!hitTarget)
+                {
+                    RemoveAndNotify();
+                }
+                hitTarget = true;
                 return;
             }
         }
