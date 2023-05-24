@@ -76,6 +76,16 @@ public class PlayerMovementController : MonoBehaviour
     SpriteRenderer m_PlayerSprite;
 
 
+    [Header("Sound")]
+    [SerializeField]
+    string JumpSound;
+    [SerializeField]
+    string LandSound;
+    [SerializeField]
+    string StepsSound;
+
+
+
 
     bool allowDashing = false;
     float dashSpeed = 500;
@@ -110,9 +120,13 @@ public class PlayerMovementController : MonoBehaviour
     float LastDashTime;
     float LastDashDurationTime;
 
+    float StepsTimer;
+
     float dashDirection;
     float canDashDirection;
 
+
+    bool feetTouchingGround;
     public bool OnGround => LastOnGroundTime > 0;
     public bool Dashing => LastDashDurationTime > 0;
 
@@ -141,6 +155,7 @@ public class PlayerMovementController : MonoBehaviour
         LastOnGroundTime -= Time.deltaTime;
         LastDashTime -= Time.deltaTime;
         LastDashDurationTime -= Time.deltaTime;
+        StepsTimer -= Time.deltaTime * Mathf.Abs(m_RigidBody.velocity.x) * 0.1f;
         if (allowDashing)
         {
             dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
@@ -148,8 +163,11 @@ public class PlayerMovementController : MonoBehaviour
 
         GroundCheck();
 
-
-
+        if (feetTouchingGround && Mathf.Abs(m_RigidBody.velocity.x) > 0.1f && StepsTimer < 0)
+        {
+            SoundManager.Instance.Play(StepsSound, transform);
+            StepsTimer = 0.5f;
+        }
     }
 
     private void FixedUpdate()
@@ -226,14 +244,16 @@ public class PlayerMovementController : MonoBehaviour
 
 
 
-        //we landed
+       //not sure this does anything
         if (OnGround && jumping && m_RigidBody.velocity.y <= 0)
         {
             jumping = false;
+          
         }
         else
         {
 
+            
             //we are falling
             if (m_RigidBody.velocity.y <= 0)
             {
@@ -337,15 +357,23 @@ public class PlayerMovementController : MonoBehaviour
         var collider = Physics2D.OverlapBox(transform.position + groundCheckPoint, groundCheckSize, 0, groundLayer);
         if (collider != null && !jumping)
         {
+            if (!feetTouchingGround && falling)
+            {
+
+                SoundManager.Instance.Play(LandSound);
+                
+            }
+            feetTouchingGround = true; 
             standingOnSpear = collider.gameObject.CompareTag("Spear");
             LastOnGroundTime = coyoteTime;
             fallingFromDash = false;
-         
+
             falling = false;
             m_RigidBody.gravityScale = gravityMultiplier * fallingGravity;
         }
         else
         {
+            feetTouchingGround = false;
             standingOnSpear = false;
         }
 
@@ -369,6 +397,7 @@ public class PlayerMovementController : MonoBehaviour
     #region input
     void OnJump(bool value)
     {
+
         jumpHeld = value;
         if (value && OnGround && !jumping)
         {
@@ -376,6 +405,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 return;
             }
+            SoundManager.Instance.Play(JumpSound, transform);
             jumping = true;
 
             //no more coyote time

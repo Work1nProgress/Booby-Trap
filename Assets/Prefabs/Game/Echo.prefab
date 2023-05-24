@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4492751368146734884}
   - component: {fileID: 4492751368146734887}
   - component: {fileID: 4492751368146734891}
+  - component: {fileID: 4492751367343421156}
   m_Layer: 6
   m_Name: Echo
   m_TagString: Untagged
@@ -50,10 +51,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RunSpeed: 12
   runAcceleration: 6
-  runDecceleration: 15
+  runDecceleration: 12
   jumpForce: 12
-  jumpAcceleration: 2
-  jumpDecceleration: 2
+  jumpAcceleration: 3
+  jumpDecceleration: 3
   gravityMultiplier: 1
   jumpGravityJumpHeld: 1.2
   jumpGravity: 14
@@ -64,9 +65,12 @@ MonoBehaviour:
   hangTimeThreshold: 0.1
   hangTimeAccelerationMult: 1.1
   hangTimeSpeedMult: 1.1
-  coyoteTime: 0.2
+  coyoteTime: 0.1
   m_RigidBody: {fileID: 4492751368146734884}
   m_PlayerSprite: {fileID: 4492751368146734891}
+  JumpSound: Echo_Jump
+  LandSound: Echo_Landing
+  StepsSound: Echo_Steps
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -103,9 +107,9 @@ MonoBehaviour:
   m_SpearRange: 0
   m_InheritSpeed: 1
   m_MovementController: {fileID: 4492751368146734888}
-  m_HorizontalRange: {x: 0.5, y: 0.5}
-  m_UpRange: {x: 0.5, y: 0.5}
-  m_DownRange: {x: 0.5, y: 0.5}
+  m_HorizontalRange: {x: 3, y: 3}
+  m_UpRange: {x: 3, y: 3}
+  m_DownRange: {x: 3, y: 3}
   m_ReloadTime: 1
   m_Damage: 1
   offsetHorizontal: 0.8
@@ -113,6 +117,10 @@ MonoBehaviour:
   offsetDown: -0.2
   InvulTime: 1
   PlayerMovementController: {fileID: 4492751368146734888}
+  Attack: Echo_Attack
+  AttackHit: Echo_AttackImpact
+  Throw: Echo_Throw
+  ThrowHit: Echo_ThrowImpact
 --- !u!50 &4492751368146734884
 Rigidbody2D:
   serializedVersion: 4
@@ -212,3 +220,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!81 &4492751367343421156
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4492751368146734886}
+  m_Enabled: 1

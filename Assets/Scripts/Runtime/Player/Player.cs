@@ -90,7 +90,15 @@ public class Player : EntityBase
 
 
     bool CanThrowSpear => (m_CurrentSpearAmount > 0 || m_MaxSpearsOnPlayer < 0) && (m_ThrowTimer < 0 || m_ThrowCooldown == 0);
-
+    [Header("Sound")]
+    [SerializeField]
+    string Attack;
+    [SerializeField]
+    string AttackHit;
+    [SerializeField]
+    string Throw;
+    [SerializeField]
+    string ThrowHit;
 
 
     private void OnEnable()
@@ -133,8 +141,9 @@ public class Player : EntityBase
     {
         if (CanThrowSpear)
         {
+           
             // will change this when we add the throwing the spear up and down
-             float speed = m_MovementController.RigidBody.velocity.x;
+            float speed = m_MovementController.RigidBody.velocity.x;
              int direction = m_MovementController.FacingRight ? 1 : -1;
 
             var hit = Physics2D.Raycast(transform.position, direction * Vector2.right, 0.5f, LayerMask.GetMask("Ground"));
@@ -144,6 +153,8 @@ public class Player : EntityBase
             Spear spear;
             if (hit)
             {
+                SoundManager.Instance.Play(Throw, transform);
+                SoundManager.Instance.Play(ThrowHit, transform);
                 var stuckSpear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, new Vector3(hit.point.x, hit.point.y, 0) - direction * Spear.StuckOffset, Quaternion.Euler(0, 0, 90));
                 stuckSpear.Init(m_SpearLifetime,
                    direction,  //direction                       
@@ -152,7 +163,7 @@ public class Player : EntityBase
             }
             else
             {
-
+               
                 var thrownSpear = PoolManager.Spawn<FlyingSpear>("FlyingSpear", null, transform.position + direction * new Vector3(0.5f, 0, 0), Quaternion.Euler(0, 0, 90));
                 thrownSpear.Init(m_SpearFlySpeed,
                     m_SpearLifetime,
@@ -161,7 +172,7 @@ public class Player : EntityBase
                    direction,  //direction
                     m_InheritSpeed,//amount of inherited speed   
                     ReturnSpear);
-
+                SoundManager.Instance.Play(Throw, thrownSpear.transform);
                 spear = thrownSpear;
             }
 
@@ -214,7 +225,8 @@ public class Player : EntityBase
             var slash = PoolManager.Spawn<Slash>("Slash", transform,default, Quaternion.Euler(0, 0, -90));
             slash.transform.localPosition = new Vector3(offsetHorizontal * direction, 0, 0);
             slash.transform.localScale = new Vector3(1, direction, 1);
-        
+            SoundManager.Instance.Play(Attack, slash.transform);
+
         }
         else if (inputY > 0)
         {
@@ -225,12 +237,17 @@ public class Player : EntityBase
             var slash = PoolManager.Spawn<Slash>("Slash", transform,default,  Quaternion.Euler(0,0,0));
             slash.transform.localPosition = new Vector3(0, offsetUp, 0);
             slash.transform.localScale = new Vector3(direction, 1, 1);
+            SoundManager.Instance.Play(Attack, slash.transform);
         }
+
+       
+
         if (hit != null)
         {
             var entity = hit.gameObject.GetComponent<EntityBase>();
             if (entity != null)
             {
+                SoundManager.Instance.Play(AttackHit, entity.transform);
                 entity.Damage(m_Damage);
             }
         }
