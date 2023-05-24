@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using UnityEditor.Build.Reporting;
 
 [InitializeOnLoad]
 public class EditorExtensions
@@ -62,4 +63,14 @@ public class EditorExtensions
         SceneManager.LoadScene(0);
     }
     #endregion
+}
+
+public class CheckBeforeBuild : UnityEditor.Build.IPreprocessBuildWithReport
+{
+    public int callbackOrder => 0;
+
+    public void OnPreprocessBuild(BuildReport report)
+    {
+        PlayerSettings.SplashScreen.showUnityLogo = false;
+    }
 }
