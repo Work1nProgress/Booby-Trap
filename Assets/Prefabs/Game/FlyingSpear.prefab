@@ -54,6 +54,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   m_RigidBody: {fileID: 9086105760571377887}
+  Hit: Echo_ThrowImpact
 --- !u!212 &9086105760571377880
 SpriteRenderer:
   m_ObjectHideFlags: 0

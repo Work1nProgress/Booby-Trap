@@ -23,6 +23,10 @@ public class FlyingSpear : Spear
     bool hitTarget = false;
 
 
+    [Header("Sound")]
+    [SerializeField]
+    string Hit;
+
 
 
 
@@ -45,11 +49,6 @@ public class FlyingSpear : Spear
     }
 
 
-    bool CheckHitWall()
-    {
-        return Physics2D.OverlapBox(transform.position + m_Direction * groundCheckPoint, groundCheckSize, 0, groundLayer);
-    }
-
     private void FixedUpdate()
     {
         if (m_Range > 0)
@@ -66,6 +65,8 @@ public class FlyingSpear : Spear
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        SoundManager.Instance.Play(Hit, transform);
         hitTarget = true;
         if (collision.gameObject.layer == 7){
             var entity = collision.gameObject.GetComponent<EntityBase>();
@@ -92,7 +93,7 @@ public class FlyingSpear : Spear
     {
         if (collision.gameObject.layer == 7)
         {
-           
+            SoundManager.Instance.Play(Hit, transform);
             var entity = collision.gameObject.GetComponent<EntityBase>();
             if (entity != null)
             {

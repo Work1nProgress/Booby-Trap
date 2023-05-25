@@ -16,7 +16,7 @@ public class ControllerLoadingScene : MonoBehaviour
         Instantiate(SoundManager, null);
 
         //TODO load save file
-        MusicPlayer.Instance.PlayPlaylist("spearmaidenPlaylist");
+     //   MusicPlayer.Instance.PlayPlaylist("spearmaidenPlaylist");
         ControllerGameFlow.Instance.LoadNewScene(mainMenuScene);
     }
 }
