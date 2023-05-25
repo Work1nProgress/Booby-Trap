@@ -73,6 +73,10 @@ public class FlyingSpear : Spear
             if (entity != null)
             {
                 entity.Damage(1);
+                if (Random.value <= ControllerGame.Instance.player.ChanceToGainHeartRanged)
+                {
+                    ControllerGame.Instance.player.Heal(1);
+                }
                 RemoveAndNotify();
                 return;
             }
@@ -98,6 +102,10 @@ public class FlyingSpear : Spear
             if (entity != null)
             {
                 entity.Damage(1);
+                if (Random.value <= ControllerGame.Instance.player.ChanceToGainHeartRanged)
+                {
+                    ControllerGame.Instance.player.Heal(1);
+                }
                 if (!hitTarget)
                 {
                     RemoveAndNotify();

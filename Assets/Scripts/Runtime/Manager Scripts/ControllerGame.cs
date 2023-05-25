@@ -27,7 +27,7 @@ public class ControllerGame : ControllerLocal
         player = FindFirstObjectByType<Player>();
         m_StartingPlayerPos = player.transform.position;
 
-        player.OnHit.AddListener(UpdatePlayerHealth);
+        player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);
         UpdatePlayerHealth();
     }

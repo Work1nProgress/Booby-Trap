@@ -106,12 +106,14 @@ MonoBehaviour:
   m_SpearLifetime: 10
   m_SpearRange: 0
   m_InheritSpeed: 1
+  chanceToGainHeartRanged: 100
   m_MovementController: {fileID: 4492751368146734888}
   m_HorizontalRange: {x: 3, y: 3}
   m_UpRange: {x: 3, y: 3}
   m_DownRange: {x: 3, y: 3}
   m_ReloadTime: 1
   m_Damage: 1
+  chanceToGainHeartMelee: 100
   offsetHorizontal: 0.8
   offsetUp: 1
   offsetDown: -0.2
