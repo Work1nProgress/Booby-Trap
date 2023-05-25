@@ -19,29 +19,21 @@ public class SoundManager : GenericSingleton<SoundManager>
 
     List<SoundInstance> PlayingSounds = new List<SoundInstance>();
     List<SoundInstance> RecentSounds = new List<SoundInstance>();
-    Dictionary<string, SoundItem> LastPlayed;
+    List<LastPlayedHelper> LastPlayed = new List<LastPlayedHelper>();
 
 
     string SoundInstanceName = "SoundInstance";
 
     public float MinDistance;
     public float MaxDistance;
+    public float SpatialBlend;
 
-    public AnimationCurve SpatialBlend = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
-    public AnimationCurve Spread = new AnimationCurve(new Keyframe(0, 1), new Keyframe(360, 0));
-    public AnimationCurve CustomRolloff = new AnimationCurve(new Keyframe(0, 1), new Keyframe(0.2f,0.8f), new Keyframe(0.4f, 0.5f), new Keyframe(0.7f, 0.2f), new Keyframe(1, 0f));
-    public AnimationCurve ReverbZoneMix = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
 
-    Dictionary<AudioSourceCurveType, AnimationCurve> curves = new Dictionary<AudioSourceCurveType, AnimationCurve>();
+    public float Spread;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        curves.Add(AudioSourceCurveType.CustomRolloff, CustomRolloff);
-        curves.Add(AudioSourceCurveType.ReverbZoneMix, ReverbZoneMix);
-        curves.Add(AudioSourceCurveType.Spread, Spread);
-        curves.Add(AudioSourceCurveType.SpatialBlend, SpatialBlend);
-    }
+    public float ReverbZoneMix;
+
+
 
     public void Play(string name, Transform target = default)
     {
@@ -59,19 +51,43 @@ public class SoundManager : GenericSingleton<SoundManager>
                 Debug.Log($"already playing {name}");
                 return;
             }
+
+            var a = UnityEngine.Random.value;
+            Debug.Log($"{name} {a} {sounds[idx].ChanceToPlay} {sounds[idx].ChanceToPlay / 100f}");
+            if (a >= (sounds[idx].ChanceToPlay / 100f))
+            {
+                return;
+            }
             Vector3 targetPosition = target == default ? Camera.main.transform.position : target.position;
             var soundInstance = PoolManager.Spawn<SoundInstance>(SoundInstanceName, null, targetPosition);
-            SoundItem previous = null;
+            List<SoundItem> previous = new List<SoundItem>();
             if (sounds[idx].PlaySubitemType == PlaySubitemType.RandomNotSameTwice)
             {
-                LastPlayed.TryGetValue(name, out previous);
+                var allPrevious = LastPlayed.FindAll(x => x.SoundName == name);
+                for (int i = allPrevious.Count - 1; i >= 0; i--)
+                {
+                    allPrevious[i].SkipsLeft--;
+                    if (allPrevious[i].SkipsLeft <= 0)
+                    {
+                        LastPlayed.Remove(allPrevious[i]);
+                    }
+                    else
+                    {
+                        previous.Add(allPrevious[i].SoundItem);
+                    }
+                }
             }
+
+          
 
             SceneManager.MoveGameObjectToScene(soundInstance.gameObject, SceneManager.GetActiveScene());
             var next = sounds[idx].SoundItem(previous);
             soundInstance.name = $"{sounds[idx].SoundName}_{idx}";
-            soundInstance.Set(next, sounds[idx], target, curves, MinDistance, MaxDistance);
+            soundInstance.Set(next, sounds[idx], target, MinDistance, MaxDistance, Spread, ReverbZoneMix, SpatialBlend);
+
+
             var length = soundInstance.Play();
+
 
             PlayingSounds.Add(soundInstance);
             if (sounds[idx].MinimumTimeBetweenSameSound > 0)
@@ -85,13 +101,17 @@ public class SoundManager : GenericSingleton<SoundManager>
 
             if (sounds[idx].PlaySubitemType == PlaySubitemType.RandomNotSameTwice)
             {
-                if (LastPlayed.ContainsKey(name)){
-                    LastPlayed[name] = next;
-                }
-                else
+
+                if (LastPlayed.Find(x => x.SoundItem == next) == null)
                 {
-                    LastPlayed.Add(name, next);
+                    LastPlayed.Add(new LastPlayedHelper
+                    {
+                        SoundName = name,
+                        SoundItem = next,
+                        SkipsLeft = sounds[idx].notSameTwiceOffset
+                    });
                 }
+                
             }
         }
     }
@@ -113,6 +133,15 @@ public class SoundManager : GenericSingleton<SoundManager>
         }
         list.Remove(instance);
         PoolManager.Despawn(instance);
+    }
+
+    public class LastPlayedHelper
+    {
+
+        public string SoundName;
+        public SoundItem SoundItem;
+        public int SkipsLeft;
+
     }
 }
 

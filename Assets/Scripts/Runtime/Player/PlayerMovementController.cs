@@ -360,7 +360,7 @@ public class PlayerMovementController : MonoBehaviour
             if (!feetTouchingGround && falling)
             {
 
-                SoundManager.Instance.Play(LandSound);
+                SoundManager.Instance.Play(LandSound, transform);
                 
             }
             feetTouchingGround = true; 

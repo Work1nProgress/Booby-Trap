@@ -29,7 +29,7 @@ public class SoundInstance : PoolObject
     }
 
 
-    public void Set(SoundItem item, Sound sound, Transform target, Dictionary<AudioSourceCurveType, AnimationCurve> curves, float minDistance, float maxDistance)
+    public void Set(SoundItem item, Sound sound, Transform target, float minDistance, float maxDistance, float Spread, float reverbMix, float spatialBlend)
     {
         m_SoundName = sound.SoundName;
 
@@ -39,32 +39,29 @@ public class SoundInstance : PoolObject
         m_AudioSource.volume = 0.5f + sound.Volume;
 
 
+        m_AudioSource.spread = sound.UseCustomSpread ? sound.Spread : Spread;
+        m_AudioSource.reverbZoneMix = sound.UseCustomReverbZoneMix ? sound.ReverbZoneMix : reverbMix;
+        m_AudioSource.spatialBlend = sound.UseCustomSpatialBlend ? sound.SpatialBlend : spatialBlend;
 
-        if (sound.UseCustomRolloff || sound.UseCustomReverbZoneMix || sound.UseCustomSpatialBlend || sound.UseCustomSpread)
+
+
+        if (sound.UseCustomMinMax)
         {
+
             m_AudioSource.minDistance = sound.MinDistance;
-            m_AudioSource.maxDistance = sound.MaxDistance;
+            m_AudioSource.maxDistance = Mathf.Max(sound.MaxDistance, m_AudioSource.minDistance + 0.1f);
         }
         else
         {
             m_AudioSource.minDistance = minDistance;
-            m_AudioSource.maxDistance = maxDistance;
+            m_AudioSource.maxDistance = Mathf.Max(maxDistance, m_AudioSource.minDistance + 0.1f);
         }
 
+       
+
+        m_AudioSource.rolloffMode = AudioRolloffMode.Custom;
+
         m_AudioSource.dopplerLevel = sound.DopplerLevel;
-
-        //curves
-        AnimationCurve tmp = sound.UseCustomRolloff ? sound.CustomRolloff : curves[AudioSourceCurveType.CustomRolloff];
-        m_AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, tmp);
-
-        tmp = sound.UseCustomReverbZoneMix ? sound.ReverbZoneMix : curves[AudioSourceCurveType.ReverbZoneMix];
-        m_AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, tmp);
-
-        tmp = sound.UseCustomSpread ? sound.Spread : curves[AudioSourceCurveType.Spread];
-        m_AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, tmp);
-
-        tmp = sound.UseCustomSpatialBlend ? sound.SpatialBlend : curves[AudioSourceCurveType.SpatialBlend];
-        m_AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, tmp);
 
 
 

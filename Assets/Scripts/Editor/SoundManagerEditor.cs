@@ -69,15 +69,15 @@ public class SoundManagerEditor : Editor
             data.MaxDistance = EditorGUILayout.FloatField(new GUIContent("Max Distance", "Furthest distance that custom curves change"), data.MaxDistance, EditorStyles.numberField);
 
 
-            data.CustomRolloff = EditorGUILayout.CurveField(new GUIContent("Rolloff", "How fast the sound fades. The higher the value, the closer the Listener has to be before hearing the sound."), data.CustomRolloff);
-            data.SpatialBlend = EditorGUILayout.CurveField(new GUIContent("Spatial blend", "Sets how much the 3D engine has an effect on the audio source."), data.SpatialBlend);
-            data.ReverbZoneMix = EditorGUILayout.CurveField(new GUIContent("Reverb zone mix", "Sets the amount of the output signal that gets routed to the reverb zones.\n" +
+            
+            data.SpatialBlend = EditorGUILayout.Slider(new GUIContent("Spatial blend", "Sets how much the 3D engine has an effect on the audio source. 0 for no 3D, 1 for full 3D"), data.SpatialBlend, 0f,1f);
+            data.ReverbZoneMix = EditorGUILayout.Slider(new GUIContent("Reverb zone mix", "Sets the amount of the output signal that gets routed to the reverb zones.\n" +
                 " The amount is linear in the (0 - 1) range, but allows for a 10 dB amplification in the (1 - 1.1) range\n" +
-                " which can be useful to achieve the effect of near-field and distant sounds."), data.ReverbZoneMix);
-            data.Spread = EditorGUILayout.CurveField(new GUIContent("Spread",
+                " which can be useful to achieve the effect of near-field and distant sounds."), data.ReverbZoneMix, 0 , 1f);
+            data.Spread = EditorGUILayout.Slider(new GUIContent("Spread",
                 "Sets the spread angle of a 3d stereo or multichannel sound in speaker space. \n" +
                 "0° = all sound channels are located at the same speaker location and is mono\n" +
-                "360° = all subchannels are located at the opposite speaker location to the speaker location that it should be according to 3D position."), data.Spread);
+                "360° = all subchannels are located at the opposite speaker location to the speaker location that it should be according to 3D position."), data.Spread, 0 ,360f);
             GUILayout.EndVertical();
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
@@ -138,40 +138,40 @@ public class SoundManagerEditor : Editor
             sound.RandomPitch = EditorGUILayout.FloatField(new GUIContent("Random Pitch ±"), sound.RandomPitch, EditorStyles.numberField);
             sound.DopplerLevel = EditorGUILayout.Slider(new GUIContent("Doppler Level"), sound.DopplerLevel, 0, 1);
             sound.MinimumTimeBetweenSameSound = EditorGUILayout.FloatField(new GUIContent("Min Time Between Play", "If attempted to play before, it will skip the command."), sound.MinimumTimeBetweenSameSound, EditorStyles.numberField);
+            sound.ChanceToPlay = EditorGUILayout.FloatField(new GUIContent("Chance to play", "If less than 100%, there is a chance this sound will not play."), sound.ChanceToPlay, EditorStyles.numberField);
 
-            sound.UseCustomRolloff = EditorGUILayout.Toggle(new GUIContent("Custom rolloff", "Use custom rolloff"), sound.UseCustomRolloff, EditorStyles.toggle);
-
-            if (sound.UseCustomRolloff)
+            sound.PlaySubitemType = (PlaySubitemType)EditorGUILayout.EnumPopup("Play Mode", sound.PlaySubitemType, EditorStyles.popup);
+            if (sound.PlaySubitemType == PlaySubitemType.RandomNotSameTwice)
             {
-                sound.CustomRolloff = EditorGUILayout.CurveField(new GUIContent("Rolloff", "How fast the sound fades. The higher the value, the closer the Listener has to be before hearing the sound."), sound.CustomRolloff);
+                sound.notSameTwiceOffset = EditorGUILayout.IntSlider("Skip last:", sound.notSameTwiceOffset, 0, sound.soundItems.Length - 1);
             }
-
-            sound.UseCustomSpatialBlend = EditorGUILayout.Toggle(new GUIContent("Custom spatial blend"), sound.UseCustomSpatialBlend, EditorStyles.toggle);
-
+            sound.UseCustomSpatialBlend = EditorGUILayout.Toggle(new GUIContent("Custom spatialBlend"), sound.UseCustomSpatialBlend, EditorStyles.toggle);
             if (sound.UseCustomSpatialBlend)
             {
-                sound.SpatialBlend = EditorGUILayout.CurveField(new GUIContent("Spatial blend", "Sets how much the 3D engine has an effect on the audio source."), data.SpatialBlend);
+                sound.SpatialBlend = EditorGUILayout.Slider(new GUIContent("Spatial blend", "Sets how much the 3D engine has an effect on the audio source."), sound.SpatialBlend, 0f, 1f);
             }
+
+          
 
             sound.UseCustomReverbZoneMix = EditorGUILayout.Toggle(new GUIContent("Custom reverb zone mix"), sound.UseCustomReverbZoneMix, EditorStyles.toggle);
             if (sound.UseCustomReverbZoneMix)
             {
-                sound.ReverbZoneMix = EditorGUILayout.CurveField(new GUIContent("Reverb zone mix", "Sets the amount of the output signal that gets routed to the reverb zones.\n" +
+                sound.ReverbZoneMix = EditorGUILayout.FloatField(new GUIContent("Reverb zone mix", "Sets the amount of the output signal that gets routed to the reverb zones.\n" +
                 " The amount is linear in the (0 - 1) range, but allows for a 10 dB amplification in the (1 - 1.1) range\n" +
-                " which can be useful to achieve the effect of near-field and distant sounds."), data.ReverbZoneMix);
+                " which can be useful to achieve the effect of near-field and distant sounds."), sound.ReverbZoneMix);
             }
 
             sound.UseCustomSpread = EditorGUILayout.Toggle(new GUIContent("Custom spread"), sound.UseCustomSpread, EditorStyles.toggle);
             if (sound.UseCustomSpread)
             {
-                sound.Spread = EditorGUILayout.CurveField(new GUIContent("Spread",
+                sound.Spread = EditorGUILayout.Slider(new GUIContent("Spread",
                 "Sets the spread angle of a 3d stereo or multichannel sound in speaker space. \n" +
                 "0° = all sound channels are located at the same speaker location and is mono\n" +
-                "360° = all subchannels are located at the opposite speaker location to the speaker location that it should be according to 3D position."), data.Spread);
+                "360° = all subchannels are located at the opposite speaker location to the speaker location that it should be according to 3D position."), sound.Spread, 0, 360f);
             }
 
-
-            if (sound.UseCustomRolloff || sound.UseCustomSpatialBlend || sound.UseCustomReverbZoneMix || sound.UseCustomSpread)
+            sound.UseCustomMinMax = EditorGUILayout.Toggle(new GUIContent("Custom min max"), sound.UseCustomMinMax, EditorStyles.toggle);
+            if (sound.UseCustomMinMax)
             {
                 sound.MinDistance = EditorGUILayout.FloatField(new GUIContent("Min Distance", "Closest distance that custom curves change"), sound.MinDistance, EditorStyles.numberField);
                 sound.MaxDistance = EditorGUILayout.FloatField(new GUIContent("Max Distance", "Furthest distance that custom curves change"), sound.MaxDistance, EditorStyles.numberField);
@@ -306,7 +306,7 @@ public class SoundManagerEditor : Editor
         {
             sound.AddSoundItem(audioClips[i]);
         }
-
+        sound.SoundName = FindName();
 
         data.Sounds.Add(sound);
 
