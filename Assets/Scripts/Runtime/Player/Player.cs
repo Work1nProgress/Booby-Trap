@@ -43,6 +43,10 @@ public class Player : EntityBase
     float m_InheritSpeed;
 
     [SerializeField]
+    float chanceToGainHeartRanged;
+    public float ChanceToGainHeartRanged => chanceToGainHeartRanged;
+
+    [SerializeField]
     PlayerMovementController m_MovementController;
 
 
@@ -65,11 +69,17 @@ public class Player : EntityBase
     int m_Damage;
 
     [SerializeField]
+    float chanceToGainHeartMelee;
+
+    [SerializeField]
     float offsetHorizontal, offsetUp, offsetDown;
 
     [SerializeField]
     [Tooltip("IFrames")]
     float InvulTime = 1f;
+
+
+    
 
 
     bool m_SpearButtonPressed = false;
@@ -249,6 +259,10 @@ public class Player : EntityBase
             {
                 SoundManager.Instance.Play(AttackHit, entity.transform);
                 entity.Damage(m_Damage);
+                if (Random.value <= ChanceToGainHeartRanged)
+                {
+                    Heal(1);
+                }
             }
         }
         m_AttackTimer = m_ReloadTime;

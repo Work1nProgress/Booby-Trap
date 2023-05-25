@@ -2289,6 +2289,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Echo
       objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: chanceToGainHeartMelee
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: chanceToGainHeartRanged
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_RootOrder
       value: 3

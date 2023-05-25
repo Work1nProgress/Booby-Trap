@@ -48,12 +48,12 @@ public class SoundManager : GenericSingleton<SoundManager>
         {
             if (RecentSounds.FindIndex(x => x.SoundName == name) != -1)
             {
-                Debug.Log($"already playing {name}");
+            //    Debug.Log($"already playing {name}");
                 return;
             }
 
             var a = UnityEngine.Random.value;
-            Debug.Log($"{name} {a} {sounds[idx].ChanceToPlay} {sounds[idx].ChanceToPlay / 100f}");
+
             if (a >= (sounds[idx].ChanceToPlay / 100f))
             {
                 return;
