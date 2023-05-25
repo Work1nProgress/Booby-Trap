@@ -17,6 +17,14 @@ public class CyclopsPatrolState : EntityState
         base.FixedUpdateState(deltaTime);
         if (DetectElevationChange()) _movingRight = !_movingRight;
         _controller.Move(_controller.MovementSpeed, _movingRight);
+
+        Transform playerCheck = CheckForPlayer();
+        if (playerCheck != null)
+        {
+            Debug.Log("PLAYER!");
+            ToNextState();
+        }
+            
     }
 
     private bool DetectElevationChange()
@@ -34,5 +42,18 @@ public class CyclopsPatrolState : EntityState
             LayerMask.GetMask("Ground"));
 
         return !(cliffHit.collider != null && wallHit.collider == null);
+    }
+
+    private Transform CheckForPlayer()
+    {
+        RaycastHit2D playerHit = Physics2D.Raycast(_controller.Rigidbody.position,
+            _movingRight ? Vector3.right : Vector3.left,
+            12,
+            LayerMask.GetMask("Player"));
+
+        if (playerHit.collider != null)
+            return playerHit.collider.transform;
+
+        return null;
     }
 }

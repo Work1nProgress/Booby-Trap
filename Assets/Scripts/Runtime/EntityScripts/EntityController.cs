@@ -207,6 +207,11 @@ public class EntityController : StateHandler
         _jumpResetTimer.Reset();
         _jumpResetTimer.Pause();
     }
+
+    public void PlayerDetected(Transform playerTransform)
+    {
+        _target = playerTransform;
+    }
 }
 
 public enum EntityRotationDirection

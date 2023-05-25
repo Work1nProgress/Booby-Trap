@@ -13,7 +13,7 @@ public class CyclopsChaseState : EntityState
 
         if (_controller.Target != null)
         {
-            _movingRight = _controller.transform.position.y < _controller.Target.position.y ?
+            _movingRight = _controller.transform.position.x < _controller.Target.position.x ?
                 true : false;
 
             if (!DetectWall()) _controller.Move(_controller.MovementSpeed * 1.1f, _movingRight);
