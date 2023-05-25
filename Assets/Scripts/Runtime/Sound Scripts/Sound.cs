@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,7 +9,7 @@ public class Sound
     public string SoundName;
 
     public PlaySubitemType PlaySubitemType;
-    public  SoundItem[] soundItems;
+    public SoundItem[] soundItems = new SoundItem[0];
 
 
     [Range(-0.5f, 0.5f)]
@@ -17,31 +18,37 @@ public class Sound
     public float RandomPitch;
     public float DopplerLevel;
     public float MinimumTimeBetweenSameSound = 0.1f;
-    public bool UseCustomSpatialBlend;
 
+    public float SpatialBlend;
+
+    public int notSameTwiceOffset = 1;
+
+    public float ChanceToPlay = 100f;
 
     public float MinDistance;
     public float MaxDistance;
 
     public bool UseCustomSpread;
-    public bool UseCustomRolloff;
+
+    public bool UseCustomMinMax;
     public bool UseCustomReverbZoneMix;
+    public bool UseCustomSpatialBlend;
 
-    public AnimationCurve SpatialBlend = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
-    public AnimationCurve Spread = new AnimationCurve(new Keyframe(0, 1), new Keyframe(360, 0));
-    public AnimationCurve CustomRolloff = new AnimationCurve(new Keyframe(0, 1), new Keyframe(0.2f, 0.8f), new Keyframe(0.4f, 0.5f), new Keyframe(0.7f, 0.2f), new Keyframe(1, 0f));
-    public AnimationCurve ReverbZoneMix = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
 
-    public SoundItem SoundItem(SoundItem prev)
+
+    public float Spread;
+
+    public float ReverbZoneMix;
+    public SoundItem SoundItem(List<SoundItem> prev)
     {
 
 
-        if (prev != null)
+        if (prev != null && prev.Count > 0)
         {
             switch (PlaySubitemType)
             {
                 case PlaySubitemType.RandomNotSameTwice:
-                    var si = System.Array.FindAll(soundItems, x => x != prev);
+                    var si = System.Array.FindAll(soundItems, x => !prev.Contains(x));
                     return si[Random.Range(0, si.Length)];
 
             }
@@ -60,9 +67,7 @@ public class Sound
             soundItems = new SoundItem[0];
         }
 
-        Debug.Log(soundItems.Length);
         Utils.AddArrayElement(ref soundItems, new SoundItem(clip));
-        Debug.Log(soundItems.Length);
     }
 }
 

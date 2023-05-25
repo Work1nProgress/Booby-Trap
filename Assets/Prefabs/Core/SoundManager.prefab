@@ -47,7 +47,7 @@ MonoBehaviour:
   Mixer: {fileID: -6841754266449158771, guid: 303465a1e9e7049499946eaf3c75a1f9, type: 2}
   sounds:
   - SoundName: Echo_Steps
-    PlaySubitemType: 0
+    PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 2632981f9911e734ab486b154ba31897, type: 3}
     - AudioClip: {fileID: 8300000, guid: 2098ea651b3b18c49a4508b87d583a0e, type: 3}
@@ -60,108 +60,17 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 5
+    ChanceToPlay: 100
     MinDistance: 1
     MaxDistance: 50
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: -3.2964199
-        outSlope: -3.2964199
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.05317433
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -0.037238948
-        outSlope: -0.037238948
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.09604204
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_Jump
     PlaySubitemType: 0
     soundItems:
@@ -169,39 +78,20 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 71d742492d9dea547b0cbf4a04e3685c, type: 3}
     Volume: 0
     PitchShift: 0
-    RandomPitch: 0
+    RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_Landing
     PlaySubitemType: 0
     soundItems:
@@ -212,36 +102,17 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_Attack
     PlaySubitemType: 0
     soundItems:
@@ -255,36 +126,17 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_AttackImpact
     PlaySubitemType: 0
     soundItems:
@@ -298,36 +150,17 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_Dash
     PlaySubitemType: 0
     soundItems:
@@ -339,54 +172,17 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: -3.2964199
-        outSlope: -3.2964199
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.05317433
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -0.037238948
-        outSlope: -0.037238948
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.09604204
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_Throw
     PlaySubitemType: 0
     soundItems:
@@ -399,90 +195,17 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0.1
     MaxDistance: 20
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: -3.2964199
-        outSlope: -3.2964199
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.05317433
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -0.037238948
-        outSlope: -0.037238948
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.09604204
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   - SoundName: Echo_ThrowImpact
     PlaySubitemType: 0
     soundItems:
@@ -495,131 +218,19 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0
-    UseCustomSpatialBlend: 0
+    SpatialBlend: 0
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomSpread: 0
-    UseCustomRolloff: 0
+    UseCustomMinMax: 0
     UseCustomReverbZoneMix: 0
-    SpatialBlend:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    Spread:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CustomRolloff:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ReverbZoneMix:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    UseCustomSpatialBlend: 0
+    Spread: 0
+    ReverbZoneMix: 0
   MinDistance: 0.1
-  MaxDistance: 2000
-  SpatialBlend:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  Spread:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  CustomRolloff:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -3.2964199
-      outSlope: -3.2964199
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.05317433
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.037238948
-      outSlope: -0.037238948
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.09604204
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  ReverbZoneMix:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  MaxDistance: 20
+  SpatialBlend: 1
+  Spread: 180
+  ReverbZoneMix: 1
