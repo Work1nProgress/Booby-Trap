@@ -39,9 +39,6 @@ public class EntityController : StateHandler
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.gravityScale = 0;
 
-        GameObject playerObj = GameObject.Find("Echo");
-        _target = playerObj != null ? playerObj.transform : null;
-
         InitStateHandler(this);
     }
 

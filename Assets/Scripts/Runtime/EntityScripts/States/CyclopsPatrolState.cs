@@ -21,7 +21,7 @@ public class CyclopsPatrolState : EntityState
         Transform playerCheck = CheckForPlayer();
         if (playerCheck != null)
         {
-            Debug.Log("PLAYER!");
+            _controller.PlayerDetected(playerCheck);
             ToNextState();
         }
             
