@@ -165,4 +165,14 @@ public class Utils
         array = newArray;
     }
 
+    public static Vector2 Rotate2D(Vector2 vector, float angle)
+    {
+
+        angle = Mathf.Deg2Rad*angle;
+        return new Vector2(vector.x * Mathf.Cos(angle) - vector.y * Mathf.Sin(angle),
+            vector.x * Mathf.Sin(angle) + vector.y * Mathf.Cos(angle));
+    }
+
+    
+
 }
