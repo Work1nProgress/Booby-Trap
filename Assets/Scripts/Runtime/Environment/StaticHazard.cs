@@ -10,8 +10,6 @@ public class StaticHazard : MonoBehaviour
     [SerializeField]
     float Range;
 
-    [SerializeField]
-    float AttackForce;
 
     [SerializeField]
     HazardShape Shape;
@@ -41,9 +39,9 @@ public class StaticHazard : MonoBehaviour
         }
         if (isInRange)
         {
-            ControllerGame.Instance.player.AttackForce(transform.position, AttackForce);
 
             ControllerGame.Instance.player.Damage(DamageToDeal);
+            ControllerGame.Instance.player.TeleportToLastGround();
         }
     }
     protected virtual void OnDrawGizmosSelected()

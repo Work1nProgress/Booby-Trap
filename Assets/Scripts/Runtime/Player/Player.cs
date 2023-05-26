@@ -219,6 +219,11 @@ public class Player : EntityBase
         base.Damage(ammount);
     }
 
+    public void TeleportToLastGround()
+    {
+        m_MovementController.TeleportToLastGround();
+    }
+
     void OnAttack()
     {
         if (m_AttackTimer > 0)
