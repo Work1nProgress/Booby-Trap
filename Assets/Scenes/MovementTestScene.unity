@@ -813,10 +813,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1739822648683402399, guid: 62cf9c320fc34ab489e2ab022b250ee1, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 47e99393d9ebda04c8e66faad79f0b87, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62cf9c320fc34ab489e2ab022b250ee1, type: 3}
 --- !u!1001 &752662323
@@ -4610,8 +4606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageToDeal: 1
-  Range: 1
-  AttackForce: 20
+  Range: 0.9
   Shape: 0
 --- !u!1 &1170369503 stripped
 GameObject:

@@ -26,12 +26,9 @@ public class SoundManager : GenericSingleton<SoundManager>
 
     public float MinDistance;
     public float MaxDistance;
-    public float SpatialBlend;
+    public bool UseSpatialSound;
 
 
-    public float Spread;
-
-    public float ReverbZoneMix;
 
 
 
@@ -83,7 +80,7 @@ public class SoundManager : GenericSingleton<SoundManager>
             SceneManager.MoveGameObjectToScene(soundInstance.gameObject, SceneManager.GetActiveScene());
             var next = sounds[idx].SoundItem(previous);
             soundInstance.name = $"{sounds[idx].SoundName}_{idx}";
-            soundInstance.Set(next, sounds[idx], target, MinDistance, MaxDistance, Spread, ReverbZoneMix, SpatialBlend);
+            soundInstance.Set(next, sounds[idx], target, MinDistance, MaxDistance,UseSpatialSound);
 
 
             var length = soundInstance.Play();

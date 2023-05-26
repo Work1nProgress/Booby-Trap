@@ -19,7 +19,7 @@ public class Sound
     public float DopplerLevel;
     public float MinimumTimeBetweenSameSound = 0.1f;
 
-    public float SpatialBlend;
+
 
     public int notSameTwiceOffset = 1;
 
@@ -28,17 +28,13 @@ public class Sound
     public float MinDistance;
     public float MaxDistance;
 
-    public bool UseCustomSpread;
 
     public bool UseCustomMinMax;
-    public bool UseCustomReverbZoneMix;
+    public bool OverrideCustomSpatialBlend;
     public bool UseCustomSpatialBlend;
 
 
 
-    public float Spread;
-
-    public float ReverbZoneMix;
     public SoundItem SoundItem(List<SoundItem> prev)
     {
 

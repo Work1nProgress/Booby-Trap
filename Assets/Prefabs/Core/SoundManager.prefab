@@ -60,17 +60,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 5
     ChanceToPlay: 100
     MinDistance: 1
     MaxDistance: 50
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_Jump
     PlaySubitemType: 0
     soundItems:
@@ -81,17 +77,13 @@ MonoBehaviour:
     RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_Landing
     PlaySubitemType: 0
     soundItems:
@@ -102,17 +94,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_Attack
     PlaySubitemType: 0
     soundItems:
@@ -126,17 +114,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_AttackImpact
     PlaySubitemType: 0
     soundItems:
@@ -150,17 +134,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_Dash
     PlaySubitemType: 0
     soundItems:
@@ -172,17 +152,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_Throw
     PlaySubitemType: 0
     soundItems:
@@ -195,17 +171,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0.1
     MaxDistance: 20
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
   - SoundName: Echo_ThrowImpact
     PlaySubitemType: 0
     soundItems:
@@ -218,19 +190,13 @@ MonoBehaviour:
     RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0
-    SpatialBlend: 0
     notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
-    UseCustomSpread: 0
     UseCustomMinMax: 0
-    UseCustomReverbZoneMix: 0
-    UseCustomSpatialBlend: 0
-    Spread: 0
-    ReverbZoneMix: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   MinDistance: 0.1
   MaxDistance: 20
-  SpatialBlend: 1
-  Spread: 180
-  ReverbZoneMix: 1
+  UseSpatialSound: 0
