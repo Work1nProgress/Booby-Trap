@@ -89,8 +89,15 @@ public class FlyingSpear : Spear
 
         var index = ControllerGame.Instance.GetSpearIndex(this);
 
-        ControllerGame.Instance.Spears[index] = spear;
-        Remove();
+        if (index != -1)
+        {
+            ControllerGame.Instance.Spears[index] = spear;
+            Remove();
+        }
+        else
+        {
+            RemoveAndNotify();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
