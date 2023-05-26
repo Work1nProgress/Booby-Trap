@@ -14,7 +14,11 @@ public class EnemyBase : EntityBase
 
     [SerializeField]
     float AttackForce;
+     
+    protected float StunTimer;
 
+
+   
 
     protected virtual void FixedUpdate()
     {
@@ -36,6 +40,11 @@ public class EnemyBase : EntityBase
 
             }
         }
+    }
+
+    public void KnockBackAndStun(Vector2 Force, float stunDuration)
+    {
+        StunTimer = stunDuration;
     }
 
 
