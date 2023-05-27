@@ -123,6 +123,15 @@ public class SoundManagerEditor : Editor
             {
                 currentSubitemIndex = 0;
             }
+
+            if (currentSoundIndex < 0)
+            {
+                currentSoundIndex = 0;
+            }
+            if (currentSoundIndex >= data.Sounds.Count)
+            {
+                currentSoundIndex = data.Sounds.Count - 1;
+            }
             var sound = data.Sounds[currentSoundIndex];
             GUILayout.BeginVertical(EditorStyles.helpBox);
             sound.SoundName = EditorGUILayout.TextField("Sound Name", sound.SoundName, EditorStyles.textField);
