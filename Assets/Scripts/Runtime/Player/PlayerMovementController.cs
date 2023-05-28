@@ -84,7 +84,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField]
     string StepsSound;
 
-
+    public Vector3 lastGroundedPosition;
 
 
     bool allowDashing = false;
@@ -328,6 +328,13 @@ public class PlayerMovementController : MonoBehaviour
         wasDashing = Dashing;
     }
 
+    public void TeleportToLastGround()
+    {
+
+        m_RigidBody.velocity = default;
+        transform.position = lastGroundedPosition;
+    }
+
     private void GroundCheck()
     {
         if (allowDashing)
@@ -363,7 +370,8 @@ public class PlayerMovementController : MonoBehaviour
                 SoundManager.Instance.Play(LandSound, transform);
                 
             }
-            feetTouchingGround = true; 
+            feetTouchingGround = true;
+            lastGroundedPosition = transform.position;
             standingOnSpear = collider.gameObject.CompareTag("Spear");
             LastOnGroundTime = coyoteTime;
             fallingFromDash = false;

@@ -14,7 +14,11 @@ public class EnemyBase : EntityBase
 
     [SerializeField]
     float AttackForce;
+     
+    protected float StunTimer;
 
+
+   
 
     protected virtual void FixedUpdate()
     {
@@ -26,6 +30,21 @@ public class EnemyBase : EntityBase
             ControllerGame.Instance.player.Damage(DamageToDeal);
             
         }
+        for (int i = ControllerGame.Instance.Spears.Count - 1; i >= 0; i--) 
+        {
+            if (ControllerGame.Instance.Spears[i] is StuckSpear)
+            {
+                if(Vector3.Distance(transform.position, ControllerGame.Instance.Spears[i].transform.position) < Range){
+                    ControllerGame.Instance.RemoveSpear(ControllerGame.Instance.Spears[i]);
+                }
+
+            }
+        }
+    }
+
+    public void KnockBackAndStun(Vector2 Force, float stunDuration)
+    {
+        StunTimer = stunDuration;
     }
 
 
@@ -34,7 +53,7 @@ public class EnemyBase : EntityBase
 #if UNITY_EDITOR
         UnityEditor.Handles.color = Color.green;
 
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, Range);
+        UnityEditor.Handles.DrawWireDisc(transform.position, transform.forward, Range);
 
     #endif
 

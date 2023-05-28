@@ -70,18 +70,12 @@ public class SoundManagerEditor : Editor
 
 
             
-            data.SpatialBlend = EditorGUILayout.Slider(new GUIContent("Spatial blend", "Sets how much the 3D engine has an effect on the audio source. 0 for no 3D, 1 for full 3D"), data.SpatialBlend, 0f,1f);
-            data.ReverbZoneMix = EditorGUILayout.Slider(new GUIContent("Reverb zone mix", "Sets the amount of the output signal that gets routed to the reverb zones.\n" +
-                " The amount is linear in the (0 - 1) range, but allows for a 10 dB amplification in the (1 - 1.1) range\n" +
-                " which can be useful to achieve the effect of near-field and distant sounds."), data.ReverbZoneMix, 0 , 1f);
-            data.Spread = EditorGUILayout.Slider(new GUIContent("Spread",
-                "Sets the spread angle of a 3d stereo or multichannel sound in speaker space. \n" +
-                "0° = all sound channels are located at the same speaker location and is mono\n" +
-                "360° = all subchannels are located at the opposite speaker location to the speaker location that it should be according to 3D position."), data.Spread, 0 ,360f);
+            data.UseSpatialSound = EditorGUILayout.Toggle(new GUIContent("Spatial blend", "Sets if 3D engine has an effect on the audio source"), data.UseSpatialSound,EditorStyles.toggle);
+
             GUILayout.EndVertical();
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
-
+       
 
 
         GUILayout.BeginHorizontal();
@@ -145,31 +139,15 @@ public class SoundManagerEditor : Editor
             {
                 sound.notSameTwiceOffset = EditorGUILayout.IntSlider("Skip last:", sound.notSameTwiceOffset, 0, sound.soundItems.Length - 1);
             }
-            sound.UseCustomSpatialBlend = EditorGUILayout.Toggle(new GUIContent("Custom spatialBlend"), sound.UseCustomSpatialBlend, EditorStyles.toggle);
-            if (sound.UseCustomSpatialBlend)
-            {
-                sound.SpatialBlend = EditorGUILayout.Slider(new GUIContent("Spatial blend", "Sets how much the 3D engine has an effect on the audio source."), sound.SpatialBlend, 0f, 1f);
-            }
+            sound.OverrideCustomSpatialBlend = EditorGUILayout.Toggle(new GUIContent("Override Spatial Blend"), sound.OverrideCustomSpatialBlend, EditorStyles.toggle);
+            EditorGUI.BeginDisabledGroup(!sound.OverrideCustomSpatialBlend);
+            
+            sound.UseCustomSpatialBlend = EditorGUILayout.Toggle(new GUIContent("Spatial blend", "Sets how much if 3D engine has an effect on the audio source."), sound.UseCustomSpatialBlend, EditorStyles.toggle);
+            EditorGUI.EndDisabledGroup();
 
           
 
-            sound.UseCustomReverbZoneMix = EditorGUILayout.Toggle(new GUIContent("Custom reverb zone mix"), sound.UseCustomReverbZoneMix, EditorStyles.toggle);
-            if (sound.UseCustomReverbZoneMix)
-            {
-                sound.ReverbZoneMix = EditorGUILayout.FloatField(new GUIContent("Reverb zone mix", "Sets the amount of the output signal that gets routed to the reverb zones.\n" +
-                " The amount is linear in the (0 - 1) range, but allows for a 10 dB amplification in the (1 - 1.1) range\n" +
-                " which can be useful to achieve the effect of near-field and distant sounds."), sound.ReverbZoneMix);
-            }
-
-            sound.UseCustomSpread = EditorGUILayout.Toggle(new GUIContent("Custom spread"), sound.UseCustomSpread, EditorStyles.toggle);
-            if (sound.UseCustomSpread)
-            {
-                sound.Spread = EditorGUILayout.Slider(new GUIContent("Spread",
-                "Sets the spread angle of a 3d stereo or multichannel sound in speaker space. \n" +
-                "0° = all sound channels are located at the same speaker location and is mono\n" +
-                "360° = all subchannels are located at the opposite speaker location to the speaker location that it should be according to 3D position."), sound.Spread, 0, 360f);
-            }
-
+         
             sound.UseCustomMinMax = EditorGUILayout.Toggle(new GUIContent("Custom min max"), sound.UseCustomMinMax, EditorStyles.toggle);
             if (sound.UseCustomMinMax)
             {

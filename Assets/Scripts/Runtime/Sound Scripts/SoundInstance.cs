@@ -29,21 +29,16 @@ public class SoundInstance : PoolObject
     }
 
 
-    public void Set(SoundItem item, Sound sound, Transform target, float minDistance, float maxDistance, float Spread, float reverbMix, float spatialBlend)
+    public void Set(SoundItem item, Sound sound, Transform target, float minDistance, float maxDistance, bool spatialBlend)
     {
         m_SoundName = sound.SoundName;
 
         m_AudioSource.clip = item.AudioClip;
         m_AudioSource.pitch = 1+sound.PitchShift;
         m_AudioSource.pitch += Random.value * sound.RandomPitch;
-        m_AudioSource.volume = 0.5f + sound.Volume;
 
-
-        m_AudioSource.spread = sound.UseCustomSpread ? sound.Spread : Spread;
-        m_AudioSource.reverbZoneMix = sound.UseCustomReverbZoneMix ? sound.ReverbZoneMix : reverbMix;
-        m_AudioSource.spatialBlend = sound.UseCustomSpatialBlend ? sound.SpatialBlend : spatialBlend;
-
-
+        
+     
 
         if (sound.UseCustomMinMax)
         {
@@ -60,7 +55,7 @@ public class SoundInstance : PoolObject
        
 
         m_AudioSource.rolloffMode = AudioRolloffMode.Custom;
-
+       
         m_AudioSource.dopplerLevel = sound.DopplerLevel;
 
 
@@ -69,6 +64,28 @@ public class SoundInstance : PoolObject
 
         followTarget = target != null;
         m_Target = target;
+
+       var t = 0f;
+        var blend = 1f;
+        if (followTarget) {
+            t = Vector3.Distance(ControllerGame.Instance.player.transform.position, target.position)/m_AudioSource.maxDistance;
+            blend = m_AudioSource.GetCustomCurve(AudioSourceCurveType.CustomRolloff).Evaluate(t);
+           }
+
+        m_AudioSource.volume = (0.5f + sound.Volume);
+
+
+        if (sound.OverrideCustomSpatialBlend)
+        {
+            m_AudioSource.volume *= sound.UseCustomSpatialBlend ? blend : 1f;
+        }
+        else
+        {
+            m_AudioSource.volume *= spatialBlend ? blend : 1f;
+        }
+        
+       
+
 
 
     }

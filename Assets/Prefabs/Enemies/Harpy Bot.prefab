@@ -174,7 +174,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DamageToDeal: 1
-  Range: 1.2
+  Range: 2.31
   AttackForce: 5
   moveSpeed: 500
   waypoints:
