@@ -98,6 +98,8 @@ public class Player : EntityBase
     [SerializeField]
     PlayerMovementController PlayerMovementController;
 
+    public Rigidbody2D RigidBody => PlayerMovementController.RigidBody;
+
 
     bool CanThrowSpear => (m_CurrentSpearAmount > 0 || m_MaxSpearsOnPlayer < 0) && (m_ThrowTimer < 0 || m_ThrowCooldown == 0);
     [Header("Sound")]

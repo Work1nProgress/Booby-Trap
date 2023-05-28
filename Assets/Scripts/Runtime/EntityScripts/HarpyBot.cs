@@ -10,7 +10,7 @@ public class HarpyBot : EnemyBase
     [SerializeField] private float lookRadius = 7;
     [SerializeField] private float losePlayerRadius = 12;
     [SerializeField] private float waypointMarginOfError = 2f;
-    private Rigidbody2D _rigidbody2D;
+
     private int _currentWaypoint;
     private bool _playerDetected = false;
 
@@ -21,15 +21,14 @@ public class HarpyBot : EnemyBase
 
     [SerializeField] private Transform _player;
 
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
+       
         if (waypoints.Length > 2)
         {
             _currentWaypoint = 0;
         }
         
-        _rigidbody2D = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
 
        
@@ -63,7 +62,7 @@ public class HarpyBot : EnemyBase
     {
         if (_seeker.IsDone())
         {
-            _seeker.StartPath(_rigidbody2D.position, _player.position, OnPathComplete);
+            _seeker.StartPath(Rigidbody.position, _player.position, OnPathComplete);
         }
     }
 
@@ -72,6 +71,7 @@ public class HarpyBot : EnemyBase
         var distanceToPlayer = Vector3.Distance(_player.position, transform.position);
         if (distanceToPlayer < lookRadius  && !_playerDetected)
         {
+
             _playerDetected = true;
             InvokeRepeating(nameof(UpdatePath), 0f, .5f);
         } else if (distanceToPlayer > losePlayerRadius)
@@ -90,7 +90,7 @@ public class HarpyBot : EnemyBase
         // handle this that after one attack of the player there is a timeout where the harpy loses aggro
         try
         {
-            Vector2 direction = ((Vector2)_path.vectorPath[_currentPathpoint] - _rigidbody2D.position).normalized;
+            Vector2 direction = ((Vector2)_path.vectorPath[_currentPathpoint] - Rigidbody.position).normalized;
             Move(direction);
         }
         catch
@@ -102,26 +102,26 @@ public class HarpyBot : EnemyBase
         
         
 
-        float distance = Vector2.Distance(_rigidbody2D.position, _path.vectorPath[_currentPathpoint]);
+        float distance = Vector2.Distance(Rigidbody.position, _path.vectorPath[_currentPathpoint]);
         if (distance < nextPathpointDistance)
         {
             _currentPathpoint++;
         }
         
-        spriteObject.transform.localScale = _rigidbody2D.velocity.x >= 0.01f ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, 1f, 1f);
+        spriteObject.transform.localScale = Rigidbody.velocity.x >= 0.01f ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, 1f, 1f);
     }
 
     private void Move(Vector2 direction)
     {
         Vector2 force = direction * (moveSpeed * Time.deltaTime);
-        _rigidbody2D.AddForce(force);
+        Rigidbody.AddForce(force);
     }
 
     private void MoveToNextWaypoint()
     {
         if(waypoints.Length < 2) return;
 
-        var distanceToCurrentWaypoint = Vector2.Distance(waypoints[_currentWaypoint].position, _rigidbody2D.position);
+        var distanceToCurrentWaypoint = Vector2.Distance(waypoints[_currentWaypoint].position, Rigidbody.position);
         Vector2 direction;
         if (distanceToCurrentWaypoint < waypointMarginOfError)
         {
@@ -132,7 +132,7 @@ public class HarpyBot : EnemyBase
             }
         }
         
-        direction = ((Vector2)waypoints[_currentWaypoint].position - _rigidbody2D.position).normalized;
+        direction = ((Vector2)waypoints[_currentWaypoint].position - Rigidbody.position).normalized;
         
         Move(direction);
     }

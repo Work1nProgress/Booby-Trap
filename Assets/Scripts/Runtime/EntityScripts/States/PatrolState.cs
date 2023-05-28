@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CyclopsPatrolState", menuName = "Entities/Cyclops Patrol")]
-public class CyclopsPatrolState : EntityState
+[CreateAssetMenu(fileName = "PatrolState", menuName = "Entities/States/Patrol State")]
+public class PatrolState : EntityState
 {
     private bool _movingRight = false;
 
@@ -18,12 +18,16 @@ public class CyclopsPatrolState : EntityState
         if (DetectElevationChange()) _movingRight = !_movingRight;
         _controller.Move(_controller.MovementSpeed, _movingRight);
 
-        Transform playerCheck = CheckForPlayer();
-        if (playerCheck != null)
+        _controller.Sprite.flipX = _movingRight;
+
+        bool playerCheck = CheckForPlayer();
+
+         _controller.PlayerDetected(playerCheck);
+        if (playerCheck)
         {
-            _controller.PlayerDetected(playerCheck);
             ToNextState();
         }
+        
             
     }
 
@@ -44,16 +48,32 @@ public class CyclopsPatrolState : EntityState
         return !(cliffHit.collider != null && wallHit.collider == null);
     }
 
-    private Transform CheckForPlayer()
+    private bool CheckForPlayer()
     {
-        RaycastHit2D playerHit = Physics2D.Raycast(_controller.Rigidbody.position,
-            _movingRight ? Vector3.right : Vector3.left,
-            12,
-            LayerMask.GetMask("Player"));
+        var distance = Vector3.Distance(_controller.Rigidbody.position, ControllerGame.Instance.player.transform.position);
 
-        if (playerHit.collider != null)
-            return playerHit.collider.transform;
+        if (distance <= _controller.Stats.DetectionDistance)
+        {
+            if (Physics2D.Raycast(_controller.Rigidbody.position,
 
-        return null;
+           ControllerGame.Instance.player.RigidBody.position - _controller.Rigidbody.position,
+           distance,
+           LayerMask.GetMask("Ground"))){
+                return false;
+            }
+
+            if (Vector2.Angle(_movingRight ? Vector3.right : Vector3.left,
+                ControllerGame.Instance.player.RigidBody.position - _controller.Rigidbody.position) > _controller.Stats.DetectionAngle)
+            {
+                return false;
+            }
+
+
+            return true;
+
+        }
+        return false;
+
+      
     }
 }

@@ -2,21 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CyclopsChaseState", menuName = "Entities/Cyclops Chase")]
-public class CyclopsChaseState : EntityState
+[CreateAssetMenu(fileName = "ChaseState", menuName = "Entities/ChaseState")]
+public class ChaseState : EntityState
 {
     private bool _movingRight = false;
+
+    [SerializeField]
+    float OffsetX;
+
+    Vector2 RaycastVector;
+
+
+    public override void EnterState()
+    {
+        base.EnterState();
+        RaycastVector = new Vector2(OffsetX, 0);
+    }
 
     public override void FixedUpdateState(float deltaTime)
     {
         base.FixedUpdateState(deltaTime);
 
-        if (_controller.Target != null)
+        if (_controller.HasTarget)
         {
-            _movingRight = _controller.transform.position.x < _controller.Target.position.x ?
-                true : false;
+            _movingRight = _controller.transform.position.x < ControllerGame.Instance.player.RigidBody.position.x;
+            _controller.Sprite.flipX = _movingRight;
 
-            if (!DetectWall()) _controller.Move(_controller.MovementSpeed * 1.1f, _movingRight);
+            if (!DetectWall()) _controller.Move(_controller.Stats.MovementSpeedChase, _movingRight);
 
             if (CloseToPlayer()) ChangeState(nextState);
         }
@@ -26,8 +38,8 @@ public class CyclopsChaseState : EntityState
     private bool DetectWall()
     {
         RaycastHit2D wallHit = Physics2D.Raycast(_movingRight ?
-            _controller.Rigidbody.position + new Vector2(0.55f, 0) :
-            _controller.Rigidbody.position - new Vector2(0.55f, 0),
+            _controller.Rigidbody.position + RaycastVector :
+            _controller.Rigidbody.position - RaycastVector,
             _movingRight ?
             Vector2.right :
             Vector2.right * -1,
@@ -40,8 +52,8 @@ public class CyclopsChaseState : EntityState
     private bool CloseToPlayer()
     {
         RaycastHit2D playerHit = Physics2D.Raycast(_movingRight ?
-            _controller.Rigidbody.position + new Vector2(0.55f, 0) :
-            _controller.Rigidbody.position - new Vector2(0.55f, 0),
+            _controller.Rigidbody.position + RaycastVector :
+            _controller.Rigidbody.position - RaycastVector,
             _movingRight ?
             Vector2.right :
             Vector2.right * -1,

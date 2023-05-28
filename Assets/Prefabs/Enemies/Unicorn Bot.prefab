@@ -1,83 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7110510423034042653
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7110510423034042642}
-  - component: {fileID: 7110510423034042640}
-  - component: {fileID: 7110510423034042643}
-  m_Layer: 9
-  m_Name: Unicorn LOS
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7110510423034042642
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110510423034042653}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7110510423519493822}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &7110510423034042640
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110510423034042653}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 5.6417513, y: 2.9093757}
-      - {x: 0.97492886, y: 1.570718}
-      - {x: 0.26536173, y: 0.8628328}
-      - {x: 0.2827497, y: 0.0128160715}
-      - {x: 0.97897065, y: -0.555238}
-      - {x: 5.540088, y: -1.7932124}
-      - {x: 5.625419, y: 0.97638655}
---- !u!114 &7110510423034042643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110510423034042653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6310d4e2f08dfa543ab9b3c147a9950c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerLayer: 6
 --- !u!1 &7110510423414983254
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +116,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7110510423414983255}
-  - {fileID: 7110510423034042642}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -211,7 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  _maxHealth: 3
+  _tempStats:
+    MaxHealth: 0
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -227,9 +149,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHit:
+  OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
+  _initialState: Patrol
+  _entityStates:
+  - stateName: Patrol
+    nextState: Chase
+    altState: 
+    state: {fileID: 11400000, guid: 8a36088de87ff284ebbd0a18bc8b0cbb, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  - stateName: Chase
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: c7ca1ed0c01f83e49a58c05f9ce9c21b, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 5
   DamageToDeal: 1
   Range: 1.5
   AttackForce: 50

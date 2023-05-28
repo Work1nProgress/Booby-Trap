@@ -19,18 +19,17 @@ public class CyclopsAttackState : EntityState
     {
         base.EnterState();
 
-        _targetOnRight = _controller.Rigidbody.position.x < _controller.Target.position.x;
+        _targetOnRight = _controller.Rigidbody.position.x < ControllerGame.Instance.player.RigidBody.position.x;
 
         attackWindup = new CountdownTimer(_windupTime, false, false, () => { Attack(_attackPower); attackCoolOff.Resume(); });
         attackCoolOff = new CountdownTimer(_coolOffTime, true, false, () => { ToNextState(); });
-        attackCoolOff.Pause();
     }
 
-    public override void FixedUpdateState(float deltaTime)
+    public override void ClearEvents()
     {
-        base.FixedUpdateState(deltaTime);
-
-
+        attackWindup.Dispose();
+        attackCoolOff.Dispose();
+        base.ClearEvents();
     }
 
     public void Attack(int power)

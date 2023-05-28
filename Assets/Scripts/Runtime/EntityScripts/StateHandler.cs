@@ -36,8 +36,8 @@ public class StateHandler : EntityBase
         {
             if (_currentState != null)
             {
-                _currentState.ExitState();
-                _currentState.ClearEvents();
+                CleanUpCurrentState();
+
             }
 
             _currentState = newState;
@@ -61,6 +61,7 @@ public class StateHandler : EntityBase
     {
         if (_currentState != null)
             _currentState.UpdateState(Time.deltaTime);
+
     }
 
     protected virtual void FixedUpdate()
@@ -71,8 +72,18 @@ public class StateHandler : EntityBase
 
     private void OnDestroy()
     {
-        if(_currentState != null)
+        if (_currentState != null)
+        {
+            CleanUpCurrentState();
+        }
+    }
+
+    protected void CleanUpCurrentState()
+    {
+        _currentState.OnChangeStateRequest -= ChangeState;
+        _currentState.ExitState();
         _currentState.ClearEvents();
+
     }
     
 }

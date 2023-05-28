@@ -15,6 +15,9 @@ public class FlyingSpear : Spear
     private Vector3 groundCheckPoint = new Vector3(0.216f, 0, 0);
 
     [SerializeField]
+    Transform lightTransform;
+
+    [SerializeField]
     LayerMask groundLayer;
 
     [SerializeField]
@@ -39,6 +42,8 @@ public class FlyingSpear : Spear
         }
         else
         {
+            lightTransform.localRotation = Quaternion.Euler(0, 0, direction == -1 ? 0 : 180f);
+            lightTransform.localPosition = new Vector3(0, 0.24f, 0) * -direction;
             m_RigidBody.velocity = new Vector2(speed * direction + echoSpeed * inheritSpeed, 0);
         }
 

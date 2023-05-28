@@ -8,6 +8,7 @@ public class EntityState : ScriptableObject
     private string _name;
     public string stateName => _name;
 
+
     public delegate void ChangeStateSignature(string state);
     public event ChangeStateSignature OnChangeStateRequest;
 
@@ -60,6 +61,7 @@ public class EntityState : ScriptableObject
         {
             _stateTimer.Reset();
             _stateTimer.Pause();
+            _stateTimer.Dispose();
         }
     }
     public virtual void UpdateState(float deltaTime) { }

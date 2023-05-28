@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : EntityBase
+public class EnemyBase : EntityController
 {
     [Header("EnemyBase")]
 
@@ -17,10 +17,36 @@ public class EnemyBase : EntityBase
      
     protected float StunTimer;
 
+    protected float _stepsTimer;
+
 
    
 
-    protected virtual void FixedUpdate()
+
+
+
+
+    protected override void Update()
+    {
+        UpdateSteps();
+        base.Update();
+
+    }
+
+
+
+    protected virtual void UpdateSteps()
+    {
+        //_stepsTimer -= Time.deltaTime * Mathf.Abs(Rigidbody.velocity.x) * stepVelocityFactor;
+        //if (Mathf.Abs(Rigidbody.velocity.x) > 0.1f && _stepsTimer < 0)
+        //{
+        //    SoundManager.Instance.Play(SoundSteps, transform);
+        //    _stepsTimer = stepDelay;
+        //}
+    }
+
+
+    protected override void FixedUpdate()
     {
         if (Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position) < Range)
         {
@@ -40,11 +66,19 @@ public class EnemyBase : EntityBase
 
             }
         }
+        base.FixedUpdate();
     }
 
     public void KnockBackAndStun(Vector2 Force, float stunDuration)
     {
         StunTimer = stunDuration;
+    }
+
+
+    protected override void OnKill()
+    {
+       
+        base.OnKill();
     }
 
 
