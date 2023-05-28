@@ -170,20 +170,19 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-  OnHit:
+  OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
   DamageToDeal: 1
   Range: 1.2
   AttackForce: 5
-  moveSpeed: 300
+  moveSpeed: 500
   waypoints:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   nextPathpointDistance: 1
   spriteObject: {fileID: 4963573131874348457}
-  lookRadius: 2
+  lookRadius: 10
   losePlayerRadius: 12
   waypointMarginOfError: 2
   _player: {fileID: 0}

@@ -211,7 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  _maxHealth: 3
+  _tempStats:
+    MaxHealth: 5
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -227,14 +228,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHit:
+  OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
   DamageToDeal: 1
   Range: 1.5
   AttackForce: 50
-  trotSpeed: 3
-  gallopSpeed: 6
+  trotSpeed: 4
+  gallopSpeed: 8
   enrageDuration: 3
   groundCheckPoint: {x: 1.58, y: -0.43}
   wallCheckPoint: {x: 1.22, y: -0.6}
