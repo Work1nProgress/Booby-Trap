@@ -55,9 +55,9 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 614df732f7bdd99478921caba1c8f572, type: 3}
     - AudioClip: {fileID: 8300000, guid: 24fb866e60de0a74e94dd13813a3da8f, type: 3}
     - AudioClip: {fileID: 8300000, guid: 277c8333e060f7e4c89c674c809a5e8c, type: 3}
-    Volume: 0
+    Volume: -0.241
     PitchShift: 0
-    RandomPitch: 0
+    RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 5
@@ -72,7 +72,7 @@ MonoBehaviour:
     soundItems:
     - AudioClip: {fileID: 8300000, guid: d689aeff85ea8e242bf6e69d7e467fff, type: 3}
     - AudioClip: {fileID: 8300000, guid: 71d742492d9dea547b0cbf4a04e3685c, type: 3}
-    Volume: 0
+    Volume: -0.141
     PitchShift: 0
     RandomPitch: 0.5
     DopplerLevel: 0
@@ -89,9 +89,9 @@ MonoBehaviour:
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 88d03bc3301e7f74eadf94276767400b, type: 3}
     - AudioClip: {fileID: 8300000, guid: 6664d100aff46694fb66c2091a1b77af, type: 3}
-    Volume: 0
+    Volume: -0.265
     PitchShift: 0
-    RandomPitch: 0
+    RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -109,7 +109,7 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 10b53e1da6bdbf84fbec6f86805dfa56, type: 3}
     - AudioClip: {fileID: 8300000, guid: 93b6e4a19a2cbd14fa17239977798a82, type: 3}
     - AudioClip: {fileID: 8300000, guid: ce18cd5e47123de4995ac39d011c5277, type: 3}
-    Volume: 0
+    Volume: -0.071
     PitchShift: 0
     RandomPitch: 0
     DopplerLevel: 0
@@ -129,9 +129,9 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: dac6cedce32e64a418c4b57a80e46fa1, type: 3}
     - AudioClip: {fileID: 8300000, guid: 4843ef68cead46e498428c45d3d9c62d, type: 3}
     - AudioClip: {fileID: 8300000, guid: c8e7a6e14b160b84f929141232af1f32, type: 3}
-    Volume: 0
+    Volume: -0.316
     PitchShift: 0
-    RandomPitch: 0
+    RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -185,9 +185,9 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: fd0d9ad1ad6396645982185138f3d5f8, type: 3}
     - AudioClip: {fileID: 8300000, guid: c19e19351af41084a80427fa9eb42226, type: 3}
     - AudioClip: {fileID: 8300000, guid: 224adedd9ae230049830858a1b68b34d, type: 3}
-    Volume: 0
+    Volume: -0.182
     PitchShift: 0
-    RandomPitch: 0
+    RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0
     notSameTwiceOffset: 1
@@ -197,6 +197,25 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 1
     UseCustomSpatialBlend: 1
+  - SoundName: Echo_FlySpearEnemie
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: c585fa2db5e909243acf6b052da1a60b, type: 3}
+    - AudioClip: {fileID: 8300000, guid: ff0f249c4765a304b884f0389a8afd44, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 4df05bbc91ad25f4899ef1296a23cde0, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 2f1e3b6ae99f3d04481ef291c7fd09ad, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0

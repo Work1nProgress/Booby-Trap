@@ -9,6 +9,8 @@ public class SoundInstance : PoolObject
 
     Transform m_Target;
     bool followTarget;
+    bool m_SpatialBlend;
+    float m_Volume;
 
 
     string m_SoundName;
@@ -26,6 +28,12 @@ public class SoundInstance : PoolObject
                 return m_AudioSource.clip.length / Mathf.Abs(m_AudioSource.pitch);
             }
         }
+    }
+
+
+    public void SetLoops(bool loop)
+    {
+        m_AudioSource.loop = loop;
     }
 
 
@@ -73,14 +81,16 @@ public class SoundInstance : PoolObject
            }
 
         m_AudioSource.volume = (0.5f + sound.Volume);
-
+        m_Volume = (0.5f + sound.Volume);
 
         if (sound.OverrideCustomSpatialBlend)
         {
+            m_SpatialBlend = sound.UseCustomSpatialBlend;
             m_AudioSource.volume *= sound.UseCustomSpatialBlend ? blend : 1f;
         }
         else
         {
+            m_SpatialBlend =spatialBlend;
             m_AudioSource.volume *= spatialBlend ? blend : 1f;
         }
         
@@ -91,13 +101,27 @@ public class SoundInstance : PoolObject
     }
     private void Update()
     {
-        if (!followTarget || m_Target == null)
+
+        if (m_Target == null)
+        {
+            followTarget = false;
+        }
+        if (!followTarget)
         {
             return;
         }
         if (m_AudioSource.isPlaying)
         {
             transform.position = m_Target.position;
+            if (followTarget && m_SpatialBlend)
+            {
+
+                var t = Vector3.Distance(ControllerGame.Instance.player.transform.position, m_Target.position) / m_AudioSource.maxDistance;
+                var blend = m_AudioSource.GetCustomCurve(AudioSourceCurveType.CustomRolloff).Evaluate(t);
+                m_AudioSource.volume = m_Volume * blend ;
+            }
+
+
         }
     }
 
