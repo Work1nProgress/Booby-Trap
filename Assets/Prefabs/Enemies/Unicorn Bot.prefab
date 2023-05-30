@@ -1,83 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7110510423034042653
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7110510423034042642}
-  - component: {fileID: 7110510423034042640}
-  - component: {fileID: 7110510423034042643}
-  m_Layer: 9
-  m_Name: Unicorn LOS
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7110510423034042642
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110510423034042653}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7110510423519493822}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &7110510423034042640
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110510423034042653}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 5.6417513, y: 2.9093757}
-      - {x: 0.97492886, y: 1.570718}
-      - {x: 0.26536173, y: 0.8628328}
-      - {x: 0.2827497, y: 0.0128160715}
-      - {x: 0.97897065, y: -0.555238}
-      - {x: 5.540088, y: -1.7932124}
-      - {x: 5.625419, y: 0.97638655}
---- !u!114 &7110510423034042643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110510423034042653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6310d4e2f08dfa543ab9b3c147a9950c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerLayer: 6
 --- !u!1 &7110510423414983254
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 7110510423414983254}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7110510423519493822}
   m_RootOrder: 0
@@ -153,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8d43747b953045f4c898cbe6a0d97199, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 7.45, y: 7.57}
@@ -194,7 +116,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7110510423414983255}
-  - {fileID: 7110510423034042642}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -211,7 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  _maxHealth: 3
+  _tempStats:
+    MaxHealth: 10
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -227,17 +149,53 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHit:
+  OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
+  _initialState: Patrol
+  _entityStates:
+  - stateName: Patrol
+    nextState: Notice
+    altState: 
+    state: {fileID: 11400000, guid: 8a36088de87ff284ebbd0a18bc8b0cbb, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  - stateName: Notice
+    nextState: Chase
+    altState: 
+    state: {fileID: 11400000, guid: 48a88071814d74f3ca4bf913f38b0e2a, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 0.5
+  - stateName: Chase
+    nextState: IdlePatrol
+    altState: 
+    state: {fileID: 11400000, guid: c7ca1ed0c01f83e49a58c05f9ce9c21b, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 5
+  - stateName: IdlePatrol
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 1fe16b79b32c1479fb41e5bff1550c64, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 2
+  m_EnemySound: {fileID: 11400000, guid: 96253dff0bfee44a38403f40674ee41f, type: 2}
+  _sprite: {fileID: 7110510423414983252}
+  DoApplyGravity: 1
   DamageToDeal: 1
   Range: 1.5
-  AttackForce: 50
-  trotSpeed: 3
-  gallopSpeed: 6
-  enrageDuration: 3
-  groundCheckPoint: {x: 1.58, y: -0.43}
-  wallCheckPoint: {x: 1.22, y: -0.6}
+  AttackForce: 10
+  StunnedStateData:
+    stateName: Stunned
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 98f03cecc6cef413e8d6c61b9fde72c1, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
 --- !u!50 &7110510423519493820
 Rigidbody2D:
   serializedVersion: 4
@@ -258,7 +216,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7110510423519493823
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -272,7 +230,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.48301983, y: -0.020191789}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -283,5 +241,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8248234, y: 2.5821664}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1739822648683402398}
+  - component: {fileID: 7814384460859420017}
   - component: {fileID: 1739822648683402399}
   - component: {fileID: 1739822648683402396}
-  - component: {fileID: 1739822648683402397}
   - component: {fileID: 6024204065095153025}
   m_Layer: 7
   m_Name: MaybeACyclops
@@ -35,6 +35,78 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7814384460859420017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739822648683402394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5985a18415ff274a9ceb5f48da9a127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  _tempStats:
+    MaxHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChangeHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _initialState: Patrol
+  _entityStates:
+  - stateName: Patrol
+    nextState: Notice
+    altState: 
+    state: {fileID: 11400000, guid: 8a36088de87ff284ebbd0a18bc8b0cbb, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  - stateName: Notice
+    nextState: Chase
+    altState: 
+    state: {fileID: 11400000, guid: 48a88071814d74f3ca4bf913f38b0e2a, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 0.5
+  - stateName: Chase
+    nextState: Attack
+    altState: Patrol
+    state: {fileID: 11400000, guid: c7ca1ed0c01f83e49a58c05f9ce9c21b, type: 2}
+    timedState: 1
+    timerAltState: 1
+    stateTime: 15
+  - stateName: Attack
+    nextState: Idle
+    altState: Idle
+    state: {fileID: 11400000, guid: 54bea932a7ad54f46ac0eb23696fb1ee, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  - stateName: Idle
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 1fe16b79b32c1479fb41e5bff1550c64, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 2
+  m_EnemySound: {fileID: 11400000, guid: 84f1dc96c919c44bd955db0339373db2, type: 2}
+  _sprite: {fileID: 1739822648683402399}
+  DoApplyGravity: 1
+  DamageToDeal: 1
+  Range: 1
+  AttackForce: 20
+  StunnedStateData:
+    stateName: Stunned
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 98f03cecc6cef413e8d6c61b9fde72c1, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
 --- !u!212 &1739822648683402399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -108,51 +180,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1739822648683402397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739822648683402394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7934ac300eaacbf4eac091e22782e6c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  _tempStats:
-    MaxHealth: 6
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  OnChangeHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  _initialState: Patrol
-  _entityStates:
-  - stateName: Patrol
-    nextState: Chase
-    altState: 
-    state: {fileID: 11400000, guid: 8a36088de87ff284ebbd0a18bc8b0cbb, type: 2}
-    timedState: 0
-    timerAltState: 0
-    stateTime: 0
-  - stateName: Chase
-    nextState: Attack
-    altState: Patrol
-    state: {fileID: 11400000, guid: c7ca1ed0c01f83e49a58c05f9ce9c21b, type: 2}
-    timedState: 1
-    timerAltState: 1
-    stateTime: 15
-  - stateName: Attack
-    nextState: Chase
-    altState: Patrol
-    state: {fileID: 11400000, guid: 54bea932a7ad54f46ac0eb23696fb1ee, type: 2}
-    timedState: 0
-    timerAltState: 0
-    stateTime: 0
-  _movementSpeed: 2
 --- !u!61 &6024204065095153025
 BoxCollider2D:
   m_ObjectHideFlags: 0
