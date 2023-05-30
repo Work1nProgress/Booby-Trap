@@ -10,8 +10,16 @@ public class EntityController : StateHandler
     private Rigidbody2D _rigidbody;
     public Rigidbody2D Rigidbody => _rigidbody;
 
+    private Collider2D _collider;
+    public Collider2D Collider => _collider;
+
     EnemyStats _enemyStats;
     public EnemyStats Stats => _enemyStats;
+
+    [SerializeField]
+    EnemySound m_EnemySound;
+
+    public EnemySound Sound => m_EnemySound;
 
     public float MovementSpeed => Stats.MovementSpeed;
 
@@ -36,6 +44,8 @@ public class EntityController : StateHandler
     SpriteRenderer _sprite;
     public SpriteRenderer Sprite => _sprite;
 
+    public bool DoApplyGravity;
+
 
     public virtual void Init(EnemyStats Stats)
     {
@@ -53,7 +63,8 @@ public class EntityController : StateHandler
 
        
         _rigidbody = GetComponent<Rigidbody2D>();
-     
+        _collider = GetComponent<Collider2D>();
+
         GroundLayer = LayerMask.GetMask("Ground");
 
         InitStateHandler(this);
@@ -68,9 +79,12 @@ public class EntityController : StateHandler
     protected override void FixedUpdate()
     {
 
-      //  _isGrounded = CheckForGround();
-       // ApplyGravity(Time.fixedDeltaTime);
-       // ApplyVelocity(Time.fixedDeltaTime, _upwardDirection);
+        _isGrounded = CheckForGround();
+        if (DoApplyGravity)
+        {
+            ApplyGravity(Time.fixedDeltaTime);
+        }
+        ApplyVelocity(Time.fixedDeltaTime, _upwardDirection);
 
         base.FixedUpdate();
     }
@@ -93,10 +107,13 @@ public class EntityController : StateHandler
 
     private void ApplyGravity(float deltaTime)
     {
-        if(!_isJumping)
+        if (!_isJumping)
+        {
             _velocity.y = !_isGrounded ?
             _velocity.y - Gravity * deltaTime :
             0;
+        }
+        
     }
 
 

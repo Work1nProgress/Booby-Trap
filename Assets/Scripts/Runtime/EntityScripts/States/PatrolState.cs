@@ -7,9 +7,23 @@ public class PatrolState : EntityState
 {
     private bool _movingRight = false;
 
+    [SerializeField]
+    bool IsIdle;
+
     public override void EnterState()
     {
         base.EnterState();
+        SoundManager.Instance.PlayLooped(_controller.Sound.PassiveLoop, _controller.gameObject, _controller.transform);
+        if (IsIdle)
+        {
+            _movingRight = !_movingRight;
+        }
+    }
+
+    public override void ExitState()
+    {
+        SoundManager.Instance.CancelLoop(_controller.Sound.PassiveLoop, _controller.gameObject);
+        base.ExitState();
     }
 
     public override void FixedUpdateState(float deltaTime)
@@ -20,7 +34,7 @@ public class PatrolState : EntityState
 
         _controller.Sprite.flipX = _movingRight;
 
-        bool playerCheck = CheckForPlayer();
+        bool playerCheck = CheckForPlayer(_movingRight) && !IsIdle;
 
          _controller.PlayerDetected(playerCheck);
         if (playerCheck)
@@ -38,42 +52,15 @@ public class PatrolState : EntityState
             _controller.Rigidbody.position - new Vector2(0.56f, 0),
             Vector3.down,
             0.55f,
-            LayerMask.GetMask("Ground"));
+            Utils.GroundLayer);
 
         RaycastHit2D wallHit = Physics2D.Raycast(_controller.Rigidbody.position,
             _movingRight ? Vector3.right : Vector3.left,
             0.55f,
-            LayerMask.GetMask("Ground"));
+            Utils.GroundLayer);
 
         return !(cliffHit.collider != null && wallHit.collider == null);
     }
 
-    private bool CheckForPlayer()
-    {
-        var distance = Vector3.Distance(_controller.Rigidbody.position, ControllerGame.Instance.player.transform.position);
-
-        if (distance <= _controller.Stats.DetectionDistance)
-        {
-            if (Physics2D.Raycast(_controller.Rigidbody.position,
-
-           ControllerGame.Instance.player.RigidBody.position - _controller.Rigidbody.position,
-           distance,
-           LayerMask.GetMask("Ground"))){
-                return false;
-            }
-
-            if (Vector2.Angle(_movingRight ? Vector3.right : Vector3.left,
-                ControllerGame.Instance.player.RigidBody.position - _controller.Rigidbody.position) > _controller.Stats.DetectionAngle)
-            {
-                return false;
-            }
-
-
-            return true;
-
-        }
-        return false;
-
-      
-    }
+  
 }

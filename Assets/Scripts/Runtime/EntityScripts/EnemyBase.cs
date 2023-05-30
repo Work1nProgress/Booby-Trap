@@ -14,17 +14,27 @@ public class EnemyBase : EntityController
 
     [SerializeField]
     float AttackForce;
-     
+
+
+    [SerializeField]
+    StateData StunnedStateData;
+
+
     protected float StunTimer;
 
     protected float _stepsTimer;
 
+    bool isStunned;
 
-   
+    
 
 
 
-
+    public override void Init(EnemyStats Stats)
+    {
+        base.Init(Stats);
+        AddState(InitializeState(StunnedStateData, this));
+    }
 
     protected override void Update()
     {
@@ -37,24 +47,36 @@ public class EnemyBase : EntityController
 
     protected virtual void UpdateSteps()
     {
-        //_stepsTimer -= Time.deltaTime * Mathf.Abs(Rigidbody.velocity.x) * stepVelocityFactor;
-        //if (Mathf.Abs(Rigidbody.velocity.x) > 0.1f && _stepsTimer < 0)
-        //{
-        //    SoundManager.Instance.Play(SoundSteps, transform);
-        //    _stepsTimer = stepDelay;
-        //}
+        if (string.IsNullOrEmpty(Sound.StepsPassive))
+        {
+            return;
+        }
+        _stepsTimer -= Time.deltaTime * Mathf.Abs(Rigidbody.velocity.x) * Sound.stepVelocityFactor;
+        if (Mathf.Abs(Rigidbody.velocity.x) > 0.1f && _stepsTimer < 0)
+        {
+            SoundManager.Instance.Play(Sound.StepsPassive, transform);
+            _stepsTimer = Sound.stepDelay;
+        }
     }
 
 
     protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+        if (isStunned) return;
+
         if (Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position) < Range)
         {
 
             ControllerGame.Instance.player.AttackForce(transform.position, AttackForce);
 
             ControllerGame.Instance.player.Damage(DamageToDeal);
-            
+            if (CurrentState is FlyingAttackState)
+            {
+                CurrentState.ToAltState();
+            }
+
+
         }
         for (int i = ControllerGame.Instance.Spears.Count - 1; i >= 0; i--) 
         {
@@ -66,12 +88,50 @@ public class EnemyBase : EntityController
 
             }
         }
-        base.FixedUpdate();
+
+    }
+
+    public override void Damage(int ammount)
+    {
+        
+        base.Damage(ammount);
+        if (Health > 0)
+        {
+            SoundManager.Instance.Play(Sound.Hurt, transform);
+        }
+        else
+        {
+            SoundManager.Instance.Play(Sound.Death, transform);
+        }
+        
     }
 
     public void KnockBackAndStun(Vector2 Force, float stunDuration)
     {
         StunTimer = stunDuration;
+        ChangeState(StunnedStateData.stateName);
+        Rigidbody.AddForce(Force, ForceMode2D.Impulse);
+    }
+
+    protected override void BeforeInitState(EntityState state)
+    {
+        if (state is StunnedState)
+        {
+            (state as StunnedState).SetTime(StunTimer);
+            state.OnStateChanged.AddListener(CheckStun);
+            isStunned = true;
+        }
+        base.BeforeInitState(state);
+    }
+
+    void CheckStun(bool entering, EntityState state)
+    {
+
+        if (!entering)
+        {
+            isStunned = false;
+            state.OnStateChanged.RemoveListener(CheckStun);
+        }
     }
 
 

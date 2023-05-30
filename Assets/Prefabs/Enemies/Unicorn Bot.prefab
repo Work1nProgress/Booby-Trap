@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 7110510423414983254}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7110510423519493822}
   m_RootOrder: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8d43747b953045f4c898cbe6a0d97199, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 7.45, y: 7.57}
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   _tempStats:
-    MaxHealth: 0
+    MaxHealth: 10
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -155,27 +155,47 @@ MonoBehaviour:
   _initialState: Patrol
   _entityStates:
   - stateName: Patrol
-    nextState: Chase
+    nextState: Notice
     altState: 
     state: {fileID: 11400000, guid: 8a36088de87ff284ebbd0a18bc8b0cbb, type: 2}
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  - stateName: Notice
+    nextState: Chase
+    altState: 
+    state: {fileID: 11400000, guid: 48a88071814d74f3ca4bf913f38b0e2a, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 0.5
   - stateName: Chase
-    nextState: Patrol
+    nextState: IdlePatrol
     altState: 
     state: {fileID: 11400000, guid: c7ca1ed0c01f83e49a58c05f9ce9c21b, type: 2}
     timedState: 1
     timerAltState: 0
     stateTime: 5
+  - stateName: IdlePatrol
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 1fe16b79b32c1479fb41e5bff1550c64, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 2
+  m_EnemySound: {fileID: 11400000, guid: 96253dff0bfee44a38403f40674ee41f, type: 2}
+  _sprite: {fileID: 7110510423414983252}
+  DoApplyGravity: 1
   DamageToDeal: 1
   Range: 1.5
-  AttackForce: 50
-  trotSpeed: 3
-  gallopSpeed: 6
-  enrageDuration: 3
-  groundCheckPoint: {x: 1.58, y: -0.43}
-  wallCheckPoint: {x: 1.22, y: -0.6}
+  AttackForce: 10
+  StunnedStateData:
+    stateName: Stunned
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 98f03cecc6cef413e8d6c61b9fde72c1, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
 --- !u!50 &7110510423519493820
 Rigidbody2D:
   serializedVersion: 4
@@ -196,7 +216,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7110510423519493823
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -210,7 +230,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.48301983, y: -0.020191789}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -221,5 +241,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8248234, y: 2.5821664}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0

@@ -59,12 +59,19 @@ MonoBehaviour:
   _initialState: Patrol
   _entityStates:
   - stateName: Patrol
-    nextState: Chase
+    nextState: Notice
     altState: 
     state: {fileID: 11400000, guid: 8a36088de87ff284ebbd0a18bc8b0cbb, type: 2}
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  - stateName: Notice
+    nextState: Chase
+    altState: 
+    state: {fileID: 11400000, guid: 48a88071814d74f3ca4bf913f38b0e2a, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 0.5
   - stateName: Chase
     nextState: Attack
     altState: Patrol
@@ -73,15 +80,33 @@ MonoBehaviour:
     timerAltState: 1
     stateTime: 15
   - stateName: Attack
-    nextState: Chase
-    altState: Patrol
+    nextState: Idle
+    altState: Idle
     state: {fileID: 11400000, guid: 54bea932a7ad54f46ac0eb23696fb1ee, type: 2}
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  - stateName: Idle
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 1fe16b79b32c1479fb41e5bff1550c64, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 2
+  m_EnemySound: {fileID: 11400000, guid: 84f1dc96c919c44bd955db0339373db2, type: 2}
+  _sprite: {fileID: 1739822648683402399}
+  DoApplyGravity: 1
   DamageToDeal: 1
   Range: 1
   AttackForce: 20
+  StunnedStateData:
+    stateName: Stunned
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 98f03cecc6cef413e8d6c61b9fde72c1, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
 --- !u!212 &1739822648683402399
 SpriteRenderer:
   m_ObjectHideFlags: 0

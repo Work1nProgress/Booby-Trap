@@ -20,6 +20,7 @@ public class SpiderPatrolState : EntityState
     public override void EnterState()
     {
         base.EnterState();
+        _controller.DoApplyGravity = false;
         if (_controller.Stats.StartDirection != 1)
         _controller.Rigidbody.isKinematic = true;
         m_BackCheckPointActive = m_BackCheckPoint;

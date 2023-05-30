@@ -15,8 +15,16 @@ public class ChaseState : EntityState
 
     public override void EnterState()
     {
+
+        SoundManager.Instance.PlayLooped(_controller.Sound.AgressiveLoop, _controller.gameObject, _controller.transform);
         base.EnterState();
         RaycastVector = new Vector2(OffsetX, 0);
+    }
+
+    public override void ExitState()
+    {
+        SoundManager.Instance.PlayLooped(_controller.Sound.PassiveLoop, _controller.gameObject, _controller.transform);
+        base.ExitState();
     }
 
     public override void FixedUpdateState(float deltaTime)
@@ -44,7 +52,7 @@ public class ChaseState : EntityState
             Vector2.right :
             Vector2.right * -1,
             0.1f,
-            LayerMask.GetMask("Ground"));
+            Utils.GroundLayer);
 
         return wallHit.collider != null;
     }
@@ -58,7 +66,7 @@ public class ChaseState : EntityState
             Vector2.right :
             Vector2.right * -1,
             0.3f,
-            LayerMask.GetMask("Player"));
+            Utils.GroundLayer);
 
         return playerHit.collider != null;
     }

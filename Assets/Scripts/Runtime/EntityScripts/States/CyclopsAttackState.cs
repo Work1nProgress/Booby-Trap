@@ -34,6 +34,8 @@ public class CyclopsAttackState : EntityState
 
     public void Attack(int power)
     {
+
+        SoundManager.Instance.Play(_controller.Sound.Attack, _controller.transform);
         Vector2 p2 = _controller.Rigidbody.position;
         p2.y -= 0.55f;
         p2.x += _targetOnRight ? 0.85f : -0.85f;
