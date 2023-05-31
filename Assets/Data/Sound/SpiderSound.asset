@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PassiveLoop: 
   AgressiveLoop: 
-  StepsPassive: 
-  StepsAggresive: 
-  Death: 
-  Hurt: 
+  StepsPassive: Spider_Step
+  StepsAggresive: Spider_Step
+  Death: Spider_Death
+  Hurt: Spider_Hurt
   NoticePlayer: 
   Attack: 
-  stepDelayPassive: 0.125
-  stepVelocityFactorPassive: 0.1
-  stepDelayAggresive: 0.125
-  stepVelocityFactorAgressive: 0.1
+  stepDelay: 0.5
+  stepVelocityFactor: 0.2
