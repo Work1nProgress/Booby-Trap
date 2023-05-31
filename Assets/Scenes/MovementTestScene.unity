@@ -8042,7 +8042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739822648683402398, guid: 62cf9c320fc34ab489e2ab022b250ee1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.78883
+      value: -4.51
       objectReference: {fileID: 0}
     - target: {fileID: 1739822648683402398, guid: 62cf9c320fc34ab489e2ab022b250ee1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9254,6 +9254,10 @@ PrefabInstance:
     - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
       propertyPath: SpiderStats.MaxHealth
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
+      propertyPath: CyclopsStats.MaxHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
       propertyPath: UnicornStats.MaxHealth
