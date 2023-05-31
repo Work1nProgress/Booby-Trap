@@ -20,5 +20,5 @@ MonoBehaviour:
   Hurt: Spider_Hurt
   NoticePlayer: 
   Attack: 
-  stepDelay: 0.5
+  stepDelay: 0.1
   stepVelocityFactor: 0.2

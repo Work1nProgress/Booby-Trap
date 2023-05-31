@@ -392,8 +392,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Unicorn_Death
     PlaySubitemType: 0
     soundItems:

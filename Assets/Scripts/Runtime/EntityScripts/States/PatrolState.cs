@@ -22,7 +22,7 @@ public class PatrolState : EntityState
 
     public override void ExitState()
     {
-        SoundManager.Instance.CancelLoop(_controller.Sound.PassiveLoop, _controller.gameObject);
+        SoundManager.Instance?.CancelLoop(_controller.Sound.PassiveLoop, _controller.gameObject);
         base.ExitState();
     }
 
