@@ -56,11 +56,11 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 24fb866e60de0a74e94dd13813a3da8f, type: 3}
     - AudioClip: {fileID: 8300000, guid: 277c8333e060f7e4c89c674c809a5e8c, type: 3}
     Volume: -0.241
-    PitchShift: 0
-    RandomPitch: 0.5
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 5
+    notSameTwiceOffset: 2
     ChanceToPlay: 100
     MinDistance: 1
     MaxDistance: 50
@@ -73,8 +73,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: d689aeff85ea8e242bf6e69d7e467fff, type: 3}
     - AudioClip: {fileID: 8300000, guid: 71d742492d9dea547b0cbf4a04e3685c, type: 3}
     Volume: -0.141
-    PitchShift: 0
-    RandomPitch: 0.5
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -91,7 +91,7 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 6664d100aff46694fb66c2091a1b77af, type: 3}
     Volume: -0.265
     PitchShift: 0.5
-    RandomPitch: -0.05
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -110,8 +110,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 93b6e4a19a2cbd14fa17239977798a82, type: 3}
     - AudioClip: {fileID: 8300000, guid: ce18cd5e47123de4995ac39d011c5277, type: 3}
     Volume: -0.071
-    PitchShift: 0
-    RandomPitch: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -185,12 +185,12 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: fd0d9ad1ad6396645982185138f3d5f8, type: 3}
     - AudioClip: {fileID: 8300000, guid: c19e19351af41084a80427fa9eb42226, type: 3}
     - AudioClip: {fileID: 8300000, guid: 224adedd9ae230049830858a1b68b34d, type: 3}
-    Volume: 0.018
-    PitchShift: 0
-    RandomPitch: 0.5
+    Volume: -0.15
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0
-    notSameTwiceOffset: 2
+    notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
@@ -205,8 +205,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 4df05bbc91ad25f4899ef1296a23cde0, type: 3}
     - AudioClip: {fileID: 8300000, guid: 2f1e3b6ae99f3d04481ef291c7fd09ad, type: 3}
     Volume: 0.047
-    PitchShift: 0
-    RandomPitch: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 2
@@ -230,8 +230,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Cyclops_Hurt
     PlaySubitemType: 1
     soundItems:
@@ -243,13 +243,13 @@ MonoBehaviour:
     RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 2
+    notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Cyclops_Step
     PlaySubitemType: 1
     soundItems:
@@ -267,8 +267,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Harpy_Aggressive
     PlaySubitemType: 0
     soundItems:
@@ -300,8 +300,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Harpy_FlyingPatrol
     PlaySubitemType: 0
     soundItems:
@@ -319,13 +319,13 @@ MonoBehaviour:
     OverrideCustomSpatialBlend: 1
     UseCustomSpatialBlend: 1
   - SoundName: Harpy_Hurt
-    PlaySubitemType: 0
+    PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: cf2d3bbee62c0a84a865d7c2721b4c59, type: 3}
     - AudioClip: {fileID: 8300000, guid: 78ff4bc35efb97f4492f84010a556b48, type: 3}
     - AudioClip: {fileID: 8300000, guid: 5896261b1b1da4f4d8508f38d0193d62, type: 3}
     - AudioClip: {fileID: 8300000, guid: 62c18aa714a749647983fe1ebac1aedf, type: 3}
-    Volume: 0
+    Volume: -0.15
     PitchShift: 0.5
     RandomPitch: -0.5
     DopplerLevel: 0
@@ -335,8 +335,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Spider_Death
     PlaySubitemType: 1
     soundItems:
@@ -352,8 +352,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Spider_Hurt
     PlaySubitemType: 1
     soundItems:
@@ -366,13 +366,13 @@ MonoBehaviour:
     RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 0
+    notSameTwiceOffset: 2
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Spider_Step
     PlaySubitemType: 1
     soundItems:
@@ -382,7 +382,7 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 9c32aa0d0bd4f6a49a98ae7d476c7dfd, type: 3}
     - AudioClip: {fileID: 8300000, guid: 72aff5216e044a547b33b16be6facaef, type: 3}
     - AudioClip: {fileID: 8300000, guid: 2a302e9ead600f0458273da5b221b237, type: 3}
-    Volume: 0
+    Volume: -0.306
     PitchShift: 0.5
     RandomPitch: -0.5
     DopplerLevel: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
     PlaySubitemType: 0
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 98959d34708cb6340b55580ee9c4af97, type: 3}
-    Volume: 0
+    Volume: -0.15
     PitchShift: 0.5
     RandomPitch: -0.5
     DopplerLevel: 0
@@ -408,8 +408,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Unicorn_Enraged
     PlaySubitemType: 0
     soundItems:
@@ -433,7 +433,7 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 43fed1dd3b0131d439d84cf870084e34, type: 3}
     - AudioClip: {fileID: 8300000, guid: b4d33c44f8e7eda4bbb21338109b5a85, type: 3}
     - AudioClip: {fileID: 8300000, guid: 43559e14453b1ba43bb81696aaaba762, type: 3}
-    Volume: 0
+    Volume: 0.1
     PitchShift: 0.5
     RandomPitch: -0.5
     DopplerLevel: 0
@@ -443,8 +443,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Unicorn_NoticePlayer
     PlaySubitemType: 1
     soundItems:
@@ -456,18 +456,18 @@ MonoBehaviour:
     RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 0
+    notSameTwiceOffset: 1
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Unicorn_Passive
     PlaySubitemType: 0
     soundItems:
     - AudioClip: {fileID: 8300000, guid: fd0d61e9aa23f0f4e8d71df1a70ee903, type: 3}
-    Volume: -0.124
+    Volume: 0.141
     PitchShift: 0
     RandomPitch: 0
     DopplerLevel: 0
@@ -488,18 +488,18 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: dbc18bd3820a59c4387543ff8e6baf85, type: 3}
     - AudioClip: {fileID: 8300000, guid: 0e58970fbdeba404baafb64b90cfb1b6, type: 3}
     - AudioClip: {fileID: 8300000, guid: 763aaaf9cf86f0a42a9cdcdaa9b6ef6b, type: 3}
-    Volume: 0
+    Volume: -0.057
     PitchShift: 0.5
     RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 0
+    notSameTwiceOffset: 2
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Cyclops_NoticePlayer
     PlaySubitemType: 0
     soundItems:
@@ -516,6 +516,23 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
+  - SoundName: Harpy_NoticePlayer
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: c932c0e67ca761d4790f07b4ecc7f254, type: 3}
+    - AudioClip: {fileID: 8300000, guid: e9184d6033c07654e8f409df9090b37c, type: 3}
+    Volume: 0.1
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0

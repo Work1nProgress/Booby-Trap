@@ -18,7 +18,7 @@ MonoBehaviour:
   StepsAggresive: 
   Death: Harpy_Death
   Hurt: Harpy_Hurt
-  NoticePlayer: 
+  NoticePlayer: Harpy_NoticePlayer
   Attack: 
   stepDelay: 0
   stepVelocityFactor: 0
