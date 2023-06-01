@@ -159,17 +159,30 @@ public class Utils
 
     }
 
-    public static int WorldPositionToTile(float posX)
+    public static int WorldPositionToTile(float pos)
     {
 
-        if (posX >= 0)
+        if (pos >= 0)
         {
-            return Mathf.FloorToInt(posX);
+            return Mathf.FloorToInt(pos);
         }
         else
         {
-            return -Mathf.CeilToInt(-posX);
+            return -Mathf.CeilToInt(-pos);
         }
+
+    }
+
+    public static Vector2 WorldPositionToTile(Vector2 pos)
+    {
+
+        return new Vector2(WorldPositionToTile(pos.x), WorldPositionToTile(pos.y));
+
+    }
+
+    public static Vector2 TileToWorldPosition(int x, int y)
+    {
+        return new Vector2(0.5f + x, 0.5f + y);
 
     }
 
