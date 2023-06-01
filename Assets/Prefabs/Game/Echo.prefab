@@ -71,6 +71,9 @@ MonoBehaviour:
   JumpSound: Echo_Jump
   LandSound: Echo_Landing
   StepsSound: Echo_Steps
+  stepDelay: 0.3
+  stepVelocityFactor: 0.1
+  lastGroundedPosition: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -94,7 +97,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-  OnHit:
+  OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
   m_MaxNumberOfSpearsInGame: 0
@@ -118,6 +121,8 @@ MonoBehaviour:
   offsetUp: 1
   offsetDown: -0.2
   InvulTime: 1
+  StunEnemyTime: 2
+  StunEnemyForce: 20
   PlayerMovementController: {fileID: 4492751368146734888}
   Attack: Echo_Attack
   AttackHit: Echo_AttackImpact

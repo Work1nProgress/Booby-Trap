@@ -20,5 +20,5 @@ MonoBehaviour:
   Hurt: Unicorn_Hurt
   NoticePlayer: Unicorn_NoticePlayer
   Attack: 
-  stepDelay: 0.5
-  stepVelocityFactor: 0.5
+  stepDelay: 0.3
+  stepVelocityFactor: 0.1
