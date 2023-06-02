@@ -12,7 +12,6 @@ public class GameUIController : MonoBehaviour
     {
         _pauseMenuCanvas = transform.Find("Canvas_PauseMenu");
         _pauseMenu = FindObjectOfType<PauseUIHandler>();
-        _pauseMenu.SetInactive();
         _pauseMenuCanvas.gameObject.SetActive(false);
         pauseMenuActive = false;
 
