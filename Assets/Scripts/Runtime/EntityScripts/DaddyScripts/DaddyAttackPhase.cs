@@ -12,6 +12,9 @@ public class DaddyAttackPhase : ScriptableObject
     [SerializeField]
     protected float m_ActiveTime, m_CooldownTime;
 
+    [SerializeField]
+    protected int DamageToPlayer;
+
 
     [Header("Triggers")]
 
@@ -30,6 +33,7 @@ public class DaddyAttackPhase : ScriptableObject
 
     [SerializeField]
     float m_PlayerCloserThanTiles;
+    public float DistanceToPlayer => m_PlayerCloserThanTiles;
 
     [SerializeField]
     int m_Weight;
@@ -237,8 +241,10 @@ public class DaddyAttackPhase : ScriptableObject
             DaddyPhaseState.Cooldown => m_CooldownTime,
             _ => 0
         };
-    
+
+    public virtual void DrawHitboxes() { Gizmos.color = Color.black; }
     #endregion
+
 
 
 
