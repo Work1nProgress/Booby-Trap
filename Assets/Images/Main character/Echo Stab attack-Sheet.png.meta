@@ -120,9 +120,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_0
       rect:
         serializedVersion: 2
-        x: 16
+        x: 18
         y: 80
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -141,9 +141,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_1
       rect:
         serializedVersion: 2
-        x: 173
+        x: 175
         y: 80
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -162,9 +162,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_2
       rect:
         serializedVersion: 2
-        x: 330
+        x: 332
         y: 80
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -183,9 +183,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_3
       rect:
         serializedVersion: 2
-        x: 487
+        x: 489
         y: 80
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -204,9 +204,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_4
       rect:
         serializedVersion: 2
-        x: 644
+        x: 646
         y: 80
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -225,9 +225,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_5
       rect:
         serializedVersion: 2
-        x: 801
+        x: 803
         y: 80
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -246,9 +246,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_6
       rect:
         serializedVersion: 2
-        x: 16
+        x: 18
         y: 0
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -267,9 +267,9 @@ TextureImporter:
       name: Echo Stab attack-Sheet_7
       rect:
         serializedVersion: 2
-        x: 173
+        x: 175
         y: 0
-        width: 141
+        width: 139
         height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
