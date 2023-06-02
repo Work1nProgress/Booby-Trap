@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1613894402475045318}
   - component: {fileID: 1613894402475045319}
+  - component: {fileID: 1613894403907780469}
   m_Layer: 0
   m_Name: ControllerGame
   m_TagString: Untagged
@@ -44,6 +45,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f76795faae624de49d54909ba5295da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxPlayerHealth: 3
   player: {fileID: 0}
   LabelHealth: {fileID: 0}
+  ControllerEnemies: {fileID: 1613894403907780469}
+  bkg: {fileID: 0}
   Spears: []
+--- !u!114 &1613894403907780469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613894402475045312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67262abffdc0049e8b87af0407988795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnicornStats:
+    MaxHealth: 1
+    DetectionAngle: 30
+    DetectionDistance: 5
+    MovementSpeed: 2
+    MovementSpeedChase: 5
+    StartDirection: 1
+  CyclopsStats:
+    MaxHealth: 3
+    DetectionAngle: 15
+    DetectionDistance: 5
+    MovementSpeed: 2
+    MovementSpeedChase: 2
+    StartDirection: 1
+  SpiderStats:
+    MaxHealth: 1
+    DetectionAngle: 15
+    DetectionDistance: 5
+    MovementSpeed: 2
+    MovementSpeedChase: 1
+    StartDirection: -1
+  HarpyStats:
+    MaxHealth: 1
+    DetectionAngle: 360
+    DetectionDistance: 5
+    MovementSpeed: 20
+    MovementSpeedChase: 30
+    StartDirection: 1

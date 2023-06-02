@@ -16,10 +16,7 @@ public class EntityBase : PoolObject
     public UnityEvent OnDeath;
     public UnityEvent OnChangeHealth = new UnityEvent();
 
-    public virtual void Awake()
-    {
-        Init(_tempStats);
-    }
+   
 
     public virtual void Init(EntityStats stats)
     {
@@ -41,6 +38,7 @@ public class EntityBase : PoolObject
         {
             OnChangeHealth.Invoke();
         }
+
         if (newHealth <= 0)
         {
             OnDeath.Invoke();
@@ -56,7 +54,17 @@ public class EntityBase : PoolObject
 }
 
 [Serializable]
-public struct EntityStats
+public class EntityStats
 {
     public int MaxHealth;
+}
+
+[Serializable]
+public class EnemyStats : EntityStats
+{
+    public float DetectionAngle;
+    public float DetectionDistance;
+    public float MovementSpeed;
+    public float MovementSpeedChase;
+    public int StartDirection;
 }

@@ -129,6 +129,64 @@ public class CountdownTimer
 
 public class Utils
 {
+
+
+    private static int _groundLayer = -1;
+    public static int GroundLayer
+    {
+        get
+        {
+            if (_groundLayer == -1)
+            {
+                _groundLayer = LayerMask.GetMask("Ground");
+            }
+            return _groundLayer;
+        }
+
+    }
+
+    private static int _playerLayer = -1;
+    public static int PlayerLayer
+    {
+        get
+        {
+            if (_playerLayer == -1)
+            {
+                _playerLayer = LayerMask.GetMask("Player");
+            }
+            return _playerLayer;
+        }
+
+    }
+
+    public static int WorldPositionToTile(float pos)
+    {
+
+        if (pos >= 0)
+        {
+            return Mathf.FloorToInt(pos);
+        }
+        else
+        {
+            return -Mathf.CeilToInt(-pos);
+        }
+
+    }
+
+    public static Vector2 WorldPositionToTile(Vector2 pos)
+    {
+
+        return new Vector2(WorldPositionToTile(pos.x), WorldPositionToTile(pos.y));
+
+    }
+
+    public static Vector2 TileToWorldPosition(int x, int y)
+    {
+        return new Vector2(0.5f + x, 0.5f + y);
+
+    }
+
+
     static public T AddArrayElement<T>(ref T[] array, T elToAdd)
     {
         if (array == null)

@@ -27,9 +27,17 @@ public class ObjectInstance
     public void Reuse(Transform parent, Vector3 position,Quaternion rotation)
     {
         poolObject.Reuse();
-        gameObject.transform.position = position;
-        gameObject.transform.rotation = rotation;
         transform.SetParent(parent);
+        if (parent)
+        {
+            gameObject.transform.localPosition = position;
+            gameObject.transform.localRotation = rotation;
+        }
+        else
+        {
+            gameObject.transform.position = position;
+            gameObject.transform.rotation = rotation;
+        }
     }
 
     public void Destroy()

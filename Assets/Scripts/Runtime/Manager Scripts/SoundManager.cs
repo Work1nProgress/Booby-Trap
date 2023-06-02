@@ -116,7 +116,7 @@ public class SoundManager : GenericSingleton<SoundManager>
     }
 
 
-    public SoundInstance PlayInstance(int idx, string soundName, Transform target)
+    private SoundInstance PlayInstance(int idx, string soundName, Transform target)
     {
         Vector3 targetPosition = target == default ? Camera.main.transform.position : target.position;
         var soundInstance = PoolManager.Spawn<SoundInstance>(SoundInstanceName, null, targetPosition);

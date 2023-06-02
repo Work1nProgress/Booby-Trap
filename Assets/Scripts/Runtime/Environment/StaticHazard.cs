@@ -16,19 +16,28 @@ public class StaticHazard : MonoBehaviour
 
 
     int PlayerLayer;
+    int EnemyLayer;
     private void Awake()
     {
         PlayerLayer = LayerMask.GetMask("Player");
+        EnemyLayer = LayerMask.GetMask("Enemy");
     }
 
 
     private void FixedUpdate()
     {
         bool isInRange = false;
+        EnemyBase enemy;
         switch(Shape)
         {
             case HazardShape.Square:
                 isInRange = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, PlayerLayer) != null;
+                var hit  = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, EnemyLayer);
+                if (hit)
+                {
+                   enemy = hit.GetComponent<EnemyBase>();
+                   enemy.Damage(10000);
+                }
                 break;
 
             case HazardShape.Circle:
@@ -43,6 +52,7 @@ public class StaticHazard : MonoBehaviour
             ControllerGame.Instance.player.Damage(DamageToDeal);
             ControllerGame.Instance.player.TeleportToLastGround();
         }
+       
     }
     protected virtual void OnDrawGizmosSelected()
     {

@@ -11,25 +11,40 @@ public class ControllerGame : ControllerLocal
 
 
 
+    public int MaxPlayerHealth;
+
     public Player player;
     Vector3 m_StartingPlayerPos;
 
     [SerializeField]
     TMP_Text LabelHealth;
 
+    [SerializeField]
+    ControllerEnemies ControllerEnemies;
+
+    [SerializeField]
+    GameObject bkg;
+
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
 
+        bkg.SetActive(true);
         base.Init();
         m_Instance = this;
 
         player = FindFirstObjectByType<Player>();
+        player.Init(new EntityStats
+        {
+            MaxHealth = MaxPlayerHealth
+
+        });
         m_StartingPlayerPos = player.transform.position;
 
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);
         UpdatePlayerHealth();
+        ControllerEnemies.Init();
     }
 
     //move this in some kind of spear controller script
@@ -38,6 +53,10 @@ public class ControllerGame : ControllerLocal
 
     public void RemoveSpear(int index = 0)
     {
+        if (index < 0 || index > Instance.Spears.Count - 1)
+        {
+            return;
+        }
         var toRemove = Instance.Spears[index];
         Instance.Spears.RemoveAt(index);
         PoolManager.Despawn(toRemove);
@@ -62,7 +81,7 @@ public class ControllerGame : ControllerLocal
     }
 
     public void OnPlayerDeath(){
-        player.Heal(3);
+        player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth();
      }

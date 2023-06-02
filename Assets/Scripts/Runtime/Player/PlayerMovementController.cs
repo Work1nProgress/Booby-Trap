@@ -84,7 +84,14 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField]
     string StepsSound;
 
-    public Vector3 lastGroundedPosition;
+
+    [SerializeField]
+    float stepDelay = 0.5f;
+    [SerializeField]
+    float stepVelocityFactor = 0.1f;
+
+
+    public Vector2 lastGroundedPosition;
 
 
     bool allowDashing = false;
@@ -155,7 +162,7 @@ public class PlayerMovementController : MonoBehaviour
         LastOnGroundTime -= Time.deltaTime;
         LastDashTime -= Time.deltaTime;
         LastDashDurationTime -= Time.deltaTime;
-        StepsTimer -= Time.deltaTime * Mathf.Abs(m_RigidBody.velocity.x) * 0.1f;
+        StepsTimer -= Time.deltaTime * Mathf.Abs(m_RigidBody.velocity.x) * stepVelocityFactor;
         if (allowDashing)
         {
             dashPressed = Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.K);
@@ -166,12 +173,13 @@ public class PlayerMovementController : MonoBehaviour
         if (feetTouchingGround && Mathf.Abs(m_RigidBody.velocity.x) > 0.1f && StepsTimer < 0)
         {
             SoundManager.Instance.Play(StepsSound, transform);
-            StepsTimer = 0.5f;
+            StepsTimer = stepDelay;
         }
     }
 
     private void FixedUpdate()
     {
+
         UpdateVerticalMovement();
 
         //UPDATE HORIZONTAL MOVEMENT
@@ -332,7 +340,9 @@ public class PlayerMovementController : MonoBehaviour
     {
 
         m_RigidBody.velocity = default;
-        transform.position = lastGroundedPosition;
+        //TODO fix this so we teleport to the center of the tile
+        // var centerPosition = new Vector3(Utils.WorldPositionToTile(lastGroundedPosition.x)+0.5f, lastGroundedPosition.y, 0);
+        transform.position = lastGroundedPosition;//centerPosition;
     }
 
     private void GroundCheck()
@@ -364,6 +374,7 @@ public class PlayerMovementController : MonoBehaviour
         var collider = Physics2D.OverlapBox(transform.position + groundCheckPoint, groundCheckSize, 0, groundLayer);
         if (collider != null && !jumping)
         {
+
             if (!feetTouchingGround && falling)
             {
 
@@ -371,7 +382,8 @@ public class PlayerMovementController : MonoBehaviour
                 
             }
             feetTouchingGround = true;
-            lastGroundedPosition = transform.position;
+            lastGroundedPosition = m_RigidBody.position;
+   
             standingOnSpear = collider.gameObject.CompareTag("Spear");
             LastOnGroundTime = coyoteTime;
             fallingFromDash = false;

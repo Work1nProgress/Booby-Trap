@@ -15,6 +15,9 @@ public class FlyingSpear : Spear
     private Vector3 groundCheckPoint = new Vector3(0.216f, 0, 0);
 
     [SerializeField]
+    Transform lightTransform;
+
+    [SerializeField]
     LayerMask groundLayer;
 
     [SerializeField]
@@ -22,10 +25,14 @@ public class FlyingSpear : Spear
 
     bool hitTarget = false;
 
+   
 
     [Header("Sound")]
     [SerializeField]
     string Hit;
+
+    [SerializeField]
+    string HitEnemy;
 
 
 
@@ -39,6 +46,8 @@ public class FlyingSpear : Spear
         }
         else
         {
+            lightTransform.localRotation = Quaternion.Euler(0, 0, direction == -1 ? 0 : 180f);
+            lightTransform.localPosition = new Vector3(0, 0.24f, 0) * -direction;
             m_RigidBody.velocity = new Vector2(speed * direction + echoSpeed * inheritSpeed, 0);
         }
 
@@ -66,22 +75,14 @@ public class FlyingSpear : Spear
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        SoundManager.Instance.Play(Hit, transform);
-        hitTarget = true;
+       
+       
         if (collision.gameObject.layer == 7){
-            var entity = collision.gameObject.GetComponent<EntityBase>();
-            if (entity != null)
-            {
-                entity.Damage(1);
-                if (Random.value <= ControllerGame.Instance.player.ChanceToGainHeartRanged)
-                {
-                    ControllerGame.Instance.player.Heal(1);
-                }
-                RemoveAndNotify();
-                return;
-            }
+            DamageEnemy(collision.gameObject);
+            return;
         }
-
+        hitTarget = true;
+        SoundManager.Instance.Play(Hit, transform);
         var spear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, transform.position + m_Direction * StuckOffset, Quaternion.Euler(0, 0, 90));
         spear.Init(m_Lifetime,
            m_Direction,
@@ -104,22 +105,28 @@ public class FlyingSpear : Spear
     {
         if (collision.gameObject.layer == 7)
         {
-            SoundManager.Instance.Play(Hit, transform);
-            var entity = collision.gameObject.GetComponent<EntityBase>();
-            if (entity != null)
+
+            DamageEnemy( collision.gameObject);
+        }
+    }
+
+    void DamageEnemy(GameObject enemyGo)
+    {
+        SoundManager.Instance.Play(HitEnemy, transform);
+        var entity = enemyGo.GetComponent<EntityBase>();
+        if (entity != null)
+        {
+            entity.Damage(1);
+            if (Random.value <= ControllerGame.Instance.player.ChanceToGainHeartRanged)
             {
-                entity.Damage(1);
-                if (Random.value <= ControllerGame.Instance.player.ChanceToGainHeartRanged)
-                {
-                    ControllerGame.Instance.player.Heal(1);
-                }
-                if (!hitTarget)
-                {
-                    RemoveAndNotify();
-                }
-                hitTarget = true;
-                return;
+                ControllerGame.Instance.player.Heal(1);
             }
+            if (!hitTarget)
+            {
+                RemoveAndNotify();
+            }
+            hitTarget = true;
+
         }
     }
 

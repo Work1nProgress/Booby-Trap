@@ -56,11 +56,11 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 24fb866e60de0a74e94dd13813a3da8f, type: 3}
     - AudioClip: {fileID: 8300000, guid: 277c8333e060f7e4c89c674c809a5e8c, type: 3}
     Volume: -0.241
-    PitchShift: 0
-    RandomPitch: 0.5
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 5
+    notSameTwiceOffset: 2
     ChanceToPlay: 100
     MinDistance: 1
     MaxDistance: 50
@@ -73,8 +73,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: d689aeff85ea8e242bf6e69d7e467fff, type: 3}
     - AudioClip: {fileID: 8300000, guid: 71d742492d9dea547b0cbf4a04e3685c, type: 3}
     Volume: -0.141
-    PitchShift: 0
-    RandomPitch: 0.5
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -90,8 +90,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 88d03bc3301e7f74eadf94276767400b, type: 3}
     - AudioClip: {fileID: 8300000, guid: 6664d100aff46694fb66c2091a1b77af, type: 3}
     Volume: -0.265
-    PitchShift: 0
-    RandomPitch: 0.5
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -110,8 +110,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 93b6e4a19a2cbd14fa17239977798a82, type: 3}
     - AudioClip: {fileID: 8300000, guid: ce18cd5e47123de4995ac39d011c5277, type: 3}
     Volume: -0.071
-    PitchShift: 0
-    RandomPitch: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -122,19 +122,19 @@ MonoBehaviour:
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
   - SoundName: Echo_AttackImpact
-    PlaySubitemType: 0
+    PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: e4e95d6e2bffdc141bda17c893ddce59, type: 3}
     - AudioClip: {fileID: 8300000, guid: 947e69dd03a30834c91f83825bf4e0d3, type: 3}
     - AudioClip: {fileID: 8300000, guid: dac6cedce32e64a418c4b57a80e46fa1, type: 3}
     - AudioClip: {fileID: 8300000, guid: 4843ef68cead46e498428c45d3d9c62d, type: 3}
     - AudioClip: {fileID: 8300000, guid: c8e7a6e14b160b84f929141232af1f32, type: 3}
-    Volume: -0.316
-    PitchShift: 0
-    RandomPitch: 0.5
+    Volume: -0.157
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 1
+    notSameTwiceOffset: 2
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
@@ -160,15 +160,15 @@ MonoBehaviour:
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
   - SoundName: Echo_Throw
-    PlaySubitemType: 0
+    PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 66bce9f7ea2e9f949a3dfefb0aaa2fca, type: 3}
     - AudioClip: {fileID: 8300000, guid: e7d1d9074c7d1e042b6f9593a58e2314, type: 3}
     - AudioClip: {fileID: 8300000, guid: c209070fcd7b6414890aad8f3f116e0d, type: 3}
     - AudioClip: {fileID: 8300000, guid: 10f48c375f6fa714996c934722f6a1a6, type: 3}
     Volume: 0
-    PitchShift: 0
-    RandomPitch: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 1
@@ -179,15 +179,15 @@ MonoBehaviour:
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
   - SoundName: Echo_ThrowImpact
-    PlaySubitemType: 0
+    PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 8d5c9189d705beb40b4f881845cee3a4, type: 3}
     - AudioClip: {fileID: 8300000, guid: fd0d9ad1ad6396645982185138f3d5f8, type: 3}
     - AudioClip: {fileID: 8300000, guid: c19e19351af41084a80427fa9eb42226, type: 3}
     - AudioClip: {fileID: 8300000, guid: 224adedd9ae230049830858a1b68b34d, type: 3}
-    Volume: -0.182
-    PitchShift: 0
-    RandomPitch: 0.5
+    Volume: -0.15
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0
     notSameTwiceOffset: 1
@@ -204,9 +204,238 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: ff0f249c4765a304b884f0389a8afd44, type: 3}
     - AudioClip: {fileID: 8300000, guid: 4df05bbc91ad25f4899ef1296a23cde0, type: 3}
     - AudioClip: {fileID: 8300000, guid: 2f1e3b6ae99f3d04481ef291c7fd09ad, type: 3}
+    Volume: 0.047
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Cyclops_Death
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: b4a5c88baaca3a049a9de4051dd89547, type: 3}
+    Volume: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Cyclops_Hurt
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 2931a5000be15ef449bf6eecf2a40ffd, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 75546e0864ac39748ad307bedf837a06, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 1a7e92296c5381b468397aea64fb5902, type: 3}
+    Volume: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Cyclops_Step
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 253a75509bfe1314a850931a14e61e31, type: 3}
+    - AudioClip: {fileID: 8300000, guid: d7cb1eabbb9c55444a406b6b10412d1c, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 39987b8d1eeb90b4cab844e7d5774618, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 941d89cf599b0654d9f7e545c5338d14, type: 3}
+    Volume: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Harpy_Aggressive
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: a31aa2483bdf2a744aa3c012a7ca5cbb, type: 3}
     Volume: 0
     PitchShift: 0
     RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Harpy_Death
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 233cde1feac143b458941acdfebf6356, type: 3}
+    - AudioClip: {fileID: 8300000, guid: d51248b5035230a4a95979de5f6f1211, type: 3}
+    Volume: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Harpy_FlyingPatrol
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 2b2260026026210418e9880d260599b7, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Harpy_Hurt
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: cf2d3bbee62c0a84a865d7c2721b4c59, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 78ff4bc35efb97f4492f84010a556b48, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 5896261b1b1da4f4d8508f38d0193d62, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 62c18aa714a749647983fe1ebac1aedf, type: 3}
+    Volume: -0.15
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Spider_Death
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 780fce9fe48992e44bbd25aee49e0a4b, type: 3}
+    - AudioClip: {fileID: 8300000, guid: cf3791d1b5acf5f468c49cb0e988a33a, type: 3}
+    Volume: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Spider_Hurt
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 098b76f61f4128242836f1dea9162f05, type: 3}
+    - AudioClip: {fileID: 8300000, guid: b61e1463acc0bc24b8cec026bf4225a6, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 75dd9805e3d9b5e4e995b01a8a67f19c, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 078618d776926874b8b86716289176db, type: 3}
+    Volume: 0.336
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Spider_Step
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 6e358eee39202194eafa2d8f5f9d4f7b, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 6d14dc9e1941fd34ab5b925d0375d1d7, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 63c28666a9c2fdd4b9eec4b477077ac1, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 9c32aa0d0bd4f6a49a98ae7d476c7dfd, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 72aff5216e044a547b33b16be6facaef, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 2a302e9ead600f0458273da5b221b237, type: 3}
+    Volume: -0.306
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Unicorn_Death
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 98959d34708cb6340b55580ee9c4af97, type: 3}
+    Volume: -0.15
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Unicorn_Enraged
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: e3263f9d9699f234aa96113241813e66, type: 3}
+    Volume: 0.412
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Unicorn_Hurt
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: ec6b1e04d5448734abdcb4e0937d3997, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 43fed1dd3b0131d439d84cf870084e34, type: 3}
+    - AudioClip: {fileID: 8300000, guid: b4d33c44f8e7eda4bbb21338109b5a85, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 43559e14453b1ba43bb81696aaaba762, type: 3}
+    Volume: 0.1
+    PitchShift: 0.5
+    RandomPitch: -0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 0
@@ -214,8 +443,96 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Unicorn_NoticePlayer
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 9188e3899392e784792fa6c010e34620, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 38b205b274ceb3547b6c066b7ec7b7ad, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 42f95fa8d9c8db34aaf8c1ea291291ce, type: 3}
+    Volume: -0.147
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Unicorn_Passive
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: fd0d61e9aa23f0f4e8d71df1a70ee903, type: 3}
+    Volume: 0.141
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Unicorn_Step
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 9b53ee195051afd46acb9b79499b5d35, type: 3}
+    - AudioClip: {fileID: 8300000, guid: fe8c397e138463b469fa9919f7148702, type: 3}
+    - AudioClip: {fileID: 8300000, guid: b1b28a18a7956ab47be49bda2a9a5a11, type: 3}
+    - AudioClip: {fileID: 8300000, guid: dbc18bd3820a59c4387543ff8e6baf85, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 0e58970fbdeba404baafb64b90cfb1b6, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 763aaaf9cf86f0a42a9cdcdaa9b6ef6b, type: 3}
+    Volume: -0.057
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Cyclops_NoticePlayer
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 132cfaf6af90fef448e73fb6bf6bd9fa, type: 3}
+    Volume: 0
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
+  - SoundName: Harpy_NoticePlayer
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: c932c0e67ca761d4790f07b4ecc7f254, type: 3}
+    - AudioClip: {fileID: 8300000, guid: e9184d6033c07654e8f409df9090b37c, type: 3}
+    Volume: 0.1
+    PitchShift: 0.5
+    RandomPitch: -0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0

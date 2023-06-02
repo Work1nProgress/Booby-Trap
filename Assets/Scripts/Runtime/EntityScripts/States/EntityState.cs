@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "New State", menuName = "Entities/State")]
 public class EntityState : ScriptableObject
 {
     private string _name;
     public string stateName => _name;
+
 
     public delegate void ChangeStateSignature(string state);
     public event ChangeStateSignature OnChangeStateRequest;
@@ -26,13 +28,14 @@ public class EntityState : ScriptableObject
     private float _stateTime;
     CountdownTimer _stateTimer;
 
+    public UnityEvent<bool, EntityState> OnStateChanged = new UnityEvent<bool, EntityState>();
+
     public void InitState(EntityController controller, StateData data)
     {
         _nextState = data.nextState;
         _altState = data.altState;
         _timedState = data.timedState;
         _stateTime = _timedState ? data.stateTime : 0;
-
         _stateTimer = _timedState ? 
             new CountdownTimer(
                 _stateTime, false, false,
@@ -50,13 +53,14 @@ public class EntityState : ScriptableObject
     #region State Executors
     public virtual void EnterState()
     {
+        OnStateChanged.Invoke(true,this);
         if (_stateTimer != null)
             _stateTimer.Resume();
     }
     public virtual void ExitState()
     {
-
-        if(_stateTimer != null)
+        OnStateChanged.Invoke(false, this);
+        if (_stateTimer != null)
         {
             _stateTimer.Reset();
             _stateTimer.Pause();
@@ -79,6 +83,44 @@ public class EntityState : ScriptableObject
     public virtual void ClearEvents()
     {
         OnChangeStateRequest = null;
+    }
+
+
+    protected bool CheckForPlayer(bool movingRight)
+    {
+        var distance = Vector3.Distance(_controller.Rigidbody.position, ControllerGame.Instance.player.transform.position);
+
+        if (distance <= _controller.Stats.DetectionDistance)
+        {
+            if (Physics2D.Raycast(_controller.Rigidbody.position,
+
+           ControllerGame.Instance.player.RigidBody.position - _controller.Rigidbody.position,
+           distance,
+           LayerMask.GetMask("Ground")))
+            {
+                return false;
+            }
+
+            if (Vector2.Angle(movingRight ? Vector3.right : Vector3.left,
+                ControllerGame.Instance.player.RigidBody.position - _controller.Rigidbody.position) > _controller.Stats.DetectionAngle)
+            {
+                return false;
+            }
+
+
+            return true;
+
+        }
+        return false;
+
+
+    }
+
+    protected void MoveArial(Vector2 direction, float speed)
+    {
+        Vector2 force = direction * (speed * Time.deltaTime);
+        _controller.Rigidbody.AddForce(force);
+        _controller.transform.localScale = _controller.Rigidbody.velocity.x >= 0.01f ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, 1f, 1f);
     }
 }
 

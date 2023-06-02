@@ -19,22 +19,23 @@ public class CyclopsAttackState : EntityState
     {
         base.EnterState();
 
-        _targetOnRight = _controller.Rigidbody.position.x < _controller.Target.position.x;
+        _targetOnRight = _controller.Rigidbody.position.x < ControllerGame.Instance.player.RigidBody.position.x;
 
         attackWindup = new CountdownTimer(_windupTime, false, false, () => { Attack(_attackPower); attackCoolOff.Resume(); });
         attackCoolOff = new CountdownTimer(_coolOffTime, true, false, () => { ToNextState(); });
-        attackCoolOff.Pause();
     }
 
-    public override void FixedUpdateState(float deltaTime)
+    public override void ClearEvents()
     {
-        base.FixedUpdateState(deltaTime);
-
-
+        attackWindup.Dispose();
+        attackCoolOff.Dispose();
+        base.ClearEvents();
     }
 
     public void Attack(int power)
     {
+
+        SoundManager.Instance.Play(_controller.Sound.Attack, _controller.transform);
         Vector2 p2 = _controller.Rigidbody.position;
         p2.y -= 0.55f;
         p2.x += _targetOnRight ? 0.85f : -0.85f;

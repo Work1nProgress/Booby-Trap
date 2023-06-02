@@ -13,6 +13,7 @@ public class StateHandler : EntityBase
 
     private Dictionary<string, EntityState> _states;
     private EntityState _currentState;
+    public EntityState CurrentState => _currentState;
 
     public void InitStateHandler(EntityController controller)
     {
@@ -20,26 +21,35 @@ public class StateHandler : EntityBase
         
         foreach (StateData data in _entityStates)
         {
-            EntityState state = Instantiate(data.state);
-            state.InitState(controller, data);
-            AddState(state);
+            AddState(InitializeState(data, controller));
         }
 
         ChangeState(_initialState);
     }
+
+    protected EntityState InitializeState(StateData data, EntityController controller)
+    {
+        EntityState state = Instantiate(data.state);
+     
+        state.InitState(controller, data);
+        return state;
+    }
+
+    protected virtual void BeforeInitState(EntityState state) { } 
     protected bool AddState(EntityState state) => _states.TryAdd(state.stateName, state);
     protected bool RemoveState(string stateName) => _states.Remove(stateName);
-    protected void ChangeState(string stateName)
+    protected virtual void ChangeState(string stateName)
     {
         EntityState newState = GetState(stateName);
         if (newState != null)
         {
             if (_currentState != null)
             {
-                _currentState.ExitState();
-                _currentState.ClearEvents();
+                CleanUpCurrentState();
+
             }
 
+            BeforeInitState(newState);
             _currentState = newState;
 
             _currentState.OnChangeStateRequest += ChangeState;
@@ -48,7 +58,7 @@ public class StateHandler : EntityBase
         else
             Debug.LogWarning($"{gameObject.name}: '{stateName}' is not a valid state.");
     }
-    private EntityState GetState(string key)
+    protected EntityState GetState(string key)
     {
         EntityState state;
         if (!_states.TryGetValue(key, out state))
@@ -61,6 +71,7 @@ public class StateHandler : EntityBase
     {
         if (_currentState != null)
             _currentState.UpdateState(Time.deltaTime);
+
     }
 
     protected virtual void FixedUpdate()
@@ -71,8 +82,18 @@ public class StateHandler : EntityBase
 
     private void OnDestroy()
     {
-        if(_currentState != null)
+        if (_currentState != null)
+        {
+            CleanUpCurrentState();
+        }
+    }
+
+    protected void CleanUpCurrentState()
+    {
+        _currentState.OnChangeStateRequest -= ChangeState;
+        _currentState.ExitState();
         _currentState.ClearEvents();
+
     }
     
 }

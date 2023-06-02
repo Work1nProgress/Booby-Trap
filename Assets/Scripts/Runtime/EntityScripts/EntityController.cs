@@ -10,9 +10,18 @@ public class EntityController : StateHandler
     private Rigidbody2D _rigidbody;
     public Rigidbody2D Rigidbody => _rigidbody;
 
-    [Header("Entity Variables")]
-    [SerializeField] private float _movementSpeed;
-    public float MovementSpeed => _movementSpeed;
+    private Collider2D _collider;
+    public Collider2D Collider => _collider;
+
+    EnemyStats _enemyStats;
+    public EnemyStats Stats => _enemyStats;
+
+    [SerializeField]
+    EnemySound m_EnemySound;
+
+    public EnemySound Sound => m_EnemySound;
+
+    public float MovementSpeed => Stats.MovementSpeed;
 
     protected bool _isGrounded;
     public bool Grounded => _isGrounded;
@@ -27,27 +36,54 @@ public class EntityController : StateHandler
 
     private EntityRotationDirection _upwardDirection = EntityRotationDirection.UP;
 
-    private Transform _target;
-    public Transform Target => _target;
+    private bool _HasTarget;
+    public bool HasTarget => _HasTarget;
+    protected int GroundLayer;
+
+    [SerializeField]
+    SpriteRenderer _sprite;
+    public SpriteRenderer Sprite => _sprite;
+
+    public bool DoApplyGravity;
+
+
+    public virtual void Init(EnemyStats Stats)
+    {
+        _enemyStats = Stats;
+        Init(Stats as EntityStats);
+    }
+
 
     public override void Init(EntityStats stats)
     {
+
         base.Init(stats);
 
         _jumpResetTimer = new CountdownTimer(0.35f, true, false, ResetJump);
 
+       
         _rigidbody = GetComponent<Rigidbody2D>();
-        _rigidbody.gravityScale = 0;
+        _collider = GetComponent<Collider2D>();
+
+        GroundLayer = LayerMask.GetMask("Ground");
 
         InitStateHandler(this);
     }
 
+    protected override void OnKill()
+    {
+        base.OnKill();
+        _jumpResetTimer.Dispose();
+    }
+
     protected override void FixedUpdate()
     {
-        HandleRotation(_upwardDirection);
 
         _isGrounded = CheckForGround();
-        ApplyGravity(Time.fixedDeltaTime);
+        if (DoApplyGravity)
+        {
+            ApplyGravity(Time.fixedDeltaTime);
+        }
         ApplyVelocity(Time.fixedDeltaTime, _upwardDirection);
 
         base.FixedUpdate();
@@ -60,8 +96,8 @@ public class EntityController : StateHandler
 
         if (!_isJumping)
         {
-            RaycastHit2D hitleft = Physics2D.Raycast(transform.position - (Vector3.right * 0.5f), transform.up * -1, 0.55f, LayerMask.GetMask("Ground"));
-            RaycastHit2D hitright = Physics2D.Raycast(transform.position + (Vector3.right * 0.5f), transform.up * -1, 0.55f, LayerMask.GetMask("Ground"));
+            RaycastHit2D hitleft = Physics2D.Raycast(transform.position - (Vector3.right * 0.5f), transform.up * -1, 0.55f, GroundLayer);
+            RaycastHit2D hitright = Physics2D.Raycast(transform.position + (Vector3.right * 0.5f), transform.up * -1, 0.55f, GroundLayer);
             if (OtherObject(hitleft) != null || OtherObject(hitright) != null)
                 return true;
         }
@@ -71,121 +107,31 @@ public class EntityController : StateHandler
 
     private void ApplyGravity(float deltaTime)
     {
-        if(!_isJumping)
+        if (!_isJumping)
+        {
             _velocity.y = !_isGrounded ?
             _velocity.y - Gravity * deltaTime :
             0;
+        }
+        
     }
+
 
     private void ApplyVelocity(float deltaTime, EntityRotationDirection upDirection)
     {
         _rigidbody.position = _rigidbody.position +
-            RotatedVelocity(upDirection) * 
+            _velocity * 
             deltaTime;
     }
 
-    public void RotateClockwise()
-    {
-        switch (_upwardDirection)
-        {
-            case EntityRotationDirection.UP: _upwardDirection = EntityRotationDirection.RIGHT; return;
-            case EntityRotationDirection.RIGHT: _upwardDirection = EntityRotationDirection.DOWN; return;
-            case EntityRotationDirection.DOWN: _upwardDirection = EntityRotationDirection.LEFT; return;
-            case EntityRotationDirection.LEFT: _upwardDirection = EntityRotationDirection.UP; return;
-        }
-    }
-
-    public void RotateCounterClockwise()
-    {
-        switch (_upwardDirection)
-        {
-            case EntityRotationDirection.UP: _upwardDirection = EntityRotationDirection.LEFT; return;
-            case EntityRotationDirection.RIGHT: _upwardDirection = EntityRotationDirection.UP; return;
-            case EntityRotationDirection.DOWN: _upwardDirection = EntityRotationDirection.RIGHT; return;
-            case EntityRotationDirection.LEFT: _upwardDirection = EntityRotationDirection.DOWN; return;
-        }
-    }
-
-    private void HandleRotation(EntityRotationDirection direction)
-    {
-        _rigidbody.rotation = RotationAngle(direction);
-    }
-
-    private float RotationAngle(EntityRotationDirection upDirection)
-    {
-        switch (upDirection)
-        {
-            case EntityRotationDirection.UP: return 0;
-            case EntityRotationDirection.RIGHT: return -90;
-            case EntityRotationDirection.DOWN: return -180;
-            case EntityRotationDirection.LEFT: return 90;
-        }
-        return 0;
-    }
-
-    private Vector2 RotatedVelocity(EntityRotationDirection upDirection)
-    {
-        Vector2 velocity = Vector2.zero;
-
-        switch (upDirection)
-        {
-            case EntityRotationDirection.UP:
-                velocity = _velocity;
-                return velocity;
-            case EntityRotationDirection.RIGHT:
-                velocity.x = _velocity.y;
-                velocity.y = _velocity.x;
-                return velocity;
-            case EntityRotationDirection.DOWN:
-                velocity.y = _velocity.y * -1;
-                velocity.x = _velocity.x * -1;
-                return velocity;
-            case EntityRotationDirection.LEFT:
-                velocity.x = _velocity.y * -1;
-                velocity.y = _velocity.x * -1;
-                return velocity;
-        }
-
-        return velocity;
-    }
-
-    private Vector2 RotatedVector(Vector2 vector)
-    {
-        Vector2 holderVector = Vector2.zero;
-
-        switch (_upwardDirection)
-        {
-            case EntityRotationDirection.UP:
-                holderVector = vector;
-                return holderVector;
-            case EntityRotationDirection.RIGHT:
-                holderVector.x = vector.y;
-                holderVector.y = vector.x;
-                return holderVector;
-            case EntityRotationDirection.DOWN:
-                holderVector.y = vector.y * -1;
-                holderVector.x = vector.x * -1;
-                return holderVector;
-            case EntityRotationDirection.LEFT:
-                holderVector.x = vector.y * -1;
-                holderVector.y = vector.x * -1;
-                return holderVector;
-        }
-
-        return holderVector;
-    }
-
-    public void SetRotation(EntityRotationDirection upwardDriecttion)
-    {
-        _upwardDirection = upwardDriecttion;
-    }
+    
 
     public virtual void Move(float speed, bool right)
     {
-        Vector2 direction = RotatedVector(new Vector2(
-            right ? speed * Time.fixedDeltaTime : speed * Time.fixedDeltaTime * -1, 0));
+        Vector2 direction = new Vector2(
+            right ? speed * Time.fixedDeltaTime : speed * Time.fixedDeltaTime * -1, 0);
 
-        _rigidbody.MovePosition(_rigidbody.position + RotatedVector(direction));
+        _rigidbody.MovePosition(_rigidbody.position + direction);
     }
 
     public virtual void Jump(float power)
@@ -198,6 +144,12 @@ public class EntityController : StateHandler
         }
     }
 
+    public override void Destroy()
+    {
+        _jumpResetTimer.Dispose();
+        base.Destroy();
+    }
+
     private void ResetJump()
     {
         _isJumping = false;
@@ -205,9 +157,9 @@ public class EntityController : StateHandler
         _jumpResetTimer.Pause();
     }
 
-    public void PlayerDetected(Transform playerTransform)
+    public void PlayerDetected(bool hasTarget)
     {
-        _target = playerTransform;
+        _HasTarget = hasTarget;
     }
 }
 

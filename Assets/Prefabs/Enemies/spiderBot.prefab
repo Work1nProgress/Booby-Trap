@@ -211,24 +211,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   _tempStats:
-    MaxHealth: 1
+    MaxHealth: 2
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
   OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
+  _initialState: Patrol
+  _entityStates:
+  - stateName: Patrol
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 8cf6274a39ddd994081eaf1bc1b4cf89, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  m_EnemySound: {fileID: 11400000, guid: 83d42dc3c86654660a262d727e1652fb, type: 2}
+  _sprite: {fileID: 4706248590428561223}
+  DoApplyGravity: 0
   DamageToDeal: 1
   Range: 0.6
   AttackForce: 20
-  CheckSize: 0.08
-  backCheckPoint: {x: -0.26, y: -0.2}
-  frontCheckPoint: {x: 0.39, y: -0.2}
-  wallCheckPoint: {x: 0.41, y: -0.12}
-  Rigidbody2D: {fileID: 1711115266399639359}
-  moveSpeed: 2
-  direction: 1
-  startRight: 0
+  StunnedStateData:
+    stateName: Stunned
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: ca3d3f014efa149fe8570fd6d8923697, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
 --- !u!50 &1711115266399639359
 Rigidbody2D:
   serializedVersion: 4

@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f45d687c3594fb5bf2ba535654cbc4, type: 3}
   m_Name: HarpySound
   m_EditorClassIdentifier: 
-  PassiveLoop: 
-  AgressiveLoop: 
+  PassiveLoop: Harpy_FlyingPatrol
+  AgressiveLoop: Harpy_Aggressive
   StepsPassive: 
   StepsAggresive: 
-  Death: 
-  Hurt: 
-  NoticePlayer: 
+  Death: Harpy_Death
+  Hurt: Harpy_Hurt
+  NoticePlayer: Harpy_NoticePlayer
   Attack: 
-  stepDelayPassive: 0.5
-  stepVelocityFactorPassive: 0.1
-  stepDelayAggresive: 0.5
-  stepVelocityFactorAgressive: 0.1
+  stepDelay: 0
+  stepVelocityFactor: 0

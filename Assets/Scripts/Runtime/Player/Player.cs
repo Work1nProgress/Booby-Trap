@@ -78,8 +78,14 @@ public class Player : EntityBase
     [Tooltip("IFrames")]
     float InvulTime = 1f;
 
+    [SerializeField]
+    float StunEnemyTime = 2f;
 
-    
+    [SerializeField]
+    float StunEnemyForce= 20f;
+
+
+
 
 
     bool m_SpearButtonPressed = false;
@@ -97,6 +103,8 @@ public class Player : EntityBase
 
     [SerializeField]
     PlayerMovementController PlayerMovementController;
+
+    public Rigidbody2D RigidBody => PlayerMovementController.RigidBody;
 
 
     bool CanThrowSpear => (m_CurrentSpearAmount > 0 || m_MaxSpearsOnPlayer < 0) && (m_ThrowTimer < 0 || m_ThrowCooldown == 0);
@@ -268,7 +276,14 @@ public class Player : EntityBase
                 {
                     Heal(1);
                 }
+
+                var enemy = entity as EnemyBase;
+                if (enemy != null)
+                {
+                    enemy.KnockBackAndStun((enemy.Rigidbody.position - RigidBody.position).normalized * StunEnemyForce, StunEnemyTime);
+                }
             }
+            
         }
         m_AttackTimer = m_ReloadTime;
     }

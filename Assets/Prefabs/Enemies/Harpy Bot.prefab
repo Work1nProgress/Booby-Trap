@@ -173,19 +173,55 @@ MonoBehaviour:
   OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
+  _initialState: Patrol
+  _entityStates:
+  - stateName: Patrol
+    nextState: Notice
+    altState: 
+    state: {fileID: 11400000, guid: d52d2b361ea434f2f89ad80dfd9a4066, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  - stateName: Notice
+    nextState: Attack
+    altState: 
+    state: {fileID: 11400000, guid: 48a88071814d74f3ca4bf913f38b0e2a, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 0.5
+  - stateName: Attack
+    nextState: Patrol
+    altState: Idle
+    state: {fileID: 11400000, guid: 41b1d94eabc2b4a2c9eb216e0abd3a0a, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 20
+  - stateName: Idle
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 0963576cb6e024795a84c01ba48088f3, type: 2}
+    timedState: 1
+    timerAltState: 0
+    stateTime: 2
+  m_EnemySound: {fileID: 11400000, guid: ef163450efe0943a19225f16dca37778, type: 2}
+  _sprite: {fileID: 4963573131874348455}
+  DoApplyGravity: 0
   DamageToDeal: 1
-  Range: 2.31
+  Range: 1.5
   AttackForce: 5
-  moveSpeed: 500
-  waypoints:
+  StunnedStateData:
+    stateName: Stunned
+    nextState: Patrol
+    altState: 
+    state: {fileID: 11400000, guid: 09778050a91fe443d9212517c53e86d7, type: 2}
+    timedState: 0
+    timerAltState: 0
+    stateTime: 0
+  _seeker: {fileID: 4963573132879665375}
+  _waypoints:
   - {fileID: 0}
   - {fileID: 0}
-  nextPathpointDistance: 1
-  spriteObject: {fileID: 4963573131874348457}
-  lookRadius: 10
-  losePlayerRadius: 12
-  waypointMarginOfError: 2
-  _player: {fileID: 0}
+  - {fileID: 0}
 --- !u!58 &4963573132879665345
 CircleCollider2D:
   m_ObjectHideFlags: 0
