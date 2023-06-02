@@ -23,7 +23,7 @@ public class ChaseState : EntityState
 
     public override void ExitState()
     {
-        SoundManager.Instance.PlayLooped(_controller.Sound.PassiveLoop, _controller.gameObject, _controller.transform);
+        SoundManager.Instance?.CancelLoop(_controller.Sound.AgressiveLoop, _controller.gameObject);
         base.ExitState();
     }
 

@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f45d687c3594fb5bf2ba535654cbc4, type: 3}
   m_Name: UnicornSound
   m_EditorClassIdentifier: 
-  PassiveLoop: 
-  AgressiveLoop: 
-  StepsPassive: 
-  StepsAggresive: 
-  Death: 
-  Hurt: 
-  NoticePlayer: 
+  PassiveLoop: Unicorn_Passive
+  AgressiveLoop: Unicorn_Enraged
+  StepsPassive: Unicorn_Step
+  StepsAggresive: Unicorn_Step
+  Death: Unicorn_Death
+  Hurt: Unicorn_Hurt
+  NoticePlayer: Unicorn_NoticePlayer
   Attack: 
-  stepDelayPassive: 0.25
-  stepVelocityFactorPassive: 0.1
-  stepDelayAggresive: 0.25
-  stepVelocityFactorAgressive: 0.1
+  stepDelay: 0.3
+  stepVelocityFactor: 0.1

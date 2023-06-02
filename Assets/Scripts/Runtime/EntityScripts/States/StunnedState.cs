@@ -47,6 +47,7 @@ public class StunnedState : EntityState
         }
         _controller.DoApplyGravity = wasApplyingGravity;
         _controller.Collider.isTrigger = colliderState;
+        _controller.Rigidbody.velocity = Vector2.zero;
         base.ExitState();
     }
 

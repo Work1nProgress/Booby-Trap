@@ -90,8 +90,15 @@ public class PoolManager : GenericSingleton<PoolManager>
                 }
                 else
                 {
+                    if (objectInstance == null || objectInstance.PoolObject == null || objectInstance.PoolObject.gameObject == null)
+                    {
+                        return;
+                    }
                     objectInstance.PoolObject.gameObject.SetActive(false);
-                    objectInstance.SetParent(Instance.transform);
+                    if (Instance != null)
+                    {
+                        objectInstance.SetParent(Instance.transform);
+                    }
                     pool.queue.Enqueue(objectInstance);
                 }
             }

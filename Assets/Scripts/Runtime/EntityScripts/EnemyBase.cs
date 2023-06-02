@@ -101,6 +101,8 @@ public class EnemyBase : EntityController
         }
         else
         {
+            SoundManager.Instance.CancelLoop(Sound.PassiveLoop, gameObject);
+            SoundManager.Instance.CancelLoop(Sound.AgressiveLoop, gameObject);
             SoundManager.Instance.Play(Sound.Death, transform);
         }
         
