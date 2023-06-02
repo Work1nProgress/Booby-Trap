@@ -28,8 +28,10 @@ public class ControllerGame : ControllerLocal
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
-
-        bkg.SetActive(true);
+        if (bkg != null)
+        {
+            bkg.SetActive(true);
+        }
         base.Init();
         m_Instance = this;
 

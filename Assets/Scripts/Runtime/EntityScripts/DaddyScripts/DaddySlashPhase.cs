@@ -29,8 +29,7 @@ public class DaddySlashPhase : DaddyAttackPhase
     protected override void StartTelegraph()
     {
         base.StartTelegraph();
-        //TODO face Echo instead of towards center
-        _controller.FaceTowards(_controller.GetTilePosition() < _controller.GetRoomPosition.x + _controller.GetRoomSize.x / 2 ? 1 : -1);
+        _controller.FaceTowardsEcho();
         startPos = _controller.Rigidbody.position;
         _SlashEndPosition = startPos + new Vector2(SlashDistance * _controller.facingDirection, 0);
     }
@@ -53,8 +52,29 @@ public class DaddySlashPhase : DaddyAttackPhase
 
         if (_State == DaddyPhaseState.Active)
         {
-            _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _SlashEndPosition, _currentTime / m_ActiveTime));
-        }
+            var target = Vector2.Lerp(startPos, _SlashEndPosition, _currentTime / m_ActiveTime);
+            //dont let dada run out of the room
+            var clampedTarget = new Vector2(
+                Mathf.Clamp(target.x,
+                _controller.GetRoomPosition.x+0.5f,
+                _controller.GetRoomPosition.x + _controller.GetRoomSize.x-0.5f)
+                , target.y);
+            _controller.Rigidbody.MovePosition(clampedTarget);
 
+            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position+SlashPosition, SlashSize, 0, Utils.PlayerLayer);
+//            Debug.Log(hit);
+            if (hit)
+            {
+                ControllerGame.Instance.player.Damage(DamageToPlayer);
+            }
+        }
+    }
+
+    public override void DrawHitboxes()
+    {
+        base.DrawHitboxes();
+        if (_State == DaddyPhaseState.Active) {
+            Gizmos.DrawWireCube(_controller.Rigidbody.position + SlashPosition*_controller.facingDirection, SlashSize);
+        }
     }
 }
