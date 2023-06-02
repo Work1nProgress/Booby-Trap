@@ -115,7 +115,175 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 112
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e83353b076f520d468a9183b097fa1f1
+      internalID: 352614336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 112
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 204c6ace7495d1c49b6bd99aa7a35e76
+      internalID: 1365208314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 112
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f385602f28590b04ea9ab3d57e5e0750
+      internalID: -1709223088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 112
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a1da635a0d6963468669e90a489f6ce
+      internalID: -992100517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 112
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 723c93c9091bc324b932fafc5dd4067f
+      internalID: 1576642225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 112
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5b122174d119224e8d20e86b5ec6791
+      internalID: 298287195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 8
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ce3a854d3b919248bd99a86a2edf187
+      internalID: 1044507977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Jump Attack-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 8
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea48824808e68004e9487950dcd5a5aa
+      internalID: 228718605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -126,7 +294,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Echo Jump Attack-Sheet_0: 352614336
+      Echo Jump Attack-Sheet_1: 1365208314
+      Echo Jump Attack-Sheet_2: -1709223088
+      Echo Jump Attack-Sheet_3: -992100517
+      Echo Jump Attack-Sheet_4: 1576642225
+      Echo Jump Attack-Sheet_5: 298287195
+      Echo Jump Attack-Sheet_6: 1044507977
+      Echo Jump Attack-Sheet_7: 228718605
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

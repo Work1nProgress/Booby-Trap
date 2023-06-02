@@ -115,7 +115,175 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f97756c78258dbc49a6668b2ea739d16
+      internalID: -845501456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 80
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f7086e641bf0db4d82558c1979599e7
+      internalID: 1151149692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 80
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b975f9e1e043ee74db0ad143e51b0ebb
+      internalID: -2065170178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 80
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4e35b5dabf518e44a6a8435bdee29ca
+      internalID: 639639747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 80
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ac289bfad38b46439ec9f6387771fef
+      internalID: 1651357662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 80
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e63ca4fce9c6493429d98e2e916a54dd
+      internalID: -805814869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b15315665f9ef774eb3dd406f12108f4
+      internalID: -2053500173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Echo Stab attack-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 0
+        width: 141
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a651271308dd2034cb769851233c5c14
+      internalID: -1374380232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -126,7 +294,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Echo Stab attack-Sheet_0: -845501456
+      Echo Stab attack-Sheet_1: 1151149692
+      Echo Stab attack-Sheet_2: -2065170178
+      Echo Stab attack-Sheet_3: 639639747
+      Echo Stab attack-Sheet_4: 1651357662
+      Echo Stab attack-Sheet_5: -805814869
+      Echo Stab attack-Sheet_6: -2053500173
+      Echo Stab attack-Sheet_7: -1374380232
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

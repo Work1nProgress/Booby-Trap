@@ -115,7 +115,196 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 53
+        width: 53
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 306547f6b759fa54194f64a4165cec2d
+      internalID: 700476536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 53
+        width: 55
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6555b83173f89644886710159e1c8945
+      internalID: -494867248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 53
+        width: 53
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c5c3e90078cbb4bbc09878fb161f5f
+      internalID: -1227090625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 74
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76c392bb075efbf46a6373f4bc6278db
+      internalID: 977983006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 53
+        width: 57
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7554bdfb2d4ed7d4f9f5ae3093820327
+      internalID: -1441911925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 53
+        width: 53
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc9ac8f080e98fc41acb76d289ad53e9
+      internalID: 1721972842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 53
+        width: 53
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b87a8a53303393544b6926dd07e75be4
+      internalID: -880055560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 0
+        width: 53
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d30c3d3ce96f3e4e905d5e55bb3f7cc
+      internalID: -975161350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Girl Combat Stance-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 48
+        width: 61
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a7b0ffdc16282242a62daddccf210ed
+      internalID: 1901302003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -126,7 +315,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Player Girl Combat Stance-Sheet_0: 700476536
+      Player Girl Combat Stance-Sheet_1: -494867248
+      Player Girl Combat Stance-Sheet_2: -1227090625
+      Player Girl Combat Stance-Sheet_3: 977983006
+      Player Girl Combat Stance-Sheet_4: -1441911925
+      Player Girl Combat Stance-Sheet_5: 1721972842
+      Player Girl Combat Stance-Sheet_6: -880055560
+      Player Girl Combat Stance-Sheet_7: -975161350
+      Player Girl Combat Stance-Sheet_8: 1901302003
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
