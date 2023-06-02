@@ -848,6 +848,8 @@ MonoBehaviour:
   ContactDamage: 1
   Phases:
   - {fileID: 11400000, guid: afd5cfe7fa99041e3b671ac6f44ad665, type: 2}
+  - {fileID: 11400000, guid: 5dd11d5b417ef4855a00858239bd7eb6, type: 2}
+  - {fileID: 11400000, guid: 093d62b7247c4480ebce58d5a467108f, type: 2}
   facingDirection: 1
   DebugText: {fileID: 683011036}
   DaddyMaxHealth: 100
