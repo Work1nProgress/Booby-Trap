@@ -33,13 +33,27 @@ public class DaddyBulldozerPhase : DaddyAttackPhase
     public override void UpdatePhase(float deltaTime)
     {
 
-     //   Debug.Log(_controller.Rigidbody.position);
         base.UpdatePhase(deltaTime);
 
         if (_State == DaddyPhaseState.Active)
         {
             _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _BulldozeEndPosition, _currentTime / m_ActiveTime));
+            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position + BulldozePosition, BulldozeSize, 0, Utils.PlayerLayer);
+            Debug.Log(hit);
+            if (hit)
+            {
+                ControllerGame.Instance.player.Damage(DamageToPlayer);
+            }
         }
 
+    }
+
+    public override void DrawHitboxes()
+    {
+        base.DrawHitboxes();
+        if (_State == DaddyPhaseState.Active)
+        {
+            Gizmos.DrawWireCube(_controller.Rigidbody.position + BulldozePosition * _controller.facingDirection, BulldozeSize);
+        }
     }
 }

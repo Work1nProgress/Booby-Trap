@@ -16,8 +16,6 @@ public class ControllerGameFlow : GenericSingleton<ControllerGameFlow>
         _currentScene = SceneManager.GetActiveScene().name;
     }
 
-   
-
     public void LoadNewScene(string sceneName)
     {
         SceneManager.sceneLoaded += OnAfterSceneLoaded;

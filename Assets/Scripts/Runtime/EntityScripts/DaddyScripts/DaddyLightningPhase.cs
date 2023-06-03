@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,16 +9,16 @@ public class DaddyLightningPhase : DaddyAttackPhase
     [Header("Lightning Phase")]
 
     [SerializeField]
-    int LightningWidth;
+    float LightningWidth;
 
     [SerializeField]
-    int LightningSpacing;
+    float LightningSpacing;
 
     [SerializeField]
-    int LightningStartTile;
+    float LightningStartPosition;
 
     [SerializeField]
-    int LightningStartTileAlternate;
+    float LightningStartPositionAlternate;
 
     [SerializeField]
     float TelegraphLightningDuration;
@@ -45,7 +44,14 @@ public class DaddyLightningPhase : DaddyAttackPhase
     //track odd or even loops
     int _loopCounter;
 
+    List<Vector2> lightningCollision = new List<Vector2>();
+    Vector2 lightningArea;
 
+    public override void Init(DaddyController daddyController)
+    {
+        base.Init(daddyController);
+        lightningArea =  new Vector2(LightningWidth, _controller.GetRoomSize.y);
+    }
 
     public override void BeginPhase()
     {
@@ -95,41 +101,72 @@ public class DaddyLightningPhase : DaddyAttackPhase
         //start telegraphing
         if (_previousLoopSegment == 0 && _loopSegment == 1)
         {
-            int currentIndex = _loopCounter % 2 == 0 ? LightningStartTile : LightningStartTileAlternate;
-            while (currentIndex < _controller.GetRoomSize.x)
+            float currentPosition = (_loopCounter % 2 == 0 ? LightningStartPosition : LightningStartPositionAlternate) + _controller.GetRoomPosition.x;
+            while (currentPosition < _controller.GetRoomPosition.x +_controller.GetRoomSize.x)
             {
 
                 //spawn at every other tile
                 var telegraph = PoolManager.Spawn<PoolObjectTimed>("LightningTelegraph",
                     null,
-                    Utils.TileToWorldPosition(
-                        (int)_controller.GetRoomPosition.x + currentIndex,
-                        (int)(_controller.GetRoomSize.y + _controller.GetRoomPosition.y)
-                        ));
+                    new Vector3(
+                        currentPosition,
+                        _controller.GetRoomSize.y + _controller.GetRoomPosition.y,
+                        0)
+                    );
                 telegraph.transform.localScale = new Vector3(LightningWidth, 1, 0);
                 telegraph.StartTicking(TelegraphLightningDuration);
-                currentIndex += LightningSpacing + LightningWidth;
+                currentPosition += LightningSpacing + LightningWidth;
             }
 
         }
         //shoot
         else if (_previousLoopSegment == 1 && _loopSegment == 2)
         {
-            int currentIndex = _loopCounter % 2 == 0 ? LightningStartTile : LightningStartTileAlternate;
-            while (currentIndex < _controller.GetRoomSize.x)
+            lightningCollision.Clear();
+            float currentPosition = (_loopCounter % 2 == 0 ? LightningStartPosition : LightningStartPositionAlternate) + _controller.GetRoomPosition.x;
+            while (currentPosition < _controller.GetRoomSize.x)
             {
-                var lightning = PoolManager.Spawn<PoolObjectTimed>("Lightning", null, Utils.TileToWorldPosition((int)_controller.GetRoomPosition.x + currentIndex, (int)(_controller.GetRoomSize.y /2+ _controller.GetRoomPosition.y)));
+                var lightning = PoolManager.Spawn<PoolObjectTimed>("Lightning",
+                    null,
+                    new Vector3(
+                        currentPosition,
+                        _controller.GetRoomSize.y / 2+ _controller.GetRoomPosition.y,
+                        0)
+                    );
                 lightning.transform.localScale = new Vector3(LightningWidth, _controller.GetRoomSize.y, 0);
                 lightning.StartTicking(LightningDuration);
-                currentIndex += LightningSpacing+ LightningWidth;
+                lightningCollision.Add(new Vector2(currentPosition, _controller.GetRoomSize.y / 2 + _controller.GetRoomPosition.y));
+                currentPosition += LightningSpacing+ LightningWidth;
             }
         }
 
         if (_loopSegment == 2)
         {
-            //TODO check if echo is standing on the tiles that are zapped by lightning and damage her
+         
+            foreach (var lightning in lightningCollision)
+            {
+                if (Physics2D.OverlapBox(lightning, lightningArea, 0, Utils.PlayerLayer))
+                {
+                    ControllerGame.Instance.player.Damage(DamageToPlayer);
+                    break;
+                }
+            }
         }
         _previousLoopSegment = _loopSegment;
+    }
+
+    public override void DrawHitboxes()
+    {
+        base.DrawHitboxes();
+        if (_loopSegment == 2 && _State == DaddyPhaseState.Active)
+        {
+
+            foreach (var lightning in lightningCollision)
+            {
+                Gizmos.DrawWireCube(lightning, lightningArea);
+            }
+            
+        }
     }
 
 

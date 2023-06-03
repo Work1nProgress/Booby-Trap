@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DaddyController : MonoBehaviour
+public class DaddyController : EntityBase
 {
 
 
@@ -48,7 +48,10 @@ public class DaddyController : MonoBehaviour
     [SerializeField]
     TMP_Text DebugText;
 
-   
+    [SerializeField]
+    int DaddyMaxHealth;
+
+
 
 
     private void Start()
@@ -60,7 +63,11 @@ public class DaddyController : MonoBehaviour
             _Phases[i].Init(this);
         }
         FaceTowards(1);
-       
+        Init(new EntityStats
+        {
+            MaxHealth = DaddyMaxHealth
+
+        });
     }
 
 
@@ -106,13 +113,11 @@ public class DaddyController : MonoBehaviour
 
         if (_CurrentPhase && _CurrentPhase.IsActive) {
             _CurrentPhase.UpdatePhase(Time.fixedDeltaTime);
-            DebugText.text = _CurrentPhase.GetDebugMessage();
+            DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentPhase.GetDebugMessage(); 
         } else if(_CurrentPhase == null){
 
             EndPhase();
         }
-
-        //todo always face player and store facing direction
     }
 
 
@@ -135,14 +140,23 @@ public class DaddyController : MonoBehaviour
 
     }
 
+    public void FaceTowardsEcho()
+    {
+ 
+        facingDirection = (int)Mathf.Sign(ControllerGame.Instance.player.transform.position.x - transform.position.x);
+        Debug.Log(facingDirection);
+        SpriteRenderer.flipX = facingDirection == 1;
+
+    }
+
 
     bool CanStartPhase(DaddyAttackPhase daddyAttackPhase)
     {
         if (daddyAttackPhase.Conditions.HasFlag(DaddyPhaseCondition.PlayerCloserThan))
         {
 
-            //TODO change this to a distance check;
-            return true;
+
+            return Vector2.Distance(Rigidbody.position, ControllerGame.Instance.player.RigidBody.position) <= daddyAttackPhase.DistanceToPlayer;
 
         }
 
@@ -158,6 +172,14 @@ public class DaddyController : MonoBehaviour
         if (collision.gameObject.layer == Utils.PlayerLayer)
         {
             ControllerGame.Instance.player.Damage(ContactDamage);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_CurrentPhase != null)
+        {
+            _CurrentPhase.DrawHitboxes();
         }
     }
 

@@ -22,7 +22,8 @@ public class ControllerInput : GenericSingleton<ControllerInput>
     public UnityEvent Throw = new UnityEvent();
     [HideInInspector]
     public UnityEvent Attack = new UnityEvent();
-
+    [HideInInspector]
+    public UnityEvent Pause = new UnityEvent();
 
     void OnAttack(InputValue inputValue)
     {
@@ -57,6 +58,14 @@ public class ControllerInput : GenericSingleton<ControllerInput>
         var vertInputRaw = inputValue.Get<float>();
         Vertical.Invoke(TristateReduction(vertInputRaw));
 
+    }
+
+    void OnPause(InputValue inputValue)
+    {
+        if(inputValue.Get<float>() > 0)
+        {
+            Pause.Invoke();
+        }
     }
     
     private int TristateReduction(float number)

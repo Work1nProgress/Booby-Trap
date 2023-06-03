@@ -231,6 +231,12 @@ public class Utils
             vector.x * Mathf.Sin(angle) + vector.y * Mathf.Cos(angle));
     }
 
-    
+    public static int Wrap(int value, int minInclusive, int maxExclusive)
+    {
+        if (value >= maxExclusive) value = minInclusive;
+        if (value < minInclusive) value = maxExclusive - 1;
+
+        return value;
+    }
 
 }

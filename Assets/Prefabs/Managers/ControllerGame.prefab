@@ -64,30 +64,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnicornStats:
-    MaxHealth: 1
+    MaxHealth: 3
     DetectionAngle: 30
     DetectionDistance: 5
     MovementSpeed: 2
-    MovementSpeedChase: 5
+    MovementSpeedChase: 3
     StartDirection: 1
   CyclopsStats:
-    MaxHealth: 3
+    MaxHealth: 100
     DetectionAngle: 15
     DetectionDistance: 5
     MovementSpeed: 2
     MovementSpeedChase: 2
     StartDirection: 1
   SpiderStats:
-    MaxHealth: 1
+    MaxHealth: 2
     DetectionAngle: 15
     DetectionDistance: 5
     MovementSpeed: 2
     MovementSpeedChase: 1
     StartDirection: -1
   HarpyStats:
-    MaxHealth: 1
+    MaxHealth: 10
     DetectionAngle: 360
-    DetectionDistance: 5
-    MovementSpeed: 20
-    MovementSpeedChase: 30
+    DetectionDistance: 10
+    MovementSpeed: 250
+    MovementSpeedChase: 350
     StartDirection: 1
