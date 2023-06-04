@@ -16,14 +16,13 @@ public class ChaseState : EntityState
     public override void EnterState()
     {
 
-        SoundManager.Instance.PlayLooped(_controller.Sound.AgressiveLoop, _controller.gameObject, _controller.transform);
+        ControllerGame.Instance.AddAgressiveEnemy(_controller);
         base.EnterState();
         RaycastVector = new Vector2(OffsetX, 0);
     }
 
     public override void ExitState()
     {
-        SoundManager.Instance?.CancelLoop(_controller.Sound.AgressiveLoop, _controller.gameObject);
         base.ExitState();
     }
 

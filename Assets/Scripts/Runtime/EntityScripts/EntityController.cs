@@ -46,6 +46,8 @@ public class EntityController : StateHandler
 
     public bool DoApplyGravity;
 
+    public bool isAggressive;
+
 
     public virtual void Init(EnemyStats Stats)
     {
@@ -85,6 +87,16 @@ public class EntityController : StateHandler
             ApplyGravity(Time.fixedDeltaTime);
         }
         ApplyVelocity(Time.fixedDeltaTime, _upwardDirection);
+
+        if (isAggressive)
+        {
+            var distance = Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position);
+            if (distance >= Sound.AggresionEndDistance)
+            {
+                ControllerGame.Instance.RemoveAgressiveEnemy(this);
+            }
+        }
+        
 
         base.FixedUpdate();
     }

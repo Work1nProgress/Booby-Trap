@@ -378,6 +378,7 @@ public class PlayerMovementController : MonoBehaviour
             if (!feetTouchingGround && falling)
             {
 
+                PoolManager.Spawn<PoolObjectTimed>("dustparticles", null, transform.position + groundCheckPoint).StartTicking();
                 SoundManager.Instance.Play(LandSound, transform);
                 
             }
@@ -427,6 +428,7 @@ public class PlayerMovementController : MonoBehaviour
             }
             SoundManager.Instance.Play(JumpSound, transform);
             jumping = true;
+            PoolManager.Spawn<PoolObjectTimed>("dustparticles", null, transform.position + groundCheckPoint).StartTicking();
 
             //no more coyote time
             LastOnGroundTime = 0;
