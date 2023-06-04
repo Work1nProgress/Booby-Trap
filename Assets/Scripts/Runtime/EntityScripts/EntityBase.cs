@@ -12,6 +12,7 @@ public class EntityBase : PoolObject
     protected int _maxHealth;
     protected int _health;
     public int Health => _health;
+    public int MaxHealth => _maxHealth;
 
     public UnityEvent OnDeath;
     public UnityEvent<int> OnChangeHealth = new UnityEvent<int>();
