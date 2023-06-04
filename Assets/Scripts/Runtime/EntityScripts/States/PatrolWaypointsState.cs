@@ -16,7 +16,10 @@ public class PatrolWaypointsState : EntityState
 
     public override void EnterState()
     {
-        SoundManager.Instance.PlayLooped(_controller.Sound.PassiveLoop, _controller.gameObject, _controller.transform);
+        if (!_controller.isAggressive)
+        {
+            SoundManager.Instance.PlayLooped(_controller.Sound.PassiveLoop, _controller.gameObject, _controller.transform);
+        }
         base.EnterState();
     }
 

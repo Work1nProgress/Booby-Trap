@@ -89,6 +89,20 @@ public class ControllerGame : ControllerLocal
      }
 
 
+    public void AddAgressiveEnemy(EntityController entity)
+    {
+        ControllerEnemies.AddAggresiveEnemy(entity);
+        entity.isAggressive = true;
+
+    }
+
+    public void RemoveAgressiveEnemy(EntityController entity)
+    {
+        ControllerEnemies.RemoveAggresiveEnemy(entity);
+        entity.isAggressive = false;
+    }
+
+
 }
 
 

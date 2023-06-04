@@ -21,4 +21,5 @@ public class EnemySound : ScriptableObject
 
 
     public float stepDelay, stepVelocityFactor;
+    public float AggresionEndDistance;
 }
