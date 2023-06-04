@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LightningAttack
   m_EditorClassIdentifier: 
   m_TelegraphTime: 1
-  m_ActiveTime: 8
+  m_ActiveTime: 4
   m_CooldownTime: 0
   DamageToPlayer: 1
   m_DaddyPhaseTrigger: 1
