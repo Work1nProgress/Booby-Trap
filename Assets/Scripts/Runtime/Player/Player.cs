@@ -282,17 +282,18 @@ public class Player : EntityBase
                 _playerAnim.SetTrigger("SpearSlash");
             }
             
+            int direction = m_MovementController.FacingRight ? 1 : -1;
+            hit = Physics2D.OverlapBox(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
+            
         }
         else
         {
             _hitsUntilCombo = hitsToCombo;
             _playerAnim.SetTrigger("SpearSpin");
+
+            hit = Physics2D.OverlapCircle(transform.position, 1.2f,  LayerMask.GetMask("Enemy"));
         }
-        
-        
-        int direction = m_MovementController.FacingRight ? 1 : -1;
-        hit = Physics2D.OverlapBox(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
-            
+
         SoundManager.Instance.Play(Attack, gameObject.transform);
         
         if (hit != null)

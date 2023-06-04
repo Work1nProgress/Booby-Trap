@@ -399,6 +399,22 @@ PrefabInstance:
       propertyPath: chanceToGainHeartRanged
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 415285139}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Rippeperoni
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Player, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -567,6 +583,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
   m_PrefabInstance: {fileID: 263005014}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &415285139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+  m_PrefabInstance: {fileID: 263005014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415285133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac923f4f778664706856fedec7339a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &415285141
 Animator:
   serializedVersion: 5
@@ -647,6 +674,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5729477894828158944, guid: 648b28199f4bf2d499914946d0788615, type: 3}
+      propertyPath: priority
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5729477895139498189, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_Follow
       value: 
@@ -661,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.435534
+      value: -8.435486
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.y
@@ -669,15 +700,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: orthographic size
-      value: 5.9375
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.001310616
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.9960682
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5729477896050877012, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_RootOrder
