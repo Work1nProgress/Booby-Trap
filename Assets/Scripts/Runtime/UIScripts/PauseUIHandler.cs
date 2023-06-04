@@ -11,6 +11,12 @@ public class PauseUIHandler : MonoBehaviour
     PauseUIButton[] _buttons;
 
     List<IMenuElement> _menuElements;
+    public IMenuElement MenuElement(int index)
+    {
+        if (index < _menuElements.Count)
+            return _menuElements[index];
+        else return null;
+    }
 
     IMenuElement _selectedElement;
     int _selectedIndex;
@@ -46,9 +52,6 @@ public class PauseUIHandler : MonoBehaviour
         {
             _selectedElement.Activate(0);
         });
-
-        foreach (IMenuElement elem in _menuElements)
-            elem.Event().AddListener((float value) => { Debug.Log($"{elem}: Activated"); });
     }
 
     private void OnEnable()
