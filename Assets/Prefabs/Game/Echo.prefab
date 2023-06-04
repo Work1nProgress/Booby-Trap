@@ -205,10 +205,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   _tempStats:
-    MaxHealth: 3
+    MaxHealth: 5
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
@@ -221,14 +233,14 @@ MonoBehaviour:
   m_SpearLifetime: 10
   m_SpearRange: 0
   m_InheritSpeed: 1
-  chanceToGainHeartRanged: 100
+  chanceToGainHeartRanged: 2.5
   m_MovementController: {fileID: 4492751368146734888}
   m_HorizontalRange: {x: 3, y: 3}
   m_UpRange: {x: 3, y: 3}
   m_DownRange: {x: 3, y: 3}
   m_ReloadTime: 1
   m_Damage: 1
-  chanceToGainHeartMelee: 100
+  chanceToGainHeartMelee: 5
   offsetHorizontal: 0.8
   offsetUp: 1
   offsetDown: -0.2

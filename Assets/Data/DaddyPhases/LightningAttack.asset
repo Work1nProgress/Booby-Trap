@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: LightningAttack
   m_EditorClassIdentifier: 
   m_TelegraphTime: 1
-  m_ActiveTime: 4
-  m_CooldownTime: 3
+  m_ActiveTime: 5
+  m_CooldownTime: 0
   DamageToPlayer: 1
-  m_DaddyPhaseTrigger: -1
-  m_DamageThreshold: 10
+  m_DaddyPhaseTrigger: 1
+  m_DamageThreshold: 0
   m_DaddyPhaseCondition: 0
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
   StartTile: 06000000
-  LightningWidth: 0.5
+  LightningWidth: 0.4
   LightningSpacing: 1.5
   LightningStartPosition: 0.5
   LightningStartPositionAlternate: 1.5
   TelegraphLightningDuration: 1
   LightningDuration: 0.5
-  LightningDelay: 0.5
+  LightningDelay: 0.3

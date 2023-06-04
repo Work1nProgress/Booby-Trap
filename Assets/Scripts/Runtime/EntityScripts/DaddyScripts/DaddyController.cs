@@ -171,6 +171,7 @@ public class DaddyController : EntityBase
     {
         if (collision.gameObject.layer == Utils.PlayerLayer)
         {
+            Debug.Log("Daddy hugged you");
             ControllerGame.Instance.player.Damage(ContactDamage);
         }
     }
