@@ -96,6 +96,7 @@ MonoBehaviour:
   m_EnemySound: {fileID: 11400000, guid: 84f1dc96c919c44bd955db0339373db2, type: 2}
   _sprite: {fileID: 1739822648683402399}
   DoApplyGravity: 1
+  isAggressive: 0
   DamageToDeal: 1
   Range: 1
   AttackForce: 20
@@ -179,7 +180,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &6024204065095153025
 BoxCollider2D:
   m_ObjectHideFlags: 0

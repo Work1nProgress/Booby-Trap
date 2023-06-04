@@ -14,7 +14,7 @@ public class EntityBase : PoolObject
     public int Health => _health;
 
     public UnityEvent OnDeath;
-    public UnityEvent OnChangeHealth = new UnityEvent();
+    public UnityEvent<int> OnChangeHealth = new UnityEvent<int>();
 
    
 
@@ -36,7 +36,7 @@ public class EntityBase : PoolObject
         _health = newHealth;
         if (ammount != 0)
         {
-            OnChangeHealth.Invoke();
+            OnChangeHealth.Invoke(ammount);
         }
 
         if (newHealth <= 0)
