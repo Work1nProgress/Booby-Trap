@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   _tempStats:
-    MaxHealth: 0
+    MaxHealth: 5
   OnDeath:
     m_PersistentCalls:
       m_Calls: []

@@ -8174,10 +8174,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8258699496252362754, guid: ad3fe6ceabc22477d9b80cb8f76a6701, type: 3}
-      propertyPath: _tempStats.MaxHealth
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8272198690611643472, guid: ad3fe6ceabc22477d9b80cb8f76a6701, type: 3}
       propertyPath: m_Name
       value: spiderBot
@@ -8188,11 +8184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272198690611643475, guid: ad3fe6ceabc22477d9b80cb8f76a6701, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4
+      value: 1.44
       objectReference: {fileID: 0}
     - target: {fileID: 8272198690611643475, guid: ad3fe6ceabc22477d9b80cb8f76a6701, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.23
+      value: 1.26
       objectReference: {fileID: 0}
     - target: {fileID: 8272198690611643475, guid: ad3fe6ceabc22477d9b80cb8f76a6701, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8922,9 +8918,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.00080450525
+    width: 0.99999994
+    height: 0.9975865
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -9402,6 +9398,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1240052530, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734886, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_Name
       value: Echo
@@ -9412,11 +9412,19 @@ PrefabInstance:
       objectReference: {fileID: 354921674}
     - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: StunEnemyTime
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: StunEnemyForce
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: chanceToGainHeartMelee
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492751368146734889, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: chanceToGainHeartRanged
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_RootOrder
