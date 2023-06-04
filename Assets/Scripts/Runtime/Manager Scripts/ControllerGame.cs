@@ -9,15 +9,14 @@ using DG.Tweening;
 
 public class ControllerGame : ControllerLocal
 {
-
     static ControllerGame m_Instance;
     public static ControllerGame Instance => m_Instance;
-
 
 
     public int MaxPlayerHealth;
 
     public Player player;
+    public DaddyController Daddy;
     Vector3 m_StartingPlayerPos;
 
     [SerializeField]
@@ -25,9 +24,6 @@ public class ControllerGame : ControllerLocal
 
     [SerializeField]
     ControllerEnemies ControllerEnemies;
-
-    [SerializeField]
-    GameObject bkg;
 
 
     #region Damage Animation
@@ -50,10 +46,6 @@ public class ControllerGame : ControllerLocal
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
-        if (bkg != null)
-        {
-            bkg.SetActive(true);
-        }
         base.Init();
         m_Instance = this;
 
@@ -123,7 +115,8 @@ public class ControllerGame : ControllerLocal
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
-     }
+        Daddy.ResetDadsHp();
+    }
 
 
     public void AddAgressiveEnemy(EntityController entity)
