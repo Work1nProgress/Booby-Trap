@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f694be16f9c849cb87f10dcf020bfa3, type: 3}
   m_Name: BulldozerAttack
   m_EditorClassIdentifier: 
-  m_TelegraphTime: 2
-  m_ActiveTime: 2
+  m_TelegraphTime: 1.5
+  m_ActiveTime: 1
   m_CooldownTime: 1
   DamageToPlayer: 1
   m_DaddyPhaseTrigger: 1
@@ -24,5 +24,5 @@ MonoBehaviour:
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
   StartTile: 000000000d000000
-  BulldozeSize: {x: 1, y: 3}
+  BulldozeSize: {x: 1, y: 5}
   BulldozePosition: {x: 1, y: 0.5}
