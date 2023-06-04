@@ -26,9 +26,6 @@ public class ControllerGame : ControllerLocal
     [SerializeField]
     ControllerEnemies ControllerEnemies;
 
-    [SerializeField]
-    GameObject bkg;
-
 
     #region Damage Animation
     CinemachineVirtualCamera vCam;
@@ -50,10 +47,6 @@ public class ControllerGame : ControllerLocal
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
-        if (bkg != null)
-        {
-            bkg.SetActive(true);
-        }
         base.Init();
         m_Instance = this;
 
