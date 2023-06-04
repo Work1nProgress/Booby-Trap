@@ -34,35 +34,44 @@ public class DaddyMusic : MonoBehaviour
         MusicPlayer.Instance.PlayPlaylist(playlistName, 0.5f, currentLayers.LayersList.ToArray());
     }
 
+    public void ResetMusic()
+    {
+        ChangeTo(musicLayers[0]);
+    }
 
 
     void OnHealthChanged(int change) {
 
         currentHealthPercent = (float)daddyController.Health / MaxHealth;
-        if (currentHealthPercent <= 0)
+        if (currentHealthPercent <= 0 || currentLayerIndex + 1 > musicLayers.Count-1)
         {
             return;
         }
         if (currentHealthPercent < musicLayers[currentLayerIndex + 1].HealthPercent)
         {
-            List<int> LayersToRemove = new List<int>();
+            ChangeTo(musicLayers[currentLayerIndex + 1]);
 
-            for (int i = 0; i < currentLayers.LayersList.Count; i++)
-            {
-                Debug.Log(currentLayers.LayersList[i]);
-                if (!musicLayers[currentLayerIndex + 1].LayersList.Contains(currentLayers.LayersList[i]))
-                {
-
-                    Debug.Log($"remove layer {currentLayers.LayersList[i]}");
-                    LayersToRemove.Add(currentLayers.LayersList[i]);
-                }
-            }
-            MusicPlayer.Instance.RemoveLayers(playlistName, LayersToRemove.ToArray());
-            MusicPlayer.Instance.AddLayers(playlistName, musicLayers[currentLayerIndex+1].LayersList.ToArray());
-            currentLayerIndex++;
-            currentLayers = musicLayers[currentLayerIndex];
 
         }
+    }
+
+    void ChangeTo(HealthMusicLayer healthMusicLayer)
+    {
+        List<int> LayersToRemove = new List<int>();
+
+        for (int i = 0; i < currentLayers.LayersList.Count; i++)
+        {
+
+            if (!healthMusicLayer.LayersList.Contains(currentLayers.LayersList[i]))
+            {
+
+                LayersToRemove.Add(currentLayers.LayersList[i]);
+            }
+        }
+        MusicPlayer.Instance.RemoveLayers(playlistName, LayersToRemove.ToArray());
+        MusicPlayer.Instance.AddLayers(playlistName, healthMusicLayer.LayersList.ToArray());
+        currentLayerIndex = musicLayers.IndexOf(healthMusicLayer);
+        currentLayers = healthMusicLayer;
     }
 
     void OnDeath()
