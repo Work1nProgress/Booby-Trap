@@ -261,20 +261,32 @@ public class Player : EntityBase
         {
             return; 
         }
+
+        float velocityOnYAxis = m_MovementController.RigidBody.velocity.y;
+        
         Collider2D hit = null;
 
         int damageToDeal = m_Damage;
-        if (_hitsUntilCombo > 1)
+        if (velocityOnYAxis == 0)
         {
-            _hitsUntilCombo--;
-            _currentComboFuse = comboFuse;
-            _playerAnim.SetTrigger("SpearThrust");
+            if (_hitsUntilCombo > 1)
+            {
+                _hitsUntilCombo--;
+                _currentComboFuse = comboFuse;
+                _playerAnim.SetTrigger("SpearThrust");
+            }
+            else
+            {
+                _hitsUntilCombo = hitsToCombo;
+                damageToDeal = _comboDamage;
+                _playerAnim.SetTrigger("SpearSlash");
+            }
+            
         }
         else
         {
             _hitsUntilCombo = hitsToCombo;
-            damageToDeal = _comboDamage;
-            _playerAnim.SetTrigger("SpearSlash");
+            _playerAnim.SetTrigger("SpearSpin");
         }
         
         
@@ -313,6 +325,11 @@ public class Player : EntityBase
     protected override void OnKill()
     {
        
+    }
+
+    public void SpearSpinOver()
+    {
+        _playerAnim.SetTrigger("SpearSpinOver");
     }
 
 
