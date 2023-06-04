@@ -9,15 +9,14 @@ using DG.Tweening;
 
 public class ControllerGame : ControllerLocal
 {
-
     static ControllerGame m_Instance;
     public static ControllerGame Instance => m_Instance;
-
 
 
     public int MaxPlayerHealth;
 
     public Player player;
+    public DaddyController Daddy;
     Vector3 m_StartingPlayerPos;
 
     [SerializeField]
@@ -116,7 +115,8 @@ public class ControllerGame : ControllerLocal
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
-     }
+        Daddy.ResetDadsHp();
+    }
 
 
     public void AddAgressiveEnemy(EntityController entity)

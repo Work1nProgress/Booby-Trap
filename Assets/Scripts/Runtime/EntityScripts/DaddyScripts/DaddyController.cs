@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DaddyController : EntityBase
 {
@@ -48,8 +50,7 @@ public class DaddyController : EntityBase
     [SerializeField]
     TMP_Text DebugText;
 
-    [SerializeField]
-    int DaddyMaxHealth;
+    public int DaddyMaxHealth = 150;
 
 
 
@@ -169,9 +170,8 @@ public class DaddyController : EntityBase
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == Utils.PlayerLayer)
+        if (collision.gameObject.layer == 6)
         {
-            Debug.Log("hey!");
             ControllerGame.Instance.player.Damage(ContactDamage);
         }
     }
@@ -184,7 +184,10 @@ public class DaddyController : EntityBase
         }
     }
 
-
+    public void ResetDadsHp()
+    {
+        _health = _maxHealth;
+    }
 }
 
 

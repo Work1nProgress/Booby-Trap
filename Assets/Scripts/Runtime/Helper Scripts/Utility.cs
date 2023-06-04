@@ -153,7 +153,6 @@ public class Utils
             if (_playerLayer == -1)
             {
                 _playerLayer = LayerMask.GetMask("Player");
-                Debug.Log(_playerLayer);
             }
             return _playerLayer;
         }
