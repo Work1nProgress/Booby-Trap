@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Player : EntityBase
 {
@@ -67,6 +69,9 @@ public class Player : EntityBase
     [SerializeField]
     [Tooltip("Normal Attack Damage")]
     int m_Damage;
+    
+    [Tooltip("Combo Attack Damage")]
+    [SerializeField] private int _comboDamage;
 
     [SerializeField]
     float chanceToGainHeartMelee;
@@ -83,6 +88,12 @@ public class Player : EntityBase
 
     [SerializeField]
     float StunEnemyForce= 20f;
+
+    [SerializeField] private int hitsToCombo = 3;
+    private int _hitsUntilCombo;
+    [SerializeField] private float comboFuse = .7f;
+    private float _currentComboFuse = 0;
+    
 
 
 
@@ -103,6 +114,8 @@ public class Player : EntityBase
 
     [SerializeField]
     PlayerMovementController PlayerMovementController;
+
+    [SerializeField] private Animator _playerAnim;
 
     public Rigidbody2D RigidBody => PlayerMovementController.RigidBody;
 
@@ -136,6 +149,7 @@ public class Player : EntityBase
     private void Start()
     {
         m_CurrentSpearAmount = m_MaxSpearsOnPlayer;
+        _hitsUntilCombo = hitsToCombo;
     }
 
     private void Update()
@@ -143,6 +157,11 @@ public class Player : EntityBase
         m_AttackTimer -= Time.deltaTime;
         m_ThrowTimer -= Time.deltaTime;
         m_InvulTimer -= Time.deltaTime;
+        _currentComboFuse -= Time.deltaTime;
+        if (_currentComboFuse <= 0)
+        {
+            _hitsUntilCombo = hitsToCombo;
+        }
 
         if (!SpearCollector)
         {
@@ -159,53 +178,56 @@ public class Player : EntityBase
     {
         if (CanThrowSpear)
         {
-           
-            // will change this when we add the throwing the spear up and down
-            float speed = m_MovementController.RigidBody.velocity.x;
-             int direction = m_MovementController.FacingRight ? 1 : -1;
-
-            var hit = Physics2D.Raycast(transform.position, direction * Vector2.right, 0.5f, LayerMask.GetMask("Ground"));
-
-
             m_ThrowTimer = m_ThrowCooldown;
-            Spear spear;
-            if (hit)
-            {
-                SoundManager.Instance.Play(Throw, transform);
-                SoundManager.Instance.Play(ThrowHit, transform);
-                var stuckSpear = PoolManager.Spawn<StuckSpear>("StuckSpear", null, new Vector3(hit.point.x, hit.point.y, 0) - direction * Spear.StuckOffset, Quaternion.Euler(0, 0, 90));
-                stuckSpear.Init(m_SpearLifetime,
-                   direction,  //direction                       
-                    ReturnSpear);
-                spear = stuckSpear;
-            }
-            else
-            {
-               
-                var thrownSpear = PoolManager.Spawn<FlyingSpear>("FlyingSpear", null, transform.position + direction * new Vector3(0.5f, 0, 0), Quaternion.Euler(0, 0, 90));
-                thrownSpear.Init(m_SpearFlySpeed,
-                    m_SpearLifetime,
-                    m_SpearRange,
-                   speed, //speed of echo
-                   direction,  //direction
-                    m_InheritSpeed,//amount of inherited speed   
-                    ReturnSpear);
-                SoundManager.Instance.Play(Throw, thrownSpear.transform);
-                spear = thrownSpear;
-            }
-
-
-
-
-            if (m_MaxNumberOfSpearsInGame > 0 && ControllerGame.Instance.Spears.Count + 1 >= m_MaxNumberOfSpearsInGame)
-            {
-                ControllerGame.Instance.RemoveSpear(0);
-            }
-
-            ControllerGame.Instance.Spears.Add(spear);
-            m_CurrentSpearAmount--;
-            m_CurrentSpearAmount = Mathf.Min(m_CurrentSpearAmount + 1, m_MaxSpearsOnPlayer);
+            _playerAnim.SetTrigger("SpearThrow");
         }
+    }
+
+    private void ThrowSpear()
+    {
+        // will change this when we add the throwing the spear up and down
+        _hitsUntilCombo = hitsToCombo;
+        float speed = m_MovementController.RigidBody.velocity.x;
+        int direction = m_MovementController.FacingRight ? 1 : -1;
+
+        var hit = Physics2D.Raycast(transform.position, direction * Vector2.right, 0.5f, LayerMask.GetMask("Ground"));
+        
+        Spear spear;
+        if (hit)
+        {
+            SoundManager.Instance.Play(Throw, transform);
+            SoundManager.Instance.Play(ThrowHit, transform);
+            var stuckSpear = PoolManager.Spawn<StuckSpear>("StuckSpear", null,
+                new Vector3(hit.point.x, hit.point.y, 0) - direction * Spear.StuckOffset, Quaternion.Euler(0, 0, 90));
+            stuckSpear.Init(m_SpearLifetime,
+                direction, //direction                       
+                ReturnSpear);
+            spear = stuckSpear;
+        }
+        else
+        {
+            var thrownSpear = PoolManager.Spawn<FlyingSpear>("FlyingSpear", null,
+                transform.position + direction * new Vector3(0.5f, 0, 0), Quaternion.Euler(0, 0, 90));
+            thrownSpear.Init(m_SpearFlySpeed,
+                m_SpearLifetime,
+                m_SpearRange,
+                speed, //speed of echo
+                direction, //direction
+                m_InheritSpeed, //amount of inherited speed   
+                ReturnSpear);
+            SoundManager.Instance.Play(Throw, thrownSpear.transform);
+            spear = thrownSpear;
+        }
+
+
+        if (m_MaxNumberOfSpearsInGame > 0 && ControllerGame.Instance.Spears.Count + 1 >= m_MaxNumberOfSpearsInGame)
+        {
+            ControllerGame.Instance.RemoveSpear(0);
+        }
+
+        ControllerGame.Instance.Spears.Add(spear);
+        m_CurrentSpearAmount--;
+        m_CurrentSpearAmount = Mathf.Min(m_CurrentSpearAmount + 1, m_MaxSpearsOnPlayer);
     }
 
     public void AttackForce(Vector3 position, float force)
@@ -224,6 +246,7 @@ public class Player : EntityBase
             return;
         }
         m_InvulTimer = InvulTime;
+        _hitsUntilCombo = hitsToCombo;
         base.Damage(ammount);
     }
 
@@ -239,39 +262,36 @@ public class Player : EntityBase
             return; 
         }
         Collider2D hit = null;
-        if (inputY == 0)
+
+        int damageToDeal = m_Damage;
+        if (_hitsUntilCombo > 1)
         {
-            int direction = m_MovementController.FacingRight ? 1 : -1;
-            hit = Physics2D.OverlapBox(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
-
-
-            var slash = PoolManager.Spawn<Slash>("Slash", transform,default, Quaternion.Euler(0, 0, -90));
-            slash.transform.localPosition = new Vector3(offsetHorizontal * direction, 0, 0);
-            slash.transform.localScale = new Vector3(1, direction, 1);
-            SoundManager.Instance.Play(Attack, slash.transform);
-
-        }
-        else if (inputY > 0)
-        {
-            int direction = m_MovementController.FacingRight ? 1 : -1;
-            hit = Physics2D.OverlapBox(transform.position + new Vector3(0, offsetUp, 0), m_UpRange, 0, LayerMask.GetMask("Enemy"));
+            _hitsUntilCombo--;
+            _currentComboFuse = comboFuse;
+            _playerAnim.SetTrigger("SpearThrust");
+            
            
-
-            var slash = PoolManager.Spawn<Slash>("Slash", transform,default,  Quaternion.Euler(0,0,0));
-            slash.transform.localPosition = new Vector3(0, offsetUp, 0);
-            slash.transform.localScale = new Vector3(direction, 1, 1);
-            SoundManager.Instance.Play(Attack, slash.transform);
         }
-
-       
-
+        else
+        {
+            _hitsUntilCombo = hitsToCombo;
+            damageToDeal = _comboDamage;
+            _playerAnim.SetTrigger("SpearSlash");
+        }
+        
+        
+        int direction = m_MovementController.FacingRight ? 1 : -1;
+        hit = Physics2D.OverlapBox(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
+            
+        SoundManager.Instance.Play(Attack, gameObject.transform);
+        
         if (hit != null)
         {
             var entity = hit.gameObject.GetComponent<EntityBase>();
             if (entity != null)
             {
                 SoundManager.Instance.Play(AttackHit, entity.transform);
-                entity.Damage(m_Damage);
+                entity.Damage(damageToDeal);
                 if (Random.value <= ChanceToGainHeartRanged)
                 {
                     Heal(1);

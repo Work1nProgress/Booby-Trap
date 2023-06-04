@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63e3401524821ad4a85be423fb9b1d09
+guid: 5a6827774e7cd2046aa2d122a0c4c6fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_0
+      name: Combat Stance Echo-Sheet_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 80
-        width: 139
-        height: 72
+        x: 0
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4238c8cc6961ee148b8ddac2d7b8656a
-      internalID: -618416377
+      spriteID: c450f2c43c490464b9363f8dde6d61c9
+      internalID: -528150267
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_1
+      name: Combat Stance Echo-Sheet_1
       rect:
         serializedVersion: 2
-        x: 175
-        y: 80
-        width: 139
-        height: 72
+        x: 174
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7be54a5ce05dc8c49b40cebb06e99f63
-      internalID: -1569788488
+      spriteID: 34dc6844d94754342b61c858205ccdcf
+      internalID: -1285299070
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_2
+      name: Combat Stance Echo-Sheet_2
       rect:
         serializedVersion: 2
-        x: 332
-        y: 80
-        width: 139
-        height: 72
+        x: 348
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4f30c3ea5cb2684482f1c130ff17aac
-      internalID: -205010051
+      spriteID: ffde449277f661b48b1f2943bde2ccd0
+      internalID: 769676231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_3
+      name: Combat Stance Echo-Sheet_3
       rect:
         serializedVersion: 2
-        x: 489
-        y: 80
-        width: 139
-        height: 72
+        x: 522
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c0a35e6b7f2af947b8feff30feb6390
-      internalID: 17095217
+      spriteID: 6d0a3f06f50bde744bd3f87127ce5ee6
+      internalID: -1939645289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_4
+      name: Combat Stance Echo-Sheet_4
       rect:
         serializedVersion: 2
-        x: 646
-        y: 80
-        width: 139
-        height: 72
+        x: 696
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a023952f2988a14a9a7003f76a497d0
-      internalID: -978164433
+      spriteID: 168dd3d82d960ce47b402dc3cd73bb3a
+      internalID: 1090695272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_5
+      name: Combat Stance Echo-Sheet_5
       rect:
         serializedVersion: 2
-        x: 803
-        y: 80
-        width: 139
-        height: 72
+        x: 870
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42d20e90026f0b049b1640202ba65104
-      internalID: -374083317
+      spriteID: 0e0fd600bcf7f4f488844aca98b44370
+      internalID: 676472946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echo Attack 1-Sheet_6
+      name: Combat Stance Echo-Sheet_6
       rect:
         serializedVersion: 2
-        x: 18
+        x: 0
         y: 0
-        width: 139
-        height: 72
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,8 +257,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7fe528d2cc624f04aa7a301381767252
-      internalID: 900780261
+      spriteID: 57af827f0c5858346b86d88f890106a7
+      internalID: 1736957527
       vertices: []
       indices: 
       edges: []
@@ -274,13 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Echo Attack 1-Sheet_0: -618416377
-      Echo Attack 1-Sheet_1: -1569788488
-      Echo Attack 1-Sheet_2: -205010051
-      Echo Attack 1-Sheet_3: 17095217
-      Echo Attack 1-Sheet_4: -978164433
-      Echo Attack 1-Sheet_5: -374083317
-      Echo Attack 1-Sheet_6: 900780261
+      Combat Stance Echo-Sheet_0: -528150267
+      Combat Stance Echo-Sheet_1: -1285299070
+      Combat Stance Echo-Sheet_2: 769676231
+      Combat Stance Echo-Sheet_3: -1939645289
+      Combat Stance Echo-Sheet_4: 1090695272
+      Combat Stance Echo-Sheet_5: 676472946
+      Combat Stance Echo-Sheet_6: 1736957527
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

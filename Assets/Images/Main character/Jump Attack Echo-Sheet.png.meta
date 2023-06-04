@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9ec4a37a40cde7a42bdc1c09ab2f8dd1
+guid: 24b632d04e876df4596cd8d944f9ad29
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_0
+      name: Jump Attack Echo-Sheet_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 53
-        width: 53
-        height: 41
+        x: 0
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 306547f6b759fa54194f64a4165cec2d
-      internalID: 700476536
+      spriteID: 2927fb9ecaaadca4cb946c1f5b05b5dd
+      internalID: -1754829633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_1
+      name: Jump Attack Echo-Sheet_1
       rect:
         serializedVersion: 2
-        x: 85
-        y: 53
-        width: 55
-        height: 39
+        x: 174
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6555b83173f89644886710159e1c8945
-      internalID: -494867248
+      spriteID: f931e2bf82d517341bb712f0ef181a61
+      internalID: 60152584
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_2
+      name: Jump Attack Echo-Sheet_2
       rect:
         serializedVersion: 2
-        x: 157
-        y: 53
-        width: 53
-        height: 38
+        x: 348
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34c5c3e90078cbb4bbc09878fb161f5f
-      internalID: -1227090625
+      spriteID: 1945da771543b154db945ee56a0cd422
+      internalID: -1903912693
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_3
+      name: Jump Attack Echo-Sheet_3
       rect:
         serializedVersion: 2
-        x: 207
-        y: 74
-        width: 7
-        height: 5
+        x: 522
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76c392bb075efbf46a6373f4bc6278db
-      internalID: 977983006
+      spriteID: 6cb83f3288b5b89418e7ee3eb8557198
+      internalID: -1275623160
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_4
+      name: Jump Attack Echo-Sheet_4
       rect:
         serializedVersion: 2
-        x: 231
-        y: 53
-        width: 57
-        height: 37
+        x: 696
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7554bdfb2d4ed7d4f9f5ae3093820327
-      internalID: -1441911925
+      spriteID: d391371e52fe6ed4db27510ce3f3bfe7
+      internalID: -946910269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_5
+      name: Jump Attack Echo-Sheet_5
       rect:
         serializedVersion: 2
-        x: 303
-        y: 53
-        width: 53
-        height: 39
+        x: 870
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,41 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc9ac8f080e98fc41acb76d289ad53e9
-      internalID: 1721972842
+      spriteID: bb8f7d0ddeb74bb4b9b57fbc2ec20a8b
+      internalID: -1503286817
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_6
+      name: Jump Attack Echo-Sheet_6
       rect:
         serializedVersion: 2
-        x: 377
-        y: 53
-        width: 53
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b87a8a53303393544b6926dd07e75be4
-      internalID: -880055560
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 12
+        x: 0
         y: 0
-        width: 53
-        height: 42
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d30c3d3ce96f3e4e905d5e55bb3f7cc
-      internalID: -975161350
+      spriteID: 109cf34a9f8bf194e99e1335b134c72d
+      internalID: 855211561
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Combat Stance-Sheet_8
+      name: Jump Attack Echo-Sheet_7
       rect:
         serializedVersion: 2
-        x: 7
-        y: 48
-        width: 61
-        height: 58
+        x: 174
+        y: 0
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -299,8 +278,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a7b0ffdc16282242a62daddccf210ed
-      internalID: 1901302003
+      spriteID: 7df4d5523936d46418d6973e386ee204
+      internalID: -191840698
       vertices: []
       indices: 
       edges: []
@@ -316,15 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player Girl Combat Stance-Sheet_0: 700476536
-      Player Girl Combat Stance-Sheet_1: -494867248
-      Player Girl Combat Stance-Sheet_2: -1227090625
-      Player Girl Combat Stance-Sheet_3: 977983006
-      Player Girl Combat Stance-Sheet_4: -1441911925
-      Player Girl Combat Stance-Sheet_5: 1721972842
-      Player Girl Combat Stance-Sheet_6: -880055560
-      Player Girl Combat Stance-Sheet_7: -975161350
-      Player Girl Combat Stance-Sheet_8: 1901302003
+      Jump Attack Echo-Sheet_0: -1754829633
+      Jump Attack Echo-Sheet_1: 60152584
+      Jump Attack Echo-Sheet_2: -1903912693
+      Jump Attack Echo-Sheet_3: -1275623160
+      Jump Attack Echo-Sheet_4: -946910269
+      Jump Attack Echo-Sheet_5: -1503286817
+      Jump Attack Echo-Sheet_6: 855211561
+      Jump Attack Echo-Sheet_7: -191840698
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

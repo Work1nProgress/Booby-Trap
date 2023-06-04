@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0a419a4349e5fdc4c960fd16dd56e825
+guid: 601b2de71a28b7648b4f6aa03ba5df86
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Girl Run with spear-Sheet_0
+      name: Attack 1_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 62
-        width: 64
-        height: 64
+        x: 0
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b067812ccf5f1ac46be5be344db31fe3
-      internalID: 888488377
+      spriteID: 7b54f4d85ee591d439b14b3d18a2f8da
+      internalID: -1866561280
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Run with spear-Sheet_1
+      name: Attack 1_1
       rect:
         serializedVersion: 2
-        x: 112
-        y: 62
-        width: 64
-        height: 64
+        x: 174
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8a4c93b84a048b46a222acae9bd8a41
-      internalID: -981902710
+      spriteID: 979561b32fcb55845a457b0078916888
+      internalID: -601858191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Run with spear-Sheet_2
+      name: Attack 1_2
       rect:
         serializedVersion: 2
-        x: 208
-        y: 62
-        width: 64
-        height: 64
+        x: 348
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: caa71de3fc9a9494ea6ec5c49e32ceea
-      internalID: -326123316
+      spriteID: ac9e35435d2dbf74ab2d52263150b00a
+      internalID: 638931406
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Run with spear-Sheet_3
+      name: Attack 1_3
       rect:
         serializedVersion: 2
-        x: 304
-        y: 62
-        width: 64
-        height: 64
+        x: 522
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f38611eaf62cfbb42b9ea7883c37486d
-      internalID: -1001959995
+      spriteID: 11108a17e286c2348abef9f6f5d5925d
+      internalID: -595260372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Run with spear-Sheet_4
+      name: Attack 1_4
       rect:
         serializedVersion: 2
-        x: 400
-        y: 62
-        width: 64
-        height: 64
+        x: 696
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed84fb23a2624bf45bf0410e0a0b3fb0
-      internalID: -1863272171
+      spriteID: 96cdb72b7bf361346bedf981fe0e1ab9
+      internalID: 515413811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Girl Run with spear-Sheet_5
+      name: Attack 1_5
       rect:
         serializedVersion: 2
-        x: 496
-        y: 62
-        width: 64
-        height: 64
+        x: 870
+        y: 124
+        width: 174
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,8 +236,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 218e02c1ad796bd46ac726338ecb39d7
-      internalID: -895170250
+      spriteID: 687ab9f84d7b31e4694dc5621a2bdd15
+      internalID: 1221538389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack 1_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 174
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c71b05a4e3cf064e8925682bf5c9277
+      internalID: -697007732
       vertices: []
       indices: 
       edges: []
@@ -253,12 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player Girl Run with spear-Sheet_0: 888488377
-      Player Girl Run with spear-Sheet_1: -981902710
-      Player Girl Run with spear-Sheet_2: -326123316
-      Player Girl Run with spear-Sheet_3: -1001959995
-      Player Girl Run with spear-Sheet_4: -1863272171
-      Player Girl Run with spear-Sheet_5: -895170250
+      Attack 1_0: -1866561280
+      Attack 1_1: -601858191
+      Attack 1_2: 638931406
+      Attack 1_3: -595260372
+      Attack 1_4: 515413811
+      Attack 1_5: 1221538389
+      Attack 1_6: -697007732
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
