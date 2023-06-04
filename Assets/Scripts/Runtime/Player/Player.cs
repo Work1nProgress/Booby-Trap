@@ -269,8 +269,6 @@ public class Player : EntityBase
             _hitsUntilCombo--;
             _currentComboFuse = comboFuse;
             _playerAnim.SetTrigger("SpearThrust");
-            
-           
         }
         else
         {
@@ -303,7 +301,6 @@ public class Player : EntityBase
                     enemy.KnockBackAndStun((enemy.Rigidbody.position - RigidBody.position).normalized * StunEnemyForce, StunEnemyTime);
                 }
             }
-            
         }
         m_AttackTimer = m_ReloadTime;
     }

@@ -364,6 +364,10 @@ PrefabInstance:
       value: Echo
       objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734888, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
+      propertyPath: _playerAnim
+      value: 
+      objectReference: {fileID: 415285141}
+    - target: {fileID: 4492751368146734888, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_PlayerSprite
       value: 
       objectReference: {fileID: 21509557}
@@ -649,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.435534
+      value: -8.435561
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.y
