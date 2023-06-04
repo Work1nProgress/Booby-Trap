@@ -29,6 +29,7 @@ public class GameUIController : MonoBehaviour
     private void OnEnable()
     {
         SetupAudioSliders();
+        SetupButtons();
     }
 
     void TogglePauseMenu()
@@ -64,6 +65,6 @@ public class GameUIController : MonoBehaviour
 
     void SetupButtons()
     {
-        _pauseMenu.MenuElement(3).Event().AddListener((float value) => { /*Application.Quit();*/ });
+        _pauseMenu.MenuElement(3).Event().AddListener((float value) => { Application.Quit(); });
     }
 }
