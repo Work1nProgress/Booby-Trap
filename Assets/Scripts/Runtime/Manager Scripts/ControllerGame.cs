@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using DG.Tweening;
 
 public class ControllerGame : ControllerLocal
 {
@@ -25,6 +29,24 @@ public class ControllerGame : ControllerLocal
     [SerializeField]
     GameObject bkg;
 
+
+    #region Damage Animation
+    CinemachineVirtualCamera vCam;
+
+    CinemachineBasicMultiChannelPerlin noiseModule;
+
+    ChromaticAberration ChromaticAberration;
+    Volume volume;
+
+    [SerializeField]
+    float AberartionDuration, ShakeDuration, AberrationIntensity, ShakeAmplitude, ShakeFrequency;
+
+    [SerializeField]
+    Ease AberrationEase;
+    
+
+    #endregion
+
     // Use this method to initialize everyhing you need at the begging of the scene
     public override void Init()
     {
@@ -45,8 +67,19 @@ public class ControllerGame : ControllerLocal
 
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);
-        UpdatePlayerHealth();
+        UpdatePlayerHealth(0);
         ControllerEnemies.Init();
+
+        vCam = FindObjectOfType<CinemachineVirtualCamera>();
+        if (vCam != null)
+        {
+            noiseModule = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+
+
+        var volume = FindObjectOfType< Volume>();
+        volume.profile.TryGet(out ChromaticAberration);
+        
     }
 
     //move this in some kind of spear controller script
@@ -76,8 +109,12 @@ public class ControllerGame : ControllerLocal
         return Spears.IndexOf(spear);
     }
 
-    public void UpdatePlayerHealth()
+    public void UpdatePlayerHealth(int amount)
     {
+        if (amount < 0)
+        {
+            AnimateCameraDamage();
+        }
 
         LabelHealth.text = $"Health: {player.Health}";
     }
@@ -85,7 +122,7 @@ public class ControllerGame : ControllerLocal
     public void OnPlayerDeath(){
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
-        UpdatePlayerHealth();
+        UpdatePlayerHealth(0);
      }
 
 
@@ -94,6 +131,26 @@ public class ControllerGame : ControllerLocal
         ControllerEnemies.AddAggresiveEnemy(entity);
         entity.isAggressive = true;
 
+    }
+
+    void AnimateCameraDamage()
+    {
+
+        noiseModule.m_AmplitudeGain = ShakeAmplitude;
+        noiseModule.m_FrequencyGain = ShakeFrequency;
+        DOVirtual.DelayedCall(ShakeDuration, EndSHake);
+        AnimateColor(AberrationIntensity);
+        DOVirtual.Float(1, 0, AberartionDuration, AnimateColor).SetEase(AberrationEase).OnComplete(() => AnimateColor(0));
+    }
+
+    void AnimateColor(float value) {
+
+        ChromaticAberration.intensity.Override(value);
+    }
+
+    void EndSHake() {
+        noiseModule.m_AmplitudeGain = 0;
+        noiseModule.m_FrequencyGain = 0;
     }
 
     public void RemoveAgressiveEnemy(EntityController entity)
