@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "LightningAttack", menuName = "Entities/Daddy/Lightning Attack")]
-public class DaddyLightningPhase : DaddyAttackPhase
+public class DaddyLightningAttack : DaddyAttack
 {
 
     [Header("Lightning Phase")]
@@ -53,22 +53,22 @@ public class DaddyLightningPhase : DaddyAttackPhase
         lightningArea =  new Vector2(LightningWidth, _controller.GetRoomSize.y);
     }
 
-    public override void BeginPhase()
+    public override void BeginAttack()
     {
-        base.BeginPhase();
+        base.BeginAttack();
         _loopSegment = 0;
         _loopCounter = 0;
         _previousLoopSegment = -1;
         _loopTimer = _LoopDuration;
     }
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateAttack(float deltaTime)
     {
 
 
-        base.UpdatePhase(deltaTime);
+        base.UpdateAttack(deltaTime);
 
-        if (_State != DaddyPhaseState.Active)
+        if (_State != DaddyAttackState.Active)
         {
             return;
         }
@@ -158,7 +158,7 @@ public class DaddyLightningPhase : DaddyAttackPhase
     public override void DrawHitboxes()
     {
         base.DrawHitboxes();
-        if (_loopSegment == 2 && _State == DaddyPhaseState.Active)
+        if (_loopSegment == 2 && _State == DaddyAttackState.Active)
         {
 
             foreach (var lightning in lightningCollision)

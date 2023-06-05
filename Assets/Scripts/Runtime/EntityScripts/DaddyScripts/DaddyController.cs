@@ -35,14 +35,16 @@ public class DaddyController : EntityBase
 
 
     [SerializeField]
-    DaddyAttackPhase[] Phases;
+    DaddyPhase[] Phases;
+
+    int currentPhase = 0;
 
 
 
-    DaddyAttackPhase[] _Phases;
+    DaddyAttack[] _DaddyAttack;
 
 
-    DaddyAttackPhase _CurrentPhase;
+    DaddyAttack _CurrentAttack;
 
     int directionToPlayer;
     public int facingDirection = 1;
@@ -55,13 +57,15 @@ public class DaddyController : EntityBase
 
 
 
+
+
     private void Awake()
     {
-        _Phases = new DaddyAttackPhase[Phases.Length];
-        for (int i = 0; i < _Phases.Length;i++)
+        _DaddyAttack = new DaddyAttack[Phases.Length];
+        for (int i = 0; i < Phases[currentPhase].DaddyAttacks.Count;i++)
         {
-            _Phases[i] = Instantiate(Phases[i]);
-            _Phases[i].Init(this);
+            _DaddyAttack[i] = Instantiate(Phases[currentPhase].DaddyAttacks[i]);
+            _DaddyAttack[i].Init(this);
         }
         FaceTowards(1);
         Init(new EntityStats
@@ -74,25 +78,25 @@ public class DaddyController : EntityBase
 
   
 
-    public void EndPhase()
+    public void EndAttack()
     {
-        _CurrentPhase = ChoseNextPhase();
-        _CurrentPhase.BeginPhase();
+        _CurrentAttack = ChoseNextAttack();
+        _CurrentAttack.BeginAttack();
 
     }
 
 
-    DaddyAttackPhase ChoseNextPhase()
+    DaddyAttack ChoseNextAttack()
     {
-        var tmpPhases = new List<DaddyAttackPhase>();
+        var tmpAttacks = new List<DaddyAttack>();
         var weights = new List<int>();
         int weightAll = 0;
-        foreach (var phase in _Phases)
+        foreach (var attack in _DaddyAttack)
         {
-            if (CanStartPhase(phase))
+            if (CanStartAttack(attack))
             {
-                tmpPhases.Add(phase);
-                weightAll += phase.Weight;
+                tmpAttacks.Add(attack);
+                weightAll += attack.Weight;
                 weights.Add(weightAll);
             }
         }
@@ -102,22 +106,22 @@ public class DaddyController : EntityBase
         {
             if (roll < weights[i])
             {
-                return _Phases[i];
+                return _DaddyAttack[i];
             }
         }
-        return _Phases[_Phases.Length - 1];
+        return _DaddyAttack[_DaddyAttack.Length - 1];
 
     }
 
     private void FixedUpdate()
     {
 
-        if (_CurrentPhase && _CurrentPhase.IsActive) {
-            _CurrentPhase.UpdatePhase(Time.fixedDeltaTime);
-            DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentPhase.GetDebugMessage(); 
-        } else if(_CurrentPhase == null){
+        if (_CurrentAttack && _CurrentAttack.IsActive) {
+            _CurrentAttack.UpdateAttack(Time.fixedDeltaTime);
+            DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentAttack.GetDebugMessage(); 
+        } else if(_CurrentAttack == null){
 
-            EndPhase();
+            EndAttack();
         }
     }
 
@@ -150,9 +154,9 @@ public class DaddyController : EntityBase
     }
 
 
-    bool CanStartPhase(DaddyAttackPhase daddyAttackPhase)
+    bool CanStartAttack(DaddyAttack daddyAttackPhase)
     {
-        if (daddyAttackPhase.Conditions.HasFlag(DaddyPhaseCondition.PlayerCloserThan))
+        if (daddyAttackPhase.Conditions.HasFlag(DaddyAttackCondition.PlayerCloserThan))
         {
 
 
@@ -177,9 +181,9 @@ public class DaddyController : EntityBase
 
     private void OnDrawGizmosSelected()
     {
-        if (_CurrentPhase != null)
+        if (_CurrentAttack != null)
         {
-            _CurrentPhase.DrawHitboxes();
+            _CurrentAttack.DrawHitboxes();
         }
     }
 
@@ -187,6 +191,14 @@ public class DaddyController : EntityBase
     {
         _health = _maxHealth;
     }
+}
+
+[System.Serializable]
+public class DaddyPhase
+{
+    public float HealthPercent;
+    public List<DaddyAttack> DaddyAttacks;
+
 }
 
 

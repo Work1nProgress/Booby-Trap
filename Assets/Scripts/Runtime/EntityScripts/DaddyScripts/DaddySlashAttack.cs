@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 [CreateAssetMenu(fileName = "SlashAttack", menuName = "Entities/Daddy/Slash Attack")]
-public class DaddySlashPhase : DaddyAttackPhase
+public class DaddySlashAttack : DaddyAttack
 {
     [SerializeField]
     int SlashDistance;
@@ -20,10 +21,10 @@ public class DaddySlashPhase : DaddyAttackPhase
 
     Vector2 startPos;
 
-    public override void BeginPhase()
+    public override void BeginAttack()
     {
       
-        base.BeginPhase();
+        base.BeginAttack();
     }
 
     protected override void StartTelegraph()
@@ -44,13 +45,13 @@ public class DaddySlashPhase : DaddyAttackPhase
     }
 
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateAttack(float deltaTime)
     {
 
 
-        base.UpdatePhase(deltaTime);
+        base.UpdateAttack(deltaTime);
 
-        if (_State == DaddyPhaseState.Active)
+        if (_State == DaddyAttackState.Active)
         {
             var target = Vector2.Lerp(startPos, _SlashEndPosition, _currentTime / m_ActiveTime);
             //dont let dada run out of the room
@@ -73,7 +74,7 @@ public class DaddySlashPhase : DaddyAttackPhase
     public override void DrawHitboxes()
     {
         base.DrawHitboxes();
-        if (_State == DaddyPhaseState.Active) {
+        if (_State == DaddyAttackState.Active) {
             Gizmos.DrawWireCube(_controller.Rigidbody.position + SlashPosition*_controller.facingDirection, SlashSize);
         }
     }

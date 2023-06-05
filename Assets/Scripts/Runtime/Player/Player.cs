@@ -150,6 +150,7 @@ public class Player : EntityBase
     {
         m_CurrentSpearAmount = m_MaxSpearsOnPlayer;
         _hitsUntilCombo = hitsToCombo;
+        
     }
 
     private void Update()

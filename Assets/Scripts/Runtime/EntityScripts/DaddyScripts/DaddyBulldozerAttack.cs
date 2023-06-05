@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BulldozerPhase", menuName = "Entities/Daddy/Bulldozer Attack")]
-public class DaddyBulldozerPhase : DaddyAttackPhase
+[CreateAssetMenu(fileName = "BulldozerAttack", menuName = "Entities/Daddy/Bulldozer Attack")]
+public class DaddyBulldozerAttack : DaddyAttack
 {
 
 
@@ -25,12 +25,12 @@ public class DaddyBulldozerPhase : DaddyAttackPhase
     }
 
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateAttack(float deltaTime)
     {
 
-        base.UpdatePhase(deltaTime);
+        base.UpdateAttack(deltaTime);
 
-        if (_State == DaddyPhaseState.Active)
+        if (_State == DaddyAttackState.Active)
         {
             _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _BulldozeEndPosition, _currentTime / m_ActiveTime));
             var hit = Physics2D.OverlapBox(_controller.Rigidbody.position + BulldozePosition, BulldozeSize, 0, Utils.PlayerLayer);
@@ -65,7 +65,7 @@ public class DaddyBulldozerPhase : DaddyAttackPhase
     public override void DrawHitboxes()
     {
         base.DrawHitboxes();
-        if (_State == DaddyPhaseState.Active)
+        if (_State == DaddyAttackState.Active)
         {
             Gizmos.DrawWireCube(_controller.Rigidbody.position + BulldozePosition * _controller.facingDirection, BulldozeSize);
         }

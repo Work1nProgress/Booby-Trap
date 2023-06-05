@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4963573131874348454}
   - component: {fileID: 4963573131874348455}
+  - component: {fileID: 6685428867874128674}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -73,9 +74,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e4972664e82df3e418b6630b7b9e48d9, type: 3}
+  m_Sprite: {fileID: -985753683, guid: c88dfaee9eada784ba816219a2296282, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 12, y: 13.96}
@@ -84,6 +85,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6685428867874128674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963573131874348457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bf583eb7e3bb14a97c24ed3b4ad532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: -985753683, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: 1898137166, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: 391833021, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: -18215117, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: -1793712379, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: -428847046, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: 1516130596, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  - {fileID: -759601314, guid: c88dfaee9eada784ba816219a2296282, type: 3}
+  _timeToNextFrame: 0.06666667
+  loopOn: 1
 --- !u!1 &4963573132119460182
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,8 +230,9 @@ MonoBehaviour:
   m_EnemySound: {fileID: 11400000, guid: ef163450efe0943a19225f16dca37778, type: 2}
   _sprite: {fileID: 4963573131874348455}
   DoApplyGravity: 0
+  isAggressive: 0
   DamageToDeal: 1
-  Range: 1.5
+  Range: 0.9
   AttackForce: 5
   StunnedStateData:
     stateName: Stunned
@@ -237,7 +262,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.2
+  m_Radius: 0.63
 --- !u!114 &4963573132879665375
 MonoBehaviour:
   m_ObjectHideFlags: 0

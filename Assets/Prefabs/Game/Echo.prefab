@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21509555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.18, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -274,8 +274,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckSize: {x: 0.49, y: 0.03}
-  groundCheckPoint: {x: 0.05, y: -0.81, z: 0}
+  groundCheckSize: {x: 0.7, y: 0.03}
+  groundCheckPoint: {x: -0.31, y: -1.04, z: 0}
   _playerAnim: {fileID: 415285141}
 --- !u!114 &4492751368146734889
 MonoBehaviour:
@@ -376,7 +376,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.3562259, y: -0.1588465}
+  m_Offset: {x: -0.3265816, y: -0.46315217}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -387,7 +387,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.27749217, y: 0.8920882}
+  m_Size: {x: 0.3279134, y: 1.1644292}
   m_EdgeRadius: 0
 --- !u!81 &4492751367343421156
 AudioListener:
