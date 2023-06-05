@@ -24,8 +24,8 @@ MonoBehaviour:
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
   StartTile: 06000000
-  LightningWidth: 0.4
-  LightningSpacing: 1.5
+  LightningWidth: 0.3
+  LightningSpacing: 1.6
   LightningStartPosition: 0.5
   LightningStartPositionAlternate: 1.5
   TelegraphLightningDuration: 1
