@@ -55,7 +55,7 @@ public class DaddyController : EntityBase
 
 
 
-    private void Start()
+    private void Awake()
     {
         _Phases = new DaddyAttackPhase[Phases.Length];
         for (int i = 0; i < _Phases.Length;i++)
@@ -145,7 +145,6 @@ public class DaddyController : EntityBase
     {
  
         facingDirection = (int)Mathf.Sign(ControllerGame.Instance.player.transform.position.x - transform.position.x);
-        Debug.Log(facingDirection);
         SpriteRenderer.flipX = facingDirection == 1;
 
     }

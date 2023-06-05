@@ -198,14 +198,15 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         {
             m_Next.item.Play(layers);
         }
+        for (int i = 0; i < layers.Length; i++) {
+            if (!Array.Exists(m_QueuedLayers,x =>x == layers[i])){
+                Utils.AddArrayElement(ref m_QueuedLayers, layers[i]);
+            }
+        }
     }
 
     public void RemoveLayers(string playlistName, params int[] layers)
     {
-        if (m_CurrentPlaylist != null && playlistName != m_CurrentPlaylist.Name)
-        {
-            return;
-        }
         if (m_CurrentPlaylist != null && playlistName != m_CurrentPlaylist.Name)
         {
             return;
@@ -217,6 +218,14 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
         if (m_Next.item != null)
         {
             m_Next.item.Stop(layers);
+        }
+        for (int i = 0; i < layers.Length; i++)
+        {
+            var idx = Array.FindIndex(m_QueuedLayers, x => x == layers[i]);
+            if(idx != -1)
+            {
+                Utils.DeleteArrayElement(ref m_QueuedLayers, idx);
+            }
         }
     }
 
@@ -332,7 +341,6 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                     }
                     else
                     {
-                        m_QueuedLayers = null;
                         StartCoroutine(CurrentTracker = PlayingCoroutine(GetPlaylistCrossfade));
                     }
                 }
@@ -371,7 +379,6 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                     }
                     else
                     {
-                        m_QueuedLayers = null;
                         StartCoroutine(CurrentTracker = PlayingCoroutine(GetPlaylistCrossfade));
                     }
                 }
@@ -398,7 +405,6 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                 }
                 else
                 {
-                    m_QueuedLayers = null;
                     StartCoroutine(CurrentTracker = PlayingCoroutine(GetPlaylistCrossfade));
                 }
 

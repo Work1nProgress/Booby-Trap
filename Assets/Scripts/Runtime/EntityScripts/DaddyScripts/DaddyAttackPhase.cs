@@ -24,6 +24,12 @@ public class DaddyAttackPhase : ScriptableObject
     [SerializeField]
     float m_DamageThreshold;
 
+    [SerializeField]
+    bool Teleport;
+
+    [SerializeField]
+    float TeleportTime;
+
 
     [Header("Conditions")]
     [SerializeField]
@@ -64,6 +70,9 @@ public class DaddyAttackPhase : ScriptableObject
     public bool IsActive => _IsActive;
 
 
+    protected Vector2 TeleportPosition;
+
+
 
     #region core
     public virtual void Init(DaddyController daddyController)
@@ -74,15 +83,29 @@ public class DaddyAttackPhase : ScriptableObject
 
     public virtual void BeginPhase()
     {
-        waitOneFrame = true;
+        _waitOneFrame = true;
         _IsActive = true;
         _currentPhaseDamage = 0;
         _State = DaddyPhaseState.None;
-        if (StartTile.Length > 0)
+        _teleported = false;
+        TeleportPosition = default;
+        if (StartTile.Length > 0 && !Teleport)
         {
 
             _controller.GoToTile(StartTile[Random.Range(0, StartTile.Length)]);
+            TeleportPosition = _controller.Rigidbody.position;
 
+        }
+        else if(Teleport)
+        {
+
+
+            TeleportPosition = _controller.GetRoomPosition+ Utils.TileToWorldPosition(StartTile[Random.Range(0, StartTile.Length)], 1);
+            if (Vector2.Distance(_controller.Rigidbody.position, TeleportPosition) < 1.1)
+            {
+                _teleported = true;
+                OnTeleport();
+            }
         }
     }
     public virtual void ExitPhase()
@@ -91,21 +114,47 @@ public class DaddyAttackPhase : ScriptableObject
         _controller.EndPhase();
     }
 
-    bool waitOneFrame;
+    bool _waitOneFrame;
+    bool _teleported;
     public virtual void UpdatePhase(float deltaTime)
     {
+
+        if (_waitOneFrame)
+        {
+            _waitOneFrame = false;
+            return;
+        }
         if (_State == DaddyPhaseState.None)
         {
-            if (waitOneFrame)
-            {
-                waitOneFrame = false;
-                return;
-            }
+          
             StartTelegraph();
             return;
         }
+
+
+        if (_State == DaddyPhaseState.Telegraph && Teleport && !_teleported)
+        {
+
+            if (_currentTime > TeleportTime)
+            {
+
+                _waitOneFrame = true;
+                _teleported = true;
+            
+                _controller.GoToTile(Utils.WorldPositionToTile(TeleportPosition.x -_controller.GetRoomPosition.x));
+                OnTeleport();
+            }
+        }
+
+
         _currentTime += deltaTime;
         
+    }
+
+    protected virtual void OnTeleport()
+    {
+
+
     }
 
 
@@ -126,6 +175,11 @@ public class DaddyAttackPhase : ScriptableObject
         if (m_TelegraphTime > 0)
         {
             _StateCountdown = new CountdownTimer(m_TelegraphTime, false, false, OnEndTelegraph);
+            if (Teleport && !_teleported)
+            {
+                var tp = PoolManager.Spawn<PoolObjectTimed>("teleportPortal", null, new Vector3(TeleportPosition.x, TeleportPosition.y, 0));
+                tp.StartTicking(TeleportTime);
+            }
         }
         else
         {
@@ -134,6 +188,8 @@ public class DaddyAttackPhase : ScriptableObject
         }
 
     }
+
+
 
     protected virtual void OnEndTelegraph()
     {
@@ -145,6 +201,7 @@ public class DaddyAttackPhase : ScriptableObject
         _currentTime = 0;
         _State = DaddyPhaseState.Active;
 
+       
         if (m_ActiveTime < 0)
         {
            

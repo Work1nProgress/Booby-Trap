@@ -116,6 +116,7 @@ public class ControllerGame : ControllerLocal
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
         Daddy.ResetDadsHp();
+        Daddy.GetComponent<DaddyMusic>().ResetMusic();
     }
 
 

@@ -21,12 +21,7 @@ public class DaddyBulldozerPhase : DaddyAttackPhase
     protected override void StartTelegraph()
     {
         base.StartTelegraph();
-        _controller.FaceTowards(_controller.GetTilePosition() < _controller.GetRoomPosition.x + _controller.GetRoomSize.x / 2 ? 1 : -1);
-        startPos = _controller.Rigidbody.position;
-        _BulldozeEndPosition = startPos + new Vector2((_controller.GetRoomSize.x-2) * _controller.facingDirection, 0);
-        var slash = PoolManager.Spawn<PoolObjectTimed>("Bulldoze", _controller.transform, new Vector3(BulldozePosition.x * _controller.facingDirection, BulldozePosition.y, 0));
-        slash.transform.localScale = BulldozeSize;
-        slash.StartTicking(m_TelegraphTime + m_ActiveTime);
+     
     }
 
 
@@ -39,13 +34,32 @@ public class DaddyBulldozerPhase : DaddyAttackPhase
         {
             _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _BulldozeEndPosition, _currentTime / m_ActiveTime));
             var hit = Physics2D.OverlapBox(_controller.Rigidbody.position + BulldozePosition, BulldozeSize, 0, Utils.PlayerLayer);
-            Debug.Log(hit);
             if (hit)
             {
                 ControllerGame.Instance.player.Damage(DamageToPlayer);
             }
         }
 
+    }
+
+    protected override void OnTeleport()
+    {
+        _controller.FaceTowards(TeleportPosition.x < _controller.GetRoomPosition.x + _controller.GetRoomSize.x / 2 ? 1 : -1);
+        var slash = PoolManager.Spawn<PoolObjectTimed>("Bulldoze", _controller.transform, new Vector3(BulldozePosition.x * _controller.facingDirection, BulldozePosition.y, 0));
+        slash.transform.localScale = BulldozeSize;
+        slash.StartTicking(m_TelegraphTime - _currentTime + m_ActiveTime);
+        base.OnTeleport();
+    }
+
+    protected override void OnEndTelegraph()
+    {
+        startPos = _controller.Rigidbody.position;
+
+   
+        _BulldozeEndPosition = startPos + new Vector2((_controller.GetRoomSize.x - 2) * _controller.facingDirection, 0);
+
+      
+        base.OnEndTelegraph();
     }
 
     public override void DrawHitboxes()
