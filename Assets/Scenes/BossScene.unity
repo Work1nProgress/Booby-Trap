@@ -460,11 +460,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.85
+      value: -7.243
       objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.95
+      value: -2.947
       objectReference: {fileID: 0}
     - target: {fileID: 4492751368146734890, guid: 7ae91f26332224f6dbc65800d19dc301, type: 3}
       propertyPath: m_LocalPosition.z
@@ -649,11 +649,11 @@ PrefabInstance:
       objectReference: {fileID: 415285134}
     - target: {fileID: 5729477895139498190, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.231377
+      value: -15.624376
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895139498190, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9524045
+      value: 0.9554045
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.x
@@ -665,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: orthographic size
-      value: 4.21875
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
@@ -1678,15 +1678,17 @@ MonoBehaviour:
   Rigidbody2D: {fileID: 1456167642}
   SpriteRenderer: {fileID: 1329102583}
   RoomSize: {x: 16, y: 8}
-  RoomPosition: {x: -7, y: -4}
+  RoomPosition: {x: -8, y: -4}
   ContactDamage: 1
   Phases:
-  - HealthPercent: 0
-    DaddyAttacks: []
-  - HealthPercent: 0
-    DaddyAttacks: []
-  - HealthPercent: 0
-    DaddyAttacks: []
+  - HealthPercent: 100
+    BeginPhaseWaitTime: 2
+    DaddyAttacks:
+    - {fileID: 11400000, guid: 2942230f8027b40cf83c922246425ae7, type: 2}
+  - HealthPercent: 99
+    BeginPhaseWaitTime: 5
+    DaddyAttacks:
+    - {fileID: 11400000, guid: 455d351523e88412a828936461b2496c, type: 2}
   facingDirection: 1
   DebugText: {fileID: 683011036}
   DaddyMaxHealth: 150
