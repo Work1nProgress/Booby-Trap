@@ -19,7 +19,6 @@ public class StaticHazard : MonoBehaviour
     int EnemyLayer;
     private void Awake()
     {
-        PlayerLayer = LayerMask.GetMask("Player");
         EnemyLayer = LayerMask.GetMask("Enemy");
     }
 
@@ -31,7 +30,7 @@ public class StaticHazard : MonoBehaviour
         switch(Shape)
         {
             case HazardShape.Square:
-                isInRange = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, PlayerLayer) != null;
+                isInRange = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, Utils.PlayerLayerMask) != null;
                 var hit  = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, EnemyLayer);
                 if (hit)
                 {

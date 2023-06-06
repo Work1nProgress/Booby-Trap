@@ -41,11 +41,13 @@ public class CyclopsAttackState : EntityState
         p2.x += _targetOnRight ? 0.85f : -0.85f;
 
         Collider2D playerCollider = Physics2D.OverlapArea(_controller.Rigidbody.position,
-            p2, LayerMask.GetMask("Player"));
+            p2, Utils.PlayerLayerMask);
 
-        EntityBase entityBase = playerCollider != null ? playerCollider.GetComponent<EntityBase>() : null;
+        if (playerCollider)
+        {
+            ControllerGame.Instance.player.Damage(power);
+        }
 
-        if (entityBase != null)
-            entityBase.Damage(power);
+       
     }
 }

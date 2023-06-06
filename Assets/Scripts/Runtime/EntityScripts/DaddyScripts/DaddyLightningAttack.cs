@@ -145,7 +145,7 @@ public class DaddyLightningAttack : DaddyAttack
          
             foreach (var lightning in lightningCollision)
             {
-                if (Physics2D.OverlapBox(lightning, lightningArea, 0, Utils.PlayerLayer))
+                if (Physics2D.OverlapBox(lightning, lightningArea, 0, Utils.PlayerLayerMask))
                 {
                     ControllerGame.Instance.player.Damage(DamageToPlayer);
                     break;

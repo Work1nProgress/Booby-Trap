@@ -65,7 +65,7 @@ public class DaddySlashAttack : DaddyAttack
                 , target.y);
             _controller.Rigidbody.MovePosition(clampedTarget);
 
-            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position+SlashPosition, SlashSize, 0, Utils.PlayerLayer);
+            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position+SlashPosition, SlashSize, 0, Utils.PlayerLayerMask);
 //            Debug.Log(hit);
             if (hit)
             {

@@ -132,7 +132,7 @@ public class Utils
 
 
     private static int _groundLayer = -1;
-    public static int GroundLayer
+    public static int GroundLayerMask
     {
         get
         {
@@ -146,7 +146,7 @@ public class Utils
     }
 
     private static int _playerLayer = -1;
-    public static int PlayerLayer
+    public static int PlayerLayerMask
     {
         get
         {

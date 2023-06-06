@@ -16,7 +16,7 @@ public class DaddyMine : PoolObject
 
     private void FixedUpdate()
     {
-        if (Physics2D.OverlapBox(_data.MinePosition, _data.MineHitbox,0, Utils.PlayerLayer)) {
+        if (Physics2D.OverlapBox(_data.MinePosition, _data.MineHitbox,0, Utils.PlayerLayerMask)) {
             PoolManager.Spawn<PoolObjectTimed>("MineExplosion", null, transform.position);
             _data.MineCallback.Invoke(_data.MinePosition);
             PoolManager.Despawn(this);
