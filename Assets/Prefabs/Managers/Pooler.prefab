@@ -70,8 +70,8 @@ MonoBehaviour:
     initialPoolSize: 1
     maxPoolSize: 2
   - poolObject: {fileID: 629883239336676359, guid: 3b39ee66da6d34c26897f4ef43eb834e, type: 3}
-    initialPoolSize: 1
-    maxPoolSize: 2
+    initialPoolSize: 3
+    maxPoolSize: 4
   - poolObject: {fileID: 507748927988082030, guid: ab00feaac0c2d446282287448cbf1cc8, type: 3}
     initialPoolSize: 5
     maxPoolSize: 10

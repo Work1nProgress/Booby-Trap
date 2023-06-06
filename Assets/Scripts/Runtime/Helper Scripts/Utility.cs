@@ -186,6 +186,12 @@ public class Utils
 
     }
 
+    public static float TileToWorldPosition(int x)
+    {
+        return 0.5f + x;
+
+    }
+
 
     static public T AddArrayElement<T>(ref T[] array, T elToAdd)
     {

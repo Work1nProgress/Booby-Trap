@@ -87,6 +87,7 @@ public class DaddyAttack : ScriptableObject
 
     public virtual void BeginAttack()
     {
+        hasSentOnTeleport = false;
         _waitOneFrame = true;
         _IsActive = true;
         _currentAttackDamage = 0;
@@ -108,6 +109,7 @@ public class DaddyAttack : ScriptableObject
             if (Vector2.Distance(_controller.Rigidbody.position, TeleportPosition) < 1.1)
             {
                 _teleported = true;
+                hasSentOnTeleport = true;
                 OnTeleport();
             }
         }
@@ -120,6 +122,8 @@ public class DaddyAttack : ScriptableObject
 
     bool _waitOneFrame;
     bool _teleported;
+    bool hasSentOnTeleport;
+
     public virtual void UpdateAttack(float deltaTime)
     {
 
@@ -142,16 +146,25 @@ public class DaddyAttack : ScriptableObject
             if (_currentTime > TeleportTime)
             {
 
+
+                _controller.GoToTile(Utils.WorldPositionToTile(TeleportPosition.x -_controller.GetRoomPosition.x));
                 _waitOneFrame = true;
+                
                 _teleported = true;
             
-                _controller.GoToTile(Utils.WorldPositionToTile(TeleportPosition.x -_controller.GetRoomPosition.x));
-                OnTeleport();
+               
             }
         }
+        else if (_State == DaddyAttackState.Telegraph && Teleport && _teleported && !hasSentOnTeleport) {
+            hasSentOnTeleport = true;
+            OnTeleport();
+        }
+        
 
 
-        _currentTime += deltaTime;
+
+
+            _currentTime += deltaTime;
         
     }
 
