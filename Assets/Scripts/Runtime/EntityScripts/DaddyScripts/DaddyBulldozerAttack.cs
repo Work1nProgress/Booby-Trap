@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BulldozerAttack", menuName = "Entities/Daddy/Bulldozer Attack")]
@@ -18,6 +19,9 @@ public class DaddyBulldozerAttack : DaddyAttack
 
     Vector2 startPos;
 
+    [SerializeField]
+    Ease MovementEase = Ease.Linear;
+
     protected override void StartTelegraph()
     {
         base.StartTelegraph();
@@ -32,7 +36,7 @@ public class DaddyBulldozerAttack : DaddyAttack
 
         if (_State == DaddyAttackState.Active)
         {
-            _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _BulldozeEndPosition, _currentTime / m_ActiveTime));
+            _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _BulldozeEndPosition, DOVirtual.EasedValue(0, 1, _currentTime / m_ActiveTime, MovementEase)));
             var hit = Physics2D.OverlapBox(_controller.Rigidbody.position + BulldozePosition, BulldozeSize, 0, Utils.PlayerLayer);
             if (hit)
             {

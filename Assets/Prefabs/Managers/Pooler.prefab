@@ -77,4 +77,13 @@ MonoBehaviour:
     maxPoolSize: 10
   - poolObject: {fileID: 1994333275375125204, guid: 968e1a0651c9c4b5f9b2ab467904e9ee, type: 3}
     initialPoolSize: 1
-    maxPoolSize: 0
+    maxPoolSize: 2
+  - poolObject: {fileID: 4935726821102692145, guid: 4ec89a0ca1bf04b7abd923854274683f, type: 3}
+    initialPoolSize: 10
+    maxPoolSize: 20
+  - poolObject: {fileID: 1774143413713634679, guid: ad62888a866ca44189afb49c4935cf65, type: 3}
+    initialPoolSize: 3
+    maxPoolSize: 6
+  - poolObject: {fileID: 8282370892159772300, guid: b4ebf86d25cd246ae910bdf70e342042, type: 3}
+    initialPoolSize: 3
+    maxPoolSize: 6

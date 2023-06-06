@@ -21,6 +21,9 @@ public class DaddySlashAttack : DaddyAttack
 
     Vector2 startPos;
 
+    [SerializeField]
+    Ease MovementEase = Ease.Linear;
+
     public override void BeginAttack()
     {
       
@@ -53,7 +56,7 @@ public class DaddySlashAttack : DaddyAttack
 
         if (_State == DaddyAttackState.Active)
         {
-            var target = Vector2.Lerp(startPos, _SlashEndPosition, _currentTime / m_ActiveTime);
+            var target = Vector2.Lerp(startPos, _SlashEndPosition, DOVirtual.EasedValue(0, 1, _currentTime / m_ActiveTime, MovementEase));
             //dont let dada run out of the room
             var clampedTarget = new Vector2(
                 Mathf.Clamp(target.x,
