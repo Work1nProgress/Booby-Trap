@@ -19,13 +19,14 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
         }
 
         Instance._isActive = active;
+        Instance.OnActivate();
     }
     public static void SetActiveUIDomain(UIDomain domain)
     {
-        CloseMenu();
-
         //deactivation list
+        MainMenuUIController.CloseMenu();
         MainMenuUIController.SetActive(false);
+        InGameUIController.CloseMenu();
         InGameUIController.SetActive(false);
 
         //activation switch
@@ -39,8 +40,7 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
                 return;
         }
     }
-
-
+    protected virtual void OnActivate() { }
 
 
     //these methods can be called at any time.
@@ -89,7 +89,7 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
 
         if (Instance._openMenu != null)
         {
-            Instance._openMenu.Close();
+            Instance._openMenu.OnClose();
             Instance._openMenu.gameObject.SetActive(false);
         }
 
@@ -97,7 +97,7 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
         if (Instance._openMenu != null)
         {
             Instance._openMenu.gameObject.SetActive(true);
-            Instance._openMenu.Open();
+            Instance._openMenu.OnOpen();
         }
     }
     public static void CloseMenu()
@@ -111,7 +111,7 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
 
         if (Instance._openMenu != null)
         {
-            Instance._openMenu.Close();
+            Instance._openMenu.OnClose();
             Instance._openMenu.gameObject.SetActive(false);
         }
             
@@ -131,7 +131,7 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
 
         if (menu != null)
         {
-            menu.Close();
+            menu.OnClose();
             menu.gameObject.SetActive(false);
         }
     }

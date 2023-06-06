@@ -6,5 +6,13 @@ public class MainMenuUIController : UIControllerSingleton<MainMenuUIController>
 {
     private void Start()
     {
+        
+    }
+
+    protected override void OnActivate()
+    {
+        base.OnActivate();
+
+        OpenMenu("Primary");
     }
 }

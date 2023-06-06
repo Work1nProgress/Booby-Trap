@@ -22,16 +22,14 @@ public class GenericMenuHandler : MonoBehaviour
     protected virtual void Start()
     {
         RegisterToController(_domain);
-
-        _initialSelectable.Select();
     }
 
-    public virtual void Open()
+    public virtual void OnOpen()
     {
         _initialSelectable.Select();
     }
 
-    public virtual void Close()
+    public virtual void OnClose()
     {
 
     }

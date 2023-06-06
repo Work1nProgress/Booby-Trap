@@ -10,4 +10,9 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
     {
         Debug.Log("Pull the lever, Kronk!");
     }
+
+    public void OtherThing()
+    {
+        Debug.Log("Oh shit! Double rainbow!!! (not really)");
+    }
 }
