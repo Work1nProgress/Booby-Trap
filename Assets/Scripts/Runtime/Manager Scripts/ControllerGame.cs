@@ -123,7 +123,12 @@ public class ControllerGame : ControllerLocal
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
-     }
+        if (Daddy != null)
+        {
+            Daddy.ResetDadsHp();
+            Daddy.GetComponent<DaddyMusic>().ResetMusic();
+        }
+    }
 
 
     public void AddAgressiveEnemy(EntityController entity)

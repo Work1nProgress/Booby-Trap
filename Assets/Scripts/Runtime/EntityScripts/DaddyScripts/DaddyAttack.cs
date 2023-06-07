@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DaddyAttackPhase : ScriptableObject
+public class DaddyAttack : ScriptableObject
 {
 
     [Header("State Times")]
@@ -19,7 +19,7 @@ public class DaddyAttackPhase : ScriptableObject
     [Header("Triggers")]
 
     [SerializeField]
-    DaddyPhaseTrigger m_DaddyPhaseTrigger;
+    DaddyAttackTrigger m_DaddyAttackTrigger;
 
     [SerializeField]
     float m_DamageThreshold;
@@ -27,9 +27,9 @@ public class DaddyAttackPhase : ScriptableObject
 
     [Header("Conditions")]
     [SerializeField]
-    DaddyPhaseCondition m_DaddyPhaseCondition;
+    DaddyAttackCondition m_DaddyAttackCondition;
 
-    public DaddyPhaseCondition Conditions => m_DaddyPhaseCondition;
+    public DaddyAttackCondition Conditions => m_DaddyAttackCondition;
 
     [SerializeField]
     float m_PlayerCloserThanTiles;
@@ -43,14 +43,17 @@ public class DaddyAttackPhase : ScriptableObject
     [Tooltip("Tile from where to start the attack. If empty starts at current tile otherwise teleports to a tile.")]
     int[] StartTile;
 
+    [Tooltip("Height from where to start the attack. If empty starts at current tile otherwise teleports to a tile.")]
+    int[] StartHeight;
+
     public int Weight => m_Weight;
 
 
 
 
-    int _currentPhaseDamage;
+    int _currentAttackDamage;
 
-    protected DaddyPhaseState _State = DaddyPhaseState.None;
+    protected DaddyAttackState _State = DaddyAttackState.None;
 
 
     CountdownTimer _StateCountdown;
@@ -65,6 +68,7 @@ public class DaddyAttackPhase : ScriptableObject
 
 
 
+
     #region core
     public virtual void Init(DaddyController daddyController)
     {
@@ -72,29 +76,53 @@ public class DaddyAttackPhase : ScriptableObject
 
     }
 
-    public virtual void BeginPhase()
+    public virtual void BeginAttack()
     {
-        waitOneFrame = true;
+        hasSentOnTeleport = false;
+        _waitOneFrame = true;
         _IsActive = true;
-        _currentPhaseDamage = 0;
-        _State = DaddyPhaseState.None;
-        if (StartTile.Length > 0)
+        _currentAttackDamage = 0;
+        _State = DaddyAttackState.None;
+        _teleported = false;
+        TeleportPosition = default;
+        if (StartTile.Length > 0 && !Teleport)
         {
 
             _controller.GoToTile(StartTile[Random.Range(0, StartTile.Length)]);
 
         }
+        else if(Teleport)
+        {
+
+
+            TeleportPosition = _controller.GetRoomPosition+ Utils.TileToWorldPosition(StartTile[Random.Range(0, StartTile.Length)], 1);
+            if (Vector2.Distance(_controller.Rigidbody.position, TeleportPosition) < 1.1)
+            {
+                _teleported = true;
+                hasSentOnTeleport = true;
+                OnTeleport();
+            }
+        }
     }
-    public virtual void ExitPhase()
+    public virtual void ExitAttack()
     {
         _IsActive = false;
-        _controller.EndPhase();
+        _controller.EndAttack();
     }
 
-    bool waitOneFrame;
-    public virtual void UpdatePhase(float deltaTime)
+    bool _waitOneFrame;
+    bool _teleported;
+    bool hasSentOnTeleport;
+
+    public virtual void UpdateAttack(float deltaTime)
     {
-        if (_State == DaddyPhaseState.None)
+
+        if (_waitOneFrame)
+        {
+            _waitOneFrame = false;
+            return;
+        }
+        if (_State == DaddyAttackState.None)
         {
             if (waitOneFrame)
             {
@@ -104,7 +132,33 @@ public class DaddyAttackPhase : ScriptableObject
             StartTelegraph();
             return;
         }
-        _currentTime += deltaTime;
+
+
+        if (_State == DaddyAttackState.Telegraph && Teleport && !_teleported)
+        {
+
+            if (_currentTime > TeleportTime)
+            {
+
+
+                _controller.GoToTile(Utils.WorldPositionToTile(TeleportPosition.x -_controller.GetRoomPosition.x));
+                _waitOneFrame = true;
+                
+                _teleported = true;
+            
+               
+            }
+        }
+        else if (_State == DaddyAttackState.Telegraph && Teleport && _teleported && !hasSentOnTeleport) {
+            hasSentOnTeleport = true;
+            OnTeleport();
+        }
+        
+
+
+
+
+            _currentTime += deltaTime;
         
     }
 
@@ -119,7 +173,7 @@ public class DaddyAttackPhase : ScriptableObject
     protected virtual void StartTelegraph()
     {
         _currentTime = 0;
-        _State = DaddyPhaseState.Telegraph;
+        _State = DaddyAttackState.Telegraph;
        
 
 
@@ -143,7 +197,7 @@ public class DaddyAttackPhase : ScriptableObject
     protected virtual void StartActive()
     {
         _currentTime = 0;
-        _State = DaddyPhaseState.Active;
+        _State = DaddyAttackState.Active;
 
         if (m_ActiveTime < 0)
         {
@@ -170,7 +224,7 @@ public class DaddyAttackPhase : ScriptableObject
     protected virtual void StartCooldown()
     {
         _currentTime = 0;
-        _State = DaddyPhaseState.Cooldown;
+        _State = DaddyAttackState.Cooldown;
 
         if (m_CooldownTime > 0)
         {
@@ -187,8 +241,8 @@ public class DaddyAttackPhase : ScriptableObject
     protected virtual void OnEndCooldown()
     {
 
-       _State = DaddyPhaseState.None;
-       ExitPhase();          
+       _State = DaddyAttackState.None;
+       ExitAttack();          
         
 
     }
@@ -200,10 +254,10 @@ public class DaddyAttackPhase : ScriptableObject
     public void AddDamage(int damage)
     {
 
-        _currentPhaseDamage += damage;
-        if (m_DaddyPhaseTrigger.HasFlag(DaddyPhaseTrigger.DamageThreshold))
+        _currentAttackDamage += damage;
+        if (m_DaddyAttackTrigger.HasFlag(DaddyAttackTrigger.DamageThreshold))
         {
-            if (_currentPhaseDamage >= m_DamageThreshold)
+            if (_currentAttackDamage >= m_DamageThreshold)
             {
                 StartCooldown();
             }
@@ -216,14 +270,14 @@ public class DaddyAttackPhase : ScriptableObject
 
     public string GetDebugMessage()
     {
-        var msg = $"Phase: {name.Split("(")[0]}\n" +
+        var msg = $"Attack: {name.Split("(")[0]}\n" +
             $"State: {_State}";
 
-        if (m_DaddyPhaseTrigger.HasFlag(DaddyPhaseTrigger.DamageThreshold))
+        if (m_DaddyAttackTrigger.HasFlag(DaddyAttackTrigger.DamageThreshold))
         {
-            msg += $"\n Damage {_currentPhaseDamage}/{m_DamageThreshold}";
+            msg += $"\n Damage {_currentAttackDamage}/{m_DamageThreshold}";
         }
-        if (m_DaddyPhaseTrigger.HasFlag(DaddyPhaseTrigger.Timer))
+        if (m_DaddyAttackTrigger.HasFlag(DaddyAttackTrigger.Timer))
         {
             msg += $"\n Time {string.Format("{0:0.00}", _currentTime)}/{GetTime()}";
         }
@@ -236,9 +290,9 @@ public class DaddyAttackPhase : ScriptableObject
 
         _State switch
         {
-            DaddyPhaseState.Telegraph => m_TelegraphTime,
-            DaddyPhaseState.Active => m_ActiveTime,
-            DaddyPhaseState.Cooldown => m_CooldownTime,
+            DaddyAttackState.Telegraph => m_TelegraphTime,
+            DaddyAttackState.Active => m_ActiveTime,
+            DaddyAttackState.Cooldown => m_CooldownTime,
             _ => 0
         };
 
@@ -257,7 +311,7 @@ public class DaddyAttackPhase : ScriptableObject
 }
 
 
-public enum DaddyPhaseState
+public enum DaddyAttackState
 {
     None,
     Telegraph,
@@ -266,7 +320,7 @@ public enum DaddyPhaseState
 }
 
 [System.Flags]
-public enum DaddyPhaseTrigger
+public enum DaddyAttackTrigger
 {
     None,
     Timer,
@@ -274,7 +328,7 @@ public enum DaddyPhaseTrigger
 }
 
 [System.Flags]
-public enum DaddyPhaseCondition
+public enum DaddyAttackCondition
 {
     None,
     PlayerCloserThan

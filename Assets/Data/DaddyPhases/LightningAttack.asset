@@ -16,9 +16,11 @@ MonoBehaviour:
   m_ActiveTime: 5
   m_CooldownTime: 0
   DamageToPlayer: 1
-  m_DaddyPhaseTrigger: 1
+  m_DaddyAttackTrigger: -1
   m_DamageThreshold: 0
-  m_DaddyPhaseCondition: 0
+  Teleport: 1
+  TeleportTime: 0.5
+  m_DaddyAttackCondition: 0
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
   StartTile: 06000000

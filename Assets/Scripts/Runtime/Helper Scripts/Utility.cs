@@ -132,7 +132,7 @@ public class Utils
 
 
     private static int _groundLayer = -1;
-    public static int GroundLayer
+    public static int GroundLayerMask
     {
         get
         {
@@ -146,7 +146,7 @@ public class Utils
     }
 
     private static int _playerLayer = -1;
-    public static int PlayerLayer
+    public static int PlayerLayerMask
     {
         get
         {
@@ -183,6 +183,12 @@ public class Utils
     public static Vector2 TileToWorldPosition(int x, int y)
     {
         return new Vector2(0.5f + x, 0.5f + y);
+
+    }
+
+    public static float TileToWorldPosition(int x)
+    {
+        return 0.5f + x;
 
     }
 

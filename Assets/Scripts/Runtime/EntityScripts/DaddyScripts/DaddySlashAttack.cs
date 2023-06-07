@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 [CreateAssetMenu(fileName = "SlashAttack", menuName = "Entities/Daddy/Slash Attack")]
-public class DaddySlashPhase : DaddyAttackPhase
+public class DaddySlashAttack : DaddyAttack
 {
     [SerializeField]
     int SlashDistance;
@@ -20,10 +21,13 @@ public class DaddySlashPhase : DaddyAttackPhase
 
     Vector2 startPos;
 
-    public override void BeginPhase()
+    [SerializeField]
+    Ease MovementEase = Ease.Linear;
+
+    public override void BeginAttack()
     {
       
-        base.BeginPhase();
+        base.BeginAttack();
     }
 
     protected override void StartTelegraph()
@@ -44,15 +48,15 @@ public class DaddySlashPhase : DaddyAttackPhase
     }
 
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateAttack(float deltaTime)
     {
 
 
-        base.UpdatePhase(deltaTime);
+        base.UpdateAttack(deltaTime);
 
-        if (_State == DaddyPhaseState.Active)
+        if (_State == DaddyAttackState.Active)
         {
-            var target = Vector2.Lerp(startPos, _SlashEndPosition, _currentTime / m_ActiveTime);
+            var target = Vector2.Lerp(startPos, _SlashEndPosition, DOVirtual.EasedValue(0, 1, _currentTime / m_ActiveTime, MovementEase));
             //dont let dada run out of the room
             var clampedTarget = new Vector2(
                 Mathf.Clamp(target.x,
@@ -61,7 +65,7 @@ public class DaddySlashPhase : DaddyAttackPhase
                 , target.y);
             _controller.Rigidbody.MovePosition(clampedTarget);
 
-            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position+SlashPosition, SlashSize, 0, Utils.PlayerLayer);
+            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position+SlashPosition, SlashSize, 0, Utils.PlayerLayerMask);
 //            Debug.Log(hit);
             if (hit)
             {
@@ -73,7 +77,7 @@ public class DaddySlashPhase : DaddyAttackPhase
     public override void DrawHitboxes()
     {
         base.DrawHitboxes();
-        if (_State == DaddyPhaseState.Active) {
+        if (_State == DaddyAttackState.Active) {
             Gizmos.DrawWireCube(_controller.Rigidbody.position + SlashPosition*_controller.facingDirection, SlashSize);
         }
     }

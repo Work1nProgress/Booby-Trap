@@ -55,12 +55,12 @@ public class PatrolState : EntityState
             _controller.Rigidbody.position - new Vector2(0.56f, 0),
             Vector3.down,
             0.55f,
-            Utils.GroundLayer);
+            Utils.GroundLayerMask);
 
         RaycastHit2D wallHit = Physics2D.Raycast(_controller.Rigidbody.position,
             _movingRight ? Vector3.right : Vector3.left,
             0.55f,
-            Utils.GroundLayer);
+            Utils.GroundLayerMask);
 
         return !(cliffHit.collider != null && wallHit.collider == null);
     }
