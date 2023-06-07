@@ -15,4 +15,14 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
     {
         Debug.Log("Oh shit! Double rainbow!!! (not really)");
     }
+
+    public void OpenOptionsMenu()
+    {
+        MainMenuUIController.OpenMenu("Options");
+    }
+
+    public void OpenMainMenu()
+    {
+        MainMenuUIController.OpenMenu("Primary");
+    }
 }
