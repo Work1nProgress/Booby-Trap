@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EnemySound: {fileID: 11400000, guid: 96253dff0bfee44a38403f40674ee41f, type: 2}
   _sprite: {fileID: 7110510423414983252}
   DoApplyGravity: 1
+  isAggressive: 0
   DamageToDeal: 1
   Range: 1.5
   AttackForce: 10
@@ -196,6 +197,7 @@ MonoBehaviour:
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  StunDuration: 0.7
 --- !u!50 &7110510423519493820
 Rigidbody2D:
   serializedVersion: 4

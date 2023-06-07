@@ -242,6 +242,7 @@ MonoBehaviour:
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  StunDuration: 1
   _seeker: {fileID: 4963573132879665375}
   _waypoints:
   - {fileID: 0}

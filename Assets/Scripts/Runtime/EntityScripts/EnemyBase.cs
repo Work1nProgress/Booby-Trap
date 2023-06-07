@@ -26,6 +26,9 @@ public class EnemyBase : EntityController
 
     bool isStunned;
 
+    [SerializeField]
+    float StunDuration;
+
 
     
 
@@ -114,9 +117,9 @@ public class EnemyBase : EntityController
         
     }
 
-    public void KnockBackAndStun(Vector2 Force, float stunDuration)
+    public void KnockBackAndStun(Vector2 Force)
     {
-        StunTimer = stunDuration;
+        StunTimer = StunDuration;
         ChangeState(StunnedStateData.stateName);
         Rigidbody.AddForce(Force, ForceMode2D.Impulse);
     }
