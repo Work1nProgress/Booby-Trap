@@ -186,6 +186,7 @@ MonoBehaviour:
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  StunDuration: 0.5
 --- !u!50 &1711115266399639359
 Rigidbody2D:
   serializedVersion: 4

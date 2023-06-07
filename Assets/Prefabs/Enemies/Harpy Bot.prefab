@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -985753683, guid: c88dfaee9eada784ba816219a2296282, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 12, y: 13.96}
@@ -242,6 +242,7 @@ MonoBehaviour:
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  StunDuration: 1
   _seeker: {fileID: 4963573132879665375}
   _waypoints:
   - {fileID: 0}

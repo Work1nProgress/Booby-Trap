@@ -240,7 +240,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.33375, y: -0.46003413}
+  m_Offset: {x: 0, y: -0.07}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -334,7 +334,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckSize: {x: 0.7, y: 0.03}
-  groundCheckPoint: {x: -0.31, y: -1.04, z: 0}
+  groundCheckPoint: {x: 0, y: -0.66, z: 0}
   _playerAnim: {fileID: 415285141}
 --- !u!114 &4492751368146734889
 MonoBehaviour:
@@ -435,7 +435,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.32658148, y: -0.45882773}
+  m_Offset: {x: 0, y: -0.06}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}

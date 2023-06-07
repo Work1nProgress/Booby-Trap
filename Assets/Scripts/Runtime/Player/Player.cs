@@ -84,9 +84,6 @@ public class Player : EntityBase
     float InvulTime = 1f;
 
     [SerializeField]
-    float StunEnemyTime = 2f;
-
-    [SerializeField]
     float StunEnemyForce= 20f;
 
     [SerializeField] private int hitsToCombo = 3;
@@ -312,7 +309,7 @@ public class Player : EntityBase
                 var enemy = entity as EnemyBase;
                 if (enemy != null)
                 {
-                    enemy.KnockBackAndStun((enemy.Rigidbody.position - RigidBody.position).normalized * StunEnemyForce, StunEnemyTime);
+                    enemy.KnockBackAndStun((enemy.Rigidbody.position - RigidBody.position).normalized * StunEnemyForce);
                 }
             }
         }
