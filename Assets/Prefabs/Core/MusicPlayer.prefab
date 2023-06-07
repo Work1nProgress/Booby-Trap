@@ -47,8 +47,8 @@ MonoBehaviour:
   Mixer: {fileID: 5082600266052968285, guid: 303465a1e9e7049499946eaf3c75a1f9, type: 2}
   Playlists:
   - Name: daddyPlaylist
-    Crossfade: 1
-    CrossfadeTime: 1e-25
+    Crossfade: 0
+    CrossfadeTime: 0
     Randomize: 0
     MusicTracks:
     - daddy

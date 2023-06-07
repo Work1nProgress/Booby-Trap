@@ -435,6 +435,7 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
                     }
                     else
                     {
+                        RemoveTrack(ref m_Current);
                         PlayTrack(m_QueuedTrack, ref m_Current);
                         StartCoroutine(CurrentTracker = PlayingCoroutine(0));
                     }
@@ -444,13 +445,18 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
     }
 
 
-
+    void OnEnd()
+    {
+        OnCoroutineEnd(PlayState.PlayingComplete);
+    }
 
     IEnumerator PlayingCoroutine(float shortenByTime)
     {
 
-        yield return new WaitForSeconds(m_Current.track.Length - m_Current.item.GetCurrentTime - shortenByTime);
-        OnCoroutineEnd(PlayState.PlayingComplete);
+        Invoke(nameof(OnEnd), m_Current.track.Length - m_Current.item.GetCurrentTime - shortenByTime);
+        yield return null;
+        //yield return new WaitForSeconds(m_Current.track.Length - m_Current.item.GetCurrentTime - shortenByTime);
+       
     }
 
     IEnumerator FadeInCoroutine(float fadeInTime)
