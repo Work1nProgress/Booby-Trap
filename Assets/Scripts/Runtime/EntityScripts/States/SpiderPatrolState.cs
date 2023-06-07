@@ -51,12 +51,12 @@ public class SpiderPatrolState : EntityState
         var wallCR = Utils.Rotate2D(m_WallCheckPointActive, m_CachedAngle);
 
 
-        var bellyCheck = Physics2D.OverlapCircle(m_CachedPos, m_CheckSize, Utils.GroundLayer) != null;
+        var bellyCheck = Physics2D.OverlapCircle(m_CachedPos, m_CheckSize, Utils.GroundLayerMask) != null;
 
-        var backCheck = Physics2D.OverlapCircle(m_CachedPos + backCR, m_CheckSize, Utils.GroundLayer) != null;
+        var backCheck = Physics2D.OverlapCircle(m_CachedPos + backCR, m_CheckSize, Utils.GroundLayerMask) != null;
 
-        var frontCheck = Physics2D.OverlapCircle(m_CachedPos + frontCR, m_CheckSize, Utils.GroundLayer) != null;
-        var wallCheck = Physics2D.OverlapCircle(m_CachedPos + wallCR, m_CheckSize, Utils.GroundLayer) != null;
+        var frontCheck = Physics2D.OverlapCircle(m_CachedPos + frontCR, m_CheckSize, Utils.GroundLayerMask) != null;
+        var wallCheck = Physics2D.OverlapCircle(m_CachedPos + wallCR, m_CheckSize, Utils.GroundLayerMask) != null;
 
 
 

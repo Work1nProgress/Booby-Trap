@@ -9,20 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f694be16f9c849cb87f10dcf020bfa3, type: 3}
-  m_Name: BulldozerAttack
+  m_Script: {fileID: 11500000, guid: f5f992bc8d5b844b4bda766f8c5dcd13, type: 3}
+  m_Name: MineAttack
   m_EditorClassIdentifier: 
-  m_TelegraphTime: 1.5
-  m_ActiveTime: 1
+  m_TelegraphTime: 1
+  m_ActiveTime: 2
   m_CooldownTime: 1
   DamageToPlayer: 1
   m_DaddyAttackTrigger: 1
   m_DamageThreshold: 0
-  Teleport: 1
-  TeleportTime: 0.5
+  Teleport: 0
+  TeleportTime: 0
   m_DaddyAttackCondition: 0
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
-  StartTile: 000000000d000000
-  BulldozeSize: {x: 1, y: 5}
-  BulldozePosition: {x: 1, y: 0.5}
+  StartTile: 
+  GridSpacing: {x: 1, y: 1}
+  VerticalOffset: {x: 3, y: 1}
+  HorizontalOffset: {x: 0, y: 0}
+  MineTelegraphTime: 1
+  MineHitBox: {x: 1, y: 1}
+  MinMines: 3
+  MaxMines: 3
+  MinimumMineDistance: 1
+  RoomSize: {x: 16, y: 8}
+  RoomPosition: {x: -8, y: -4}

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88d213602bbc6bd41b85f9c9db201b54
+guid: 201f87db15b024d11b1f60e7aa167d10
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -102,18 +102,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -137,17 +125,29 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spider bot-Sheet_0
+      name: bomb_0
       rect:
         serializedVersion: 2
-        x: 5
+        x: 0
         y: 0
-        width: 48
-        height: 32
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19e000b713f544b4faa58066bda206d3
-      internalID: 2110370412
+      spriteID: df4ffc9ad64ad40b29d41bac2b5f4c98
+      internalID: 530641164
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider bot-Sheet_1
+      name: bomb_1
       rect:
         serializedVersion: 2
-        x: 65
+        x: 20
         y: 0
-        width: 48
-        height: 32
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2889db256a0304b4883f95953abd185d
-      internalID: -2004633065
+      spriteID: 6a6ea101fbc234132bcda09ff5aa24c2
+      internalID: -1051955140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider bot-Sheet_2
+      name: bomb_2
       rect:
         serializedVersion: 2
-        x: 125
+        x: 40
         y: 0
-        width: 48
-        height: 32
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0645c2c5b95084c25b17effaf8e49e1c
-      internalID: -1034874099
+      spriteID: aac3aa0dd4e964a7089b16f339dd99cf
+      internalID: -158093868
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider bot-Sheet_3
+      name: bomb_3
       rect:
         serializedVersion: 2
-        x: 185
+        x: 60
         y: 0
-        width: 48
-        height: 32
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 922b657b1eb37454f824d475d34d985b
-      internalID: 692882642
+      spriteID: 9cd7920ac54e3429cac9dd2254220f94
+      internalID: -181781152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider bot-Sheet_4
+      name: bomb_4
       rect:
         serializedVersion: 2
-        x: 245
+        x: 80
         y: 0
-        width: 48
-        height: 32
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,20 +239,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 785be9645542a47ab8e5afdc0ab59378
-      internalID: 174476345
+      spriteID: d9a708441643540c0ab4601baa7e7af9
+      internalID: -1465104622
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider bot-Sheet_5
+      name: bomb_5
       rect:
         serializedVersion: 2
-        x: 305
+        x: 100
         y: 0
-        width: 48
-        height: 32
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,8 +260,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbd6b7c395705473fab1a246fc64b291
-      internalID: 2077572972
+      spriteID: 0d32681e87dfa468ab11b5954fe779e2
+      internalID: 1334066238
       vertices: []
       indices: 
       edges: []
@@ -277,12 +277,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spider bot-Sheet_0: 2110370412
-      spider bot-Sheet_1: -2004633065
-      spider bot-Sheet_2: -1034874099
-      spider bot-Sheet_3: 692882642
-      spider bot-Sheet_4: 174476345
-      spider bot-Sheet_5: 2077572972
+      bomb_0: 530641164
+      bomb_1: -1051955140
+      bomb_2: -158093868
+      bomb_3: -181781152
+      bomb_4: -1465104622
+      bomb_5: 1334066238
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
