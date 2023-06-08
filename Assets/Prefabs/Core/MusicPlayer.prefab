@@ -46,16 +46,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mixer: {fileID: 5082600266052968285, guid: 303465a1e9e7049499946eaf3c75a1f9, type: 2}
   Playlists:
-  - Name: spearmaidenPlaylist
-    Crossfade: 1
-    CrossfadeTime: 1
+  - Name: daddyPlaylist
+    Crossfade: 0
+    CrossfadeTime: 0
     Randomize: 0
     MusicTracks:
-    - spearmaiden
+    - daddy
   Tracks:
-  - Name: spearmaiden
+  - Name: daddy
     Volume: 0.58
     Layers:
     - Volume: 1
-      m_AudioClip: {fileID: 8300000, guid: 5f2168dbfa2b247a2a465d252cf89ee8, type: 3}
+      m_AudioClip: {fileID: 8300000, guid: e34ce61f794d94607a5a325f1125d03a, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: c1b5ec92e378a4c5fa88095d259c334e, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 3f478459b61d148c7b48a18bcef1d78e, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: dd5b7da2687314f82ba7bd090c4bb0cf, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 24a7d613155774218a6eb14fad2bc74d, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 710a046e5a5c441bea90b284332b0342, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 9875e0debb20f41fbb6130dba4b3ac09, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: bf90b0f702959483797f2fd04ecf3a9e, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 54a2be775339d4a118a943705d889d68, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: b3577a5b828d643f6b4919c19556d95d, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 1a477054c78964735be59b65c792dd3d, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 4a832eb6afbd14ad0a7d605c248aa47b, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 1b209a653d3ad4928a76b5a696121b28, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 9ab3e94c498cc4be392d7bd983795075, type: 3}
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 0eab5bd41320d42fd9fb6e8a963f965b, type: 3}
   DeltaTime: 0.05

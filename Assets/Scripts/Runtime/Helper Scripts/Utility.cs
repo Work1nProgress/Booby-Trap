@@ -132,7 +132,7 @@ public class Utils
 
 
     private static int _groundLayer = -1;
-    public static int GroundLayer
+    public static int GroundLayerMask
     {
         get
         {
@@ -146,7 +146,7 @@ public class Utils
     }
 
     private static int _playerLayer = -1;
-    public static int PlayerLayer
+    public static int PlayerLayerMask
     {
         get
         {
@@ -159,17 +159,36 @@ public class Utils
 
     }
 
-    public static int WorldPositionToTile(float posX)
+    public static int WorldPositionToTile(float pos)
     {
 
-        if (posX >= 0)
+        if (pos >= 0)
         {
-            return Mathf.FloorToInt(posX);
+            return Mathf.FloorToInt(pos);
         }
         else
         {
-            return -Mathf.CeilToInt(-posX);
+            return -Mathf.CeilToInt(-pos);
         }
+
+    }
+
+    public static Vector2 WorldPositionToTile(Vector2 pos)
+    {
+
+        return new Vector2(WorldPositionToTile(pos.x), WorldPositionToTile(pos.y));
+
+    }
+
+    public static Vector2 TileToWorldPosition(int x, int y)
+    {
+        return new Vector2(0.5f + x, 0.5f + y);
+
+    }
+
+    public static float TileToWorldPosition(int x)
+    {
+        return 0.5f + x;
 
     }
 
@@ -218,6 +237,12 @@ public class Utils
             vector.x * Mathf.Sin(angle) + vector.y * Mathf.Cos(angle));
     }
 
-    
+    public static int Wrap(int value, int minInclusive, int maxExclusive)
+    {
+        if (value >= maxExclusive) value = minInclusive;
+        if (value < minInclusive) value = maxExclusive - 1;
+
+        return value;
+    }
 
 }

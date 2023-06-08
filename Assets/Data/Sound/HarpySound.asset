@@ -22,3 +22,4 @@ MonoBehaviour:
   Attack: 
   stepDelay: 0
   stepVelocityFactor: 0
+  AggresionEndDistance: 15

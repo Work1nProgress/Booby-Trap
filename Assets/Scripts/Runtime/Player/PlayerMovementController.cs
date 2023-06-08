@@ -110,6 +110,9 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Ground Checks")]
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.49f, 0.03f);
     [SerializeField] private Vector3 groundCheckPoint;
+    
+    [Header("Animator")]
+    [SerializeField] Animator _playerAnim;
 
 
 
@@ -179,7 +182,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        _playerAnim.SetFloat("VelocityOnYAxis", m_RigidBody.velocity.y);
         UpdateVerticalMovement();
 
         //UPDATE HORIZONTAL MOVEMENT
@@ -252,17 +255,14 @@ public class PlayerMovementController : MonoBehaviour
 
 
 
-       //not sure this does anything
+        //not sure this does anything
         if (OnGround && jumping && m_RigidBody.velocity.y <= 0)
         {
             jumping = false;
-          
         }
         else
         {
-
-            
-            //we are falling
+            //we are falling according to some weird definition which includes just chilling on the ground too
             if (m_RigidBody.velocity.y <= 0)
             {
                 falling = true;
@@ -288,7 +288,6 @@ public class PlayerMovementController : MonoBehaviour
             {
                 m_RigidBody.gravityScale = gravityMultiplier * jumpGravity;
             }
-
         }
 
 
@@ -378,6 +377,7 @@ public class PlayerMovementController : MonoBehaviour
             if (!feetTouchingGround && falling)
             {
 
+                PoolManager.Spawn<PoolObjectTimed>("dustparticles", null, transform.position + groundCheckPoint).StartTicking();
                 SoundManager.Instance.Play(LandSound, transform);
                 
             }
@@ -417,7 +417,6 @@ public class PlayerMovementController : MonoBehaviour
     #region input
     void OnJump(bool value)
     {
-
         jumpHeld = value;
         if (value && OnGround && !jumping)
         {
@@ -425,8 +424,10 @@ public class PlayerMovementController : MonoBehaviour
             {
                 return;
             }
+            
             SoundManager.Instance.Play(JumpSound, transform);
             jumping = true;
+            PoolManager.Spawn<PoolObjectTimed>("dustparticles", null, transform.position + groundCheckPoint).StartTicking();
 
             //no more coyote time
             LastOnGroundTime = 0;

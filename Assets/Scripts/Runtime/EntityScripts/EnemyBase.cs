@@ -26,6 +26,10 @@ public class EnemyBase : EntityController
 
     bool isStunned;
 
+    [SerializeField]
+    float StunDuration;
+
+
     
 
 
@@ -65,7 +69,9 @@ public class EnemyBase : EntityController
         base.FixedUpdate();
         if (isStunned) return;
 
-        if (Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position) < Range)
+
+        var distance = Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position);
+        if (distance < Range)
         {
 
             ControllerGame.Instance.player.AttackForce(transform.position, AttackForce);
@@ -95,22 +101,25 @@ public class EnemyBase : EntityController
     {
         
         base.Damage(ammount);
+       
         if (Health > 0)
         {
+            ControllerGame.Instance.AddAgressiveEnemy(this);
             SoundManager.Instance.Play(Sound.Hurt, transform);
         }
         else
         {
+            isAggressive = false;
             SoundManager.Instance.CancelLoop(Sound.PassiveLoop, gameObject);
-            SoundManager.Instance.CancelLoop(Sound.AgressiveLoop, gameObject);
+            ControllerGame.Instance.RemoveAgressiveEnemy(this);
             SoundManager.Instance.Play(Sound.Death, transform);
         }
         
     }
 
-    public void KnockBackAndStun(Vector2 Force, float stunDuration)
+    public void KnockBackAndStun(Vector2 Force)
     {
-        StunTimer = stunDuration;
+        StunTimer = StunDuration;
         ChangeState(StunnedStateData.stateName);
         Rigidbody.AddForce(Force, ForceMode2D.Impulse);
     }

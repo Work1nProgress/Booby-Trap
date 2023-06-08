@@ -60,3 +60,30 @@ MonoBehaviour:
   - poolObject: {fileID: 4568430017190543386, guid: 8f6c698300d894260ba4a58fe30b4cb6, type: 3}
     initialPoolSize: 20
     maxPoolSize: 40
+  - poolObject: {fileID: 1073638014, guid: 18869de4dd0304544acbc29b33f78486, type: 3}
+    initialPoolSize: 7
+    maxPoolSize: 8
+  - poolObject: {fileID: 2172079135372036022, guid: b2f0302c3c37341818b031a911799585, type: 3}
+    initialPoolSize: 7
+    maxPoolSize: 8
+  - poolObject: {fileID: 5204880793045513180, guid: 305c55e48964746578c7ddd565b809f8, type: 3}
+    initialPoolSize: 1
+    maxPoolSize: 2
+  - poolObject: {fileID: 629883239336676359, guid: 3b39ee66da6d34c26897f4ef43eb834e, type: 3}
+    initialPoolSize: 3
+    maxPoolSize: 4
+  - poolObject: {fileID: 507748927988082030, guid: ab00feaac0c2d446282287448cbf1cc8, type: 3}
+    initialPoolSize: 5
+    maxPoolSize: 10
+  - poolObject: {fileID: 1994333275375125204, guid: 968e1a0651c9c4b5f9b2ab467904e9ee, type: 3}
+    initialPoolSize: 1
+    maxPoolSize: 2
+  - poolObject: {fileID: 4935726821102692145, guid: 4ec89a0ca1bf04b7abd923854274683f, type: 3}
+    initialPoolSize: 10
+    maxPoolSize: 20
+  - poolObject: {fileID: 1774143413713634679, guid: ad62888a866ca44189afb49c4935cf65, type: 3}
+    initialPoolSize: 3
+    maxPoolSize: 6
+  - poolObject: {fileID: 8282370892159772300, guid: b4ebf86d25cd246ae910bdf70e342042, type: 3}
+    initialPoolSize: 3
+    maxPoolSize: 6

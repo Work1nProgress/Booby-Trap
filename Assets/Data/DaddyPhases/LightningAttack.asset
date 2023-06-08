@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72a8c2becefa419ea847a72327112dc, type: 3}
+  m_Name: LightningAttack
+  m_EditorClassIdentifier: 
+  m_TelegraphTime: 1
+  m_ActiveTime: 5
+  m_CooldownTime: 0
+  DamageToPlayer: 1
+  m_DaddyAttackTrigger: -1
+  m_DamageThreshold: 0
+  Teleport: 1
+  TeleportTime: 0.5
+  m_DaddyAttackCondition: 0
+  m_PlayerCloserThanTiles: 0
+  m_Weight: 1
+  StartTile: 06000000
+  LightningWidth: 0.4
+  LightningSpacing: 1.5
+  LightningStartPosition: 0.5
+  LightningStartPositionAlternate: 1.5
+  TelegraphLightningDuration: 1
+  LightningDuration: 0.5
+  LightningDelay: 0.3
