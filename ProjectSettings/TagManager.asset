@@ -17,8 +17,8 @@ TagManager:
   - Projectile
   - EnemyLOS
   - EchoCollisionBox
-  - 
-  - 
+  - Room
+  - Hazard
   - 
   - 
   - 

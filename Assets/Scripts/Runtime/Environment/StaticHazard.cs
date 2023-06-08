@@ -7,76 +7,40 @@ public class StaticHazard : MonoBehaviour
     [SerializeField]
     int DamageToDeal;
 
-    [SerializeField]
-    float Range;
 
 
-    [SerializeField]
-    HazardShape Shape;
-
-
-    int PlayerLayer;
     int EnemyLayer;
     private void Awake()
     {
         EnemyLayer = LayerMask.GetMask("Enemy");
     }
 
-
-    private void FixedUpdate()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        bool isInRange = false;
-        EnemyBase enemy;
-        switch(Shape)
+        Collide(collision.gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Collide(collision.gameObject);
+    }
+
+
+    private void Collide(GameObject go)
+    {
+        EnemyBase enemy = go.GetComponent<EnemyBase>();
+        if (enemy != null)
         {
-            case HazardShape.Square:
-                isInRange = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, Utils.PlayerLayerMask) != null;
-                var hit  = Physics2D.OverlapBox(transform.position, Vector2.one * Range, 0, EnemyLayer);
-                if (hit)
-                {
-                   enemy = hit.GetComponent<EnemyBase>();
-                   enemy.Damage(10000);
-                }
-                break;
-
-            case HazardShape.Circle:
-                isInRange = Vector3.Distance(ControllerGame.Instance.player.transform.position, transform.position) < Range;
-                break;
-
-
+            enemy.Damage(10000);
         }
-        if (isInRange)
-        {
 
-            ControllerGame.Instance.player.Damage(DamageToDeal);
+        if (go.layer == Utils.PlayerCollisionLayer)
+        {
             ControllerGame.Instance.player.TeleportToLastGround();
+            ControllerGame.Instance.player.Damage(DamageToDeal);
         }
        
     }
-    protected virtual void OnDrawGizmosSelected()
-    {
-#if UNITY_EDITOR
-        UnityEditor.Handles.color = Color.green;
-
-        switch (Shape)
-        {
-            case HazardShape.Square:
-                UnityEditor.Handles.DrawWireCube(transform.position, Vector3.one*Range);
-                break;
-
-            case HazardShape.Circle:
-                UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.forward, Range);
-                break;
-
-
-        }
-       
-
-#endif
-
-    }
-
-
 }
 
 public enum HazardShape {
