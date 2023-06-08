@@ -108,6 +108,7 @@ MonoBehaviour:
     timedState: 0
     timerAltState: 0
     stateTime: 0
+  StunDuration: 2
 --- !u!212 &1739822648683402399
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efb2e5e165ce4166a5dd0db64cf7878, type: 3}
   m_Name: SlashAttack
   m_EditorClassIdentifier: 
-  m_TelegraphTime: 1
+  m_TelegraphTime: 1.5
   m_ActiveTime: 0.5
   m_CooldownTime: 1
-  DamageToPlayer: 1
-  m_DaddyPhaseTrigger: 1
+  DamageToPlayer: 2
+  m_DaddyAttackTrigger: 1
   m_DamageThreshold: 0
   Teleport: 0
   TeleportTime: 0
-  m_DaddyPhaseCondition: -1
+  m_DaddyAttackCondition: -1
   m_PlayerCloserThanTiles: 6
   m_Weight: 1
   StartTile: 

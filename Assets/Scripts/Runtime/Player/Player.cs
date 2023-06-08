@@ -57,7 +57,7 @@ public class Player : EntityBase
     Vector2 m_HorizontalRange;
 
     [SerializeField]
-    Vector2 m_UpRange;
+    float m_JumpingAttackRange = 1.2f;
 
     [SerializeField]
     Vector2 m_DownRange;
@@ -84,15 +84,14 @@ public class Player : EntityBase
     float InvulTime = 1f;
 
     [SerializeField]
-    float StunEnemyTime = 2f;
-
-    [SerializeField]
     float StunEnemyForce= 20f;
 
     [SerializeField] private int hitsToCombo = 3;
     private int _hitsUntilCombo;
     [SerializeField] private float comboFuse = .7f;
     private float _currentComboFuse = 0;
+
+
     
 
 
@@ -131,6 +130,15 @@ public class Player : EntityBase
     [SerializeField]
     string ThrowHit;
 
+    [SerializeField]
+    string HurtLight;
+
+    [SerializeField]
+    string HurtHeavy;
+
+    [SerializeField]
+    int HeavyHurtThreshold;
+
 
     private void OnEnable()
     {
@@ -150,6 +158,7 @@ public class Player : EntityBase
     {
         m_CurrentSpearAmount = m_MaxSpearsOnPlayer;
         _hitsUntilCombo = hitsToCombo;
+        
     }
 
     private void Update()
@@ -245,6 +254,16 @@ public class Player : EntityBase
         {
             return;
         }
+
+        if (ammount >= HeavyHurtThreshold)
+        {
+            SoundManager.Instance.Play(HurtHeavy);
+
+        }
+        else
+        {
+            SoundManager.Instance.Play(HurtLight);
+        }
         m_InvulTimer = InvulTime;
         _hitsUntilCombo = hitsToCombo;
         base.Damage(ammount);
@@ -264,7 +283,7 @@ public class Player : EntityBase
 
         float velocityOnYAxis = m_MovementController.RigidBody.velocity.y;
         
-        Collider2D hit = null;
+        Collider2D[] hits = null;
 
         int damageToDeal = m_Damage;
         if (velocityOnYAxis == 0)
@@ -283,7 +302,7 @@ public class Player : EntityBase
             }
             
             int direction = m_MovementController.FacingRight ? 1 : -1;
-            hit = Physics2D.OverlapBox(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
+            hits = Physics2D.OverlapBoxAll(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
             
         }
         else
@@ -291,27 +310,30 @@ public class Player : EntityBase
             _hitsUntilCombo = hitsToCombo;
             _playerAnim.SetTrigger("SpearSpin");
 
-            hit = Physics2D.OverlapCircle(transform.position, 1.2f,  LayerMask.GetMask("Enemy"));
+            hits = Physics2D.OverlapCircleAll(transform.position, m_JumpingAttackRange,  LayerMask.GetMask("Enemy"));
         }
 
         SoundManager.Instance.Play(Attack, gameObject.transform);
-        
-        if (hit != null)
-        {
-            var entity = hit.gameObject.GetComponent<EntityBase>();
-            if (entity != null)
-            {
-                SoundManager.Instance.Play(AttackHit, entity.transform);
-                entity.Damage(damageToDeal);
-                if (Random.value <= ChanceToGainHeartRanged)
-                {
-                    Heal(1);
-                }
 
-                var enemy = entity as EnemyBase;
-                if (enemy != null)
+        foreach (var hit in hits)
+        {
+            if (hit != null)
+            {
+                var entity = hit.gameObject.GetComponent<EntityBase>();
+                if (entity != null)
                 {
-                    enemy.KnockBackAndStun((enemy.Rigidbody.position - RigidBody.position).normalized * StunEnemyForce, StunEnemyTime);
+                    SoundManager.Instance.Play(AttackHit, entity.transform);
+                    entity.Damage(damageToDeal);
+                    if (Random.value <= chanceToGainHeartMelee)
+                    {
+                        Heal(1);
+                    }
+
+                    var enemy = entity as EnemyBase;
+                    if (enemy != null)
+                    {
+                        enemy.KnockBackAndStun((enemy.Rigidbody.position - RigidBody.position).normalized * StunEnemyForce);
+                    }
                 }
             }
         }
@@ -354,8 +376,9 @@ public class Player : EntityBase
         Gizmos.color = Color.cyan;
         int direction = m_MovementController.FacingRight ? 1 : -1;
         Gizmos.DrawWireCube(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange);
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + new Vector3(0, offsetUp, 0), m_UpRange);
+        Gizmos.DrawWireSphere(transform.position, m_JumpingAttackRange);
     }
 
 
