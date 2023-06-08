@@ -26,8 +26,8 @@ MonoBehaviour:
   StartTile: 06000000
   LightningWidth: 0.3
   LightningSpacing: 1.6
-  LightningStartPosition: 0.5
-  LightningStartPositionAlternate: 1.5
+  LightningStartPosition: 0
+  LightningStartPositionAlternate: 1
   TelegraphLightningDuration: 1
-  LightningDuration: 0.5
-  LightningDelay: 0.3
+  LightningDuration: 0.3
+  LightningDelay: 0.2
