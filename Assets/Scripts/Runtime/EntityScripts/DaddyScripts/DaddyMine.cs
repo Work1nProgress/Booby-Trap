@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DaddyMine : PoolObject
+public class DaddyMine : EntityBase
 {
 
     MineData _data;
@@ -22,6 +22,12 @@ public class DaddyMine : PoolObject
             PoolManager.Despawn(this);
             ControllerGame.Instance.player.Damage(_data.Damage);
         }
+    }
+
+    protected override void OnKill()
+    {
+        _data.MineCallback.Invoke(_data.MinePosition);
+        PoolManager.Despawn(this);
     }
 }
 
