@@ -90,6 +90,8 @@ public class Player : EntityBase
     private int _hitsUntilCombo;
     [SerializeField] private float comboFuse = .7f;
     private float _currentComboFuse = 0;
+
+
     
 
 
@@ -127,6 +129,15 @@ public class Player : EntityBase
     string Throw;
     [SerializeField]
     string ThrowHit;
+
+    [SerializeField]
+    string HurtLight;
+
+    [SerializeField]
+    string HurtHeavy;
+
+    [SerializeField]
+    int HeavyHurtThreshold;
 
 
     private void OnEnable()
@@ -242,6 +253,16 @@ public class Player : EntityBase
         if (m_InvulTimer > 0)
         {
             return;
+        }
+
+        if (ammount >= HeavyHurtThreshold)
+        {
+            SoundManager.Instance.Play(HurtHeavy);
+
+        }
+        else
+        {
+            SoundManager.Instance.Play(HurtLight);
         }
         m_InvulTimer = InvulTime;
         _hitsUntilCombo = hitsToCombo;

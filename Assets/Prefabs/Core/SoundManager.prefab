@@ -533,6 +533,47 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 1
     UseCustomSpatialBlend: 1
+  - SoundName: Echo_Hurt_Heavy
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 7bf4837b56d922d44aa527a0a74d09db, type: 3}
+    - AudioClip: {fileID: 8300000, guid: fbb98bae10838f943b9e6d218cfd3154, type: 3}
+    - AudioClip: {fileID: 8300000, guid: b91586c33291a1f4b84a80edeecc02e1, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 2d96ab988a8880f45a62c7d7bcf9679d, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 05821827d1986d34dbc480a77432857b, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Echo_Hurt_Light
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: d5dcab97b2076614c8013d6a93716c59, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 2c8112216a4084a45bae5fe635559367, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 59723d81d0cf52f41b7f4f294f4cd7b1, type: 3}
+    - AudioClip: {fileID: 8300000, guid: c957feefc3716024da69b83c323105e8, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 6c536284123fd0f4dbf739c8ee3f9c50, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 1bbe68eb5f427994d8cc50b3190c759c, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0
