@@ -391,7 +391,6 @@ MonoBehaviour:
   offsetUp: 1
   offsetDown: -0.2
   InvulTime: 1
-  StunEnemyTime: 1
   StunEnemyForce: 2
   hitsToCombo: 3
   comboFuse: 1
@@ -401,6 +400,9 @@ MonoBehaviour:
   AttackHit: Echo_AttackImpact
   Throw: Echo_Throw
   ThrowHit: Echo_ThrowImpact
+  HurtLight: Echo_Hurt_Light
+  HurtHeavy: Echo_Hurt_Heavy
+  HeavyHurtThreshold: 2
 --- !u!50 &4492751368146734884
 Rigidbody2D:
   serializedVersion: 4
