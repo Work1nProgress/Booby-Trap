@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 1e562c7d007a149f3ae0e8fd9b67ff1d
   - enabled: 1
-    path: Assets/Scenes/MovementTestScene.unity
-    guid: 756bfbf46edac4519a3f975a730ca581
-  - enabled: 1
     path: Assets/Scenes/BossScene.unity
     guid: 54185bb3828aa470aa200c8890da74a6
+  - enabled: 1
+    path: Assets/Scenes/MovementTestScene.unity
+    guid: 756bfbf46edac4519a3f975a730ca581
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7fcd2037a6c6844f48d3260f4701c8bf, type: 2}
