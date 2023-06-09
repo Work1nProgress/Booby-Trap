@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class ControllerRooms : MonoBehaviour
 {
-    
+
+
+
+    public void Init()
+    {
+
+
+    }
 }

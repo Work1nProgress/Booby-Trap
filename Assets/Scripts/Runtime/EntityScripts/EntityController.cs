@@ -7,6 +7,9 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EntityController : StateHandler
 {
+
+    public EnemyType EnemyType;
+
     private Rigidbody2D _rigidbody;
     public Rigidbody2D Rigidbody => _rigidbody;
 
@@ -47,6 +50,9 @@ public class EntityController : StateHandler
     public bool DoApplyGravity;
 
     public bool isAggressive;
+
+    public int StartDirection;
+
 
 
     public virtual void Init(EnemyStats Stats)
