@@ -21,8 +21,4 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
         MainMenuUIController.OpenMenu("Options");
     }
 
-    public void OpenMainMenu()
-    {
-        MainMenuUIController.OpenMenu("Primary");
-    }
 }
