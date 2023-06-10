@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,8 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
 
     public void StartGame()
     {
-        Debug.Log("Pull the lever, Kronk!");
+        ControllerGameFlow.Instance.LoadNewScene("BossScene");
+        MainMenuUIController.CloseMenu();
     }
 
     public void OtherThing()

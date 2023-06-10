@@ -47,9 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxPlayerHealth: 3
   player: {fileID: 0}
+  Daddy: {fileID: 0}
   LabelHealth: {fileID: 0}
   ControllerEnemies: {fileID: 1613894403907780469}
-  bkg: {fileID: 0}
+  AberartionDuration: 0.2
+  ShakeDuration: 0.15
+  AberrationIntensity: 1
+  ShakeAmplitude: 2
+  ShakeFrequency: 10
+  AberrationEase: 15
   Spears: []
 --- !u!114 &1613894403907780469
 MonoBehaviour:

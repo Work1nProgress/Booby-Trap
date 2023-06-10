@@ -7840,11 +7840,6 @@ Transform:
   m_Father: {fileID: 815593407}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &884381100 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5729477896509569347, guid: 648b28199f4bf2d499914946d0788615, type: 3}
-  m_PrefabInstance: {fileID: 5729477895761505519}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &944735636
 GameObject:
   m_ObjectHideFlags: 0
@@ -9023,10 +9018,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: bkg
-      value: 
-      objectReference: {fileID: 884381100}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1882126798}
@@ -9034,62 +9025,6 @@ PrefabInstance:
       propertyPath: LabelHealth
       value: 
       objectReference: {fileID: 770572637}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: ShakeDuration
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: AberrationEase
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: ShakeAmplitude
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: ShakeFrequency
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: AberartionDuration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894402475045319, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: AberrationIntensity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: HarpyStats.MaxHealth
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: SpiderStats.MaxHealth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: CyclopsStats.MaxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: UnicornStats.MaxHealth
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: HarpyStats.MovementSpeed
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: HarpyStats.DetectionDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: HarpyStats.MovementSpeedChase
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 1613894403907780469, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
-      propertyPath: UnicornStats.MovementSpeedChase
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edcb123b5c45048abbc31e6821caf599, type: 3}
 --- !u!1001 &4492751367343421154
@@ -9166,7 +9101,7 @@ PrefabInstance:
       objectReference: {fileID: 1882126792}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: orthographic size
-      value: 4.21875
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
