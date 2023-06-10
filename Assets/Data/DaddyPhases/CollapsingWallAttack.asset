@@ -22,16 +22,16 @@ MonoBehaviour:
   TeleportTime: 2
   m_DaddyAttackCondition: 0
   m_PlayerCloserThanTiles: 0
-  m_Weight: 0
+  m_Weight: 1
   StartTile: 07000000
   WallStartSize: {x: 1, y: 4}
   WallEndSize: {x: 1, y: 0}
   WallStartPositionOffset: 0
   WallEndPositionOffset: 12
   WallMovementEase: 1
+  WallSizeEase: 1
   AscentMovementEase: 1
   DescentMovementEase: 1
-  SizeEase: 1
   HoverHeight: 3
   HoverAmplitude: {x: 0.3, y: 0.5}
   HoverFrequency: {x: 20, y: 6}
