@@ -665,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.697617
+      value: -8.6917715
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1704,7 +1704,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 455d351523e88412a828936461b2496c, type: 2}
   facingDirection: 1
   DebugText: {fileID: 683011036}
-  DaddyMaxHealth: 10
+  DaddyMaxHealth: 150
 --- !u!114 &1456167644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1719,19 +1719,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicLayers:
   - HealthPercent: 1
-    Layers: 2,7
-  - HealthPercent: 0.85714287
-    Layers: 2,7,14
-  - HealthPercent: 0.7142858
-    Layers: 0,2,7
-  - HealthPercent: 0.5714287
-    Layers: 0,2,5,7
-  - HealthPercent: 0.4285716
-    Layers: 0,3,9,11
-  - HealthPercent: 0.2857145
-    Layers: 1,10,12,13
-  - HealthPercent: 0.1428571
-    Layers: 0,4,6,8
+    Layers: 0
+  - HealthPercent: 0.5
+    Layers: 1
 --- !u!4 &1523120390 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4677667726472368055, guid: 73574c5b7bc776a4987a0da6a6b57a1c, type: 3}

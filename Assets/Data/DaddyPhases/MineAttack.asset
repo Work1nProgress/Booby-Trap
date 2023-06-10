@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Weight: 1
   StartTile: 
   GridSpacing: {x: 1, y: 1}
-  VerticalOffset: {x: 2, y: 3}
+  VerticalOffset: {x: 0, y: 6}
   HorizontalOffset: {x: 1, y: 1}
   MineTelegraphTime: 1
   MineHitBox: {x: 1, y: 1}
