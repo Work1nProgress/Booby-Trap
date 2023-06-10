@@ -36,6 +36,7 @@ public class EnemyBase : EntityController
 
     public override void Init(EnemyStats Stats)
     {
+        
         base.Init(Stats);
         AddState(InitializeState(StunnedStateData, this));
     }

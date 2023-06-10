@@ -131,30 +131,58 @@ public class Utils
 {
 
 
-    private static int _groundLayer = -1;
+    private static int _groundLayerMask = -1;
     public static int GroundLayerMask
     {
         get
         {
-            if (_groundLayer == -1)
+            if (_groundLayerMask == -1)
             {
-                _groundLayer = LayerMask.GetMask("Ground");
+                _groundLayerMask = LayerMask.GetMask("Ground");
             }
-            return _groundLayer;
+            return _groundLayerMask;
+        }
+
+    }
+
+    private static int _playerLayerMask = -1;
+    public static int PlayerLayerMask
+    {
+        get
+        {
+            if (_playerLayerMask == -1)
+            {
+                _playerLayerMask = LayerMask.GetMask("Player");
+            }
+            return _playerLayerMask;
         }
 
     }
 
     private static int _playerLayer = -1;
-    public static int PlayerLayerMask
+    public static int PlayerLayer
     {
         get
         {
             if (_playerLayer == -1)
             {
-                _playerLayer = LayerMask.GetMask("Player");
+                _playerLayer = LayerMask.NameToLayer("Player");
             }
             return _playerLayer;
+        }
+
+    }
+
+    private static int _playerCollisionLayer = -1;
+    public static int PlayerCollisionLayer
+    {
+        get
+        {
+            if (_playerCollisionLayer == -1)
+            {
+                _playerCollisionLayer = LayerMask.NameToLayer("EchoCollisionBox");
+            }
+            return _playerCollisionLayer;
         }
 
     }

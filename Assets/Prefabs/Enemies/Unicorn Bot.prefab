@@ -182,10 +182,12 @@ MonoBehaviour:
     timedState: 1
     timerAltState: 0
     stateTime: 2
+  EnemyType: 4
   m_EnemySound: {fileID: 11400000, guid: 96253dff0bfee44a38403f40674ee41f, type: 2}
   _sprite: {fileID: 7110510423414983252}
   DoApplyGravity: 1
   isAggressive: 0
+  StartDirection: 0
   DamageToDeal: 1
   Range: 1.5
   AttackForce: 10

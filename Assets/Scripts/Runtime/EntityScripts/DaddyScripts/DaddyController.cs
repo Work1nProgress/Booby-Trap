@@ -151,7 +151,7 @@ public class DaddyController : EntityBase
             return;
         }
         var currentHealthPercent = (float)Health / MaxHealth;
-        if (currentHealthPercent <= Phases[currentPhase + 1].HealthPercent)
+        if (currentHealthPercent*100 <= Phases[currentPhase + 1].HealthPercent)
         {
 
             //go to next phase
