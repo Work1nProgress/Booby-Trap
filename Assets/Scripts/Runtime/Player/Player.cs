@@ -51,6 +51,8 @@ public class Player : EntityBase
     [SerializeField]
     PlayerMovementController m_MovementController;
 
+    [SerializeField] private PlayerHealthBar _playerHealthBar;
+
 
     [Header("Attack")]
     [SerializeField]
@@ -248,14 +250,14 @@ public class Player : EntityBase
         PlayerMovementController.RigidBody.AddForce((transform.position -position).normalized * force, ForceMode2D.Impulse);
     }
 
-    public override void Damage(int ammount)
+    public override void Damage(int amount)
     {
         if (m_InvulTimer > 0)
         {
             return;
         }
 
-        if (ammount >= HeavyHurtThreshold)
+        if (amount >= HeavyHurtThreshold)
         {
             SoundManager.Instance.Play(HurtHeavy);
 
@@ -266,7 +268,8 @@ public class Player : EntityBase
         }
         m_InvulTimer = InvulTime;
         _hitsUntilCombo = hitsToCombo;
-        base.Damage(ammount);
+        _playerHealthBar.updateHealth(-amount);
+        base.Damage(amount);
     }
 
     public void TeleportToLastGround()
@@ -327,6 +330,7 @@ public class Player : EntityBase
                     if (Random.value <= chanceToGainHeartMelee)
                     {
                         Heal(1);
+                        _playerHealthBar.updateHealth(1);
                     }
 
                     var enemy = entity as EnemyBase;
