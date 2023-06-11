@@ -7845,6 +7845,7 @@ MonoBehaviour:
   RoomPosition: {x: -8, y: -4}
   bossHealthBar: {fileID: 1395961493}
   ContactDamage: 0
+  _animator: {fileID: 0}
   Phases:
   - HealthPercent: 100
     BeginPhaseWaitTime: 0
