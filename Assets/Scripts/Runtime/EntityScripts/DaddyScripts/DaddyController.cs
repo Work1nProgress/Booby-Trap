@@ -35,6 +35,8 @@ public class DaddyController : EntityBase
     [SerializeField]
     int ContactDamage = 1;
 
+    [SerializeField] private Animator _animator;
+
 
     [SerializeField]
     DaddyPhase[] Phases;
