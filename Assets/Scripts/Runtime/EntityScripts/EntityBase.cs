@@ -67,5 +67,4 @@ public class EnemyStats : EntityStats
     public float DetectionDistance;
     public float MovementSpeed;
     public float MovementSpeedChase;
-    public int StartDirection;
 }

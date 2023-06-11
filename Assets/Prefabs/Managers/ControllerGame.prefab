@@ -47,9 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxPlayerHealth: 3
   player: {fileID: 0}
+  Daddy: {fileID: 0}
   LabelHealth: {fileID: 0}
   ControllerEnemies: {fileID: 1613894403907780469}
-  bkg: {fileID: 0}
+  AberartionDuration: 0.2
+  ShakeDuration: 0.15
+  AberrationIntensity: 1
+  ShakeAmplitude: 2
+  ShakeFrequency: 10
+  AberrationEase: 15
   Spears: []
 --- !u!114 &1613894403907780469
 MonoBehaviour:
@@ -63,31 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67262abffdc0049e8b87af0407988795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnicornStats:
-    MaxHealth: 3
-    DetectionAngle: 30
-    DetectionDistance: 5
-    MovementSpeed: 2
-    MovementSpeedChase: 3
-    StartDirection: 1
-  CyclopsStats:
-    MaxHealth: 100
-    DetectionAngle: 15
-    DetectionDistance: 5
-    MovementSpeed: 2
-    MovementSpeedChase: 2
-    StartDirection: 1
-  SpiderStats:
-    MaxHealth: 2
-    DetectionAngle: 15
-    DetectionDistance: 5
-    MovementSpeed: 2
-    MovementSpeedChase: 1
-    StartDirection: -1
-  HarpyStats:
-    MaxHealth: 10
-    DetectionAngle: 360
-    DetectionDistance: 10
-    MovementSpeed: 250
-    MovementSpeedChase: 350
-    StartDirection: 1
+  DefaultEnemyStats:
+  - EnemyType: 4
+    EnemyStats:
+      MaxHealth: 0
+      DetectionAngle: 0
+      DetectionDistance: 0
+      MovementSpeed: 0
+      MovementSpeedChase: 0

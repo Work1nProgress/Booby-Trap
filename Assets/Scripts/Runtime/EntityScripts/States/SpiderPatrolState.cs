@@ -21,7 +21,7 @@ public class SpiderPatrolState : EntityState
     {
         base.EnterState();
         _controller.DoApplyGravity = false;
-        if (_controller.Stats.StartDirection != 1)
+        if (_controller.StartDirection != 1)
         _controller.Rigidbody.isKinematic = true;
         m_BackCheckPointActive = m_BackCheckPoint;
         m_FrontCheckPointActive = m_FrontCheckPoint;
@@ -29,7 +29,7 @@ public class SpiderPatrolState : EntityState
 
         m_Direction = 1;
         _controller.Rigidbody.gravityScale = 1;
-        if(_controller.Stats.StartDirection != 1)
+        if(_controller.StartDirection != 1)
         {
             ChangeDirection();
         }
