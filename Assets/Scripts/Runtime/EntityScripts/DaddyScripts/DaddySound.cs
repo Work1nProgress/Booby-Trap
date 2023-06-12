@@ -33,7 +33,10 @@ public class DaddySound : ScriptableObject
     public string MineArmed;
 
     [Header("Dialogue")]
-    public string DaddySp33k;
+    public string StartBattle;
+    public string EchoDie;
+    public string PhaseChange;
+    public string Death;
 
 
 

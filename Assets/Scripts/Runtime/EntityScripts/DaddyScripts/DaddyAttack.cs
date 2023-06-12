@@ -46,6 +46,7 @@ public class DaddyAttack : ScriptableObject
 
 
     [Tooltip("Tile from where to start the attack. If empty starts at current tile otherwise teleports to a tile.")]
+    [SerializeField]
     int[] StartTile;
 
     [Tooltip("Height from where to start the attack. If empty starts at current tile otherwise teleports to a tile.")]

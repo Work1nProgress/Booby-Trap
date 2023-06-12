@@ -23,3 +23,8 @@ MonoBehaviour:
   LightningCharge: Boss_Charge_Lightning
   WallsStart: Boss_Walls_Start
   WallsEnd: Boss_Walls_End
+  MineArmed: Boss_Mine_Armed
+  StartBattle: Boss_Battle_Start
+  EchoDie: Boss_Echo_Die
+  PhaseChange: Boss_Phase_Change
+  Death: Boss_Death

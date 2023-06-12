@@ -121,6 +121,8 @@ public class ControllerGame : ControllerLocal
         playerHealthBar.resetHealth();
         if (Daddy != null)
         {
+
+            SoundManager.Instance.Play(Daddy.Sound.EchoDie, transform);
             Daddy.ResetDadsHp();
             Daddy.GetComponent<DaddyMusic>().ResetMusic();
         }

@@ -829,6 +829,80 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
+  - SoundName: Boss_Death
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 284a552443c474cdf8ae697c77797552, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Echo_Die
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: fed2372ca1fed4b7cb16d9c105ac3490, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 171f66e6fa520418a91b30473f73664d, type: 3}
+    - AudioClip: {fileID: 8300000, guid: e4daa144d8d314c978bedb551a709bb9, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 3ba31e845d82143bcbab8ec52b037c86, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 0a5731647b40f4bc79d34193060b10d2, type: 3}
+    - AudioClip: {fileID: 8300000, guid: be3f7992b30444aa18060915babe1873, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Phase_Change
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 873974306cbb6473a932e098e9c5efdf, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 7b4594a340bdb426f8863d1fde557b96, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 8c1e549b94ea74583af3b482aa7f727b, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 0956cd93b19904b46909c4f5db00d11b, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Battle_Start
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: f6e4f338547f54eddbc97bb4f05ba97b, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 81761e7806f9f44a99cb2ec5675a004e, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 1aeb1fcd7777443cb950b36c6c8b3e4a, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0
