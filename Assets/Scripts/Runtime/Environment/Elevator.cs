@@ -7,10 +7,9 @@ public class Elevator : MonoBehaviour
     [SerializeField] Transform _pointA;
     [SerializeField] Transform _pointB;
     [SerializeField] Transform _carriage;
+    [SerializeField] Transform _interactCanvas;
 
-    bool _moveToPointB;
-    bool _moving;
-    bool _canMove;
+    bool _moveToPointB, _moving, _canMove, _interactorNear;
 
     [SerializeField] ElevatorPoint _startPoint;
     [SerializeField] float _tripTime;
@@ -40,12 +39,31 @@ public class Elevator : MonoBehaviour
 
         _canMove = true;
         _moving = false;
+
+        if(_interactCanvas != null)
+            _interactCanvas.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()
     {
         if (_moving && _canMove)
             Step();
+
+        if(_interactorNear && _canMove && !_moving)
+            _interactCanvas.gameObject.SetActive(true);
+        else
+            _interactCanvas.gameObject.SetActive(false);
+
+        _interactorNear = false;
+    }
+
+    private bool VerifyKeycard(Transform transform)
+    {
+        PlayerKeycardContainer kkc = transform.GetComponent<PlayerKeycardContainer>();
+        if (kkc != null)
+            return kkc.Contains(_keystring);
+
+        return false;
     }
 
     private void Step()
@@ -74,8 +92,9 @@ public class Elevator : MonoBehaviour
 
     public void StartElevator(Transform interactor)
     {
-        if(!_moving && _canMove)
-        _moving = true;
+        if(VerifyKeycard(interactor))
+            if (!_moving && _canMove)
+                _moving = true;
     }
 
     private void StopElevator()
@@ -96,6 +115,12 @@ public class Elevator : MonoBehaviour
         _movementResetTimer.Reset();
         _movementResetTimer.Pause();
         _canMove = true;
+    }
+
+    public void InteractorNear(Transform interactor)
+    {
+        if(VerifyKeycard(interactor))
+            _interactorNear = true;
     }
 
     private enum ElevatorPoint

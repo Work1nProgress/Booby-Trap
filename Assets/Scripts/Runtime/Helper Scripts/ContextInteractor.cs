@@ -18,6 +18,10 @@ public class ContextInteractor : MonoBehaviour
         Collider2D collider = Physics2D.OverlapBox(transform.position, new Vector2(3f, 3f), 0f, LayerMask.GetMask("Interactable"));
         if (collider != null)
             _interactable = collider.GetComponent<ContextInteractable>();
+        else
+            _interactable = null;
+
+        if (_interactable != null) _interactable.InteractorNear(this);
     }
 
     protected virtual void Interact()
