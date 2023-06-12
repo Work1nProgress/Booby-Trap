@@ -191,6 +191,7 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
         _playerAnim.SetFloat("VelocityOnYAxis", m_RigidBody.velocity.y);
+        _playerAnim.SetFloat("VelocityOnXAxis", m_RigidBody.velocity.x);
         UpdateVerticalMovement();
 
         //UPDATE HORIZONTAL MOVEMENT

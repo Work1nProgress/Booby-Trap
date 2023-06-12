@@ -4,7 +4,7 @@ public class ControllerLoadingScene : MonoBehaviour
 {
 
 
-    string mainMenuScene = "MainMenuScene";
+    //string mainMenuScene = "MainMenuScene";
     //string mainMenuScene = "RoomTestScene";
 
     [SerializeField]
@@ -17,6 +17,6 @@ public class ControllerLoadingScene : MonoBehaviour
 
         //TODO load save file
      //   MusicPlayer.Instance.PlayPlaylist("spearmaidenPlaylist");
-        ControllerGameFlow.Instance.LoadNewScene(mainMenuScene);
+        ControllerGameFlow.Instance.LoadNewScene("BossScene");
     }
 }

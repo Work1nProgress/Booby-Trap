@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class ControllerGame : ControllerLocal
 {
@@ -18,9 +19,6 @@ public class ControllerGame : ControllerLocal
     public Player player;
     public DaddyController Daddy;
     Vector3 m_StartingPlayerPos;
-
-    [SerializeField]
-    TMP_Text LabelHealth;
 
     [SerializeField]
     ControllerEnemies ControllerEnemies;
@@ -57,6 +55,7 @@ public class ControllerGame : ControllerLocal
             MaxHealth = MaxPlayerHealth
 
         });
+        playerHealthBar.setMaxHealth(MaxPlayerHealth);
         m_StartingPlayerPos = player.transform.position;
 
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
@@ -81,6 +80,8 @@ public class ControllerGame : ControllerLocal
     //move this in some kind of spear controller script
     [HideInInspector]
     public List<Spear> Spears = new List<Spear>();
+
+    [SerializeField] private PlayerHealthBar playerHealthBar;
 
     public void RemoveSpear(int index = 0)
     {
@@ -111,14 +112,13 @@ public class ControllerGame : ControllerLocal
         {
             AnimateCameraDamage();
         }
-
-        LabelHealth.text = $"Health: {player.Health}";
     }
 
     public void OnPlayerDeath(){
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
+        playerHealthBar.resetHealth();
         if (Daddy != null)
         {
             Daddy.ResetDadsHp();

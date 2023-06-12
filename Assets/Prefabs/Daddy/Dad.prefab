@@ -68,7 +68,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 093d62b7247c4480ebce58d5a467108f, type: 2}
   facingDirection: 1
   DebugText: {fileID: 0}
-  DaddyMaxHealth: 150
+  DaddyMaxHealth: 100
 --- !u!50 &6398755638102881984
 Rigidbody2D:
   serializedVersion: 4

@@ -11873,7 +11873,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -11884,8 +11884,8 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 4886160cb31a929469489fa6e05ad797, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: dcb1c7b4caae0754e91047c84c4ceb65, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 1
     m_Data:
@@ -12515,7 +12515,8 @@ PolygonCollider2D:
       - {x: 0.887228, y: 20.901585}
       - {x: 18.669718, y: 19.549225}
       - {x: 17.97835, y: 2.654684}
-      - {x: -3.0393167, y: 2.4805508}
+      - {x: -4.2134137, y: 2.5224824}
+      - {x: -4.569493, y: 11.440424}
       - {x: -3.3079143, y: 16.309656}
 --- !u!114 &2113011840
 MonoBehaviour:

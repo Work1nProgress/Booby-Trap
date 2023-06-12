@@ -98,10 +98,10 @@ public class EnemyBase : EntityController
 
     }
 
-    public override void Damage(int ammount)
+    public override void Damage(int amount)
     {
         
-        base.Damage(ammount);
+        base.Damage(amount);
        
         if (Health > 0)
         {

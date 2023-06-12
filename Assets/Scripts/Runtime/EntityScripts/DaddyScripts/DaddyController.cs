@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class DaddyController : EntityBase
 {
-
-
     [SerializeField]
     Rigidbody2D Rigidbody2D;
 
@@ -23,6 +23,8 @@ public class DaddyController : EntityBase
     [SerializeField]
     Vector2 RoomPosition;
 
+    [SerializeField] private BossHealthBar bossHealthBar;
+
 
     public Vector2 GetRoomSize => RoomSize;
     public Vector2 GetRoomPosition => RoomPosition;
@@ -33,6 +35,8 @@ public class DaddyController : EntityBase
     [SerializeField]
     int ContactDamage = 1;
 
+    [SerializeField] private Animator _animator;
+
 
     [SerializeField]
     DaddyPhase[] Phases;
@@ -41,7 +45,7 @@ public class DaddyController : EntityBase
 
 
 
-    DaddyAttack[] _DaddyAttack;
+    DaddyAttack[] _DaddyAttacks;
 
 
     DaddyAttack _CurrentAttack;
@@ -54,6 +58,8 @@ public class DaddyController : EntityBase
 
     public int DaddyMaxHealth = 150;
     float WaitTimer = 2;
+    
+    private DaddyAttack _previousAttack;
 
     
 
@@ -67,6 +73,7 @@ public class DaddyController : EntityBase
             MaxHealth = DaddyMaxHealth
 
         });
+        bossHealthBar.setMaxHealth(DaddyMaxHealth);
     }
 
 
@@ -88,18 +95,23 @@ public class DaddyController : EntityBase
             _CurrentAttack = null;
             return;
         }
-        _CurrentAttack = ChoseNextAttack();
+
+        _CurrentAttack = ChooseAttack();
         _CurrentAttack.BeginAttack();
 
     }
 
 
-    DaddyAttack ChoseNextAttack()
+    DaddyAttack ChooseAttack()
     {
+        var possibleAttacks = _DaddyAttacks.ToList();
+        possibleAttacks.RemoveAll(at => at == _previousAttack);
+        
         var tmpAttacks = new List<DaddyAttack>();
         var weights = new List<int>();
         int weightAll = 0;
-        foreach (var attack in _DaddyAttack)
+        
+        foreach (var attack in possibleAttacks)
         {
             if (CanStartAttack(attack))
             {
@@ -114,10 +126,12 @@ public class DaddyController : EntityBase
         {
             if (roll < weights[i])
             {
-                return _DaddyAttack[i];
+                _previousAttack = possibleAttacks[i];
+                return possibleAttacks[i];
             }
         }
-        return _DaddyAttack[_DaddyAttack.Length - 1];
+
+        return _DaddyAttacks[_DaddyAttacks.Length - 1];
 
     }
 
@@ -141,11 +155,11 @@ public class DaddyController : EntityBase
         }
     }
     bool phaseChange =  false;
-    public override void Damage(int ammount)
+    public override void Damage(int amount)
     {
 
-        
-        base.Damage(ammount);
+        bossHealthBar.updateHealth(-amount);
+        base.Damage(amount);
         if (currentPhase >= Phases.Length - 1)
         {
             return;
@@ -205,18 +219,18 @@ public class DaddyController : EntityBase
 
     void InitCurrentPhase()
     {
-        _DaddyAttack = new DaddyAttack[Phases[currentPhase].DaddyAttacks.Count];
+        _DaddyAttacks = new DaddyAttack[Phases[currentPhase].DaddyAttacks.Count];
         for (int i = 0; i < Phases[currentPhase].DaddyAttacks.Count; i++)
         {
-            _DaddyAttack[i] = Instantiate(Phases[currentPhase].DaddyAttacks[i]);
-            _DaddyAttack[i].Init(this);
+            _DaddyAttacks[i] = Instantiate(Phases[currentPhase].DaddyAttacks[i]);
+            _DaddyAttacks[i].Init(this);
         }
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6 && ContactDamage > 0)
         {
             ControllerGame.Instance.player.Damage(ContactDamage);
         }
@@ -232,6 +246,7 @@ public class DaddyController : EntityBase
 
     public void ResetDadsHp()
     {
+        bossHealthBar.resetHealth();
         _health = _maxHealth;
         currentPhase = 0;
         phaseChange = true;
