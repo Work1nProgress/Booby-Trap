@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1739822648683402398}
   - component: {fileID: 7814384460859420017}
-  - component: {fileID: 1739822648683402399}
   - component: {fileID: 1739822648683402396}
+  - component: {fileID: 1739822648683402399}
   - component: {fileID: 6024204065095153025}
   m_Layer: 7
   m_Name: MaybeACyclops
@@ -93,10 +93,13 @@ MonoBehaviour:
     timedState: 1
     timerAltState: 0
     stateTime: 2
+  EnemyType: 3
+  _rigidbody: {fileID: 1739822648683402396}
   m_EnemySound: {fileID: 11400000, guid: 84f1dc96c919c44bd955db0339373db2, type: 2}
   _sprite: {fileID: 1739822648683402399}
   DoApplyGravity: 1
   isAggressive: 0
+  StartDirection: 0
   DamageToDeal: 1
   Range: 1
   AttackForce: 20
@@ -109,6 +112,27 @@ MonoBehaviour:
     timerAltState: 0
     stateTime: 0
   StunDuration: 2
+--- !u!50 &1739822648683402396
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739822648683402394}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!212 &1739822648683402399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -161,27 +185,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1739822648683402396
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739822648683402394}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &6024204065095153025
 BoxCollider2D:
   m_ObjectHideFlags: 0

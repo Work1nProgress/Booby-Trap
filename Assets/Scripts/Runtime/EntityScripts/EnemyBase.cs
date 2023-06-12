@@ -111,8 +111,7 @@ public class EnemyBase : EntityController
         else
         {
             isAggressive = false;
-            SoundManager.Instance.CancelLoop(Sound.PassiveLoop, gameObject);
-            ControllerGame.Instance.RemoveAgressiveEnemy(this);
+            CancelSound();
             SoundManager.Instance.Play(Sound.Death, transform);
         }
         
@@ -146,11 +145,18 @@ public class EnemyBase : EntityController
         }
     }
 
+    public void CancelSound()
+    {
+        SoundManager.Instance.CancelLoop(Sound.PassiveLoop, gameObject);
+        ControllerGame.Instance.RemoveAgressiveEnemy(this);
+    }
+
 
     protected override void OnKill()
     {
-       
-        base.OnKill();
+
+        PoolManager.Despawn(this);
+      
     }
 
 

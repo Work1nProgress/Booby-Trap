@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class ControllerEnemies : MonoBehaviour
 {
-    [SerializeField]
-    List<EnemyStatsOverride> DefaultEnemyStats;
+  
 
 
     Dictionary<EnemyType, HashSet<Transform>> AgressiveEnemies = new Dictionary<EnemyType, HashSet<Transform>>();
-    public void Init()
-    {
-        var enemies = FindObjectsOfType<EntityController>();
 
-        foreach (var enemy in enemies)
-        {
-            enemy.Init(DefaultEnemyStats.Find(x => x.EnemyType == enemy.EnemyType).EnemyStats);
-        }
-    }
+
+  
 
     public void AddAggresiveEnemy(EntityController enemy)
     {

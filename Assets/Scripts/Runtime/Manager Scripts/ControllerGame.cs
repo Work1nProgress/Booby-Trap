@@ -24,13 +24,15 @@ public class ControllerGame : ControllerLocal
     ControllerEnemies ControllerEnemies;
 
 
+    ControllerRooms ControllerRooms;
+
+
     #region Damage Animation
     CinemachineVirtualCamera vCam;
 
     CinemachineBasicMultiChannelPerlin noiseModule;
 
     ChromaticAberration ChromaticAberration;
-    Volume volume;
 
     [SerializeField]
     float AberartionDuration, ShakeDuration, AberrationIntensity, ShakeAmplitude, ShakeFrequency;
@@ -59,17 +61,19 @@ public class ControllerGame : ControllerLocal
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);
         UpdatePlayerHealth(0);
-        ControllerEnemies.Init();
-
+        var volume = FindObjectOfType< Volume>();
+        volume.profile.TryGet(out ChromaticAberration);
+        volume.profile.TryGet(out ColorAdjustments adjustments);
         vCam = FindObjectOfType<CinemachineVirtualCamera>();
+        ControllerRooms = GetComponent<ControllerRooms>();
+        ControllerRooms.Init(vCam, adjustments);
+
         if (vCam != null)
         {
             noiseModule = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         }
 
 
-        var volume = FindObjectOfType< Volume>();
-        volume.profile.TryGet(out ChromaticAberration);
         
     }
 

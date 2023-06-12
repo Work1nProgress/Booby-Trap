@@ -10,6 +10,7 @@ public class EntityController : StateHandler
 
     public EnemyType EnemyType;
 
+    [SerializeField]
     private Rigidbody2D _rigidbody;
     public Rigidbody2D Rigidbody => _rigidbody;
 
@@ -70,7 +71,6 @@ public class EntityController : StateHandler
         _jumpResetTimer = new CountdownTimer(0.35f, true, false, ResetJump);
 
        
-        _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 
         GroundLayer = LayerMask.GetMask("Ground");
