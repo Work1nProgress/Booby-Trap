@@ -61,7 +61,12 @@ public class DaddyController : EntityBase
     
     private DaddyAttack _previousAttack;
 
-    
+    [SerializeField]
+    private DaddySound m_Sound;
+
+    public DaddySound Sound => m_Sound;
+
+
 
 
 
@@ -158,6 +163,7 @@ public class DaddyController : EntityBase
     public override void Damage(int amount)
     {
 
+        SoundManager.Instance.Play(Sound.Hurt, transform);
         bossHealthBar.updateHealth(-amount);
         base.Damage(amount);
         if (currentPhase >= Phases.Length - 1)

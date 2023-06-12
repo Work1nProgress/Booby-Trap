@@ -44,7 +44,6 @@ public class DaddyAttack : ScriptableObject
     [SerializeField]
     int m_Weight;
 
-    [SerializeField]
 
     [Tooltip("Tile from where to start the attack. If empty starts at current tile otherwise teleports to a tile.")]
     int[] StartTile;
@@ -53,6 +52,10 @@ public class DaddyAttack : ScriptableObject
     int[] StartHeight;
 
     public int Weight => m_Weight;
+
+
+
+
 
 
 
@@ -157,6 +160,7 @@ public class DaddyAttack : ScriptableObject
         }
         else if (_State == DaddyAttackState.Telegraph && Teleport && _teleported && !hasSentOnTeleport) {
             hasSentOnTeleport = true;
+            SoundManager.Instance.Play(_controller.Sound.TeleportOut, _controller.transform);
             OnTeleport();
         }
         
@@ -170,8 +174,6 @@ public class DaddyAttack : ScriptableObject
 
     protected virtual void OnTeleport()
     {
-
-
     }
 
 
@@ -196,6 +198,7 @@ public class DaddyAttack : ScriptableObject
             {
                 var tp = PoolManager.Spawn<PoolObjectTimed>("teleportPortal", null, new Vector3(TeleportPosition.x, TeleportPosition.y, 0));
                 tp.StartTicking(TeleportTime);
+                SoundManager.Instance.Play(_controller.Sound.TeleportIn, tp.transform);
             }
         }
         else
@@ -245,7 +248,6 @@ public class DaddyAttack : ScriptableObject
     {
         _currentTime = 0;
         _State = DaddyAttackState.Cooldown;
-
         if (m_CooldownTime > 0)
         {
             _StateCountdown = new CountdownTimer(m_CooldownTime, false, false, OnEndCooldown);

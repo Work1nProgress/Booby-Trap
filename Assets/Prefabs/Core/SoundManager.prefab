@@ -574,6 +574,261 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
+  - SoundName: Boss_Bulldozer
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: e340063b868b2d04bbe1fe785621b987, type: 3}
+    - AudioClip: {fileID: 8300000, guid: bd1bab8c80b90a24ab8c5e05de581d90, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Channel_Lightning
+    PlaySubitemType: 0
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: c2f20087a3bb895499c2f87eb835d108, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Teleport_In
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 92b906125fe2be44bb4e5e347baa128e, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Teleport_Out
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: c9cd52d734e6f7b44851985f030bedc6, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Walls_End
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: d437050aa3204c1409aad217eef64423, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Walls_Start
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 01ae6cdd4bcc9e742aa93da665ce02d7, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Slash
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 92f74a77dd224b943baaec66548584f9, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 492b3022ff0b84f4d98d1df580777b61, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 1bcaeb9ab3154b14795aafc802fd49ad, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Mine_Explode
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 2185249ac0b003c41bb02fb576401110, type: 3}
+    - AudioClip: {fileID: 8300000, guid: ac0a3fb78373512438a55d3547707221, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 2b18bf1028b9260408bd68c443c04b07, type: 3}
+    - AudioClip: {fileID: 8300000, guid: e1cde0cbc010c424a80b6a6b877b7eef, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Mine_Destroyed
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 2b3c8859df34b904ba098e7e4d214b4c, type: 3}
+    - AudioClip: {fileID: 8300000, guid: c0f2b9b865650f54ca768f01ae9c0bd4, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 828e1203eaeaaa84cb7326ff37439829, type: 3}
+    - AudioClip: {fileID: 8300000, guid: d22161b9c973f134bbf8b448b5ab01f6, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Mine_Armed
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 1c382fed22b3d7342b5c1a4ddaf785fc, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Lightning_Strike
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: f02269a6de203a04a99ff6ad78e529dd, type: 3}
+    - AudioClip: {fileID: 8300000, guid: b6a7497ecc3c5d545b5dd6ccc07435e6, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 3c3ecfe502e892e438e7a70996c97e58, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 2b7e5a221485a7f40bc09e2afe8aa59a, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Hurt
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 4a88459150b5e424ebdd4066a35252c9, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 74cd17e229c70824cb4a00777911b959, type: 3}
+    - AudioClip: {fileID: 8300000, guid: b31fe1feb1ed7c64d835219d09c4b7b6, type: 3}
+    - AudioClip: {fileID: 8300000, guid: f79c9cc0442bc7843b672a1e0f854fa4, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 2
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Charge_Slash
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: cad7fcbd40846db49ae0c262cb63dd67, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Charge_Lightning
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 8d94d2292857c4a4db189248dba4d6fc, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
+  - SoundName: Boss_Charge_Bulldozer
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: f67f4808a4e6c184bbd86267d629684e, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0
