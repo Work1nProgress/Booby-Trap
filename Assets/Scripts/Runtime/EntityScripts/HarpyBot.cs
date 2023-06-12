@@ -9,11 +9,18 @@ public class HarpyBot : EnemyBase
     [SerializeField]
     private Transform[] _waypoints;
 
+    public Transform[] Waypoints => _waypoints;
+
 
     public override void Init(EntityStats stats)
     {
         base.Init(stats);
         Rigidbody.gravityScale = 0;
+    }
+
+    public void SetWaypoints(Transform[] waypoints)
+    {
+        _waypoints = waypoints;
     }
 
 

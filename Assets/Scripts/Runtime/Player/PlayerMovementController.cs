@@ -162,6 +162,10 @@ public class PlayerMovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ControllerGame.Instance.player.Freeze)
+        {
+            return;
+        }
         LastOnGroundTime -= Time.deltaTime;
         LastDashTime -= Time.deltaTime;
         LastDashDurationTime -= Time.deltaTime;
@@ -182,6 +186,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (ControllerGame.Instance.player.Freeze)
+        {
+            return;
+        }
         _playerAnim.SetFloat("VelocityOnYAxis", m_RigidBody.velocity.y);
         UpdateVerticalMovement();
 
@@ -346,6 +354,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void GroundCheck()
     {
+        if (ControllerGame.Instance.player.Freeze)
+        {
+            return;
+        }
         if (allowDashing)
         {
             canDashDirection = 0;
@@ -417,6 +429,10 @@ public class PlayerMovementController : MonoBehaviour
     #region input
     void OnJump(bool value)
     {
+        if (ControllerGame.Instance.player.Freeze)
+        {
+            return;
+        }
         jumpHeld = value;
         if (value && OnGround && !jumping)
         {
@@ -444,11 +460,21 @@ public class PlayerMovementController : MonoBehaviour
 
     void OnHorizontal(float value)
     {
+        if (ControllerGame.Instance.player.Freeze)
+        {
+            inputX = 0;
+            return;
+        }
         inputX = value;
     }
 
     void OnVertical(float value)
     {
+        if (ControllerGame.Instance.player.Freeze)
+        {
+            inputY = 0;
+            return;
+        }
         inputY = value;
     }
 

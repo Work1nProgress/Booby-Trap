@@ -183,6 +183,7 @@ MonoBehaviour:
     timerAltState: 0
     stateTime: 2
   EnemyType: 4
+  _rigidbody: {fileID: 7110510423519493820}
   m_EnemySound: {fileID: 11400000, guid: 96253dff0bfee44a38403f40674ee41f, type: 2}
   _sprite: {fileID: 7110510423414983252}
   DoApplyGravity: 1

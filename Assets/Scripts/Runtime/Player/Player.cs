@@ -108,6 +108,8 @@ public class Player : EntityBase
     float m_InvulTimer;
     int m_CurrentSpearAmount;
 
+    public bool Freeze = false;
+
 
     float inputY;
 
@@ -163,6 +165,11 @@ public class Player : EntityBase
 
     private void Update()
     {
+
+        if (Freeze)
+        {
+            return;
+        }
         m_AttackTimer -= Time.deltaTime;
         m_ThrowTimer -= Time.deltaTime;
         m_InvulTimer -= Time.deltaTime;
@@ -185,6 +192,11 @@ public class Player : EntityBase
 
     void OnThrow()
     {
+        if (Freeze)
+        {
+            return;
+        }
+
         if (CanThrowSpear)
         {
             m_ThrowTimer = m_ThrowCooldown;
@@ -194,6 +206,8 @@ public class Player : EntityBase
 
     private void ThrowSpear()
     {
+       
+
         // will change this when we add the throwing the spear up and down
         _hitsUntilCombo = hitsToCombo;
         float speed = m_MovementController.RigidBody.velocity.x;
@@ -250,6 +264,12 @@ public class Player : EntityBase
 
     public override void Damage(int ammount)
     {
+
+        if (Freeze)
+        {
+            return;
+        }
+
         if (m_InvulTimer > 0)
         {
             return;
@@ -276,6 +296,11 @@ public class Player : EntityBase
 
     void OnAttack()
     {
+
+        if (Freeze)
+        {
+            return;
+        }
         if (m_AttackTimer > 0)
         {
             return; 
@@ -342,6 +367,10 @@ public class Player : EntityBase
 
     void OnVertical(float value)
     {
+        if (Freeze)
+        {
+            return;
+        }
         inputY = value;
     }
 
@@ -364,6 +393,23 @@ public class Player : EntityBase
             GainSpear();
         }
 
+    }
+    Vector2 cacheVelocity;
+    public void FreezeOnTransition(bool freeze)
+    {
+        Freeze = freeze;
+        if (freeze)
+        {
+            cacheVelocity = RigidBody.velocity;
+            RigidBody.velocity = default;
+          
+        }
+        else
+        {
+            RigidBody.velocity = cacheVelocity;
+            cacheVelocity = default;
+        }
+        RigidBody.isKinematic = freeze;
     }
 
     void GainSpear()
