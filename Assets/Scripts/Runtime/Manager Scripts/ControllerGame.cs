@@ -55,13 +55,17 @@ public class ControllerGame : ControllerLocal
             MaxHealth = MaxPlayerHealth
 
         });
-        playerHealthBar.setMaxHealth(MaxPlayerHealth);
+        if (playerHealthBar)
+        {
+            playerHealthBar.setMaxHealth(MaxPlayerHealth);
+        }
+        
         m_StartingPlayerPos = player.transform.position;
 
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);
         UpdatePlayerHealth(0);
-        var volume = FindObjectOfType< Volume>();
+        var volume = FindObjectOfType<Volume>();
         volume.profile.TryGet(out ChromaticAberration);
         volume.profile.TryGet(out ColorAdjustments adjustments);
         vCam = FindObjectOfType<CinemachineVirtualCamera>();
