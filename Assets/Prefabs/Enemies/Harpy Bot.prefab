@@ -227,10 +227,13 @@ MonoBehaviour:
     timedState: 1
     timerAltState: 0
     stateTime: 2
+  EnemyType: 1
+  _rigidbody: {fileID: 4963573132879665372}
   m_EnemySound: {fileID: 11400000, guid: ef163450efe0943a19225f16dca37778, type: 2}
   _sprite: {fileID: 4963573131874348455}
   DoApplyGravity: 0
   isAggressive: 0
+  StartDirection: 0
   DamageToDeal: 1
   Range: 0.9
   AttackForce: 5

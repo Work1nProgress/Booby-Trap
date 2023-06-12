@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1613894402475045318}
   - component: {fileID: 1613894402475045319}
   - component: {fileID: 1613894403907780469}
+  - component: {fileID: 1798053065}
   m_Layer: 0
   m_Name: ControllerGame
   m_TagString: Untagged
@@ -69,11 +70,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67262abffdc0049e8b87af0407988795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1798053065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613894402475045312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdb72c691f3c4339b80a6a539509531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   DefaultEnemyStats:
   - EnemyType: 4
     EnemyStats:
-      MaxHealth: 0
-      DetectionAngle: 0
-      DetectionDistance: 0
-      MovementSpeed: 0
-      MovementSpeedChase: 0
+      MaxHealth: 3
+      DetectionAngle: 30
+      DetectionDistance: 5
+      MovementSpeed: 2
+      MovementSpeedChase: 3
+  - EnemyType: 1
+    EnemyStats:
+      MaxHealth: 10
+      DetectionAngle: 360
+      DetectionDistance: 10
+      MovementSpeed: 250
+      MovementSpeedChase: 350
+  - EnemyType: 2
+    EnemyStats:
+      MaxHealth: 2
+      DetectionAngle: 15
+      DetectionDistance: 5
+      MovementSpeed: 2
+      MovementSpeedChase: 1
+  - EnemyType: 3
+    EnemyStats:
+      MaxHealth: 5
+      DetectionAngle: 15
+      DetectionDistance: 5
+      MovementSpeed: 2
+      MovementSpeedChase: 2
