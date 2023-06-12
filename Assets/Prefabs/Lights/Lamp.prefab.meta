@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Prefabs/Game/Elevator.prefab.meta
-guid: 45c9f5923b2f41c4f8e7d46d54a71b5e
-========
 guid: 754b409d3cf920f4191aa4773a8a7c14
->>>>>>>> 61a43fef8ecc1c353537e25437cc87c2dafd5be9:Assets/Prefabs/Lights/Lamp.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
