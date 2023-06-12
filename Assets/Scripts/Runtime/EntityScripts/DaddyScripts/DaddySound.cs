@@ -32,6 +32,9 @@ public class DaddySound : ScriptableObject
     [Header("Mines")]
     public string MineArmed;
 
+    [Header("Dialogue")]
+    public string DaddySp33k;
+
 
 
 }
