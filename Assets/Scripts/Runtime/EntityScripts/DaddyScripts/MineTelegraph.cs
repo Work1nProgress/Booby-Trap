@@ -17,11 +17,11 @@ public class MineTelegraph : PoolObject
         SpriteRenderer.DOFade(0, 0);
         base.Reuse();
     }
-    public void Init(MineData data)
+    public MineTelegraph Init(MineData data)
     {
         _data = data;
         SpriteRenderer.DOFade(1, _data.MineTelegraphDuration).OnComplete(() => SpawnMine());
-
+        return this;
     }
 
     void SpawnMine()

@@ -287,7 +287,14 @@ public class SoundManagerEditor : Editor
 
     void CreateNewSound(params AudioClip[] audioClips) {
 
-        var sound = new Sound();
+        var sound = new Sound
+        {
+            PitchShift = -0.5f,
+            RandomPitch = 0.5f,
+            notSameTwiceOffset = 2,
+            PlaySubitemType = PlaySubitemType.RandomNotSameTwice
+
+        };
 
         for (int i = 0; i < audioClips.Length; i++)
         {
@@ -296,6 +303,7 @@ public class SoundManagerEditor : Editor
         sound.SoundName = FindName();
 
         data.Sounds.Add(sound);
+
 
         currentSoundIndex = data.Sounds.IndexOf(sound);
     }

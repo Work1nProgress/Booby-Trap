@@ -129,6 +129,8 @@ MonoBehaviour:
   OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
+  Explode: Boss_Mine_Explode
+  Destroyed: Boss_Mine_Destroyed
 --- !u!58 &6359845032886054665
 CircleCollider2D:
   m_ObjectHideFlags: 0

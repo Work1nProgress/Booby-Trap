@@ -104,6 +104,18 @@ public class SoundManager : GenericSingleton<SoundManager>
         PlayOneShot(idx, soundName, target);
     }
 
+    public void PlayDelayed(string soundName, float delay, Transform target = default)
+    {
+        StartCoroutine(WaitforDelaye(soundName, delay, transform));
+    }
+
+    IEnumerator WaitforDelaye(string soundName, float delay, Transform target) {
+
+
+        yield return new WaitForSeconds(delay);
+        Play(soundName, transform);
+    }
+
     public void PlayOneShot(int idx, string soundName, Transform target)
     {
 
@@ -158,6 +170,8 @@ public class SoundManager : GenericSingleton<SoundManager>
         
 
 
+       
+
         if (sounds[idx].PlaySubitemType == PlaySubitemType.RandomNotSameTwice)
         {
 
@@ -174,9 +188,6 @@ public class SoundManager : GenericSingleton<SoundManager>
         }
         return soundInstance;
     }
-
-
-    
 
 
     int CanPlay(string soundName)

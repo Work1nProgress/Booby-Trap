@@ -53,6 +53,7 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     {
         hoverState = 0;
         base.BeginAttack();
+        
     }
 
     public override void UpdateAttack(float deltaTime)
@@ -140,6 +141,7 @@ public class DaddyCollapsingWallAttack : DaddyAttack
         _hoverDuration = m_ActiveTime;
         _hoverTimer = 0;
         hoverPos = _controller.Rigidbody.position;
+        SoundManager.Instance.PlayLooped(_controller.Sound.WallsStart,_controller.gameObject, _controller.transform);
         base.StartActive();
     }
 
@@ -149,7 +151,8 @@ public class DaddyCollapsingWallAttack : DaddyAttack
         _hoverTimer = 0;
         hoverState = 3;
         hoverPos = _controller.Rigidbody.position;
-
+        SoundManager.Instance.CancelLoop(_controller.gameObject);
+        SoundManager.Instance.Play(_controller.Sound.WallsEnd, _controller.transform);
         base.StartCooldown();
     }
 

@@ -91,12 +91,15 @@ public class DaddyMineAttack : DaddyAttack
         }
 
         int Mines = Random.Range(MinMines, MaxMines+1);
-      
+
+        bool soundPlayed = false;
         for (int i = 0; i < Mines; i++)
         {
             if (PossiblePositions.Count > 0) {
+
+
                 var nextMinePos = PossiblePositions[Random.Range(0, PossiblePositions.Count)];
-                PoolManager.Spawn<MineTelegraph>("DaddyMineTelegraph", null, new Vector3(nextMinePos.x, nextMinePos.y, 0)).Init(new MineData
+                var mine = PoolManager.Spawn<MineTelegraph>("DaddyMineTelegraph", null, new Vector3(nextMinePos.x, nextMinePos.y, 0)).Init(new MineData
                 {
                     MineTelegraphDuration = MineTelegraphTime,
                     MinePosition = nextMinePos,
@@ -104,6 +107,11 @@ public class DaddyMineAttack : DaddyAttack
                     MineCallback = OnMineDestroyed,
                     Damage = DamageToPlayer
                 });
+                if (!soundPlayed)
+                {
+                    soundPlayed = true;
+                    SoundManager.Instance.Play(_controller.Sound.MineArmed, mine.transform);
+                }
                 MinePositions.Add(nextMinePos);
                 for (int j = PossiblePositions.Count - 1; j >= 0; j--)
                 {
@@ -118,6 +126,7 @@ public class DaddyMineAttack : DaddyAttack
                 }
             }
         }
+        
 
 
         //var slash = PoolManager.Spawn<PoolObjectTimed>("SlashDaddy", _controller.transform, new Vector3(SlashPosition.x * _controller.facingDirection, SlashPosition.y, 0));
