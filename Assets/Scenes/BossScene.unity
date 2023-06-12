@@ -2736,19 +2736,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.7398815
+      value: -15.731377
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504586, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3502345
+      value: 0.5724046
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: orthographic size
-      value: 5.15625
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0.0005681818
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
@@ -2756,7 +2756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 0.9988636
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5729477895221504587, guid: 648b28199f4bf2d499914946d0788615, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
@@ -7862,6 +7862,7 @@ MonoBehaviour:
   facingDirection: 1
   DebugText: {fileID: 683011036}
   DaddyMaxHealth: 120
+  m_Sound: {fileID: 11400000, guid: 90fdb302ed92646b28f75ff6decf5854, type: 2}
 --- !u!114 &1456167644
 MonoBehaviour:
   m_ObjectHideFlags: 0
