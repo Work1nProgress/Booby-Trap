@@ -44,10 +44,6 @@ public class Elevator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_moving && _canMove)
-            if (VerifyKeycard())
-                StartElevator();
-
         if (_moving && _canMove)
             Step();
     }
@@ -76,26 +72,9 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    private bool VerifyKeycard()
+    public void StartElevator(Transform interactor)
     {
-        Collider2D collider = Physics2D.OverlapBox(_carriage.position, Vector2.one, 0f, LayerMask.GetMask("EchoCollisionBox"));
-        bool hasKey = false;
-
-        if(collider != null)
-        {
-            if (_keystring == "")
-                return true;
-
-            PlayerKeycardContainer kkc = collider.GetComponent<PlayerKeycardContainer>();
-            if (kkc != null)
-                hasKey = kkc.Contains(_keystring);
-        }
-
-        return hasKey;
-    }
-
-    private void StartElevator()
-    {
+        if(!_moving && _canMove)
         _moving = true;
     }
 
