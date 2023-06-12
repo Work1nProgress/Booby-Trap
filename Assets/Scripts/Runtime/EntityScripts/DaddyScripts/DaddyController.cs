@@ -61,8 +61,14 @@ public class DaddyController : EntityBase
     
     private DaddyAttack _previousAttack;
 
-    
+    [SerializeField]
+    private DaddySound m_Sound;
 
+    public DaddySound Sound => m_Sound;
+
+
+    bool saidIntro;
+    bool isDead;
 
 
     private void Awake()
@@ -75,6 +81,7 @@ public class DaddyController : EntityBase
         });
         bossHealthBar.setMaxHealth(DaddyMaxHealth);
     }
+
 
 
   
@@ -90,6 +97,11 @@ public class DaddyController : EntityBase
             FaceTowardsEcho();
             //do some in-between phases stuff here
 
+            if (currentPhase > 0)
+            {
+                Debug.Log("phase change");
+                SoundManager.Instance.Play(Sound.PhaseChange, transform);
+            }
 
 
             _CurrentAttack = null;
@@ -138,10 +150,19 @@ public class DaddyController : EntityBase
     private void FixedUpdate()
     {
 
+        if (isDead)
+        {
+            return;
+        }
         WaitTimer -= Time.fixedDeltaTime;
 
         if (WaitTimer > 0)
         {
+            if (currentPhase == 0 && !saidIntro)
+            {
+                saidIntro = true;
+                SoundManager.Instance.Play(Sound.StartBattle, transform);
+            }
             DebugText.text = $"Entering Phase {currentPhase+1} in {string.Format("{0:0.00}", WaitTimer)}";
             return;
         }
@@ -158,6 +179,7 @@ public class DaddyController : EntityBase
     public override void Damage(int amount)
     {
 
+       
         bossHealthBar.updateHealth(-amount);
         base.Damage(amount);
         if (currentPhase >= Phases.Length - 1)
@@ -171,9 +193,20 @@ public class DaddyController : EntityBase
             //go to next phase
             currentPhase++;
             phaseChange = true;
-          
-        }
 
+        }
+        
+
+
+    }
+
+    protected override void OnKill()
+    {
+        if (!isDead)
+        {
+             isDead = true;
+            SoundManager.Instance.Play(Sound.Death, transform);
+        }
 
     }
 
@@ -219,6 +252,8 @@ public class DaddyController : EntityBase
 
     void InitCurrentPhase()
     {
+
+       
         _DaddyAttacks = new DaddyAttack[Phases[currentPhase].DaddyAttacks.Count];
         for (int i = 0; i < Phases[currentPhase].DaddyAttacks.Count; i++)
         {
@@ -250,6 +285,7 @@ public class DaddyController : EntityBase
         _health = _maxHealth;
         currentPhase = 0;
         phaseChange = true;
+        saidIntro = false;
     }
 }
 

@@ -23,6 +23,8 @@ public class ControllerInput : GenericSingleton<ControllerInput>
     [HideInInspector]
     public UnityEvent Attack = new UnityEvent();
     [HideInInspector]
+    public UnityEvent Interact = new UnityEvent();
+    [HideInInspector]
     public UnityEvent Pause = new UnityEvent();
 
     void OnAttack(InputValue inputValue)
@@ -44,6 +46,12 @@ public class ControllerInput : GenericSingleton<ControllerInput>
         {
             Throw.Invoke();
         }
+    }
+
+    void OnInteract(InputValue inputValue)
+    {
+        if (inputValue.Get<float>() > 0)
+            Interact.Invoke();
     }
 
     void OnHorizontal(InputValue inputValue)

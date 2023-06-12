@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -51,6 +52,12 @@ public class DaddyLightningAttack : DaddyAttack
     {
         base.Init(daddyController);
         lightningArea =  new Vector2(LightningWidth, _controller.GetRoomSize.y);
+    }
+
+    protected override void OnTeleport()
+    {
+        base.OnTeleport();
+        SoundManager.Instance.Play(_controller.Sound.LightningCharge, _controller.transform);
     }
 
     public override void BeginAttack()
@@ -133,11 +140,17 @@ public class DaddyLightningAttack : DaddyAttack
                         _controller.GetRoomSize.y / 2+ _controller.GetRoomPosition.y,
                         0)
                     );
+
+               
                 lightning.transform.localScale = new Vector3(LightningWidth * 3, _controller.GetRoomSize.y, 0);
                 lightning.StartTicking(LightningDuration);
+              
                 lightningCollision.Add(new Vector2(currentPosition, _controller.GetRoomSize.y / 2 + _controller.GetRoomPosition.y));
                 currentPosition += LightningSpacing+ LightningWidth;
             }
+            SoundManager.Instance.Play(_controller.Sound.LightningStrike, _controller.transform);
+            SoundManager.Instance.PlayLooped(_controller.Sound.LightningChannel, _controller.gameObject, _controller.transform);
+            DOVirtual.DelayedCall(LightningDuration, () => SoundManager.Instance.CancelLoop(_controller.gameObject));
         }
 
         if (_loopSegment == 2)
