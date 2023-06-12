@@ -22,8 +22,10 @@ public class DaddyBulldozerAttack : DaddyAttack
     [SerializeField]
     Ease MovementEase = Ease.Linear;
 
+
     protected override void StartTelegraph()
     {
+        SoundManager.Instance.Play(_controller.Sound.Bulldozer, _controller.transform);
         base.StartTelegraph();
      
     }
@@ -62,7 +64,6 @@ public class DaddyBulldozerAttack : DaddyAttack
    
         _BulldozeEndPosition = startPos + new Vector2((_controller.GetRoomSize.x - 2) * _controller.facingDirection, 0);
 
-      
         base.OnEndTelegraph();
     }
 

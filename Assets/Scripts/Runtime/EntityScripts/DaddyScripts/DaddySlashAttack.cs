@@ -36,6 +36,7 @@ public class DaddySlashAttack : DaddyAttack
         _controller.FaceTowardsEcho();
         startPos = _controller.Rigidbody.position;
         _SlashEndPosition = startPos + new Vector2(SlashDistance * _controller.facingDirection, 0);
+        SoundManager.Instance.Play(_controller.Sound.SlashCharge, _controller.transform);
     }
 
 
@@ -43,6 +44,7 @@ public class DaddySlashAttack : DaddyAttack
     protected override void StartActive()
     {
         base.StartActive();
+        SoundManager.Instance.Play(_controller.Sound.SlashAttack, _controller.transform);
         var slash = PoolManager.Spawn<PoolObjectTimed>("SlashDaddy", _controller.transform, new Vector3(SlashPosition.x * _controller.facingDirection, SlashPosition.y, 0));
         slash.StartTicking(m_ActiveTime);
     }
