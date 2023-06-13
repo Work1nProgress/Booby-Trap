@@ -542,8 +542,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 2d96ab988a8880f45a62c7d7bcf9679d, type: 3}
     - AudioClip: {fileID: 8300000, guid: 05821827d1986d34dbc480a77432857b, type: 3}
     Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    PitchShift: -0.2
+    RandomPitch: 0.2
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 2
@@ -563,8 +563,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 6c536284123fd0f4dbf739c8ee3f9c50, type: 3}
     - AudioClip: {fileID: 8300000, guid: 1bbe68eb5f427994d8cc50b3190c759c, type: 3}
     Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    PitchShift: -0.2
+    RandomPitch: 0.2
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 2
@@ -577,14 +577,13 @@ MonoBehaviour:
   - SoundName: Boss_Bulldozer
     PlaySubitemType: 1
     soundItems:
-    - AudioClip: {fileID: 8300000, guid: e340063b868b2d04bbe1fe785621b987, type: 3}
-    - AudioClip: {fileID: 8300000, guid: bd1bab8c80b90a24ab8c5e05de581d90, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 5523658f34f49b147a7a172c03188b3d, type: 3}
     Volume: 0
     PitchShift: -0.5
     RandomPitch: 0.5
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
-    notSameTwiceOffset: 1
+    notSameTwiceOffset: 0
     ChanceToPlay: 100
     MinDistance: 0
     MaxDistance: 0
@@ -611,9 +610,9 @@ MonoBehaviour:
     PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 92b906125fe2be44bb4e5e347baa128e, type: 3}
-    Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    Volume: 0.1
+    PitchShift: -0.2
+    RandomPitch: 0.3
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 0
@@ -621,13 +620,12 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
     UseCustomSpatialBlend: 0
   - SoundName: Boss_Teleport_Out
     PlaySubitemType: 1
-    soundItems:
-    - AudioClip: {fileID: 8300000, guid: c9cd52d734e6f7b44851985f030bedc6, type: 3}
-    Volume: 0
+    soundItems: []
+    Volume: 0.1
     PitchShift: -0.5
     RandomPitch: 0.5
     DopplerLevel: 0
@@ -637,7 +635,7 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
     UseCustomSpatialBlend: 0
   - SoundName: Boss_Walls_End
     PlaySubitemType: 1
@@ -678,8 +676,8 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 492b3022ff0b84f4d98d1df580777b61, type: 3}
     - AudioClip: {fileID: 8300000, guid: 1bcaeb9ab3154b14795aafc802fd49ad, type: 3}
     Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    PitchShift: -0.2
+    RandomPitch: 0.2
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 2
@@ -696,9 +694,9 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: ac0a3fb78373512438a55d3547707221, type: 3}
     - AudioClip: {fileID: 8300000, guid: 2b18bf1028b9260408bd68c443c04b07, type: 3}
     - AudioClip: {fileID: 8300000, guid: e1cde0cbc010c424a80b6a6b877b7eef, type: 3}
-    Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    Volume: 0.3
+    PitchShift: -0.3
+    RandomPitch: 0.2
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 2
@@ -784,10 +782,10 @@ MonoBehaviour:
   - SoundName: Boss_Charge_Slash
     PlaySubitemType: 1
     soundItems:
-    - AudioClip: {fileID: 8300000, guid: cad7fcbd40846db49ae0c262cb63dd67, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 46925e2582bd68e4cb43c64952f47943, type: 3}
     Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    PitchShift: -0.2
+    RandomPitch: 0.2
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 0
@@ -795,7 +793,7 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
     UseCustomSpatialBlend: 0
   - SoundName: Boss_Charge_Lightning
     PlaySubitemType: 1
@@ -817,9 +815,9 @@ MonoBehaviour:
     PlaySubitemType: 1
     soundItems:
     - AudioClip: {fileID: 8300000, guid: f67f4808a4e6c184bbd86267d629684e, type: 3}
-    Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    Volume: 0.1
+    PitchShift: -0.2
+    RandomPitch: 0.2
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 0
