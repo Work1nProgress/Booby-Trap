@@ -9,25 +9,10 @@ public class BossHealthBar : MonoBehaviour
     [SerializeField] private Sprite healthPipFilled;
     [SerializeField] private Sprite healthPipEmpty;
 
-    private int _maxHealth;
-    private int _currentHealth;
     
-    public void setMaxHealth(int maxHealth)
+    public void RerenderPips(int health, int maxHealth)
     {
-        this._maxHealth = maxHealth;
-        _currentHealth = this._maxHealth;
-        RerenderPips();
-    }
-    
-    public void updateHealth(int amount)
-    {
-        _currentHealth += amount;
-        RerenderPips();
-    }
-
-    private void RerenderPips()
-    {
-        float healthPercentage = (float)_currentHealth / _maxHealth;
+        float healthPercentage = (float)health / maxHealth;
         int filledPipsCount = Mathf.CeilToInt(healthPips.Length * healthPercentage);
 
         for (int i = 0; i < healthPips.Length; i++)
@@ -41,11 +26,5 @@ public class BossHealthBar : MonoBehaviour
                 healthPips[i].sprite = healthPipEmpty;
             }
         }
-    }
-
-    public void resetHealth()
-    {
-        _currentHealth = _maxHealth;
-        RerenderPips();
     }
 }

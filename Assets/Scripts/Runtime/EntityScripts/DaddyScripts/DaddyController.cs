@@ -79,7 +79,7 @@ public class DaddyController : EntityBase
             MaxHealth = DaddyMaxHealth
 
         });
-        bossHealthBar.setMaxHealth(DaddyMaxHealth);
+        bossHealthBar.RerenderPips(_health, MaxHealth);
     }
 
 
@@ -211,8 +211,9 @@ public class DaddyController : EntityBase
     {
 
        
-        bossHealthBar.updateHealth(-amount);
+      
         base.Damage(amount);
+        bossHealthBar.RerenderPips(_health, MaxHealth);
         if (currentPhase >= Phases.Length - 1)
         {
             return;
@@ -312,8 +313,8 @@ public class DaddyController : EntityBase
 
     public void ResetDadsHp()
     {
-        bossHealthBar.resetHealth();
         _health = _maxHealth;
+        bossHealthBar.RerenderPips(_health, MaxHealth);
         currentPhase = 0;
         phaseChange = true;
         saidIntro = false;
