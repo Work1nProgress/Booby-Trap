@@ -624,7 +624,8 @@ MonoBehaviour:
     UseCustomSpatialBlend: 0
   - SoundName: Boss_Teleport_Out
     PlaySubitemType: 1
-    soundItems: []
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: c9cd52d734e6f7b44851985f030bedc6, type: 3}
     Volume: 0.1
     PitchShift: -0.5
     RandomPitch: 0.5
