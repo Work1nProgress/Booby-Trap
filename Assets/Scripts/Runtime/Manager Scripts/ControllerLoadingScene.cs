@@ -17,6 +17,6 @@ public class ControllerLoadingScene : MonoBehaviour
 
         //TODO load save file
      //   MusicPlayer.Instance.PlayPlaylist("spearmaidenPlaylist");
-        ControllerGameFlow.Instance.LoadNewScene("BossScene");
+        ControllerGameFlow.Instance.LoadNewScene("GardenOfDestiny");
     }
 }
