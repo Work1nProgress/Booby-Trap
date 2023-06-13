@@ -190,8 +190,8 @@ public class PlayerMovementController : MonoBehaviour
         {
             return;
         }
-        _playerAnim.SetFloat("VelocityOnYAxis", m_RigidBody.velocity.y);
-        _playerAnim.SetFloat("VelocityOnXAxis", m_RigidBody.velocity.x);
+        _playerAnim.SetFloat(VelocityOnYAxis, Mathf.Round(m_RigidBody.velocity.y * 100f) / 100f );
+        _playerAnim.SetFloat(VelocityOnXAxis, Mathf.Round(m_RigidBody.velocity.x * 100f) / 100f);
         UpdateVerticalMovement();
 
         //UPDATE HORIZONTAL MOVEMENT
@@ -306,6 +306,9 @@ public class PlayerMovementController : MonoBehaviour
 
 
     bool wasDashing;
+    private static readonly int VelocityOnYAxis = Animator.StringToHash("VelocityOnYAxis");
+    private static readonly int VelocityOnXAxis = Animator.StringToHash("VelocityOnXAxis");
+
     private void UpdateDash()
     {
         //dash cooldown ended and dash input pressed

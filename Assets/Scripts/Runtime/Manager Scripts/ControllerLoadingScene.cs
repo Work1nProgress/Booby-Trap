@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ControllerLoadingScene : MonoBehaviour
 {
@@ -17,6 +18,6 @@ public class ControllerLoadingScene : MonoBehaviour
 
         //TODO load save file
      //   MusicPlayer.Instance.PlayPlaylist("spearmaidenPlaylist");
-        ControllerGameFlow.Instance.LoadNewScene("GardenOfDestiny");
+        ControllerGameFlow.Instance.LoadNewScene("BossScene");
     }
 }

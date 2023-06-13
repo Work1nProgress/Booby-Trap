@@ -9,40 +9,13 @@ public class PlayerHealthBar : MonoBehaviour
     [SerializeField] private Sprite healthPipFilled;
     [SerializeField] private Sprite healthPipEmpty;
 
-    private int _maxHealth;
-    private int _currentHealth;
-    
-    public void setMaxHealth(int maxHealth)
+    public void RerenderPips(int currenHealth)
     {
-        this._maxHealth = maxHealth;
-        _currentHealth = this._maxHealth;
-        RerenderPips();
-    }
-    
-    public void updateHealth(int amount)
-    {
-        _currentHealth += amount;
-        RerenderPips();
-    }
-
-    private void RerenderPips()
-    {
-        for (int i = 0; i < healthPips.Length; i++)
+        for (var i = 0; i < healthPips.Length; i++)
         {
-            if (i < _currentHealth)
-            {
-                healthPips[i].sprite = healthPipFilled;
-            }
-            else
-            {
-                healthPips[i].sprite = healthPipEmpty;
-            }
+            healthPips[i].sprite = i < currenHealth - 1 
+                ? healthPipFilled 
+                : healthPipEmpty;
         }
-    }
-
-    public void resetHealth()
-    {
-        _currentHealth = _maxHealth;
-        RerenderPips();
     }
 }
