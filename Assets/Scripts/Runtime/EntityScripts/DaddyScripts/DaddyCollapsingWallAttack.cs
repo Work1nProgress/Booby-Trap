@@ -120,17 +120,15 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     void MoveWall(Transform wall, float value, float startX, float endX)
     {
         currentSize = Vector2.Lerp(WallStartSize, WallEndSize, DOVirtual.EasedValue(0,1, value, WallSizeEase));
-        var y = _controller.GetRoomPosition.y + currentSize.y / 2;
+        var y = _controller.GetRoomPosition.y /2;
         var x = DOVirtual.EasedValue(startX, endX, value, WallMovementEase);
         wall.transform.position = new Vector3(x, y, 0);
-        wall.transform.localScale = currentSize;
 
     }
 
     PoolObjectTimed SpawnWall(float posX)
     {
-        var slash = PoolManager.Spawn<PoolObjectTimed>("Bulldoze", null, new Vector3(posX, _controller.GetRoomPosition.y + WallStartSize.y / 2, 0));
-        slash.transform.localScale = WallStartSize;
+        var slash = PoolManager.Spawn<CollapsingWall>("CollapsingWall", null, new Vector3(posX, _controller.GetRoomPosition.y/2, 0));
         slash.StartTicking(m_TelegraphTime - _currentTime + m_ActiveTime);
         return slash;
     }

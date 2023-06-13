@@ -119,6 +119,11 @@ public class ControllerGame : ControllerLocal
     }
 
     public void OnPlayerDeath(){
+        ControllerRooms.OnDeathAnimation();
+    }
+
+    public void ResetPlayer()
+    {
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);

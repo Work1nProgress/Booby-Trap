@@ -313,6 +313,12 @@ public class DaddyController : EntityBase
 
     public void ResetDadsHp()
     {
+
+        var mines = FindObjectsOfType<DaddyMine>();
+        foreach (var mine in mines)
+        {
+            mine.Remove();
+        }
         _health = _maxHealth;
         bossHealthBar.RerenderPips(_health, MaxHealth);
         currentPhase = 0;

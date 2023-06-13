@@ -39,7 +39,7 @@ public class DaddyBulldozerAttack : DaddyAttack
         if (_State == DaddyAttackState.Active)
         {
             _controller.Rigidbody.MovePosition(Vector2.Lerp(startPos, _BulldozeEndPosition, DOVirtual.EasedValue(0, 1, _currentTime / m_ActiveTime, MovementEase)));
-            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position + BulldozePosition, BulldozeSize, 0, Utils.PlayerLayerMask);
+            var hit = Physics2D.OverlapBox(_controller.Rigidbody.position + new Vector2(_controller.facingDirection*BulldozePosition.x, BulldozePosition.y), BulldozeSize, 0, Utils.PlayerLayerMask);
             if (hit)
             {
                 ControllerGame.Instance.player.Damage(DamageToPlayer);
@@ -52,7 +52,6 @@ public class DaddyBulldozerAttack : DaddyAttack
     {
         _controller.FaceTowards(TeleportPosition.x < _controller.GetRoomPosition.x + _controller.GetRoomSize.x / 2 ? 1 : -1);
         var slash = PoolManager.Spawn<PoolObjectTimed>("Bulldoze", _controller.transform, new Vector3(BulldozePosition.x * _controller.facingDirection, BulldozePosition.y, 0));
-        slash.transform.localScale = BulldozeSize;
         slash.StartTicking(m_TelegraphTime - _currentTime + m_ActiveTime);
         SoundManager.Instance.Play(_controller.Sound.BulldozerCharge, _controller.transform);
         base.OnTeleport();
@@ -73,7 +72,7 @@ public class DaddyBulldozerAttack : DaddyAttack
         base.DrawHitboxes();
         if (_State == DaddyAttackState.Active)
         {
-            Gizmos.DrawWireCube(_controller.Rigidbody.position + BulldozePosition * _controller.facingDirection, BulldozeSize);
+            Gizmos.DrawWireCube(_controller.Rigidbody.position + new Vector2(_controller.facingDirection * BulldozePosition.x, BulldozePosition.y), BulldozeSize);
         }
     }
 }

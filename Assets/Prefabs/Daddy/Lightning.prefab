@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6194658686370036945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.19, y: 0, z: -0.047829095}
-  m_LocalScale: {x: 1, y: 8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1608006457, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
+  m_Sprite: {fileID: -2012816618, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,14 +99,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprites:
-  - {fileID: 1608006457, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: 865686539, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: -664439466, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: -698355726, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: 28973347, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: -345698542, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: 1973909273, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
-  - {fileID: -1075797256, guid: cf6222521c51f42eeb36512084fe6471, type: 3}
+  - {fileID: -595720002, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: -218885513, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: 864693055, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: -1344315645, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: -1838664713, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: 2097106155, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: -1621804283, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: -1361734863, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
+  - {fileID: 1078576644, guid: 974e4f395bbe6f748afa8c5e4a8f5ebd, type: 3}
   _timeToNextFrame: 0.06666667
   loopOn: 1
 --- !u!114 &1073638014

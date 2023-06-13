@@ -132,6 +132,15 @@ public class ControllerRooms : MonoBehaviour
 
     }
 
+    public void OnDeathAnimation()
+    {
+        var sequence = DOTween.Sequence();
+        sequence.Append(DOVirtual.Float(0, 1, timeFadeIn*5, DoColorAdjustment));
+        sequence.AppendCallback(() => ControllerGame.Instance.ResetPlayer());
+        sequence.AppendInterval(0.4f);
+        sequence.Append(DOVirtual.Float(1, 0, timeFadeIn*3, DoColorAdjustment));
+    }
+
     void AnimateRoomTransition(Room fromRoom, Room toRoom)
     {
         ControllerGame.Instance.player.FreezeOnTransition(true);
