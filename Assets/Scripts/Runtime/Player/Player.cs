@@ -288,7 +288,7 @@ public class Player : EntityBase
         }
         m_InvulTimer = InvulTime;
         _hitsUntilCombo = hitsToCombo;
-        _playerHealthBar.updateHealth(-amount);
+        _playerHealthBar.RerenderPips(_health);
         base.Damage(amount);
     }
 
@@ -314,7 +314,7 @@ public class Player : EntityBase
         Collider2D[] hits = null;
 
         int damageToDeal = m_Damage;
-        if (velocityOnYAxis == 0)
+        if (velocityOnYAxis > -0.1 && velocityOnYAxis < 0.1)
         {
             if (_hitsUntilCombo > 1)
             {
@@ -355,7 +355,7 @@ public class Player : EntityBase
                     if (Random.value <= chanceToGainHeartMelee)
                     {
                         Heal(1);
-                        _playerHealthBar.updateHealth(1);
+                        _playerHealthBar.RerenderPips(_health + 1);
                     }
 
                     var enemy = entity as EnemyBase;
