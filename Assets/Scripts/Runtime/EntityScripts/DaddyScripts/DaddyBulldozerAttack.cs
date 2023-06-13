@@ -25,7 +25,7 @@ public class DaddyBulldozerAttack : DaddyAttack
 
     protected override void StartTelegraph()
     {
-        SoundManager.Instance.Play(_controller.Sound.Bulldozer, _controller.transform);
+       
         base.StartTelegraph();
      
     }
@@ -54,6 +54,7 @@ public class DaddyBulldozerAttack : DaddyAttack
         var slash = PoolManager.Spawn<PoolObjectTimed>("Bulldoze", _controller.transform, new Vector3(BulldozePosition.x * _controller.facingDirection, BulldozePosition.y, 0));
         slash.transform.localScale = BulldozeSize;
         slash.StartTicking(m_TelegraphTime - _currentTime + m_ActiveTime);
+        SoundManager.Instance.Play(_controller.Sound.BulldozerCharge, _controller.transform);
         base.OnTeleport();
     }
 
@@ -63,7 +64,7 @@ public class DaddyBulldozerAttack : DaddyAttack
 
    
         _BulldozeEndPosition = startPos + new Vector2((_controller.GetRoomSize.x - 2) * _controller.facingDirection, 0);
-
+        SoundManager.Instance.Play(_controller.Sound.BulldozerAttack, _controller.transform);
         base.OnEndTelegraph();
     }
 

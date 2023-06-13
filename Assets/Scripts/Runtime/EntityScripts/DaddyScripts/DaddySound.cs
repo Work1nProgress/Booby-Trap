@@ -14,7 +14,8 @@ public class DaddySound : ScriptableObject
     public string Hurt;
 
     [Header("Bulldozer")]
-    public string Bulldozer;
+    public string BulldozerCharge;
+    public string BulldozerAttack;
 
     [Header("Slash")]
     public string SlashCharge;
