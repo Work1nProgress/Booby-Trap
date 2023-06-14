@@ -34,6 +34,11 @@ public class ControllerGame : ControllerLocal
 
     ChromaticAberration ChromaticAberration;
 
+    Vignette Vignette;
+
+    [SerializeField]
+    float VignetteDuration, VignetteIntensity;
+
     [SerializeField]
     float AberartionDuration, ShakeDuration, AberrationIntensity, ShakeAmplitude, ShakeFrequency;
 
@@ -68,6 +73,7 @@ public class ControllerGame : ControllerLocal
         var volume = FindObjectOfType<Volume>();
         volume.profile.TryGet(out ChromaticAberration);
         volume.profile.TryGet(out ColorAdjustments adjustments);
+        volume.profile.TryGet(out Vignette);
         vCam = FindObjectOfType<CinemachineVirtualCamera>();
         ControllerRooms = GetComponent<ControllerRooms>();
         ControllerRooms.Init(vCam, adjustments);
@@ -116,6 +122,14 @@ public class ControllerGame : ControllerLocal
         {
             AnimateCameraDamage();
         }
+        else if(amount > 0)
+        {
+
+            SoundManager.Instance.Play("Echo_Heal", player.transform);
+            AnimateVignetter(VignetteIntensity);
+            DOVirtual.Float(VignetteIntensity, 0, VignetteDuration, AnimateVignetter).OnComplete(() => AnimateVignetter(0));
+
+        }
     }
 
     public void OnPlayerDeath(){
@@ -158,6 +172,11 @@ public class ControllerGame : ControllerLocal
     void AnimateColor(float value) {
 
         ChromaticAberration.intensity.Override(value);
+    }
+
+    void AnimateVignetter(float value)
+    {
+        Vignette.intensity.Override(value);
     }
 
     void EndSHake() {

@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.Audio;
+using DG.Tweening;
 public class DaddyMusic : MonoBehaviour
 {
     HealthMusicLayer currentLayers;
+    [SerializeField]
+    AudioMixer _MusicVolume;
 
     float MaxHealth;
     DaddyController daddyController;
@@ -16,6 +19,8 @@ public class DaddyMusic : MonoBehaviour
     float currentHealthPercent;
     int currentLayerIndex;
     string playlistName = "daddyPlaylist";
+
+    public float previousMusicVolume;
 
     private void Start()
     {
@@ -30,13 +35,22 @@ public class DaddyMusic : MonoBehaviour
         musicLayers = musicLayers.OrderByDescending(x => x.HealthPercent).ToList();
         currentLayers = musicLayers[0];
         currentHealthPercent = 1f;
-
-        MusicPlayer.Instance.PlayPlaylist(playlistName, 0.5f, currentLayers.LayersList.ToArray());
+        MusicPlayer.Instance.PlayPlaylist(playlistName, 7f, currentLayers.LayersList.ToArray());
     }
 
     public void ResetMusic()
     {
-        ChangeTo(musicLayers[0]);
+        MusicPlayer.Instance.StopPlaying();
+        currentLayers = musicLayers[0];
+        currentHealthPercent = 1f;
+        
+        MusicPlayer.Instance.PlayPlaylist(playlistName, 7f, currentLayers.LayersList.ToArray());
+    }
+
+    public void ResetVolume(float delay)
+    {
+
+        _MusicVolume.DOSetFloat("MusicVolume", previousMusicVolume, 0.5f).SetDelay(delay);
     }
 
 
@@ -50,6 +64,10 @@ public class DaddyMusic : MonoBehaviour
         if (currentHealthPercent < musicLayers[currentLayerIndex + 1].HealthPercent)
         {
             ChangeTo(musicLayers[currentLayerIndex + 1]);
+
+             _MusicVolume.GetFloat("MusicVolume", out previousMusicVolume);
+            Debug.Log(previousMusicVolume);
+            _MusicVolume.DOSetFloat("MusicVolume", -50f, 0.5f);
 
 
         }

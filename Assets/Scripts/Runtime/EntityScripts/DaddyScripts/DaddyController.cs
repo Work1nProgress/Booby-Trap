@@ -99,8 +99,8 @@ public class DaddyController : EntityBase
 
             if (currentPhase > 0)
             {
-                Debug.Log("phase change");
                 SoundManager.Instance.Play(Sound.PhaseChange, transform);
+                GetComponent<DaddyMusic>().ResetVolume(2f);
             }
 
 

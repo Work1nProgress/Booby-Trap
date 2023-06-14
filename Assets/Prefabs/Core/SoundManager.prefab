@@ -902,6 +902,23 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
+  - SoundName: Echo_Heal
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: a7c7665679b42a24f8fde86a44a33973, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 703df73e63968444590516eb402d8508, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 1
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0
