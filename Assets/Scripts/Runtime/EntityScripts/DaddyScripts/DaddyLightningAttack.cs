@@ -117,10 +117,10 @@ public class DaddyLightningAttack : DaddyAttack
                     null,
                     new Vector3(
                         currentPosition,
-                        _controller.GetRoomSize.y + _controller.GetRoomPosition.y,
+                        _controller.GetRoomSize.y/2 + _controller.GetRoomPosition.y,
                         0)
                     );
-                telegraph.transform.localScale = new Vector3(LightningWidth * 3, 1, 0);
+             //   telegraph.transform.localScale = new Vector3(LightningWidth * 3, 1, 0);
                 telegraph.StartTicking(TelegraphLightningDuration);
                 currentPosition += LightningSpacing + LightningWidth;
             }
@@ -142,7 +142,7 @@ public class DaddyLightningAttack : DaddyAttack
                     );
 
                
-                lightning.transform.localScale = new Vector3(LightningWidth * 3, _controller.GetRoomSize.y, 0);
+              //  lightning.transform.localScale = new Vector3(LightningWidth * 3, _controller.GetRoomSize.y, 0);
                 lightning.StartTicking(LightningDuration);
               
                 lightningCollision.Add(new Vector2(currentPosition, _controller.GetRoomSize.y / 2 + _controller.GetRoomPosition.y));

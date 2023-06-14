@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: CollapsingWallAttack
   m_EditorClassIdentifier: 
   m_TelegraphTime: 1
-  m_ActiveTime: 2.5
+  m_ActiveTime: 1.5
   m_CooldownTime: 1
   DamageToPlayer: 1
   m_DaddyAttackTrigger: 0
   m_DamageThreshold: 0
   Teleport: 1
   TeleportTime: 0.5
+  AnimatorTrigger: 0
   m_DaddyAttackCondition: 0
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
@@ -27,7 +28,7 @@ MonoBehaviour:
   WallStartSize: {x: 1, y: 7}
   WallEndSize: {x: 1, y: -1}
   WallStartPositionOffset: 0
-  WallEndPositionOffset: 12
+  WallEndPositionOffset: 8
   WallMovementEase: 2
   WallSizeEase: 1
   AscentMovementEase: 2

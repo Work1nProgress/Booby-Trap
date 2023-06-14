@@ -31,6 +31,9 @@ public class DaddyMineAttack : DaddyAttack
     [SerializeField]
     int MinimumMineDistance;
 
+    [SerializeField]
+    float maxDistanceToPlayer = 2f;
+
 
 
     [Header("Debug room data")]
@@ -69,6 +72,7 @@ public class DaddyMineAttack : DaddyAttack
       
 
         int breakCondition = 0;
+        
         while (x < xMax && breakCondition < 100)
         {
 
@@ -77,7 +81,8 @@ public class DaddyMineAttack : DaddyAttack
             while (y < yMax && breakCondition2 < 100)
             {
                 var pos = new Vector2(x, y);
-                if (!MinePositions.Contains(pos))
+                var distance = Vector2.Distance(ControllerGame.Instance.player.RigidBody.position, pos);
+                if (!MinePositions.Contains(pos) && distance > maxDistanceToPlayer)
                 {
                     PossiblePositions.Add(new Vector2(x, y));
                 }
@@ -142,8 +147,6 @@ public class DaddyMineAttack : DaddyAttack
 
 
     }
-
-
     
 
 #if UNITY_EDITOR

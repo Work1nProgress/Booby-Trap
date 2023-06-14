@@ -34,11 +34,22 @@ public class ControllerGame : ControllerLocal
 
     ChromaticAberration ChromaticAberration;
 
+    Vignette Vignette;
+
+    [SerializeField]
+    float VignetteDuration, VignetteIntensity;
+
     [SerializeField]
     float AberartionDuration, ShakeDuration, AberrationIntensity, ShakeAmplitude, ShakeFrequency;
 
     [SerializeField]
     Ease AberrationEase;
+
+    int savedRoom = 1;
+    public int SavedRoom => savedRoom;
+
+    public bool HasSpear;
+
     
 
     #endregion
@@ -47,17 +58,20 @@ public class ControllerGame : ControllerLocal
     public override void Init()
     {
         base.Init();
-        m_Instance = this;
 
+        Debug.Log(ControllerSaveLoad.GetSaveData.GetJson());
+        m_Instance = this;
+        HasSpear = ControllerSaveLoad.GetSaveData.HasSpear;
         player = FindFirstObjectByType<Player>();
+        Daddy = FindFirstObjectByType<DaddyController>();
         player.Init(new EntityStats
         {
-            MaxHealth = MaxPlayerHealth
+            MaxHealth = MaxPlayerHealth + ControllerSaveLoad.GetSaveData.HealthPickups.Count
 
         });
         if (playerHealthBar)
         {
-            playerHealthBar.RerenderPips(MaxPlayerHealth + 1);
+            playerHealthBar.RerenderPips(player.MaxHealth, player.MaxHealth);
         }
         
         m_StartingPlayerPos = player.transform.position;
@@ -68,6 +82,7 @@ public class ControllerGame : ControllerLocal
         var volume = FindObjectOfType<Volume>();
         volume.profile.TryGet(out ChromaticAberration);
         volume.profile.TryGet(out ColorAdjustments adjustments);
+        volume.profile.TryGet(out Vignette);
         vCam = FindObjectOfType<CinemachineVirtualCamera>();
         ControllerRooms = GetComponent<ControllerRooms>();
         ControllerRooms.Init(vCam, adjustments);
@@ -78,7 +93,27 @@ public class ControllerGame : ControllerLocal
         }
 
 
-        
+        var pickups = FindObjectsOfType<Pickup>();
+        for (int i = 0; i < pickups.Length; i++)
+        {
+
+            if (string.IsNullOrEmpty(pickups[i].GetPickupID) ||
+                ControllerSaveLoad.GetSaveData.HealthPickups.Contains(pickups[i].GetPickupID) ||
+                ControllerSaveLoad.GetSaveData.Keycards.Contains(pickups[i].GetPickupID)
+                )
+            {
+                Destroy(pickups[i].gameObject);
+            }
+
+        }
+         var spearPickup = FindObjectOfType<SpearPickup>();
+        if (ControllerSaveLoad.GetSaveData.HasSpear)
+        {
+
+            Destroy(spearPickup.gameObject);
+        }
+
+
     }
 
     //move this in some kind of spear controller script
@@ -116,27 +151,71 @@ public class ControllerGame : ControllerLocal
         {
             AnimateCameraDamage();
         }
+        else if(amount > 0)
+        {
+
+            SoundManager.Instance.Play("Echo_Heal", player.transform);
+            AnimateVignetter(VignetteIntensity);
+            DOVirtual.Float(VignetteIntensity, 0, VignetteDuration, AnimateVignetter).OnComplete(() => AnimateVignetter(0));
+
+        }
     }
 
     public void OnPlayerDeath(){
-        player.Heal(MaxPlayerHealth);
+        ControllerRooms.OnDeathAnimation();
+    }
+
+    public void ResetPlayer()
+    {
+        player.Heal(player.MaxHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
-        playerHealthBar.RerenderPips(MaxPlayerHealth  + 1);
-        if (Daddy != null)
-        {
+        playerHealthBar.RerenderPips(player.MaxHealth, player.MaxHealth);
+        //if (Daddy != null)
+        //{
 
-            SoundManager.Instance.Play(Daddy.Sound.EchoDie, transform);
-            Daddy.ResetDadsHp();
-            Daddy.GetComponent<DaddyMusic>().ResetMusic();
-        }
+        //    SoundManager.Instance.Play(Daddy.Sound.EchoDie, transform);
+        //    Daddy.ResetDadsHp();
+        //    Daddy.GetComponent<DaddyMusic>().ResetMusic();
+        //}
     }
+
+
 
 
     public void AddAgressiveEnemy(EntityController entity)
     {
         ControllerEnemies.AddAggresiveEnemy(entity);
         entity.isAggressive = true;
+
+    }
+
+
+    public void PickupHealth(string healthID)
+    {
+        if (!ControllerSaveLoad.GetSaveData.HealthPickups.Contains(healthID))
+        {
+            ControllerSaveLoad.GetSaveData.HealthPickups.Add(healthID);
+            ControllerSaveLoad.Save();
+            player.IncreaseMaxHealth(1);
+            playerHealthBar.RerenderPips(player.Health, player.MaxHealth);
+        }
+    }
+
+    public void PickupKeycard(string keycardID)
+    {
+        if (!ControllerSaveLoad.GetSaveData.Keycards.Contains(keycardID))
+        {
+            ControllerSaveLoad.GetSaveData.Keycards.Add(keycardID);
+            ControllerSaveLoad.Save();
+        }
+    }
+
+    public void PickupSpear()
+    {
+        ControllerSaveLoad.GetSaveData.HasSpear = true;
+        HasSpear = true;
+        ControllerSaveLoad.Save();
 
     }
 
@@ -153,6 +232,11 @@ public class ControllerGame : ControllerLocal
     void AnimateColor(float value) {
 
         ChromaticAberration.intensity.Override(value);
+    }
+
+    void AnimateVignetter(float value)
+    {
+        Vignette.intensity.Override(value);
     }
 
     void EndSHake() {

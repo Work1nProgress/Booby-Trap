@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,6 +30,8 @@ public class DaddyAttack : ScriptableObject
 
     [SerializeField]
     float TeleportTime;
+
+    public int AnimatorTrigger;
 
 
     [Header("Conditions")]
@@ -91,6 +94,7 @@ public class DaddyAttack : ScriptableObject
 
     public virtual void BeginAttack()
     {
+        _currentTime = 0;
         hasSentOnTeleport = false;
         _waitOneFrame = true;
         _IsActive = true;
@@ -103,19 +107,25 @@ public class DaddyAttack : ScriptableObject
 
             _controller.GoToTile(StartTile[Random.Range(0, StartTile.Length)]);
             TeleportPosition = _controller.Rigidbody.position;
+            _controller.SetTrigger(AnimatorTrigger);
 
         }
-        else if(Teleport)
+        else if (Teleport)
         {
 
 
-            TeleportPosition = _controller.GetRoomPosition+ Utils.TileToWorldPosition(StartTile[Random.Range(0, StartTile.Length)], 1);
+            TeleportPosition = _controller.GetRoomPosition + Utils.TileToWorldPosition(StartTile[Random.Range(0, StartTile.Length)], 1);
             if (Vector2.Distance(_controller.Rigidbody.position, TeleportPosition) < 1.1)
             {
                 _teleported = true;
                 hasSentOnTeleport = true;
                 OnTeleport();
             }
+        }
+        else
+        {
+            //edge case for slash attack
+            DOVirtual.DelayedCall(1.5f, () => _controller.SetTrigger(AnimatorTrigger));
         }
     }
     public virtual void ExitAttack()
@@ -175,6 +185,7 @@ public class DaddyAttack : ScriptableObject
 
     protected virtual void OnTeleport()
     {
+        _controller.SetTrigger(AnimatorTrigger);
     }
 
 
@@ -197,9 +208,11 @@ public class DaddyAttack : ScriptableObject
             _StateCountdown = new CountdownTimer(m_TelegraphTime, false, false, OnEndTelegraph);
             if (Teleport && !_teleported)
             {
-                var tp = PoolManager.Spawn<PoolObjectTimed>("teleportPortal", null, new Vector3(TeleportPosition.x, TeleportPosition.y, 0));
-                tp.StartTicking(TeleportTime);
+                var tp = PoolManager.Spawn<CollapsingWall>("teleportPortal", null, new Vector3(TeleportPosition.x, TeleportPosition.y-0.4f, 0));
+                tp.transform.localScale = Vector3.one * _controller.facingDirection;
+                tp.StartTicking(TeleportTime+0.16f);
                 SoundManager.Instance.Play(_controller.Sound.TeleportIn, tp.transform);
+                _controller.SetTeleportTrigger();
             }
         }
         else

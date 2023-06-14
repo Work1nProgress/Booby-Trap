@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public class ContextInteractable : MonoBehaviour
 {
-    [SerializeField] UnityEvent<Transform> onInteract = new UnityEvent<Transform> ();
-    [SerializeField] UnityEvent<Transform> onInteractableFound = new UnityEvent<Transform>();
+    [SerializeField] UnityEvent onInteract = new UnityEvent ();
+    [SerializeField] UnityEvent onInteractableFound = new UnityEvent();
 
-    public virtual void Interact(ContextInteractor interactor) { onInteract.Invoke(interactor.transform); }
+    public virtual void Interact(ContextInteractor interactor) { onInteract.Invoke(); }
 
-    public virtual void InteractorNear(ContextInteractor interactor) { onInteractableFound.Invoke(interactor.transform); }
+    public virtual void InteractorNear(ContextInteractor interactor) { onInteractableFound.Invoke(); }
 }
