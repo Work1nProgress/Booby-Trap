@@ -15,7 +15,8 @@ MonoBehaviour:
   TeleportIn: Boss_Teleport_In
   TeleportOut: Boss_Teleport_Out
   Hurt: Boss_Hurt
-  Bulldozer: Boss_Bulldozer
+  BulldozerCharge: Boss_Charge_Bulldozer
+  BulldozerAttack: Boss_Bulldozer
   SlashCharge: Boss_Charge_Slash
   SlashAttack: Boss_Slash
   LightningChannel: Boss_Channel_Lightning

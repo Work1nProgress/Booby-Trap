@@ -26,6 +26,13 @@ public class EntityBase : PoolObject
         _health = _maxHealth;
     }
 
+    public void IncreaseMaxHealth(int amount)
+    {
+        _maxHealth  += amount;
+        Heal(amount);
+
+    }
+
     public virtual void Damage(int amount) => ChangeHealth(Mathf.Abs(amount) * -1);
     public virtual void Heal(int ammount) => ChangeHealth(Mathf.Abs(ammount));
 

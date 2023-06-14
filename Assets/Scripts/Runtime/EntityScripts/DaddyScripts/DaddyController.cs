@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using DG.Tweening;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -66,20 +68,68 @@ public class DaddyController : EntityBase
 
     public DaddySound Sound => m_Sound;
 
+    [SerializeField]
+    Light2D daddyLight;
+
+    [SerializeField]
+    Light2D roomLight;
+
 
     bool saidIntro;
     bool isDead;
+    bool isActive;
+
+    Vector3 startPos;
+    bool startFlipSprite;
 
 
     private void Awake()
     {
+        startPos = transform.position;
+        startFlipSprite = SpriteRenderer.flipX;
+        facingDirection = SpriteRenderer.flipX ? 1 : -1;
+    }
+
+
+    public void StartFight()
+    {
+
+      
+      
         phaseChange = true;
         Init(new EntityStats
         {
             MaxHealth = DaddyMaxHealth
 
         });
-        bossHealthBar.setMaxHealth(DaddyMaxHealth);
+        bossHealthBar.transform.parent.gameObject.SetActive(true);
+        bossHealthBar.RerenderPips(_health, MaxHealth);
+        isActive = true;
+        DOVirtual.DelayedCall(3f,() =>GetComponent<DaddyMusic>().ResetMusic());
+
+        DOVirtual.Float(0, 1, 1, AnimateLight).SetDelay(3);
+    }
+
+    public void CancelFight()
+    {
+        MusicPlayer.Instance.StopPlaying(0.5f);
+        SoundManager.Instance.Play(Sound.EchoDie, transform);
+        transform.position = startPos;
+        SpriteRenderer.flipX = startFlipSprite;
+        facingDirection = SpriteRenderer.flipX ? 1 : -1;
+        isActive = false;
+        bossHealthBar.transform.parent.gameObject.SetActive(false);
+        var mines = FindObjectsOfType<DaddyMine>();
+        foreach (var mine in mines)
+        {
+            mine.Remove();
+        }
+        _health = _maxHealth;
+        currentPhase = 0;
+        phaseChange = true;
+        saidIntro = false;
+        AnimateLight(0);
+
     }
 
 
@@ -99,8 +149,8 @@ public class DaddyController : EntityBase
 
             if (currentPhase > 0)
             {
-                Debug.Log("phase change");
                 SoundManager.Instance.Play(Sound.PhaseChange, transform);
+                GetComponent<DaddyMusic>().ResetVolume(2f);
             }
 
 
@@ -109,33 +159,55 @@ public class DaddyController : EntityBase
         }
 
         _CurrentAttack = ChooseAttack();
-        _CurrentAttack.BeginAttack();
+       
         switch (_CurrentAttack)
         {
             case DaddyBulldozerAttack daddyBulldozerAttack:
-                _animator.SetTrigger(Bulldozer);
+                _CurrentAttack.AnimatorTrigger = Bulldozer;
+                ///_animator.SetTrigger(Bulldozer);
                 break;
             case DaddyCollapsingWallAttack daddyCollapsingWallAttack:
-                _animator.SetTrigger(Floating);
+                _CurrentAttack.AnimatorTrigger = Floating;
+                //_animator.SetTrigger(Floating);
                 break;
             case DaddyLightningAttack daddyLightningAttack:
-                _animator.SetTrigger(Lightning);
+                _CurrentAttack.AnimatorTrigger = Lightning;
+                //_animator.SetTrigger(Lightning);
                 break;
             case DaddyMineAttack daddyMineAttack:
-                _animator.SetTrigger(Mines);
+                _CurrentAttack.AnimatorTrigger = Mines;
+               // _animator.SetTrigger(Mines);
                 break;
             case DaddySlashAttack daddySlashAttack:
-                Invoke(nameof(SetSlashTrigger), 2f);
+                _CurrentAttack.AnimatorTrigger = Slash;
+               // Invoke(nameof(SetSlashTrigger), 1.5f);
                 break;
-                
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(_CurrentAttack));
         }
+        _CurrentAttack.BeginAttack();
+    }
+
+    public void SetTrigger(int triggerHash)
+    {
+        _animator.SetTrigger(triggerHash);
+    }
+
+    void AnimateLight(float value)
+    {
+        roomLight.intensity = value * 3.18f;
+        daddyLight.intensity = value;
     }
 
     private void SetSlashTrigger()
     {
         _animator.SetTrigger(Slash);
+    }
+
+    public void SetTeleportTrigger()
+    {
+        _animator.SetTrigger(Teleport);
     }
 
 
@@ -175,7 +247,7 @@ public class DaddyController : EntityBase
     private void FixedUpdate()
     {
 
-        if (isDead)
+        if (isDead || !isActive)
         {
             return;
         }
@@ -188,13 +260,13 @@ public class DaddyController : EntityBase
                 saidIntro = true;
                 SoundManager.Instance.Play(Sound.StartBattle, transform);
             }
-            DebugText.text = $"Entering Phase {currentPhase+1} in {string.Format("{0:0.00}", WaitTimer)}";
+          //  DebugText.text = $"Entering Phase {currentPhase+1} in {string.Format("{0:0.00}", WaitTimer)}";
             return;
         }
 
         if (_CurrentAttack && _CurrentAttack.IsActive) {
             _CurrentAttack.UpdateAttack(Time.fixedDeltaTime);
-            DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentAttack.GetDebugMessage(); 
+          //  DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentAttack.GetDebugMessage(); 
         } else if(_CurrentAttack == null){
 
             EndAttack();
@@ -206,13 +278,15 @@ public class DaddyController : EntityBase
     private static readonly int Mines = Animator.StringToHash("Mines");
     private static readonly int Slash = Animator.StringToHash("Slash");
     private static readonly int Lightning = Animator.StringToHash("Lightning");
+    private static readonly int Teleport = Animator.StringToHash("Teleport out");
 
     public override void Damage(int amount)
     {
 
        
-        bossHealthBar.updateHealth(-amount);
+      
         base.Damage(amount);
+        bossHealthBar.RerenderPips(_health, MaxHealth);
         if (currentPhase >= Phases.Length - 1)
         {
             return;
@@ -312,8 +386,14 @@ public class DaddyController : EntityBase
 
     public void ResetDadsHp()
     {
-        bossHealthBar.resetHealth();
+
+        var mines = FindObjectsOfType<DaddyMine>();
+        foreach (var mine in mines)
+        {
+            mine.Remove();
+        }
         _health = _maxHealth;
+        bossHealthBar.RerenderPips(_health, MaxHealth);
         currentPhase = 0;
         phaseChange = true;
         saidIntro = false;

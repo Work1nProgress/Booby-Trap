@@ -24,6 +24,8 @@ public class Room : MonoBehaviour
     UnityAction<Room> m_OnEchoExit;
     UnityAction<Room> m_OnEchoInRoom;
 
+
+
     bool isInitialized = false;
 
     public List<EnemyBase> Init(List<EnemyBase> enemies, UnityAction<Room> OnEchoExit, UnityAction<Room> OnEchoInRoom)
@@ -57,6 +59,8 @@ public class Room : MonoBehaviour
             }
 
         }
+
+
         isInitialized = true;
         return enemiesInThisRoom;
 

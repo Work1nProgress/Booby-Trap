@@ -28,6 +28,13 @@ public class SpriteAnimator : MonoBehaviour
         _countDownTimer = _timeToNextFrame;
     }
 
+    public void Reset()
+    {
+        _index = 0;
+        _countDownTimer = _timeToNextFrame;
+
+    }
+
     private int _index = 0;
     
     void Update()

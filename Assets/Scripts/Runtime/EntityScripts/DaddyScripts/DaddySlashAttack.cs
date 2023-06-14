@@ -24,11 +24,7 @@ public class DaddySlashAttack : DaddyAttack
     [SerializeField]
     Ease MovementEase = Ease.Linear;
 
-    public override void BeginAttack()
-    {
-      
-        base.BeginAttack();
-    }
+ 
 
     protected override void StartTelegraph()
     {
@@ -45,8 +41,6 @@ public class DaddySlashAttack : DaddyAttack
     {
         base.StartActive();
         SoundManager.Instance.Play(_controller.Sound.SlashAttack, _controller.transform);
-        var slash = PoolManager.Spawn<PoolObjectTimed>("SlashDaddy", _controller.transform, new Vector3(SlashPosition.x * _controller.facingDirection, SlashPosition.y, 0));
-        slash.StartTicking(m_ActiveTime);
     }
 
 

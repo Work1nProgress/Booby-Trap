@@ -74,8 +74,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 530641164, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
+  m_SortingOrder: 48
+  m_Sprite: {fileID: 613559852, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,12 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprites:
-  - {fileID: 530641164, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
-  - {fileID: -1051955140, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
-  - {fileID: -158093868, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
-  - {fileID: -181781152, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
-  - {fileID: -1465104622, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
-  - {fileID: 1334066238, guid: 201f87db15b024d11b1f60e7aa167d10, type: 3}
+  - {fileID: 613559852, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
+  - {fileID: 1148646381, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
+  - {fileID: -923354496, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
+  - {fileID: 1041972983, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
+  - {fileID: 1697015735, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
+  - {fileID: 991611943, guid: 94fb2869a1cc54e4c8bcfbb3a40df25f, type: 3}
   _timeToNextFrame: 0.06666667
   loopOn: 1
 --- !u!114 &1774143413713634679

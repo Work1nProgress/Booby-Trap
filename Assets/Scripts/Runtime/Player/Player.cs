@@ -288,8 +288,8 @@ public class Player : EntityBase
         }
         m_InvulTimer = InvulTime;
         _hitsUntilCombo = hitsToCombo;
-        _playerHealthBar.RerenderPips(_health);
         base.Damage(amount);
+        _playerHealthBar.RerenderPips(_health, MaxHealth);
     }
 
     public void TeleportToLastGround()
@@ -355,7 +355,7 @@ public class Player : EntityBase
                     if (Random.value <= chanceToGainHeartMelee)
                     {
                         Heal(1);
-                        _playerHealthBar.RerenderPips(_health + 1);
+                        _playerHealthBar.RerenderPips(_health, MaxHealth);
                     }
 
                     var enemy = entity as EnemyBase;
