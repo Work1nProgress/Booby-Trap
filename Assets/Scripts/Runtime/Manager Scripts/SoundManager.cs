@@ -38,6 +38,7 @@ public class SoundManager : GenericSingleton<SoundManager>
 
     public void PlayLooped(string name, GameObject source = null, Transform target = default)
     {
+
         if (LoopingSounds.Exists(x => x.SoundName == name && x.Source == source))
         {
             return;

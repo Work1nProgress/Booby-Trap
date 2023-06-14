@@ -20,6 +20,6 @@ public class ControllerLoadingScene : MonoBehaviour
 
 
      //   MusicPlayer.Instance.PlayPlaylist("spearmaidenPlaylist");
-        ControllerGameFlow.Instance.LoadNewScene("GardenofDestiny");
+        ControllerGameFlow.Instance.LoadNewScene("MainMenuScene");
     }
 }

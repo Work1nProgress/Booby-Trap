@@ -74,6 +74,7 @@ public class ControllerRooms : MonoBehaviour
             Debug.Log($"enemy {enemies[i]} at {enemies[i].Rigidbody.position} is not in a room", enemies[i]);
         }
 
+
     }
 
     void ToggleElevators(bool isPaused)
@@ -95,6 +96,8 @@ public class ControllerRooms : MonoBehaviour
         room.Activate(DefaultEnemyStats);
         if (room.RoomId == bossRoom)
         {
+            SoundManager.Instance.CancelLoop("Ambience", gameObject);
+            MusicPlayer.Instance.StopPlaying(0.5f);
             ControllerGame.Instance.player.transform.position = new Vector3(-34.8f, -39.35f);
             ControllerGame.Instance.player.RigidBody.velocity = default;
             ControllerGame.Instance.Daddy.StartFight();
@@ -112,8 +115,9 @@ public class ControllerRooms : MonoBehaviour
         room.Deactivate();
         if (room.RoomId == bossRoom)
         {
-
+            SoundManager.Instance.PlayLooped("Ambience", gameObject);
             ControllerGame.Instance.Daddy.CancelFight();
+            DOVirtual.DelayedCall(3f, () =>MusicPlayer.Instance.PlayPlaylist("GardenPlaylist", 2));
         }
     }
 
@@ -142,17 +146,23 @@ public class ControllerRooms : MonoBehaviour
         {
             if (firstRoomEntered)
             {
+
                 AnimateRoomTransition(null, room);
 
             }
             else
             {
+                if (room.RoomId != 3)
+                {
+                    MusicPlayer.Instance.PlayPlaylist("GardenPlaylist", 2);
+                    SoundManager.Instance.PlayLooped("Ambience", gameObject);
+                }
                 firstRoomEntered = true;
                 EnterRoom(room);
                 ChangeCamera(room);
             }
             m_CurrentRoom = room;
-            Debug.Log(m_CurrentRoom);
+
         }
         if (m_CurrentRoom == room)
         {

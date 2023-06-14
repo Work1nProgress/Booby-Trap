@@ -22,10 +22,16 @@ public class ControllerSaveLoad : GenericSingleton<ControllerSaveLoad>
         }
     }
 
+    public static void ClearSave()
+    {
+        Instance._saveData = new SaveData();
+        Save();
+    }
+
     public static void Save()
     {
         PlayerPrefs.SetString(SAVE_STRING, Instance._saveData.GetJson());
-        Debug.Log(Instance._saveData.GetJson());
+//        Debug.Log(Instance._saveData.GetJson());
         PlayerPrefs.Save();
     }
 }
