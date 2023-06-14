@@ -31,7 +31,7 @@ public class GenericMenuHandler : MonoBehaviour
 
     public virtual void OnClose()
     {
-
+        
     }
 
     private void RegisterToController(UIDomain domain)
