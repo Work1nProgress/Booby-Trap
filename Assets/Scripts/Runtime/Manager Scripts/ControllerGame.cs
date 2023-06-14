@@ -57,7 +57,7 @@ public class ControllerGame : ControllerLocal
         });
         if (playerHealthBar)
         {
-            playerHealthBar.setMaxHealth(MaxPlayerHealth);
+            playerHealthBar.RerenderPips(MaxPlayerHealth + 1);
         }
         
         m_StartingPlayerPos = player.transform.position;
@@ -122,7 +122,7 @@ public class ControllerGame : ControllerLocal
         player.Heal(MaxPlayerHealth);
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
-        playerHealthBar.resetHealth();
+        playerHealthBar.RerenderPips(MaxPlayerHealth  + 1);
         if (Daddy != null)
         {
 

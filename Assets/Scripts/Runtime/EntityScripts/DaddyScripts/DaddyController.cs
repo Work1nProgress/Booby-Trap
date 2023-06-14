@@ -110,7 +110,32 @@ public class DaddyController : EntityBase
 
         _CurrentAttack = ChooseAttack();
         _CurrentAttack.BeginAttack();
+        switch (_CurrentAttack)
+        {
+            case DaddyBulldozerAttack daddyBulldozerAttack:
+                _animator.SetTrigger(Bulldozer);
+                break;
+            case DaddyCollapsingWallAttack daddyCollapsingWallAttack:
+                _animator.SetTrigger(Floating);
+                break;
+            case DaddyLightningAttack daddyLightningAttack:
+                _animator.SetTrigger(Lightning);
+                break;
+            case DaddyMineAttack daddyMineAttack:
+                _animator.SetTrigger(Mines);
+                break;
+            case DaddySlashAttack daddySlashAttack:
+                Invoke(nameof(SetSlashTrigger), 2f);
+                break;
+                
+            default:
+                throw new ArgumentOutOfRangeException(nameof(_CurrentAttack));
+        }
+    }
 
+    private void SetSlashTrigger()
+    {
+        _animator.SetTrigger(Slash);
     }
 
 
@@ -176,6 +201,12 @@ public class DaddyController : EntityBase
         }
     }
     bool phaseChange =  false;
+    private static readonly int Floating = Animator.StringToHash("Floating");
+    private static readonly int Bulldozer = Animator.StringToHash("Bulldozer");
+    private static readonly int Mines = Animator.StringToHash("Mines");
+    private static readonly int Slash = Animator.StringToHash("Slash");
+    private static readonly int Lightning = Animator.StringToHash("Lightning");
+
     public override void Damage(int amount)
     {
 
