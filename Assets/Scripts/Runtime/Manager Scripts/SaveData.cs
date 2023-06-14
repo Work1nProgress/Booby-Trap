@@ -11,6 +11,7 @@ public class SaveData
     public bool HasSpear = false;
     public Vector3 SavePosition = default;
     public int SaveRoom = 1;
+    public bool Patricide = false;
 
 
     public string GetJson()
