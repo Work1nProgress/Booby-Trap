@@ -194,7 +194,7 @@ public class Player : EntityBase
 
     void OnThrow()
     {
-        if (Freeze)
+        if (Freeze || !ControllerGame.Instance.HasSpear)
         {
             return;
         }
@@ -419,6 +419,11 @@ public class Player : EntityBase
     void GainSpear()
     {
         m_CurrentSpearAmount = Mathf.Min(m_CurrentSpearAmount + 1, m_MaxSpearsOnPlayer);
+    }
+
+    public void TriggerTyping()
+    {
+        _playerAnim.SetTrigger("Typing");
     }
 
     private void OnDrawGizmos()

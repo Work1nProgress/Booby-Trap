@@ -18,7 +18,7 @@ public class ControllerGame : ControllerLocal
 
     public Player player;
     public DaddyController Daddy;
-    Vector3 m_StartingPlayerPos;
+    Vector3 m_StartingPlayerPos = new Vector3(-4.15f, -4.34f);
 
     [SerializeField]
     ControllerEnemies ControllerEnemies;
@@ -45,8 +45,7 @@ public class ControllerGame : ControllerLocal
     [SerializeField]
     Ease AberrationEase;
 
-    int savedRoom = 1;
-    public int SavedRoom => savedRoom;
+    public int SavedRoom => ControllerSaveLoad.GetSaveData.SaveRoom;
 
     public bool HasSpear;
 
@@ -59,10 +58,20 @@ public class ControllerGame : ControllerLocal
     {
         base.Init();
 
-        Debug.Log(ControllerSaveLoad.GetSaveData.GetJson());
+        player = FindFirstObjectByType<Player>();
+        if (ControllerSaveLoad.GetSaveData.Patricide)
+        {
+            if (ControllerSaveLoad.GetSaveData.SaveRoom == 1)
+            {
+                player.transform.position = m_StartingPlayerPos;
+            }
+            else
+            {
+                player.transform.position = ControllerSaveLoad.GetSaveData.SavePosition;
+            }
+        }
         m_Instance = this;
         HasSpear = ControllerSaveLoad.GetSaveData.HasSpear;
-        player = FindFirstObjectByType<Player>();
         Daddy = FindFirstObjectByType<DaddyController>();
         player.Init(new EntityStats
         {
@@ -74,7 +83,6 @@ public class ControllerGame : ControllerLocal
             playerHealthBar.RerenderPips(player.MaxHealth, player.MaxHealth);
         }
         
-        m_StartingPlayerPos = player.transform.position;
 
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);
@@ -162,15 +170,31 @@ public class ControllerGame : ControllerLocal
     }
 
     public void OnPlayerDeath(){
+
+      
         ControllerRooms.OnDeathAnimation();
     }
 
     public void ResetPlayer()
     {
         player.Heal(player.MaxHealth);
-        player.transform.position = m_StartingPlayerPos;
+        if (ControllerSaveLoad.GetSaveData.SaveRoom == 1)
+        {
+            player.transform.position = m_StartingPlayerPos;
+        }
+        else
+        {
+            player.transform.position = ControllerSaveLoad.GetSaveData.SavePosition;
+
+        }
+        if (!ControllerSaveLoad.GetSaveData.Patricide)
+        {
+            ControllerSaveLoad.GetSaveData.Patricide = true;
+            ControllerSaveLoad.Save();
+        }
         UpdatePlayerHealth(0);
         playerHealthBar.RerenderPips(player.MaxHealth, player.MaxHealth);
+        
         //if (Daddy != null)
         //{
 
@@ -217,6 +241,13 @@ public class ControllerGame : ControllerLocal
         HasSpear = true;
         ControllerSaveLoad.Save();
 
+    }
+
+    public void SaveRoom(int room)
+    {
+        ControllerSaveLoad.GetSaveData.SaveRoom = room;
+        ControllerSaveLoad.GetSaveData.SavePosition = player.transform.position;
+        ControllerSaveLoad.Save();
     }
 
     void AnimateCameraDamage()

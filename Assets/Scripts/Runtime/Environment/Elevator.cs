@@ -9,7 +9,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] Transform _carriage;
     [SerializeField] Transform _interactCanvas;
 
-    bool _moveToPointB, _moving, _canMove, _interactorNear;
+    bool _moveToPointB, _moving, _canMove, _interactorNear, _isPaused;
 
     [SerializeField] ElevatorPoint _startPoint;
     [SerializeField] float _tripTime;
@@ -49,7 +49,7 @@ public class Elevator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_moving && _canMove)
+        if (_moving && _canMove && !_isPaused)
             Step();
 
         if(_interactorNear && _canMove && !_moving)
@@ -95,9 +95,15 @@ public class Elevator : MonoBehaviour
 
     public void StartElevator()
     {
-        if(VerifyKeycard())
+        if (VerifyKeycard())
+        {
             if (!_moving && _canMove)
                 _moving = true;
+        }
+        else
+        {
+            SoundManager.Instance.Play("Error", ControllerGame.Instance.player.transform);
+        }
     }
 
     private void StopElevator()
@@ -110,7 +116,7 @@ public class Elevator : MonoBehaviour
 
     public void Pause(bool isPaused)
     {
-        _moving = !isPaused;
+        _isPaused = isPaused;
 
     }
 
