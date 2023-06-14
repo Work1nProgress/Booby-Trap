@@ -198,8 +198,6 @@ public class ControllerGame : ControllerLocal
             ControllerSaveLoad.GetSaveData.HealthPickups.Add(healthID);
             ControllerSaveLoad.Save();
             player.IncreaseMaxHealth(1);
-            UpdatePlayerHealth(1);
-            Debug.Log($"{player.Health} {player.MaxHealth}");
             playerHealthBar.RerenderPips(player.Health, player.MaxHealth);
         }
     }

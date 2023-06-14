@@ -29,7 +29,8 @@ public class EntityBase : PoolObject
     public void IncreaseMaxHealth(int amount)
     {
         _maxHealth  += amount;
-        Heal(amount);
+        _health += amount;
+
 
     }
 

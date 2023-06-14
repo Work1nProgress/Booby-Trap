@@ -10,8 +10,9 @@ public class ContextInteractor : MonoBehaviour
 
     private void Awake()
     {
-        ControllerInput.Instance.Interact.AddListener(() => { Interact(); });
+        ControllerInput.Instance.Interact.AddListener(Interact);
     }
+
 
     protected virtual void FindInteractable()
     {
@@ -26,6 +27,7 @@ public class ContextInteractor : MonoBehaviour
 
     protected virtual void Interact()
     {
+        Debug.Log(_interactable);
         if (_interactable != null)
             _interactable.Interact(this);
     }

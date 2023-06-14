@@ -919,6 +919,22 @@ MonoBehaviour:
     UseCustomMinMax: 0
     OverrideCustomSpatialBlend: 0
     UseCustomSpatialBlend: 0
+  - SoundName: Health_Bottle
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 6cd422e07656e4c0f93d638fa389c5e8, type: 3}
+    Volume: 0
+    PitchShift: -0.5
+    RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 0
+    UseCustomSpatialBlend: 0
   MinDistance: 0.1
   MaxDistance: 20
   UseSpatialSound: 0

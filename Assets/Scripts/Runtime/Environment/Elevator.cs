@@ -21,6 +21,9 @@ public class Elevator : MonoBehaviour
     [SerializeField]
     string _keystring;
 
+    [SerializeField]
+    Rigidbody2D rb;
+
     private void Awake()
     {
         _movementResetTimer = new CountdownTimer(_resetTime, true, false);
@@ -66,10 +69,14 @@ public class Elevator : MonoBehaviour
     {
         if (_moveToPointB)
         {
-            _carriage.position = Vector3.Lerp(_pointA.position, _pointB.position, _currentTime/_tripTime);
+            var pos = Vector3.Lerp(_pointA.position, _pointB.position, _currentTime / _tripTime);
+            rb.MovePosition(pos);
         }
         else
-            _carriage.position = Vector3.Lerp(_pointB.position, _pointA.position, _currentTime / _tripTime);
+        {
+            var pos = Vector3.Lerp(_pointB.position, _pointA.position, _currentTime / _tripTime);
+            rb.MovePosition(pos);
+        }
 
         if (_currentTime < _tripTime)
             _currentTime += Time.fixedDeltaTime;
@@ -86,7 +93,7 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    public void StartElevator(Transform interactor)
+    public void StartElevator()
     {
         if(VerifyKeycard())
             if (!_moving && _canMove)
@@ -99,6 +106,12 @@ public class Elevator : MonoBehaviour
         _canMove = false;
         _moveToPointB = !_moveToPointB;
         _currentTime = 0;
+    }
+
+    public void Pause(bool isPaused)
+    {
+        _moving = !isPaused;
+
     }
 
     private void StartReset()
