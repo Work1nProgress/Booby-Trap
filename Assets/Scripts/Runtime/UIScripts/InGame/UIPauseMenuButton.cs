@@ -36,7 +36,7 @@ public class UIPauseMenuButton : MonoBehaviour, ISubmitHandler, ISelectHandler, 
 
     public void OnSubmit(BaseEventData data)
     {
-        OnDeselect(null);
+        //OnDeselect(null);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

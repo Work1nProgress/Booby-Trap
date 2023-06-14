@@ -5405,6 +5405,9 @@ MonoBehaviour:
   _openOnRegister: 0
   _initialSelectable: {fileID: 6527307413441153841}
   _audioMixer: {fileID: 24100000, guid: 303465a1e9e7049499946eaf3c75a1f9, type: 2}
+  _masterSlider: {fileID: 6527307412846708635}
+  _musicSlider: {fileID: 6527307412840852803}
+  _effectsSlider: {fileID: 6527307413434225202}
 --- !u!1 &6527307412632316255
 GameObject:
   m_ObjectHideFlags: 0
