@@ -10,6 +10,7 @@ public class HealthPickup : Pickup
     protected override void OnPickedUp()
     {
         base.OnPickedUp();
+        SoundManager.Instance.Play("Health_Bottle", ControllerGame.Instance.player.transform);
         ControllerGame.Instance.PickupHealth(PickupID);
     }
 }

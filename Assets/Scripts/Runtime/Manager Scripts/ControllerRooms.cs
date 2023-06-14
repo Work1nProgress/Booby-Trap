@@ -38,6 +38,8 @@ public class ControllerRooms : MonoBehaviour
 
     int bossRoom;
 
+    Elevator[] elevators;
+
     
 
     public Room GetRoom(int roomId)
@@ -47,7 +49,7 @@ public class ControllerRooms : MonoBehaviour
 
     public void Init(CinemachineVirtualCamera cinemachineVirtualCamera, ColorAdjustments colorAdjustments)
     {
-
+        elevators = FindObjectsOfType<Elevator>();
         var boss = FindObjectOfType<DaddyController>();
         var hit = Physics2D.OverlapPoint(boss.Rigidbody.position, LayerMask.GetMask("Room"));
         bossRoom = hit.GetComponent<Room>().RoomId;
@@ -70,6 +72,16 @@ public class ControllerRooms : MonoBehaviour
         for (int i = enemies.Count-1; i >=0; i--)
         {
             Debug.Log($"enemy {enemies[i]} at {enemies[i].Rigidbody.position} is not in a room", enemies[i]);
+        }
+
+    }
+
+    void ToggleElevators(bool isPaused)
+    {
+        foreach (var elevator in elevators)
+        {
+            elevator.Pause(isPaused);
+
         }
 
     }
@@ -167,7 +179,9 @@ public class ControllerRooms : MonoBehaviour
         m_NextRoom = null;
         roomTransition.Kill();
         ControllerGame.Instance.player.FreezeOnTransition(true);
+        ToggleElevators(true);
         var sequence = DOTween.Sequence();
+
         sequence.Append(DOVirtual.Float(0, 1, timeFadeIn*5, DoColorAdjustment));
         sequence.AppendCallback(() => ControllerGame.Instance.ResetPlayer());
         sequence.AppendCallback(() => ExitRoom(m_CurrentRoom));
@@ -176,7 +190,9 @@ public class ControllerRooms : MonoBehaviour
         sequence.AppendCallback(() => ChangeCamera(GetRoom(ControllerGame.Instance.SavedRoom)));
         sequence.AppendInterval(0.4f);
         sequence.AppendCallback(() => ControllerGame.Instance.player.FreezeOnTransition(false));
+        sequence.AppendCallback(() => ToggleElevators(false));
         sequence.Append(DOVirtual.Float(1, 0, timeFadeIn*3, DoColorAdjustment));
+        
         sequence.Play();
         
 
@@ -187,7 +203,7 @@ public class ControllerRooms : MonoBehaviour
     void AnimateRoomTransition(Room fromRoom, Room toRoom)
     {
         ControllerGame.Instance.player.FreezeOnTransition(true);
-
+        ToggleElevators(true);
         roomTransition = DOTween.Sequence();
 
         roomTransition.Append(DOVirtual.Float(0, 1, timeFadeIn, DoColorAdjustment));
@@ -201,6 +217,7 @@ public class ControllerRooms : MonoBehaviour
             m_CurrentRoom = m_NextRoom;
             m_NextRoom = null;
             ControllerGame.Instance.player.FreezeOnTransition(false);
+            ToggleElevators(false);
         });
 
         roomTransition.Play();

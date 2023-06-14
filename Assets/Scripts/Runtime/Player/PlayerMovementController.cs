@@ -114,7 +114,7 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Animator")]
     [SerializeField] Animator _playerAnim;
 
-
+    private static readonly int isOnGround = Animator.StringToHash("isOnGround");
 
     private bool jumping = false;
     private bool falling = false;
@@ -398,6 +398,7 @@ public class PlayerMovementController : MonoBehaviour
                 
             }
             feetTouchingGround = true;
+            
             lastGroundedPosition = m_RigidBody.position;
    
             standingOnSpear = collider.gameObject.CompareTag("Spear");
@@ -412,6 +413,7 @@ public class PlayerMovementController : MonoBehaviour
             feetTouchingGround = false;
             standingOnSpear = false;
         }
+        _playerAnim.SetBool(isOnGround, feetTouchingGround);
 
     }
 
