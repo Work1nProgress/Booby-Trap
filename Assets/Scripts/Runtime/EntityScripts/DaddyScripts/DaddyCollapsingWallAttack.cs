@@ -48,6 +48,9 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     PoolObjectTimed wallLeft;
     PoolObjectTimed wallRight;
 
+    Vector3 wallLeftPos;
+    Vector3 wallRightPos;
+
 
     public override void BeginAttack()
     {
@@ -88,11 +91,21 @@ public class DaddyCollapsingWallAttack : DaddyAttack
         {
             MoveWall(wallLeft.transform, _currentTime / m_ActiveTime, leftStartX, leftEndX);
             MoveWall(wallRight.transform, _currentTime / m_ActiveTime, rightStartX, rightEndX);
-            if (Physics2D.OverlapBox(wallLeft.transform.position, currentSize, 0, Utils.PlayerLayerMask) || Physics2D.OverlapBox(wallRight.transform.position, currentSize, 0, Utils.PlayerLayerMask))
+            if (Physics2D.OverlapBox(new Vector3(wallLeft.transform.position.x, _controller.GetRoomPosition.y + currentSize.y / 2, 0), currentSize, 0, Utils.PlayerLayerMask) || Physics2D.OverlapBox(new Vector3(wallRight.transform.position.x, _controller.GetRoomPosition.y + currentSize.y / 2, 0), currentSize, 0, Utils.PlayerLayerMask))
             {
                 ControllerGame.Instance.player.Damage(DamageToPlayer);
             }
-          
+
+            if (wallLeft != null)
+            {
+                wallLeftPos = wallLeft.transform.position;
+            }
+
+            if (wallRight != null)
+            {
+                wallRightPos = wallRight.transform.position;
+            }
+
 
         }
 
@@ -120,7 +133,7 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     void MoveWall(Transform wall, float value, float startX, float endX)
     {
         currentSize = Vector2.Lerp(WallStartSize, WallEndSize, DOVirtual.EasedValue(0,1, value, WallSizeEase));
-        var y = _controller.GetRoomPosition.y /2;
+        var y = DOVirtual.EasedValue(_controller.GetRoomPosition.y/1.5f, -6.74f, value, Ease.Linear);
         var x = DOVirtual.EasedValue(startX, endX, value, WallMovementEase);
         wall.transform.position = new Vector3(x, y, 0);
 
@@ -128,8 +141,11 @@ public class DaddyCollapsingWallAttack : DaddyAttack
 
     PoolObjectTimed SpawnWall(float posX)
     {
-        var slash = PoolManager.Spawn<CollapsingWall>("CollapsingWall", null, new Vector3(posX, _controller.GetRoomPosition.y/2, 0));
+        var slash = PoolManager.Spawn<CollapsingWall>("CollapsingWall", null, new Vector3(posX, _controller.GetRoomPosition.y/1.5f, 0));
+
+
         slash.StartTicking(m_TelegraphTime - _currentTime + m_ActiveTime);
+
         return slash;
     }
 
@@ -143,8 +159,28 @@ public class DaddyCollapsingWallAttack : DaddyAttack
         base.StartActive();
     }
 
+    PoolObjectTimed SpawnVanishDrone(Vector3 position, int direction)
+    {
+        var droneVanish = PoolManager.Spawn<CollapsingWall>("LigtningDroneVanish", null, position);
+
+
+        droneVanish.StartTicking(0.4f);
+        droneVanish.transform.DOLocalMove(droneVanish.transform.position + new Vector3(1.5f*direction, 0.5f,0), 0.4f).SetEase(Ease.OutCubic);
+
+        return droneVanish;
+
+    }
+
+    protected override void OnEndActive()
+    {
+        SpawnVanishDrone(wallRightPos + new Vector3(0, 3.014f, 0f), -1);
+        SpawnVanishDrone(wallLeftPos+ new Vector3(0, 3.014f, 0f), 1);
+        base.OnEndActive();
+    }
+
     protected override void StartCooldown()
     {
+
         _hoverDuration = m_CooldownTime;
         _hoverTimer = 0;
         hoverState = 3;
@@ -160,8 +196,8 @@ public class DaddyCollapsingWallAttack : DaddyAttack
         base.DrawHitboxes();
         if (_State == DaddyAttackState.Active)
         {
-            Gizmos.DrawWireCube(wallLeft.transform.position, new Vector3(currentSize.x, currentSize.y,0));
-            Gizmos.DrawWireCube(wallRight.transform.position, new Vector3(currentSize.x, currentSize.y, 0));
+            Gizmos.DrawWireCube(new Vector3(wallLeft.transform.position.x, _controller.GetRoomPosition.y + currentSize.y/2, 0), new Vector3(currentSize.x, currentSize.y,0));
+            Gizmos.DrawWireCube(new Vector3(wallRight.transform.position.x, _controller.GetRoomPosition.y + currentSize.y/2, 0), new Vector3(currentSize.x, currentSize.y, 0));
         }
     }
 

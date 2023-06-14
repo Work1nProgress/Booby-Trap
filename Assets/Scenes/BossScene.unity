@@ -4162,8 +4162,6 @@ MonoBehaviour:
     BeginPhaseWaitTime: 0
     DaddyAttacks:
     - {fileID: 11400000, guid: 2942230f8027b40cf83c922246425ae7, type: 2}
-    - {fileID: 11400000, guid: afd5cfe7fa99041e3b671ac6f44ad665, type: 2}
-    - {fileID: 11400000, guid: 093d62b7247c4480ebce58d5a467108f, type: 2}
   - HealthPercent: 50
     BeginPhaseWaitTime: 1
     DaddyAttacks:

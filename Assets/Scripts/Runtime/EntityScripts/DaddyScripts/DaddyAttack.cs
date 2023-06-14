@@ -91,6 +91,7 @@ public class DaddyAttack : ScriptableObject
 
     public virtual void BeginAttack()
     {
+        _currentTime = 0;
         hasSentOnTeleport = false;
         _waitOneFrame = true;
         _IsActive = true;
