@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class PlayerMovementController : MonoBehaviour
@@ -89,6 +90,8 @@ public class PlayerMovementController : MonoBehaviour
     float stepDelay = 0.5f;
     [SerializeField]
     float stepVelocityFactor = 0.1f;
+
+    [SerializeField] Player player;
 
 
     public Vector2 lastGroundedPosition;
@@ -395,10 +398,10 @@ public class PlayerMovementController : MonoBehaviour
 
                 PoolManager.Spawn<PoolObjectTimed>("dustparticles", null, transform.position + groundCheckPoint).StartTicking();
                 SoundManager.Instance.Play(LandSound, transform);
-                
             }
             feetTouchingGround = true;
-            
+            player.grounded = true;
+
             lastGroundedPosition = m_RigidBody.position;
    
             standingOnSpear = collider.gameObject.CompareTag("Spear");
@@ -411,6 +414,7 @@ public class PlayerMovementController : MonoBehaviour
         else
         {
             feetTouchingGround = false;
+            player.grounded = true;
             standingOnSpear = false;
         }
         _playerAnim.SetBool(isOnGround, feetTouchingGround);
@@ -447,6 +451,7 @@ public class PlayerMovementController : MonoBehaviour
                 return;
             }
             
+            _playerAnim.SetTrigger("Jump");
             SoundManager.Instance.Play(JumpSound, transform);
             jumping = true;
             PoolManager.Spawn<PoolObjectTimed>("dustparticles", null, transform.position + groundCheckPoint).StartTicking();
