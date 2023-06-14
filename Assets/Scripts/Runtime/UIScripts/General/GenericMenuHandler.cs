@@ -13,15 +13,15 @@ public class GenericMenuHandler : MonoBehaviour
     [SerializeField] private bool _openOnRegister;
     [SerializeField] Selectable _initialSelectable;
 
-
-    protected virtual void Awake()
-    {
-        
-    }
+    bool _menuRegistered = false;
 
     protected virtual void Start()
     {
-        RegisterToController(_domain);
+        if (!_menuRegistered)
+        {
+            RegisterToController(_domain);
+            _menuRegistered = true;
+        }
     }
 
     public virtual void OnOpen()

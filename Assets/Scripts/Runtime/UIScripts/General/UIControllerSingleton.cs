@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControllerSingleton<T>
 {
-    //After inheriting from this class, be sure to add to the UIDomain enum at the bottom of this document.
-    //Instructions on how to do so are commented in the enum itself.
+    //!Important!//
+    //After inheriting from this class, be sure to follow the process described in the UIDomain enum
+    //at the bottom of this document. Instructions on how to do so are commented in the enum itself.
 
 
     bool _isActive = true;
@@ -67,13 +68,18 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
             return;
         }
 
+        bool wasAlreadyActive = Instance._isActive;
+        if(!wasAlreadyActive)
+            Instance._isActive = true;
+
         Instance._menus.Add(key, menu);
         CloseMenu(key);
 
         if (openOnRegister) OpenMenu(key);
+
+        if(!wasAlreadyActive)
+        Instance._isActive = false;
     }
-
-
 
 
     //these methods can only be called if _isActive == true
@@ -159,8 +165,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     }
 
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -178,7 +182,6 @@ Checklist for adding new UIDomain:
     1. Add to the 'deactivation list' in SetActiveUIDomain, which is in UIControllerSingleton (this file).
     2. Add new case to the 'activation switch' in SetActiveUIDomain, which is in UIControllerSingleton (this file).
     3. Add new case to 'registration switch' in RegisterToController, which is in GenericMenuHandler.
-
  */
 
     MAINMENU,
