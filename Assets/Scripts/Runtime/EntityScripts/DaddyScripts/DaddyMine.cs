@@ -33,6 +33,7 @@ public class DaddyMine : EntityBase
     protected override void OnKill()
     {
         SoundManager.Instance.Play(Destroyed, transform);
+        PoolManager.Spawn<PoolObjectTimed>("MineBreak", null, transform.position);
         Remove();
     }
 

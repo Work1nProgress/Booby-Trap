@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4677667726472368048}
   - component: {fileID: 4677667726472368054}
   - component: {fileID: 2774559944677761869}
+  - component: {fileID: 2771322331606350840}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -125,3 +126,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6944914}
   m_EdgeRadius: 0
+--- !u!114 &2771322331606350840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4677667726472368049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bf583eb7e3bb14a97c24ed3b4ad532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: -1760522572, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 1981276292, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 1320690348, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: -1267843199, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 1301453007, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 790386885, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: -177702215, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 880830867, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 208246666, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 1112240238, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 894501194, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: -75053623, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: 260071241, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  - {fileID: -1820301569, guid: 5fe98ba3ed21a7c46870dc7b0aa96f48, type: 3}
+  _timeToNextFrame: 0.06666667
+  loopOn: 1
