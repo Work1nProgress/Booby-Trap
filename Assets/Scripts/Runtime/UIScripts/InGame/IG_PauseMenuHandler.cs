@@ -7,11 +7,6 @@ public class IG_PauseMenuHandler : GenericMenuHandler
 {
     [SerializeField] AudioMixer _audioMixer;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     public override void OnOpen()
     {
         base.OnOpen();
@@ -26,31 +21,12 @@ public class IG_PauseMenuHandler : GenericMenuHandler
 
     public void OnResume()
     {
-        InGameUIController.CloseMenu("Pause");
+        InGameUIController.ToggleMenu("Pause");
     }
 
-    public void ChangeMasterVolume(float volume)
+    public void OnOpenOptionsMenu()
     {
-        if (_audioMixer != null)
-            _audioMixer.SetFloat("MasterVolume", (volume * 100) - 80);
-        else
-            Debug.LogWarning("Warning: No AudioMixer to adjust!");
-    }
-
-    public void ChangeMusicVolume(float volume)
-    {
-        if (_audioMixer != null)
-            _audioMixer.SetFloat("MusicVolume", (volume * 100) - 80);
-        else
-            Debug.LogWarning("Warning: No AudioMixer to adjust!");
-    }
-
-    public void ChangeEffectsVolume(float volume)
-    {
-        if (_audioMixer != null)
-            _audioMixer.SetFloat("EffectsVolume", (volume * 100) - 80);
-        else
-            Debug.LogWarning("Warning: No AudioMixer to adjust!");
+        InGameUIController.ToggleMenu("Options");
     }
 
     public void OnQuit()
