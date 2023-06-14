@@ -109,33 +109,49 @@ public class DaddyController : EntityBase
         }
 
         _CurrentAttack = ChooseAttack();
-        _CurrentAttack.BeginAttack();
+       
         switch (_CurrentAttack)
         {
             case DaddyBulldozerAttack daddyBulldozerAttack:
-                _animator.SetTrigger(Bulldozer);
+                _CurrentAttack.AnimatorTrigger = Bulldozer;
+                ///_animator.SetTrigger(Bulldozer);
                 break;
             case DaddyCollapsingWallAttack daddyCollapsingWallAttack:
-                _animator.SetTrigger(Floating);
+                _CurrentAttack.AnimatorTrigger = Floating;
+                //_animator.SetTrigger(Floating);
                 break;
             case DaddyLightningAttack daddyLightningAttack:
-                _animator.SetTrigger(Lightning);
+                _CurrentAttack.AnimatorTrigger = Lightning;
+                //_animator.SetTrigger(Lightning);
                 break;
             case DaddyMineAttack daddyMineAttack:
-                _animator.SetTrigger(Mines);
+                _CurrentAttack.AnimatorTrigger = Mines;
+               // _animator.SetTrigger(Mines);
                 break;
             case DaddySlashAttack daddySlashAttack:
-                Invoke(nameof(SetSlashTrigger), 2f);
+                _CurrentAttack.AnimatorTrigger = Slash;
+               // Invoke(nameof(SetSlashTrigger), 1.5f);
                 break;
-                
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(_CurrentAttack));
         }
+        _CurrentAttack.BeginAttack();
+    }
+
+    public void SetTrigger(int triggerHash)
+    {
+        _animator.SetTrigger(triggerHash);
     }
 
     private void SetSlashTrigger()
     {
         _animator.SetTrigger(Slash);
+    }
+
+    public void SetTeleportTrigger()
+    {
+        _animator.SetTrigger(Teleport);
     }
 
 
@@ -206,6 +222,7 @@ public class DaddyController : EntityBase
     private static readonly int Mines = Animator.StringToHash("Mines");
     private static readonly int Slash = Animator.StringToHash("Slash");
     private static readonly int Lightning = Animator.StringToHash("Lightning");
+    private static readonly int Teleport = Animator.StringToHash("Teleport out");
 
     public override void Damage(int amount)
     {

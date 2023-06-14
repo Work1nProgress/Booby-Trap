@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1994333275375125211}
   - component: {fileID: 1994333275375125210}
   - component: {fileID: 1994333275375125205}
-  - component: {fileID: 1994333275375125204}
+  - component: {fileID: 4240567999222469647}
   m_Layer: 0
   m_Name: teleportPortal
   m_TagString: Untagged
@@ -99,13 +99,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprites:
-  - {fileID: -774460214, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
-  - {fileID: 1804261654, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
   - {fileID: 1582366384, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
   - {fileID: 1804261654, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: -774460214, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: 1736323002, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: 149488247, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: 1183122637, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: 965922535, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: -1647735161, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: 806038328, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: -984370734, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: 809651300, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: -132186007, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: -1256897890, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
+  - {fileID: -1130523643, guid: 4ae1977f21163454cafb6bbc45fe7430, type: 3}
   _timeToNextFrame: 0.06666667
   loopOn: 1
---- !u!114 &1994333275375125204
+--- !u!114 &4240567999222469647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +124,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1994333275375125207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20119b5bbc65f4a8e9d71fc86b4df195, type: 3}
+  m_Script: {fileID: 11500000, guid: 826bf4229b4084660b67ea0b6cc1e880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
