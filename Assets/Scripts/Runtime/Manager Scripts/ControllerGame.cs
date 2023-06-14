@@ -58,6 +58,7 @@ public class ControllerGame : ControllerLocal
         m_Instance = this;
 
         player = FindFirstObjectByType<Player>();
+        Daddy = FindFirstObjectByType<DaddyController>();
         player.Init(new EntityStats
         {
             MaxHealth = MaxPlayerHealth
@@ -145,13 +146,13 @@ public class ControllerGame : ControllerLocal
         player.transform.position = m_StartingPlayerPos;
         UpdatePlayerHealth(0);
         playerHealthBar.RerenderPips(MaxPlayerHealth, MaxPlayerHealth);
-        if (Daddy != null)
-        {
+        //if (Daddy != null)
+        //{
 
-            SoundManager.Instance.Play(Daddy.Sound.EchoDie, transform);
-            Daddy.ResetDadsHp();
-            Daddy.GetComponent<DaddyMusic>().ResetMusic();
-        }
+        //    SoundManager.Instance.Play(Daddy.Sound.EchoDie, transform);
+        //    Daddy.ResetDadsHp();
+        //    Daddy.GetComponent<DaddyMusic>().ResetMusic();
+        //}
     }
 
 

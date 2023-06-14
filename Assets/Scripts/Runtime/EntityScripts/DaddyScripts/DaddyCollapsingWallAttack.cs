@@ -52,6 +52,8 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     Vector3 wallRightPos;
 
 
+
+
     public override void BeginAttack()
     {
         hoverState = 0;
@@ -133,7 +135,7 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     void MoveWall(Transform wall, float value, float startX, float endX)
     {
         currentSize = Vector2.Lerp(WallStartSize, WallEndSize, DOVirtual.EasedValue(0,1, value, WallSizeEase));
-        var y = DOVirtual.EasedValue(_controller.GetRoomPosition.y/1.5f, -6.74f, value, Ease.Linear);
+        var y = DOVirtual.EasedValue(_controller.GetRoomPosition.y + _controller.GetRoomSize.y *0.4f, _controller.GetRoomPosition.y-2.74f, value, Ease.Linear);
         var x = DOVirtual.EasedValue(startX, endX, value, WallMovementEase);
         wall.transform.position = new Vector3(x, y, 0);
 
@@ -141,7 +143,7 @@ public class DaddyCollapsingWallAttack : DaddyAttack
 
     PoolObjectTimed SpawnWall(float posX)
     {
-        var slash = PoolManager.Spawn<CollapsingWall>("CollapsingWall", null, new Vector3(posX, _controller.GetRoomPosition.y/1.5f, 0));
+        var slash = PoolManager.Spawn<CollapsingWall>("CollapsingWall", null, new Vector3(posX, _controller.GetRoomPosition.y + _controller.GetRoomSize.y * 0.4f, 0));
 
 
         slash.StartTicking(m_TelegraphTime - _currentTime + m_ActiveTime);

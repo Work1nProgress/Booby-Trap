@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using DG.Tweening;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -66,20 +68,68 @@ public class DaddyController : EntityBase
 
     public DaddySound Sound => m_Sound;
 
+    [SerializeField]
+    Light2D daddyLight;
+
+    [SerializeField]
+    Light2D roomLight;
+
 
     bool saidIntro;
     bool isDead;
+    bool isActive;
+
+    Vector3 startPos;
+    bool startFlipSprite;
 
 
     private void Awake()
     {
+        startPos = transform.position;
+        startFlipSprite = SpriteRenderer.flipX;
+        facingDirection = SpriteRenderer.flipX ? 1 : -1;
+    }
+
+
+    public void StartFight()
+    {
+
+      
+      
         phaseChange = true;
         Init(new EntityStats
         {
             MaxHealth = DaddyMaxHealth
 
         });
+        bossHealthBar.transform.parent.gameObject.SetActive(true);
         bossHealthBar.RerenderPips(_health, MaxHealth);
+        isActive = true;
+        DOVirtual.DelayedCall(3f,() =>GetComponent<DaddyMusic>().ResetMusic());
+
+        DOVirtual.Float(0, 1, 1, AnimateLight).SetDelay(3);
+    }
+
+    public void CancelFight()
+    {
+        MusicPlayer.Instance.StopPlaying(0.5f);
+        SoundManager.Instance.Play(Sound.EchoDie, transform);
+        transform.position = startPos;
+        SpriteRenderer.flipX = startFlipSprite;
+        facingDirection = SpriteRenderer.flipX ? 1 : -1;
+        isActive = false;
+        bossHealthBar.transform.parent.gameObject.SetActive(false);
+        var mines = FindObjectsOfType<DaddyMine>();
+        foreach (var mine in mines)
+        {
+            mine.Remove();
+        }
+        _health = _maxHealth;
+        currentPhase = 0;
+        phaseChange = true;
+        saidIntro = false;
+        AnimateLight(0);
+
     }
 
 
@@ -144,6 +194,12 @@ public class DaddyController : EntityBase
         _animator.SetTrigger(triggerHash);
     }
 
+    void AnimateLight(float value)
+    {
+        roomLight.intensity = value * 3.18f;
+        daddyLight.intensity = value;
+    }
+
     private void SetSlashTrigger()
     {
         _animator.SetTrigger(Slash);
@@ -191,7 +247,7 @@ public class DaddyController : EntityBase
     private void FixedUpdate()
     {
 
-        if (isDead)
+        if (isDead || !isActive)
         {
             return;
         }
@@ -204,13 +260,13 @@ public class DaddyController : EntityBase
                 saidIntro = true;
                 SoundManager.Instance.Play(Sound.StartBattle, transform);
             }
-            DebugText.text = $"Entering Phase {currentPhase+1} in {string.Format("{0:0.00}", WaitTimer)}";
+          //  DebugText.text = $"Entering Phase {currentPhase+1} in {string.Format("{0:0.00}", WaitTimer)}";
             return;
         }
 
         if (_CurrentAttack && _CurrentAttack.IsActive) {
             _CurrentAttack.UpdateAttack(Time.fixedDeltaTime);
-            DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentAttack.GetDebugMessage(); 
+          //  DebugText.text = $"HP: {Health}/{DaddyMaxHealth}\n"+_CurrentAttack.GetDebugMessage(); 
         } else if(_CurrentAttack == null){
 
             EndAttack();

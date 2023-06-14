@@ -35,7 +35,7 @@ public class DaddyMusic : MonoBehaviour
         musicLayers = musicLayers.OrderByDescending(x => x.HealthPercent).ToList();
         currentLayers = musicLayers[0];
         currentHealthPercent = 1f;
-        MusicPlayer.Instance.PlayPlaylist(playlistName, 7f, currentLayers.LayersList.ToArray());
+       // MusicPlayer.Instance.PlayPlaylist(playlistName, 7f, currentLayers.LayersList.ToArray());
     }
 
     public void ResetMusic()
@@ -44,7 +44,7 @@ public class DaddyMusic : MonoBehaviour
         currentLayers = musicLayers[0];
         currentHealthPercent = 1f;
         
-        MusicPlayer.Instance.PlayPlaylist(playlistName, 7f, currentLayers.LayersList.ToArray());
+        MusicPlayer.Instance.PlayPlaylist(playlistName, 6f, currentLayers.LayersList.ToArray());
     }
 
     public void ResetVolume(float delay)

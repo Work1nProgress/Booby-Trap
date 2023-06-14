@@ -36,7 +36,9 @@ public class ControllerRooms : MonoBehaviour
 
     bool firstRoomEntered = false;
 
+    int bossRoom;
 
+    
 
     public Room GetRoom(int roomId)
     {
@@ -45,8 +47,11 @@ public class ControllerRooms : MonoBehaviour
 
     public void Init(CinemachineVirtualCamera cinemachineVirtualCamera, ColorAdjustments colorAdjustments)
     {
+
+        var boss = FindObjectOfType<DaddyController>();
+        var hit = Physics2D.OverlapPoint(boss.Rigidbody.position, LayerMask.GetMask("Room"));
+        bossRoom = hit.GetComponent<Room>().RoomId;
         m_VCam = cinemachineVirtualCamera;
-        Debug.Log(m_VCam);
         m_Confiner2D = m_VCam.GetComponent<CinemachineConfiner2D>();
         m_ColorAdjustments = colorAdjustments;
 
@@ -76,6 +81,12 @@ public class ControllerRooms : MonoBehaviour
             return;
         }
         room.Activate(DefaultEnemyStats);
+        if (room.RoomId == bossRoom)
+        {
+            ControllerGame.Instance.player.transform.position = new Vector3(-34.8f, -39.35f);
+            ControllerGame.Instance.player.RigidBody.velocity = default;
+            ControllerGame.Instance.Daddy.StartFight();
+        }
 
     }
 
@@ -87,6 +98,11 @@ public class ControllerRooms : MonoBehaviour
         }
 
         room.Deactivate();
+        if (room.RoomId == bossRoom)
+        {
+
+            ControllerGame.Instance.Daddy.CancelFight();
+        }
     }
 
     void EchoExitRoom(Room room)
@@ -124,6 +140,7 @@ public class ControllerRooms : MonoBehaviour
                 ChangeCamera(room);
             }
             m_CurrentRoom = room;
+            Debug.Log(m_CurrentRoom);
         }
         if (m_CurrentRoom == room)
         {
@@ -154,13 +171,16 @@ public class ControllerRooms : MonoBehaviour
         sequence.Append(DOVirtual.Float(0, 1, timeFadeIn*5, DoColorAdjustment));
         sequence.AppendCallback(() => ControllerGame.Instance.ResetPlayer());
         sequence.AppendCallback(() => ExitRoom(m_CurrentRoom));
+        sequence.AppendCallback(() => m_CurrentRoom = GetRoom(ControllerGame.Instance.SavedRoom));
         sequence.AppendCallback(() => EnterRoom(GetRoom(ControllerGame.Instance.SavedRoom)));
         sequence.AppendCallback(() => ChangeCamera(GetRoom(ControllerGame.Instance.SavedRoom)));
         sequence.AppendInterval(0.4f);
         sequence.AppendCallback(() => ControllerGame.Instance.player.FreezeOnTransition(false));
         sequence.Append(DOVirtual.Float(1, 0, timeFadeIn*3, DoColorAdjustment));
         sequence.Play();
-       
+        
+
+
 
     }
     Sequence roomTransition;

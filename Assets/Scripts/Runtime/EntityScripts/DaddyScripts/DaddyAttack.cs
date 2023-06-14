@@ -209,6 +209,7 @@ public class DaddyAttack : ScriptableObject
             if (Teleport && !_teleported)
             {
                 var tp = PoolManager.Spawn<CollapsingWall>("teleportPortal", null, new Vector3(TeleportPosition.x, TeleportPosition.y-0.4f, 0));
+                tp.transform.localScale = Vector3.one * _controller.facingDirection;
                 tp.StartTicking(TeleportTime+0.16f);
                 SoundManager.Instance.Play(_controller.Sound.TeleportIn, tp.transform);
                 _controller.SetTeleportTrigger();
