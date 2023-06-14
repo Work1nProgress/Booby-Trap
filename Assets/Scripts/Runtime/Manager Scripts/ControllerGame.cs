@@ -44,6 +44,9 @@ public class ControllerGame : ControllerLocal
 
     [SerializeField]
     Ease AberrationEase;
+
+    int savedRoom = 1;
+    public int SavedRoom => savedRoom;
     
 
     #endregion

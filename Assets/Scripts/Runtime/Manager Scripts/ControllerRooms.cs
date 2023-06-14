@@ -36,6 +36,8 @@ public class ControllerRooms : MonoBehaviour
 
     bool firstRoomEntered = false;
 
+
+
     public Room GetRoom(int roomId)
     {
         return Array.Find(m_Rooms, x => x.RoomId == roomId);
@@ -69,12 +71,21 @@ public class ControllerRooms : MonoBehaviour
 
     public void EnterRoom(Room room)
     {
+        if (room == null)
+        {
+            return;
+        }
         room.Activate(DefaultEnemyStats);
 
     }
 
     public void ExitRoom(Room room)
     {
+        if (room == null)
+        {
+            return;
+        }
+
         room.Deactivate();
     }
 
@@ -84,14 +95,14 @@ public class ControllerRooms : MonoBehaviour
         {
             if (m_NextRoom != null)
             {
-                if (m_CurrentRoom != null)
+                if (m_CurrentRoom != null && ControllerGame.Instance.player.Health > 0)
                 {
                     AnimateRoomTransition(m_CurrentRoom, m_NextRoom);
                 }
             }
             else
             {
-                Debug.LogWarning($"Echo not in any room! (from room {m_CurrentRoom})");
+                //Debug.LogWarning($"Echo not in any room! (from room {m_CurrentRoom})");
             }
         }
     }
@@ -110,6 +121,7 @@ public class ControllerRooms : MonoBehaviour
             {
                 firstRoomEntered = true;
                 EnterRoom(room);
+                ChangeCamera(room);
             }
             m_CurrentRoom = room;
         }
@@ -134,32 +146,44 @@ public class ControllerRooms : MonoBehaviour
 
     public void OnDeathAnimation()
     {
+
+        m_NextRoom = null;
+        roomTransition.Kill();
+        ControllerGame.Instance.player.FreezeOnTransition(true);
         var sequence = DOTween.Sequence();
         sequence.Append(DOVirtual.Float(0, 1, timeFadeIn*5, DoColorAdjustment));
         sequence.AppendCallback(() => ControllerGame.Instance.ResetPlayer());
+        sequence.AppendCallback(() => ExitRoom(m_CurrentRoom));
+        sequence.AppendCallback(() => EnterRoom(GetRoom(ControllerGame.Instance.SavedRoom)));
+        sequence.AppendCallback(() => ChangeCamera(GetRoom(ControllerGame.Instance.SavedRoom)));
         sequence.AppendInterval(0.4f);
+        sequence.AppendCallback(() => ControllerGame.Instance.player.FreezeOnTransition(false));
         sequence.Append(DOVirtual.Float(1, 0, timeFadeIn*3, DoColorAdjustment));
-    }
+        sequence.Play();
+       
 
+    }
+    Sequence roomTransition;
     void AnimateRoomTransition(Room fromRoom, Room toRoom)
     {
         ControllerGame.Instance.player.FreezeOnTransition(true);
 
-       var sequence = DOTween.Sequence();
+        roomTransition = DOTween.Sequence();
 
-        sequence.Append(DOVirtual.Float(0, 1, timeFadeIn, DoColorAdjustment));
-        sequence.AppendCallback(() => ExitRoom(fromRoom));
-        sequence.AppendCallback(() => EnterRoom(toRoom));
-        sequence.AppendCallback(() => ChangeCamera(toRoom));
-        sequence.Append(DOVirtual.Float(1, 0, timeFadeIn, DoColorAdjustment));
+        roomTransition.Append(DOVirtual.Float(0, 1, timeFadeIn, DoColorAdjustment));
+        roomTransition.AppendCallback(() => ExitRoom(fromRoom));
+        roomTransition.AppendCallback(() => EnterRoom(toRoom));
+        roomTransition.AppendCallback(() => ChangeCamera(toRoom));
+        roomTransition.AppendInterval(0.3f);
+        roomTransition.Append(DOVirtual.Float(1, 0, timeFadeIn, DoColorAdjustment));
 
-        sequence.AppendCallback(() => {
+        roomTransition.AppendCallback(() => {
             m_CurrentRoom = m_NextRoom;
             m_NextRoom = null;
             ControllerGame.Instance.player.FreezeOnTransition(false);
         });
-        
-        sequence.Play();
+
+        roomTransition.Play();
 
     }
 
