@@ -338,7 +338,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: a786e538269f8194595f81c172514a4a, type: 3}
+      name: _Emission
     nameFileIdTable:
       Spear Throw Echo-Sheet_0: -801096502
       Spear Throw Echo-Sheet_1: 1094402304
