@@ -49,12 +49,12 @@ MonoBehaviour:
   - SoundName: Echo_Steps
     PlaySubitemType: 1
     soundItems:
-    - AudioClip: {fileID: 8300000, guid: 2632981f9911e734ab486b154ba31897, type: 3}
-    - AudioClip: {fileID: 8300000, guid: 2098ea651b3b18c49a4508b87d583a0e, type: 3}
-    - AudioClip: {fileID: 8300000, guid: b7a7cebe86719ca4ebeb9e722599b7d2, type: 3}
-    - AudioClip: {fileID: 8300000, guid: 614df732f7bdd99478921caba1c8f572, type: 3}
-    - AudioClip: {fileID: 8300000, guid: 24fb866e60de0a74e94dd13813a3da8f, type: 3}
-    - AudioClip: {fileID: 8300000, guid: 277c8333e060f7e4c89c674c809a5e8c, type: 3}
+    - AudioClip: {fileID: 8300000, guid: ae7b9c7b83090b143bf5a5a5769adb5c, type: 3}
+    - AudioClip: {fileID: 8300000, guid: ffa74a48808462d43bc309ca9c468590, type: 3}
+    - AudioClip: {fileID: 8300000, guid: c8d2d14e7b1981c41ad91dba0081b015, type: 3}
+    - AudioClip: {fileID: 8300000, guid: afabb67042ffee848b7bb7b28f1f39c8, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 328932d2a7e02c646ab28736f6347f3c, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 1f3944c436099df479a0d29734d68408, type: 3}
     Volume: -0.241
     PitchShift: 0.5
     RandomPitch: -0.5
@@ -956,8 +956,8 @@ MonoBehaviour:
     soundItems:
     - AudioClip: {fileID: 8300000, guid: 0123d89af958c42d5aed53587e6af3b5, type: 3}
     Volume: 0
-    PitchShift: -0.5
-    RandomPitch: 0.5
+    PitchShift: 0
+    RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 0
@@ -997,8 +997,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Elevator_Loop
     PlaySubitemType: 1
     soundItems:
@@ -1013,8 +1013,8 @@ MonoBehaviour:
     MinDistance: 0
     MaxDistance: 0
     UseCustomMinMax: 0
-    OverrideCustomSpatialBlend: 0
-    UseCustomSpatialBlend: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
   - SoundName: Elevator_End
     PlaySubitemType: 1
     soundItems:
@@ -1022,6 +1022,22 @@ MonoBehaviour:
     Volume: 0
     PitchShift: -0.5
     RandomPitch: 0.5
+    DopplerLevel: 0
+    MinimumTimeBetweenSameSound: 0.1
+    notSameTwiceOffset: 0
+    ChanceToPlay: 100
+    MinDistance: 0
+    MaxDistance: 0
+    UseCustomMinMax: 0
+    OverrideCustomSpatialBlend: 1
+    UseCustomSpatialBlend: 1
+  - SoundName: Ambience
+    PlaySubitemType: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 4f1438b50f514a54d873a190b48d9a37, type: 3}
+    Volume: 0
+    PitchShift: 0
+    RandomPitch: 0
     DopplerLevel: 0
     MinimumTimeBetweenSameSound: 0.1
     notSameTwiceOffset: 0

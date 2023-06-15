@@ -82,7 +82,7 @@ public class ControllerGame : ControllerLocal
         {
             playerHealthBar.RerenderPips(player.MaxHealth, player.MaxHealth);
         }
-        
+      
 
         player.OnChangeHealth.AddListener(UpdatePlayerHealth);
         player.OnDeath.AddListener(OnPlayerDeath);

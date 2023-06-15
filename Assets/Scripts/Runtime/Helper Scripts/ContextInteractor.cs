@@ -27,7 +27,7 @@ public class ContextInteractor : MonoBehaviour
 
     protected virtual void Interact()
     {
-        Debug.Log(_interactable);
+//        Debug.Log(_interactable);
         if (_interactable != null)
             _interactable.Interact(this);
     }

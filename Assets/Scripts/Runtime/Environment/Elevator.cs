@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Elevator : MonoBehaviour
 {
@@ -24,8 +25,11 @@ public class Elevator : MonoBehaviour
     [SerializeField]
     Rigidbody2D rb;
 
+    Animator _animator;
+
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _movementResetTimer = new CountdownTimer(_resetTime, true, false);
         _movementResetTimer.RegisterEvent(() => { StopReset(); });
 
@@ -88,6 +92,10 @@ public class Elevator : MonoBehaviour
 
         if(_currentTime == _tripTime)
         {
+            _animator.SetBool("Moving", false);
+            SoundManager.Instance.Play("Elevator_End", transform);
+            DOVirtual.DelayedCall(0.2f, () => SoundManager.Instance.CancelLoop(gameObject));
+
             StopElevator();
             StartReset();
         }
@@ -98,7 +106,13 @@ public class Elevator : MonoBehaviour
         if (VerifyKeycard())
         {
             if (!_moving && _canMove)
+            {
+                _animator.SetBool("Moving", true);
                 _moving = true;
+                SoundManager.Instance.Play("Elevator_Start", transform);
+                DOVirtual.DelayedCall(1.8f, () => SoundManager.Instance.PlayLooped("Elevator_Loop", gameObject, transform));
+                
+            }
         }
         else
         {

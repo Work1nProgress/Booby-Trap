@@ -141,8 +141,6 @@ public class MusicPlayer : GenericSingleton<MusicPlayer>
             Debug.LogWarning($"Playlist {playlist} not found");
             return;
         }
-
-
         m_QueuedLayers = layers;
         m_CurrentPlaylist = nextPlaylist;
 
