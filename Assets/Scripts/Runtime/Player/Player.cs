@@ -169,7 +169,6 @@ public class Player : EntityBase
 
     private void Update()
     {
-
         if (Freeze)
         {
             return;

@@ -414,7 +414,7 @@ public class PlayerMovementController : MonoBehaviour
         else
         {
             feetTouchingGround = false;
-            player.grounded = true;
+            player.grounded = false;
             standingOnSpear = false;
         }
         _playerAnim.SetBool(isOnGround, feetTouchingGround);
