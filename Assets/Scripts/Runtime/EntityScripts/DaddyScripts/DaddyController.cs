@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -331,9 +333,36 @@ public class DaddyController : EntityBase
     {
         if (!isDead)
         {
+            void UnloadAllScenesExcept(string sceneName) {
+                int c = SceneManager.sceneCount;
+                for (int i = 0; i < c; i++) {
+                    Scene scene = SceneManager.GetSceneAt (i);
+                    if (scene.name != sceneName) {
+                        SceneManager.UnloadSceneAsync (scene);
+                    }
+                }
+            }
+            
+            
              isDead = true;
+            var volume = FindObjectOfType<Volume>();
+            volume.profile.TryGet(out ColorAdjustments adjustments);
             SoundManager.Instance.Play(Sound.Death, transform);
-            //ToDo Add dying stuff
+            var fadeTimer = 0f;
+            while (fadeTimer < 1)
+            {
+                fadeTimer += Time.deltaTime;
+                var c = Color.Lerp(Color.white, Color.black, fadeTimer);
+                adjustments.colorFilter.Override(c);
+            }
+            var roomTransition = DOTween.Sequence();
+
+            int sceneCount = SceneManager.sceneCount;
+            for (int i = 0; i < sceneCount; i++) {
+                var scene = SceneManager.GetSceneAt (i);
+                SceneManager.UnloadSceneAsync(scene);
+            }
+            DOVirtual.DelayedCall(1f, () => SceneManager.LoadScene("Credits"));
         }
 
     }
@@ -360,7 +389,11 @@ public class DaddyController : EntityBase
 
     public void FaceTowardsEcho()
     {
- 
+        if (!isDead)
+        {
+            return;
+        }
+
         facingDirection = (int)Mathf.Sign(ControllerGame.Instance.player.transform.position.x - transform.position.x);
         SpriteRenderer.flipX = facingDirection == 1;
 
@@ -369,9 +402,12 @@ public class DaddyController : EntityBase
 
     bool CanStartAttack(DaddyAttack daddyAttackPhase)
     {
+        if (isDead) return false;
+        
         if (daddyAttackPhase.Conditions.HasFlag(DaddyAttackCondition.PlayerCloserThan))
         {
-            return Vector2.Distance(Rigidbody.position, ControllerGame.Instance.player.RigidBody.position) <= daddyAttackPhase.DistanceToPlayer;
+            return Vector2.Distance(Rigidbody.position, ControllerGame.Instance.player.RigidBody.position) <=
+                   daddyAttackPhase.DistanceToPlayer;
         }
 
         return true;
