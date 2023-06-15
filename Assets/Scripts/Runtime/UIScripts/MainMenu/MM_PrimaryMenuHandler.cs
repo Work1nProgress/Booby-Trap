@@ -24,7 +24,7 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
 
     public void OtherThing()
     {
-        Debug.Log("Oh shit! Double rainbow!!! (not really)");
+        
     }
 
     public void OpenOptionsMenu()

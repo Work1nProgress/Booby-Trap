@@ -29,7 +29,6 @@ public class UIPauseMenuButton : MonoBehaviour, ISubmitHandler, ISelectHandler, 
 
     public void OnDeselect(BaseEventData data)
     {
-        Debug.Log($"{name} : DESELECT");
         if (_selectedIndicator != null) _selectedIndicator.SetActive(false);
         if (_buttonText != null) _buttonText.fontStyle = FontStyles.Normal;
     }

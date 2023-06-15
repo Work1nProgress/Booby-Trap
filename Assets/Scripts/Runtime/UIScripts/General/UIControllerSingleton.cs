@@ -15,7 +15,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if (Instance == null)
         {
-            Debug.LogWarning($"Warning: could not set active, UI controller does not exist!");
             return;
         }
 
@@ -50,13 +49,11 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if(Instance == null)
         {
-            Debug.LogWarning($"Warning: menu '{key}' could not be retrieved, UI controller does not exist!");
             return null;
         }
 
         GenericMenuHandler menu;
         bool menuExists = Instance._menus.TryGetValue(key, out menu);
-        if (!menuExists) Debug.LogWarning($"Warning: menu key '{key}' does not exist in the menu dictionary!");
 
         return menuExists ? menu : null;
     }
@@ -64,7 +61,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if (Instance == null)
         {
-            Debug.LogWarning($"Warning: menu '{key}' could not be added, UI controller does not exist!");
             return;
         }
 
@@ -88,7 +84,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if (Instance == null)
         {
-            Debug.LogWarning($"Warning: menu '{key}' could not be opened, UI controller does not exist!");
             return;
         }
         if (!Instance._isActive) return;
@@ -110,7 +105,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if (Instance == null)
         {
-            Debug.LogWarning($"Warning: menu could not be closed, UI controller does not exist!");
             return;
         }
         if (!Instance._isActive) return;
@@ -128,7 +122,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if (Instance == null)
         {
-            Debug.LogWarning($"Warning: menu {key} could not be closed, UI controller does not exist!");
             return;
         }
         if (!Instance._isActive) return;
@@ -145,7 +138,6 @@ public class UIControllerSingleton<T> : GenericSingleton<T> where T : UIControll
     {
         if (Instance == null)
         {
-            Debug.LogWarning($"Warning: menu {key} could not be toggled, UI controller does not exist!");
             return;
         }
         if (!Instance._isActive) return;
