@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Player : EntityBase
@@ -92,6 +93,7 @@ public class Player : EntityBase
     private int _hitsUntilCombo;
     [SerializeField] private float comboFuse = .7f;
     private float _currentComboFuse = 0;
+    public bool grounded = false;
 
 
     
@@ -167,7 +169,6 @@ public class Player : EntityBase
 
     private void Update()
     {
-
         if (Freeze)
         {
             return;
@@ -194,7 +195,7 @@ public class Player : EntityBase
 
     void OnThrow()
     {
-        if (Freeze || !ControllerGame.Instance.HasSpear)
+        if (Freeze)
         {
             return;
         }
@@ -314,7 +315,14 @@ public class Player : EntityBase
         Collider2D[] hits = null;
 
         int damageToDeal = m_Damage;
-        if (velocityOnYAxis > -0.1 && velocityOnYAxis < 0.1)
+        if (velocityOnYAxis > -0.1 && !grounded  || velocityOnYAxis < 0.1 && !grounded)
+        {
+            _hitsUntilCombo = hitsToCombo;
+            _playerAnim.SetTrigger("SpearSpin");
+
+            hits = Physics2D.OverlapCircleAll(transform.position, m_JumpingAttackRange, LayerMask.GetMask("Enemy"));
+        }
+        else
         {
             if (_hitsUntilCombo > 1)
             {
@@ -328,17 +336,10 @@ public class Player : EntityBase
                 damageToDeal = _comboDamage;
                 _playerAnim.SetTrigger("SpearSlash");
             }
-            
-            int direction = m_MovementController.FacingRight ? 1 : -1;
-            hits = Physics2D.OverlapBoxAll(transform.position + new Vector3(offsetHorizontal * direction, 0, 0), m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
-            
-        }
-        else
-        {
-            _hitsUntilCombo = hitsToCombo;
-            _playerAnim.SetTrigger("SpearSpin");
 
-            hits = Physics2D.OverlapCircleAll(transform.position, m_JumpingAttackRange,  LayerMask.GetMask("Enemy"));
+            int direction = m_MovementController.FacingRight ? 1 : -1;
+            hits = Physics2D.OverlapBoxAll(transform.position + new Vector3(offsetHorizontal * direction, 0, 0),
+                m_HorizontalRange, 0, LayerMask.GetMask("Enemy"));
         }
 
         SoundManager.Instance.Play(Attack, gameObject.transform);

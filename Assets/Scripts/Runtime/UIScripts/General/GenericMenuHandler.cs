@@ -15,7 +15,7 @@ public class GenericMenuHandler : MonoBehaviour
 
     bool _menuRegistered = false;
 
-    protected virtual void Awake()
+    private void Start()
     {
         if (!_menuRegistered)
         {

@@ -9,6 +9,7 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
 
     public void StartGame()
     {
+        MainMenuUIController.SetActiveUIDomain(UIDomain.INGAME);
         ControllerGameFlow.Instance.LoadNewScene("GardenofDestiny");
         MainMenuUIController.CloseMenu();
     }
@@ -16,6 +17,7 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
     public void NewGame()
     {
         ControllerSaveLoad.ClearSave();
+        MainMenuUIController.SetActiveUIDomain(UIDomain.INGAME);
         ControllerGameFlow.Instance.LoadNewScene("GardenofDestiny");
         MainMenuUIController.CloseMenu();
     }

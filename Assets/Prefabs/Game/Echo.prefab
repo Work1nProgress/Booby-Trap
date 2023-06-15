@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b1f8824f3eb04964d907eab881c50339, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +84,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &251119522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251119523}
+  - component: {fileID: 251119524}
+  m_Layer: 13
+  m_Name: Interactor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &251119523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251119522}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4492751368146734890}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &251119524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251119522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dad038a06d4fe348911343b8e6fec16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1240052529
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1240052530
 Transform:
   m_ObjectHideFlags: 0
@@ -109,7 +153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240052529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.81, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -133,7 +177,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.8
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -183,8 +227,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.83
-  m_PointLightOuterRadius: 4.43
+  m_PointLightInnerRadius: 1
+  m_PointLightOuterRadius: 16
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -290,6 +334,7 @@ Transform:
   - {fileID: 1240052530}
   - {fileID: 21509556}
   - {fileID: 5567527375990211592}
+  - {fileID: 251119523}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -329,6 +374,7 @@ MonoBehaviour:
   StepsSound: Echo_Steps
   stepDelay: 0.3
   stepVelocityFactor: 0.1
+  player: {fileID: 4492751368146734889}
   lastGroundedPosition: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
@@ -350,22 +396,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   _tempStats:
-    MaxHealth: 5
+    MaxHealth: 1
   OnDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4492751368146734889}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Rippeperoni
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
@@ -380,8 +414,9 @@ MonoBehaviour:
   m_InheritSpeed: 1
   chanceToGainHeartRanged: 0.05
   m_MovementController: {fileID: 4492751368146734888}
+  _playerHealthBar: {fileID: 0}
   m_HorizontalRange: {x: 3, y: 3}
-  m_UpRange: {x: 3, y: 3}
+  m_JumpingAttackRange: 1.2
   m_DownRange: {x: 3, y: 3}
   m_ReloadTime: 0.5
   m_Damage: 1
@@ -394,6 +429,8 @@ MonoBehaviour:
   StunEnemyForce: 2
   hitsToCombo: 3
   comboFuse: 1
+  grounded: 0
+  Freeze: 0
   PlayerMovementController: {fileID: 4492751368146734888}
   _playerAnim: {fileID: 415285141}
   Attack: Echo_Attack

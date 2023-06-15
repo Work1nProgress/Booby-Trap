@@ -20,10 +20,11 @@ MonoBehaviour:
   m_DamageThreshold: 0
   Teleport: 1
   TeleportTime: 0.5
+  AnimatorTrigger: 0
   m_DaddyAttackCondition: 0
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
-  StartTile: 010000000e000000
+  StartTile: 000000000f000000
   BulldozeSize: {x: 1, y: 4.5}
   BulldozePosition: {x: 1, y: 0.5}
   MovementEase: 2

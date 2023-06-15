@@ -25,10 +25,10 @@ MonoBehaviour:
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
   StartTile: 07000000
-  WallStartSize: {x: 1, y: 7}
+  WallStartSize: {x: 1, y: 8}
   WallEndSize: {x: 1, y: -1}
-  WallStartPositionOffset: 0
-  WallEndPositionOffset: 8
+  WallStartPositionOffset: 1
+  WallEndPositionOffset: 13
   WallMovementEase: 2
   WallSizeEase: 1
   AscentMovementEase: 2
