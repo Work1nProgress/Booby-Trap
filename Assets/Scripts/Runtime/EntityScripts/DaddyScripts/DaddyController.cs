@@ -311,6 +311,7 @@ public class DaddyController : EntityBase
         {
              isDead = true;
             SoundManager.Instance.Play(Sound.Death, transform);
+            //ToDo Add dying stuff
         }
 
     }

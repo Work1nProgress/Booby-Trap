@@ -20,6 +20,7 @@ MonoBehaviour:
   m_DamageThreshold: 0
   Teleport: 0
   TeleportTime: 0
+  AnimatorTrigger: 0
   m_DaddyAttackCondition: 0
   m_PlayerCloserThanTiles: 0
   m_Weight: 1
@@ -32,5 +33,6 @@ MonoBehaviour:
   MinMines: 3
   MaxMines: 3
   MinimumMineDistance: 1
+  maxDistanceToPlayer: 2
   RoomSize: {x: 16, y: 8}
-  RoomPosition: {x: -8, y: -4}
+  RoomPosition: {x: -48, y: -40}

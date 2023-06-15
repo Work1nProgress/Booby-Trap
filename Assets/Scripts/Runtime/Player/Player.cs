@@ -196,7 +196,7 @@ public class Player : EntityBase
 
     void OnThrow()
     {
-        if (Freeze || !ControllerGame.Instance.HasSpear)
+        if (Freeze)
         {
             return;
         }

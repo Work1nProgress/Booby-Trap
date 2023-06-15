@@ -127,7 +127,7 @@ public class DaddyCollapsingWallAttack : DaddyAttack
     }
 
     float leftStartX => _controller.GetRoomPosition.x + WallStartPositionOffset;
-    float rightStartX => _controller.GetRoomPosition.x + _controller.GetRoomSize.x - WallStartPositionOffset;
+    float rightStartX => _controller.GetRoomPosition.x + _controller.GetRoomSize.x - WallStartPositionOffset - 1;
 
     float leftEndX => _controller.GetRoomPosition.x + WallEndPositionOffset;
     float rightEndX => _controller.GetRoomPosition.x + _controller.GetRoomSize.x - WallEndPositionOffset;

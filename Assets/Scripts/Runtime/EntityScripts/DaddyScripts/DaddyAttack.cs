@@ -125,7 +125,7 @@ public class DaddyAttack : ScriptableObject
         else
         {
             //edge case for slash attack
-            DOVirtual.DelayedCall(1.5f, () => _controller.SetTrigger(AnimatorTrigger));
+             _controller.SetTrigger(AnimatorTrigger);
         }
     }
     public virtual void ExitAttack()

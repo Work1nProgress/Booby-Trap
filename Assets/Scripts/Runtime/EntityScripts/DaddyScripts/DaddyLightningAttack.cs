@@ -131,7 +131,7 @@ public class DaddyLightningAttack : DaddyAttack
         {
             lightningCollision.Clear();
             float currentPosition = (_loopCounter % 2 == 0 ? LightningStartPosition : LightningStartPositionAlternate) + _controller.GetRoomPosition.x;
-            while (currentPosition < _controller.GetRoomSize.x)
+            while (currentPosition < _controller.GetRoomPosition.x +_controller.GetRoomSize.x)
             {
                 var lightning = PoolManager.Spawn<PoolObjectTimed>("Lightning",
                     null,
