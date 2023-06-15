@@ -282,9 +282,8 @@ public class DaddyController : EntityBase
 
     public override void Damage(int amount)
     {
-
-       
-      
+        SoundManager.Instance.Play(Sound.Hurt, transform);
+        
         base.Damage(amount);
         bossHealthBar.RerenderPips(_health, MaxHealth);
         if (currentPhase >= Phases.Length - 1)

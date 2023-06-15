@@ -768,7 +768,7 @@ MonoBehaviour:
     - AudioClip: {fileID: 8300000, guid: 74cd17e229c70824cb4a00777911b959, type: 3}
     - AudioClip: {fileID: 8300000, guid: b31fe1feb1ed7c64d835219d09c4b7b6, type: 3}
     - AudioClip: {fileID: 8300000, guid: f79c9cc0442bc7843b672a1e0f854fa4, type: 3}
-    Volume: -0.05
+    Volume: 0.5
     PitchShift: -0.2
     RandomPitch: 0.2
     DopplerLevel: 0
