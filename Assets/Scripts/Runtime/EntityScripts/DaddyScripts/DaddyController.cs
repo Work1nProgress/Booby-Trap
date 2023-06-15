@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -38,6 +39,8 @@ public class DaddyController : EntityBase
     int ContactDamage = 1;
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private Color flashColor = Color.white;
+    [SerializeField] private float flashTime = 0.3f;
 
 
     [SerializeField]
@@ -279,10 +282,13 @@ public class DaddyController : EntityBase
     private static readonly int Slash = Animator.StringToHash("Slash");
     private static readonly int Lightning = Animator.StringToHash("Lightning");
     private static readonly int Teleport = Animator.StringToHash("Teleport out");
+    private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
     public override void Damage(int amount)
     {
         SoundManager.Instance.Play(Sound.Hurt, transform);
+        StartCoroutine(nameof(DamageFlasher));
+        
         
         base.Damage(amount);
         bossHealthBar.RerenderPips(_health, MaxHealth);
@@ -302,6 +308,23 @@ public class DaddyController : EntityBase
         
 
 
+    }
+
+    private IEnumerator DamageFlasher()
+    {
+    float currentFlashAmount = 0f;
+    float elapsedTime = 0f;
+    
+    while (elapsedTime < flashTime)
+    {
+        elapsedTime += Time.deltaTime;
+        currentFlashAmount = Mathf.Lerp(2f, 0f, (elapsedTime / flashTime));
+        Debug.Log(currentFlashAmount);
+        SpriteRenderer.material.SetFloat(FlashAmount, currentFlashAmount);
+        
+        yield return null;
+    }
+    
     }
 
     protected override void OnKill()
