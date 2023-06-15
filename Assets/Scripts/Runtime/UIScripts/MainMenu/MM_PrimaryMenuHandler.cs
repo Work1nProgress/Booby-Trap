@@ -9,7 +9,14 @@ public class MM_PrimaryMenuHandler : GenericMenuHandler
 
     public void StartGame()
     {
-        ControllerGameFlow.Instance.LoadNewScene("BossScene");
+        ControllerGameFlow.Instance.LoadNewScene("GardenofDestiny");
+        MainMenuUIController.CloseMenu();
+    }
+
+    public void NewGame()
+    {
+        ControllerSaveLoad.ClearSave();
+        ControllerGameFlow.Instance.LoadNewScene("GardenofDestiny");
         MainMenuUIController.CloseMenu();
     }
 

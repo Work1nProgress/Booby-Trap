@@ -52,6 +52,18 @@ MonoBehaviour:
     Randomize: 0
     MusicTracks:
     - daddy
+  - Name: GardenPlaylist
+    Crossfade: 0
+    CrossfadeTime: 0
+    Randomize: 0
+    MusicTracks:
+    - GardenSong
+  - Name: CreditsPlaylist
+    Crossfade: 0
+    CrossfadeTime: 0
+    Randomize: 0
+    MusicTracks:
+    - CreditsSong
   Tracks:
   - Name: daddy
     Volume: 0.58
@@ -60,4 +72,14 @@ MonoBehaviour:
       m_AudioClip: {fileID: 8300000, guid: 5c9f5f84550b7a74ca01dfe6816f8968, type: 3}
     - Volume: 1
       m_AudioClip: {fileID: 8300000, guid: 337d450fec4a55f4ca125d0f3433715d, type: 3}
+  - Name: GardenSong
+    Volume: 0.58
+    Layers:
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: 656be7895c9d14fce8a4dda843a6eb6c, type: 3}
+  - Name: CreditsSong
+    Volume: 0.58
+    Layers:
+    - Volume: 1
+      m_AudioClip: {fileID: 8300000, guid: cc2106908b3a649e181948b8910e3b04, type: 3}
   DeltaTime: 0.05

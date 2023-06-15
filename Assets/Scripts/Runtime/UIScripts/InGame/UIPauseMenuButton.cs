@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class UIPauseMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler
+public class UIPauseMenuButton : MonoBehaviour, ISubmitHandler, ISelectHandler, IDeselectHandler, IPointerEnterHandler
 {
     GameObject _selectedIndicator;
     TextMeshProUGUI _buttonText;
@@ -29,8 +29,14 @@ public class UIPauseMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnDeselect(BaseEventData data)
     {
+        Debug.Log($"{name} : DESELECT");
         if (_selectedIndicator != null) _selectedIndicator.SetActive(false);
         if (_buttonText != null) _buttonText.fontStyle = FontStyles.Normal;
+    }
+
+    public void OnSubmit(BaseEventData data)
+    {
+        //OnDeselect(null);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

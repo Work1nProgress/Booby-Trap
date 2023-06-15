@@ -15,31 +15,29 @@ public class IG_OptionsMenuHandler : GenericMenuHandler
         base.OnOpen();
         Time.timeScale = 0;
 
-        float masterVolume, musicVolume, effectsVolume;
-        _audioMixer.GetFloat("MasterVolume", out masterVolume);
-        _audioMixer.GetFloat("MusicVolume", out musicVolume);
-        _audioMixer.GetFloat("EffectsVolume", out effectsVolume);
-
         if (_masterSlider != null)
         {
-            masterVolume = (masterVolume + 80) * 0.01f;
-            _masterSlider.value = masterVolume;
+            _audioMixer.SetFloat(
+            "MasterVolume",
+            Mathf.Log10(_masterSlider.value) * 20);
         }
         else
             Debug.LogWarning("Warning: Master volume slider not set!");
 
         if (_musicSlider != null)
         {
-            musicVolume = (musicVolume + 80) * 0.01f;
-            _musicSlider.value = musicVolume;
+            _audioMixer.SetFloat(
+            "MusicVolume",
+            Mathf.Log10(_musicSlider.value) * 20);
         }
         else
             Debug.LogWarning("Warning: Music volume slider not set!");
 
         if (_effectsSlider != null)
         {
-            effectsVolume = (effectsVolume + 80) * 0.01f;
-            _effectsSlider.value = effectsVolume;
+            _audioMixer.SetFloat(
+            "EffectsVolume",
+            Mathf.Log10(_effectsSlider.value) * 20);
         }
         else
             Debug.LogWarning("Warning: Effects volume slider not set!");
@@ -51,25 +49,25 @@ public class IG_OptionsMenuHandler : GenericMenuHandler
         Time.timeScale = 1;
     }
 
-    public void OnChangeMasterVolume(float value)
+    public void OnChangeMasterVolume(float volume)
     {
         _audioMixer.SetFloat(
             "MasterVolume",
-            value * 100f - 80f);
+            Mathf.Log10(volume) * 20);
     }
 
-    public void OnChangeMusicVolume(float value)
+    public void OnChangeMusicVolume(float volume)
     {
         _audioMixer.SetFloat(
             "MusicVolume",
-            value * 100f - 80f);
+            Mathf.Log10(volume) * 20);
     }
 
-    public void OnChangeEffectsVolume(float value)
+    public void OnChangeEffectsVolume(float volume)
     {
         _audioMixer.SetFloat(
             "EffectsVolume",
-            value * 100f - 80f);
+            Mathf.Log10(volume) * 20);
     }
 
     public void OnOpenPauseMenu()

@@ -15,7 +15,7 @@ public class GenericMenuHandler : MonoBehaviour
 
     bool _menuRegistered = false;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         if (!_menuRegistered)
         {
@@ -31,11 +31,12 @@ public class GenericMenuHandler : MonoBehaviour
 
     public virtual void OnClose()
     {
-
+        
     }
 
     private void RegisterToController(UIDomain domain)
     {
+
         //registration switch
         switch (domain)
         {
