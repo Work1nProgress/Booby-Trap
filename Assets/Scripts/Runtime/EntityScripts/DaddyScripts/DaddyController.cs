@@ -49,6 +49,8 @@ public class DaddyController : EntityBase
     DaddyPhase[] Phases;
 
     int currentPhase = 0;
+    private float fadeCooldown = 2;
+    private float fadeTimer;
 
 
 
@@ -78,6 +80,8 @@ public class DaddyController : EntityBase
 
     [SerializeField]
     Light2D roomLight;
+
+    [SerializeField] private bool fadeToBlack = false;
 
 
     bool saidIntro;
@@ -251,9 +255,9 @@ public class DaddyController : EntityBase
 
     private void FixedUpdate()
     {
-
         if (isDead || !isActive)
         {
+            FadeToBlack();
             return;
         }
         WaitTimer -= Time.fixedDeltaTime;
@@ -307,9 +311,6 @@ public class DaddyController : EntityBase
             phaseChange = true;
 
         }
-        
-
-
     }
 
     private IEnumerator DamageFlasher()
@@ -329,42 +330,34 @@ public class DaddyController : EntityBase
     
     }
 
-    protected override void OnKill()
+    private void FadeToBlack()
     {
-        if (!isDead)
+        if (fadeTimer > 0)
         {
-            void UnloadAllScenesExcept(string sceneName) {
-                int c = SceneManager.sceneCount;
-                for (int i = 0; i < c; i++) {
-                    Scene scene = SceneManager.GetSceneAt (i);
-                    if (scene.name != sceneName) {
-                        SceneManager.UnloadSceneAsync (scene);
-                    }
-                }
-            }
-            
-            
-             isDead = true;
+            fadeTimer -= Time.deltaTime;
             var volume = FindObjectOfType<Volume>();
             volume.profile.TryGet(out ColorAdjustments adjustments);
-            SoundManager.Instance.Play(Sound.Death, transform);
-            var fadeTimer = 0f;
-            while (fadeTimer < 1)
-            {
-                fadeTimer += Time.deltaTime;
-                var c = Color.Lerp(Color.white, Color.black, fadeTimer);
-                adjustments.colorFilter.Override(c);
-            }
-            var roomTransition = DOTween.Sequence();
-
-            int sceneCount = SceneManager.sceneCount;
-            for (int i = 0; i < sceneCount; i++) {
-                var scene = SceneManager.GetSceneAt (i);
-                SceneManager.UnloadSceneAsync(scene);
-            }
-            DOVirtual.DelayedCall(1f, () => SceneManager.LoadScene("Credits"));
+            var c = Color.Lerp(Color.white, Color.black, fadeTimer);
+            adjustments.colorFilter.Override(c);
         }
+    }
 
+    protected override void OnKill()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        fadeToBlack = true;
+        fadeTimer = fadeCooldown;
+        SoundManager.Instance.Play(Sound.Death, transform);
+        MusicPlayer.Instance.StopPlaying();
+
+        int sceneCount = SceneManager.sceneCount;
+        for (int i = 0; i < sceneCount; i++) {
+            var scene = SceneManager.GetSceneAt (i);
+            SceneManager.UnloadSceneAsync(scene);
+        }
+        DOVirtual.DelayedCall(10f, () => SceneManager.LoadScene("Credits"));
     }
 
 
@@ -389,7 +382,7 @@ public class DaddyController : EntityBase
 
     public void FaceTowardsEcho()
     {
-        if (!isDead)
+        if (isDead)
         {
             return;
         }

@@ -192,7 +192,6 @@ public class SoundManagerEditor : Editor
             }
             if (GUILayout.Button("+", GUILayout.Width(30)))
             {
-                Debug.Log("add subitem");
                 data.Sounds[currentSoundIndex].AddSoundItem(null);
             }
             EditorGUI.BeginDisabledGroup(data.Sounds.Count <= 0);
